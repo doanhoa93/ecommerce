@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+  <!-- Define Struts Tile for Front-End module -->
+  <definition name="baselayout" template="/layouts/template.jsp">
+
+    <!-- Set header, footer, body -->
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="header" value="/layouts/header.jsp" />
+    <put-attribute name="body" value="/layouts/body.jsp" />
+    <put-attribute name="footer" value="/layouts/footer.jsp" />
+
+    <!-- import css -->
+    <put-list-attribute name="default-css">
+      <add-attribute value="/assets/css/animate.css" />
+      <add-attribute value="/assets/css/bootstrap.min.css" />
+      <add-attribute value="/assets/css/font-awesome.min.css" />
+      <add-attribute value="/assets/css/main.css" />
+      <add-attribute value="/assets/css/prettyPhoto.css" />
+      <add-attribute value="/assets/css/price-range.css" />
+      <add-attribute value="/assets/css/responsive.css" />
+    </put-list-attribute>
+
+    <!-- import js -->
+    <put-list-attribute name="default-js">
+      <add-attribute value="/assets/js/jquery.js" />
+      <add-attribute value="/assets/js/bootstrap.min.js" />
+      <add-attribute value="/assets/js/jquery.scrollUp.min.js" />
+      <add-attribute value="/assets/js/price-range.js" />
+      <add-attribute value="/assets/js/jquery.prettyPhoto.js" />
+      <add-attribute value="/assets/js/main.js" />
+    </put-list-attribute>
+
+    <put-list-attribute name="css" />
+    <put-list-attribute name="js" />
+  </definition>
+
+  <definition name="homePage" extends="baselayout">
+    <put-attribute name="title" value="HomePage | Ecommerce" />
+    <put-attribute name="body" value="/pages/index.jsp" />
+  </definition>
+
+  <definition name="login" extends="baselayout">
+    <put-attribute name="title" value="Login | Ecommerce" />
+    <put-attribute name="body" value="/sessions/new.jsp" />
+  </definition>
+
+  <definition name="signup" extends="baselayout">
+    <put-attribute name="title" value="Signup | Ecommerce" />
+    <put-attribute name="body" value="/registrations/new.jsp" />
+  </definition>
+  
+  <definition name="products" extends="baselayout">
+    <put-attribute name="title" value="Products | Ecommerce" />
+    <put-attribute name="body" value="/products/index.jsp" />
+  </definition>
+</tiles-definitions>
