@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="User" table="users">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <property name="email" column="email" type="string"
+      not-null="true" unique="true" />
+    <property name="password" column="password" type="string"
+      not-null="true" />
+    <property name="name" column="name" type="string" />
+    <property name="avatar" column="avatar" type="string" />
+    <property name="role" column="role" type="string" />
+
+    <set name="orders">
+      <key column="user_id" not-null="true" />
+      <one-to-many class="Order" />
+    </set>
+    
+    <set name="carts">
+      <key column="user_id" not-null="true" />
+      <one-to-many class="Cart" />
+    </set>
+    
+    <set name="comments">
+      <key column="user_id" not-null="true" />
+      <one-to-many class="Comment" />
+    </set>
+  </class>
+</hibernate-mapping>

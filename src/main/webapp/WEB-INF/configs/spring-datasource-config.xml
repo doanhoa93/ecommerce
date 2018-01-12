@@ -34,12 +34,24 @@
         <prop key="hibernate.c3p0.max_statements">300</prop>
         <prop key="hibernate.c3p0.timeout">1800</prop>
         <prop key="hibernate.show_sql">${jdbc.showSql}</prop>
+        <prop key="hbm2ddl.auto">create</prop>
       </props>
     </property>
 
     <property name="mappingResources">
       <list>
-        <value>com/framgia/model/hbm/user.hbm.xml</value>
+        <value>com/framgia/model/hbm/Cart.hbm.xml</value>
+        <value>com/framgia/model/hbm/CartProduct.hbm.xml</value>
+        <value>com/framgia/model/hbm/Category.hbm.xml</value>
+        <value>com/framgia/model/hbm/Comment.hbm.xml</value>
+        <value>com/framgia/model/hbm/Image.hbm.xml</value>
+        <value>com/framgia/model/hbm/Order.hbm.xml</value>
+        <value>com/framgia/model/hbm/OrderProduct.hbm.xml</value>
+        <value>com/framgia/model/hbm/Product.hbm.xml</value>
+        <value>com/framgia/model/hbm/Profile.hbm.xml</value>
+        <value>com/framgia/model/hbm/Promotion.hbm.xml</value>
+        <value>com/framgia/model/hbm/Recent.hbm.xml</value>
+        <value>com/framgia/model/hbm/User.hbm.xml</value>
       </list>
     </property>
   </bean>
