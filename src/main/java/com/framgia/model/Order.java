@@ -1,13 +1,15 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Order implements Serializable {
   private Integer id;
-  private Integer userId;
-  private Float totalPrice;
+  private User user;
+  private float totalPrice;
   private StatusEnum status;
+  private List<OrderProduct> orderProducts;
 
   public Order() {
     super();
@@ -18,10 +20,10 @@ public class Order implements Serializable {
     this.id = id;
   }
 
-  public Order(Integer id, Integer userId, Float totalPrice, StatusEnum status) {
+  public Order(Integer id, User user, float totalPrice, StatusEnum status) {
     super();
     this.id = id;
-    this.userId = userId;
+    this.user = user;
     this.totalPrice = totalPrice;
     this.status = status;
   }
@@ -34,27 +36,35 @@ public class Order implements Serializable {
     this.id = id;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public Float getTotalPrice() {
+  public float getTotalPrice() {
     return totalPrice;
   }
 
-  public void setTotalPrice(Float totalPrice) {
+  public void setTotalPrice(float totalPrice) {
     this.totalPrice = totalPrice;
   }
 
-  public StatusEnum getStatus() {
-    return status;
+  public int getStatus() {
+    return status.ordinal();
   }
 
   public void setStatus(StatusEnum status) {
     this.status = status;
+  }
+
+  public List<OrderProduct> getOrderProducts() {
+    return orderProducts;
+  }
+
+  public void setOrderProducts(List<OrderProduct> orderProducts) {
+    this.orderProducts = orderProducts;
   }
 }

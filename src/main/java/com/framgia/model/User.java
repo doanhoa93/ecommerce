@@ -1,6 +1,7 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -10,6 +11,9 @@ public class User implements Serializable {
   private String name;
   private String avatar;
   private RoleEnum role;
+  private List<Order> orders;
+  private List<Cart> carts;
+  private List<Comment> comments;
 
   public User() {
     super();
@@ -71,11 +75,35 @@ public class User implements Serializable {
     this.avatar = avatar;
   }
 
-  public RoleEnum getRole() {
-    return role;
+  public String getRole() {
+    return role.toString();
   }
 
   public void setRole(RoleEnum role) {
     this.role = role;
+  }
+
+  public List<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(List<Order> orders) {
+    this.orders = orders;
+  }
+
+  public List<Cart> getCarts() {
+    return carts;
+  }
+
+  public void setCarts(List<Cart> carts) {
+    this.carts = carts;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
   }
 }

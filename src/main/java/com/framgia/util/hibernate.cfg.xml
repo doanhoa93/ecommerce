@@ -1,0 +1,27 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/java</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">123456</property>
+    <property name="hibernate.show_sql">true</property>
+
+    <mapping resource="com/framgia/model/hbm/Cart.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/CartProduct.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Category.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Comment.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Image.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Order.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/OrderProduct.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Product.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Profile.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Promotion.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Recent.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/User.hbm.xml" />
+  </session-factory>
+</hibernate-configuration>

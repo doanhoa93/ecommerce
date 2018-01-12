@@ -5,18 +5,18 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class CartProduct implements Serializable {
   private Integer id;
-  private Integer cartId;
-  private Integer productId;
+  private Cart cart;
+  private Product product;
 
   public CartProduct() {
     super();
   }
 
-  public CartProduct(Integer id, Integer cartId, Integer productId) {
+  public CartProduct(Integer id, Cart cart, Product product) {
     super();
     this.id = id;
-    this.cartId = cartId;
-    this.productId = productId;
+    this.cart = cart;
+    this.product = product;
   }
 
   public Integer getId() {
@@ -27,19 +27,19 @@ public class CartProduct implements Serializable {
     this.id = id;
   }
 
-  public Integer getCartId() {
-    return cartId;
+  public Cart getCart() {
+    return cart;
   }
 
-  public void setCartId(Integer cartId) {
-    this.cartId = cartId;
+  public void setCart(Cart cart) {
+    this.cart = cart;
   }
 
-  public Integer getProductId() {
-    return productId;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 }

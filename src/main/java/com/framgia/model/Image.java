@@ -5,17 +5,17 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Image implements Serializable {
   private Integer id;
-  private Integer productId;
+  private Product product;
   private String image;
 
   public Image() {
     super();
   }
 
-  public Image(Integer id, Integer productId, String image) {
+  public Image(Integer id, Product product, String image) {
     super();
     this.id = id;
-    this.productId = productId;
+    this.product = product;
     this.image = image;
   }
 
@@ -27,12 +27,12 @@ public class Image implements Serializable {
     this.id = id;
   }
 
-  public Integer getProductId() {
-    return productId;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
   public String getImage() {

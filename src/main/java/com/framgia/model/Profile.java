@@ -6,7 +6,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Profile implements Serializable {
   private Integer id;
-  private Integer userId;
+  private User user;
   private GenderEnum gender;
   private Date birthday;
   private String address;
@@ -15,16 +15,16 @@ public class Profile implements Serializable {
     super();
   }
 
-  public Profile(Integer id, Integer userId) {
+  public Profile(Integer id, User user) {
     super();
     this.id = id;
-    this.userId = userId;
+    this.user = user;
   }
 
-  public Profile(Integer id, Integer userId, GenderEnum gender, Date birthday, String address) {
+  public Profile(Integer id, User user, GenderEnum gender, Date birthday, String address) {
     super();
     this.id = id;
-    this.userId = userId;
+    this.user = user;
     this.gender = gender;
     this.birthday = birthday;
     this.address = address;
@@ -38,16 +38,16 @@ public class Profile implements Serializable {
     this.id = id;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public GenderEnum getGender() {
-    return gender;
+  public int getGender() {
+    return gender.ordinal();
   }
 
   public void setGender(GenderEnum gender) {

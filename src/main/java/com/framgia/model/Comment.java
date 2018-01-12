@@ -5,19 +5,19 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Comment implements Serializable {
   private Integer id;
-  private Integer userId;
-  private Integer productId;
+  private User user;
+  private Product product;
   private String content;
 
   public Comment() {
     super();
   }
 
-  public Comment(Integer id, Integer userId, Integer productId, String content) {
+  public Comment(Integer id, User user, Product product, String content) {
     super();
     this.id = id;
-    this.userId = userId;
-    this.productId = productId;
+    this.user = user;
+    this.product = product;
     this.content = content;
   }
 
@@ -29,20 +29,20 @@ public class Comment implements Serializable {
     this.id = id;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public Integer getProductId() {
-    return productId;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
   public String getContent() {

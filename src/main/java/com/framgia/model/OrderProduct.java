@@ -5,21 +5,20 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class OrderProduct implements Serializable {
   private Integer id;
-  private Integer orderId;
-  private Integer productId;
-  private Float price;
-  private Integer quantity;
+  private Order order;
+  private Product product;
+  private float price;
+  private int quantity;
 
   public OrderProduct() {
     super();
   }
 
-  public OrderProduct(Integer id, Integer orderId, Integer productId, Float price,
-    Integer quantity) {
+  public OrderProduct(Integer id, Order order, Product product, float price, int quantity) {
     super();
     this.id = id;
-    this.orderId = orderId;
-    this.productId = productId;
+    this.order = order;
+    this.product = product;
     this.price = price;
     this.quantity = quantity;
   }
@@ -32,35 +31,35 @@ public class OrderProduct implements Serializable {
     this.id = id;
   }
 
-  public Integer getOrderId() {
-    return orderId;
+  public Order getOrder() {
+    return order;
   }
 
-  public void setOrderId(Integer orderId) {
-    this.orderId = orderId;
+  public void setOrder(Order order) {
+    this.order = order;
   }
 
-  public Integer getProductId() {
-    return productId;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
-  public Float getPrice() {
+  public float getPrice() {
     return price;
   }
 
-  public void setPrice(Float price) {
+  public void setPrice(float price) {
     this.price = price;
   }
 
-  public Integer getQuantity() {
+  public int getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(Integer quantity) {
+  public void setQuantity(int quantity) {
     this.quantity = quantity;
   }
 }
