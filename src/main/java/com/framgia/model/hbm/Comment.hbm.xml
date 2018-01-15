@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="Comment" table="comments">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <property name="content" column="content" type="string" />
+
+    <many-to-one name="user" column="user_id" not-null="true" />
+    <many-to-one name="product" column="product_id" not-null="true" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="Cart" table="carts">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <many-to-one name="user" column="user_id" not-null="true" />
+
+    <set name="cart_products">
+      <key column="cart_id" />
+      <one-to-many class="Product" />
+    </set>
+  </class>
+</hibernate-mapping>
