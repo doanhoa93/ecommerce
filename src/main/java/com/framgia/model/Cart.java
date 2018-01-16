@@ -1,20 +1,22 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Cart implements Serializable {
   private Integer id;
-  private Integer userId;
+  private User user;
+  private List<CartProduct> cartProducts;
 
   public Cart() {
     super();
   }
 
-  public Cart(Integer id, Integer userId) {
+  public Cart(Integer id, User user) {
     super();
     this.id = id;
-    this.userId = userId;
+    this.user = user;
   }
 
   public Integer getId() {
@@ -25,11 +27,19 @@ public class Cart implements Serializable {
     this.id = id;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public List<CartProduct> getCartProducts() {
+    return cartProducts;
+  }
+
+  public void setCartProducts(List<CartProduct> cartProducts) {
+    this.cartProducts = cartProducts;
   }
 }

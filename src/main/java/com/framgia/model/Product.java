@@ -1,31 +1,33 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Product implements Serializable {
   private Integer id;
-  private Integer categoryId;
-  private Boolean isPromotion;
+  private Category category;
+  private boolean isPromotion;
   private Integer promotionId;
-  private Float saleOf;
+  private float saleOf;
   private String name;
-  private Float price;
-  private Float rating;
+  private float price;
+  private float rating;
   private String avatar;
   private String information;
-  private Integer number;
+  private int number;
+  private List<Image> images;
 
   public Product() {
     super();
   }
 
-  public Product(Integer id, Integer categoryId, Boolean isPromotion, Integer promotionId,
-    Float saleOf, String name, Float price, Float rating, String avatar, String information,
-    Integer number) {
+  public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId,
+    float saleOf, String name, float price, float rating, String avatar, String information,
+    int number) {
     super();
     this.id = id;
-    this.categoryId = categoryId;
+    this.category = category;
     this.isPromotion = isPromotion;
     this.promotionId = promotionId;
     this.saleOf = saleOf;
@@ -45,12 +47,12 @@ public class Product implements Serializable {
     this.id = id;
   }
 
-  public Integer getCategoryId() {
-    return categoryId;
+  public Category getCategory() {
+    return category;
   }
 
-  public void setCategoryId(Integer categoryId) {
-    this.categoryId = categoryId;
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
   public Boolean getIsPromotion() {
@@ -69,11 +71,11 @@ public class Product implements Serializable {
     this.promotionId = promotionId;
   }
 
-  public Float getSaleOf() {
+  public float getSaleOf() {
     return saleOf;
   }
 
-  public void setSaleOf(Float saleOf) {
+  public void setSaleOf(float saleOf) {
     this.saleOf = saleOf;
   }
 
@@ -85,19 +87,19 @@ public class Product implements Serializable {
     this.name = name;
   }
 
-  public Float getPrice() {
+  public float getPrice() {
     return price;
   }
 
-  public void setPrice(Float price) {
+  public void setPrice(float price) {
     this.price = price;
   }
 
-  public Float getRating() {
+  public float getRating() {
     return rating;
   }
 
-  public void setRating(Float rating) {
+  public void setRating(float rating) {
     this.rating = rating;
   }
 
@@ -117,11 +119,19 @@ public class Product implements Serializable {
     this.information = information;
   }
 
-  public Integer getNumber() {
+  public int getNumber() {
     return number;
   }
 
-  public void setNumber(Integer number) {
+  public void setNumber(int number) {
     this.number = number;
+  }
+
+  public List<Image> getImages() {
+    return images;
+  }
+
+  public void setImages(List<Image> images) {
+    this.images = images;
   }
 }

@@ -6,4 +6,76 @@
   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+  <bean id="CartDAO" class="com.framgia.dao.impl.CartDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="CartProductDAO" class="com.framgia.dao.impl.CartProductDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="CategoryDAO" class="com.framgia.dao.impl.CategoryDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="CommentDAO" class="com.framgia.dao.impl.CommentDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="ImageDAO" class="com.framgia.dao.impl.ImageDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="OrderDAO" class="com.framgia.dao.impl.OrderDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="OrderProductDAO" class="com.framgia.dao.impl.OrderProductDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="ProductDAO" class="com.framgia.dao.impl.ProductDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="ProfileDAO" class="com.framgia.dao.impl.ProfileDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="PromotionDAO" class="com.framgia.dao.impl.PromotionDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="RecentDAO" class="com.framgia.dao.impl.RecentDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="UserDAO" class="com.framgia.dao.impl.UserDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
 </beans>

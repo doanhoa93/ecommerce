@@ -1,0 +1,66 @@
+package com.framgia.bean;
+
+import java.util.Date;
+
+import com.framgia.model.GenderEnum;
+
+public class ProfileInfo {
+  private Integer id;
+  private Integer userId;
+  private GenderEnum gender;
+  private Date birthday;
+  private String address;
+
+  public ProfileInfo() {
+    super();
+  }
+
+  public ProfileInfo(Integer id, Integer userId, GenderEnum gender, Date birthday, String address) {
+    super();
+    this.id = id;
+    this.userId = userId;
+    this.gender = gender;
+    this.birthday = birthday;
+    this.address = address;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
+  }
+
+  public GenderEnum getGender() {
+    return gender;
+  }
+
+  public void setGender(GenderEnum gender) {
+    this.gender = gender;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+}

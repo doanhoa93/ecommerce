@@ -19,7 +19,6 @@
 
     <many-to-one name="category" column="category_id"
       not-null="true" />
-    <many-to-one name="promotion" column="promotion_id" />
 
     <set name="images">
       <key column="product_id" />

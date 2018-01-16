@@ -5,17 +5,17 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Recent implements Serializable {
   private Integer id;
-  private Integer productId;
-  private Integer viewed;
+  private Product product;
+  private int viewed;
 
   public Recent() {
     super();
   }
 
-  public Recent(Integer id, Integer productId, Integer viewed) {
+  public Recent(Integer id, Product product, int viewed) {
     super();
     this.id = id;
-    this.productId = productId;
+    this.product = product;
     this.viewed = viewed;
   }
 
@@ -27,19 +27,19 @@ public class Recent implements Serializable {
     this.id = id;
   }
 
-  public Integer getProductId() {
-    return productId;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
-  public Integer getViewed() {
+  public int getViewed() {
     return viewed;
   }
 
-  public void setViewed(Integer viewed) {
+  public void setViewed(int viewed) {
     this.viewed = viewed;
   }
 }

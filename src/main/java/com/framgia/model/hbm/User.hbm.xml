@@ -16,17 +16,17 @@
     <property name="role" column="role" type="string" />
 
     <set name="orders">
-      <key column="user_id" not-null="true" />
+      <key column="user_id" />
       <one-to-many class="Order" />
     </set>
-    
+
     <set name="carts">
-      <key column="user_id" not-null="true" />
+      <key column="user_id" />
       <one-to-many class="Cart" />
     </set>
-    
+
     <set name="comments">
-      <key column="user_id" not-null="true" />
+      <key column="user_id" />
       <one-to-many class="Comment" />
     </set>
   </class>
