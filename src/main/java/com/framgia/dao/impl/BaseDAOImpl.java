@@ -5,37 +5,44 @@ import java.io.Serializable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseDAOImpl<PK, T> {
-  public SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-  @SuppressWarnings({ "deprecation", "unchecked" })
-  public T findBy(String attribute, Serializable key) {
-    return (T) getSession().createCriteria(this.getClass()).add(Restrictions.eq(attribute, key))
-      .uniqueResult();
-  }
+	final Class<T> typeClass;
 
-  public T findById(Serializable key) {
-    return findBy("id", key);
-  }
+	public BaseDAOImpl(Class<T> typeClass) {
+		this.typeClass = typeClass;
+	}
 
-  public void delete(T entity) {
-    getSession().delete(entity);
-  }
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public T findBy(String attribute, Serializable key) {
+		return (T) getSession().createCriteria(typeClass).add(Restrictions.eq(attribute, key)).uniqueResult();
+	}
 
-  public void saveOrUpdate(T entity) {
-    getSession().saveOrUpdate(entity);
-  }
+	public T findById(Serializable key) {
+		return findBy("id", key);
+	}
 
-  public SessionFactory getSessionFactory() {
-    return sessionFactory;
-  }
+	public void delete(T entity) {
+		getSession().delete(entity);
+	}
 
-  public void setSessionFactory(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+	public void saveOrUpdate(T entity) {
+		getSession().saveOrUpdate(entity);
+	}
 
-  public Session getSession() {
-    return sessionFactory.openSession();
-  }
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public Session getSession() {
+		return sessionFactory.openSession();
+	}
 }

@@ -12,30 +12,33 @@ import com.framgia.model.User;
 
 public class OrderDAOImpl extends BaseDAOImpl<Integer, Order> implements OrderDAO {
 
-  @SuppressWarnings("deprecation")
-  @Override
-  public User getUser(Integer orderId) {
-    Criteria criteria = getSession().createCriteria(User.class);
-    criteria.createAlias("orders", "orders", Criteria.LEFT_JOIN,
-      Restrictions.eq("orders.id", orderId));
-    return (User) criteria.uniqueResult();
-  }
+	public OrderDAOImpl() {
+		super(Order.class);
+	}
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<OrderProduct> getOrderProducts(Integer orderId) {
-    @SuppressWarnings("deprecation")
-    Criteria criteria = getSession().createCriteria(OrderProduct.class);
-    criteria.add(Restrictions.eq("order_id", orderId));
-    return (List<OrderProduct>) criteria.list();
-  }
+	@SuppressWarnings("deprecation")
+	@Override
+	public User getUser(Integer orderId) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.createAlias("orders", "orders", Criteria.LEFT_JOIN, Restrictions.eq("orders.id", orderId));
+		return (User) criteria.uniqueResult();
+	}
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<Order> getOrders(List<Integer> orderIds) {
-    @SuppressWarnings("deprecation")
-    Criteria criteria = getSession().createCriteria(Order.class);
-    criteria.add(Restrictions.in("id", orderIds));
-    return (List<Order>) criteria.list();
-  }
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderProduct> getOrderProducts(Integer orderId) {
+		@SuppressWarnings("deprecation")
+		Criteria criteria = getSession().createCriteria(OrderProduct.class);
+		criteria.add(Restrictions.eq("order_id", orderId));
+		return (List<OrderProduct>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getOrders(List<Integer> orderIds) {
+		@SuppressWarnings("deprecation")
+		Criteria criteria = getSession().createCriteria(Order.class);
+		criteria.add(Restrictions.in("id", orderIds));
+		return (List<Order>) criteria.list();
+	}
 }

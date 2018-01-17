@@ -13,7 +13,7 @@ import com.framgia.model.Cart;
 import com.framgia.model.CartProduct;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
-import com.framgia.model.GenderEnum;
+import com.framgia.model.Gender;
 import com.framgia.model.Image;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
@@ -21,8 +21,8 @@ import com.framgia.model.Product;
 import com.framgia.model.Profile;
 import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
-import com.framgia.model.RoleEnum;
-import com.framgia.model.StatusEnum;
+import com.framgia.model.Role;
+import com.framgia.model.Status;
 import com.framgia.model.User;
 
 public class FakeData {
@@ -57,14 +57,14 @@ public class FakeData {
         user.setId(i);
         user.setEmail("example-" + i + "@gmail.com");
         user.setPassword(Encode.encode("123456"));
-        user.setRole(RoleEnum.User);
+        user.setRole(Role.User);
         user.setName("Example-" + i);
         session.save(user);
         Profile profile = new Profile();
         profile.setId(i);
         profile.setUser(user);
         profile.setAddress("Ha Noi");
-        profile.setGender(GenderEnum.MALE);
+        profile.setGender(Gender.MALE);
         profile.setBirthday(new Date(1995, 11, 05));
 
         session.save(profile);
@@ -148,7 +148,7 @@ public class FakeData {
         Order order = new Order();
         order.setId(i);
         order.setUser(users.get(i - 1));
-        order.setStatus(StatusEnum.WAITING);
+        order.setStatus(Status.WAITING);
         order.setTotalPrice(new Float(100));
 
         session.save(order);
