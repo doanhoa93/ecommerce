@@ -3,6 +3,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
+  <!-- Load database's config. Example: url, username, password -->
   <bean
     class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
@@ -26,6 +27,7 @@
       <ref bean="dataSource" />
     </property>
 
+    <!-- Set hibernate's properties -->
     <property name="hibernateProperties">
       <props>
         <prop key="hibernate.dialect">${jdbc.hibernateDialect}</prop>
@@ -38,6 +40,7 @@
       </props>
     </property>
 
+    <!-- Load mapping of model and table -->
     <property name="mappingResources">
       <list>
         <value>com/framgia/model/hbm/Cart.hbm.xml</value>
@@ -63,9 +66,13 @@
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
 
+  <!-- Define scope transaction -->
   <bean id="transactionProxyTemplate" abstract="true"
     class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
     <property name="transactionManager" ref="transactionManager" />
+
+    <!-- Define methods which use transaction. If property is PROPAGATION_REQUIRED, 
+      when access db, MUST use transaction -->
     <property name="transactionAttributes">
       <props>
         <prop key="create*">PROPAGATION_REQUIRED</prop>

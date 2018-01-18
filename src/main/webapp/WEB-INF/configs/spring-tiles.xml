@@ -5,13 +5,13 @@
 
 <tiles-definitions>
   <!-- Define Struts Tile for Front-End module -->
-  <definition name="baselayout" template="/layouts/template.jsp">
+  <definition name="baselayout" template="/views/layouts/template.jsp">
 
     <!-- Set header, footer, body -->
     <put-attribute name="title" value="Ecommerce" />
-    <put-attribute name="header" value="/layouts/header.jsp" />
-    <put-attribute name="body" value="/layouts/body.jsp" />
-    <put-attribute name="footer" value="/layouts/footer.jsp" />
+    <put-attribute name="header" value="/views/layouts/header.jsp" />
+    <put-attribute name="body" value="/views/layouts/body.jsp" />
+    <put-attribute name="footer" value="/views/layouts/footer.jsp" />
 
     <!-- import css -->
     <put-list-attribute name="default-css">
@@ -40,21 +40,6 @@
 
   <definition name="homePage" extends="baselayout">
     <put-attribute name="title" value="HomePage | Ecommerce" />
-    <put-attribute name="body" value="/pages/index.jsp" />
-  </definition>
-
-  <definition name="login" extends="baselayout">
-    <put-attribute name="title" value="Login | Ecommerce" />
-    <put-attribute name="body" value="/sessions/new.jsp" />
-  </definition>
-
-  <definition name="signup" extends="baselayout">
-    <put-attribute name="title" value="Signup | Ecommerce" />
-    <put-attribute name="body" value="/registrations/new.jsp" />
-  </definition>
-  
-  <definition name="products" extends="baselayout">
-    <put-attribute name="title" value="Products | Ecommerce" />
-    <put-attribute name="body" value="/products/index.jsp" />
+    <put-attribute name="body" value="/views/pages/index.jsp" />
   </definition>
 </tiles-definitions>

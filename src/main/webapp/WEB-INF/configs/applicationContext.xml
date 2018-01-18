@@ -5,8 +5,12 @@
 
   <mvc:resources mapping="/resources/**" location="/resources/" />
   <mvc:resources mapping="/assets/**" location="/assets/" />
+
+  <!-- Load all file from package com.framgia to bean. There, Almost are 
+    controllers -->
   <context:component-scan base-package="com.framgia" />
 
+  <!-- Load all annoation from java class -->
   <context:annotation-config />
 
   <mvc:annotation-driven>
