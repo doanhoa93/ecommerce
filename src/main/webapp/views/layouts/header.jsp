@@ -52,8 +52,8 @@
               <li><a href="cart.html"><i
                   class="fa fa-shopping-cart"></i> Cart</a></li>
               <li><a
-                href="${pageContext.request.contextPath}/sessions/delete"><i
-                  class="fa fa-lock"></i> Logout</a></li>
+                href="${pageContext.request.contextPath}/sessions/delete"
+                class="logout-btn"><i class="fa fa-lock"></i>Logout</a></li>
               <%
               	} else {
               %>

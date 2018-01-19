@@ -34,12 +34,20 @@
       <add-attribute value="/assets/js/main.js" />
     </put-list-attribute>
 
-    <put-list-attribute name="css" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/custom/login.css" />
+    </put-list-attribute>
+    
     <put-list-attribute name="js" />
   </definition>
 
   <definition name="homePage" extends="baselayout">
     <put-attribute name="title" value="HomePage | Ecommerce" />
     <put-attribute name="body" value="/views/pages/index.jsp" />
+  </definition>
+
+  <definition name="login" extends="baselayout">
+    <put-attribute name="title" value="Login | Ecommerce" />
+    <put-attribute name="body" value="/views/sessions/new.jsp" />
   </definition>
 </tiles-definitions>

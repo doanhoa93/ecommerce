@@ -10,21 +10,23 @@ import com.framgia.model.User;
 
 public class CommentDAOImpl extends BaseDAOImpl<Integer, Comment> implements CommentDAO {
 
-  @SuppressWarnings("deprecation")
-  @Override
-  public User getUser(Integer commentId) {
-    Criteria criteria = getSession().createCriteria(User.class);
-    criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN,
-      Restrictions.eq("comments.id", commentId));
-    return (User) criteria.uniqueResult();
-  }
+	public CommentDAOImpl() {
+		super(Comment.class);
+	}
 
-  @SuppressWarnings("deprecation")
-  @Override
-  public Product getProduct(Integer commentId) {
-    Criteria criteria = getSession().createCriteria(Product.class);
-    criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN,
-      Restrictions.eq("comments.id", commentId));
-    return (Product) criteria.uniqueResult();
-  }
+	@SuppressWarnings("deprecation")
+	@Override
+	public User getUser(Integer commentId) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN, Restrictions.eq("comments.id", commentId));
+		return (User) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public Product getProduct(Integer commentId) {
+		Criteria criteria = getSession().createCriteria(Product.class);
+		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN, Restrictions.eq("comments.id", commentId));
+		return (Product) criteria.uniqueResult();
+	}
 }

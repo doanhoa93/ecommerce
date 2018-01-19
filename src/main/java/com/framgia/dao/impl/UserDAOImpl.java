@@ -14,48 +14,57 @@ import com.framgia.model.User;
 
 public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 
-  @Override
-  public User findByEmail(String email) {
-    return findBy("email", email);
-  }
+	public UserDAOImpl() {
+		super(User.class);
+	}
 
-  @SuppressWarnings("deprecation")
-  @Override
-  public Profile getProfile(Integer userId) {
-    Criteria criteria = getSession().createCriteria(Profile.class);
-    criteria.add(Restrictions.eq("user_id", userId));
-    return (Profile) criteria.uniqueResult();
-  }
+	@Override
+	public User findById(Integer id) {
+		return findBy("id", id);
+	}
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
-  @Override
-  public List<Order> getOrders(Integer userId) {
-    Criteria criteria = getSession().createCriteria(Order.class);
-    criteria.add(Restrictions.eq("user_id", userId));
-    return (List<Order>) criteria.list();
-  }
+	@Override
+	public User findByEmail(String email) {
+		return findBy("email", email);
+	}
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
-  @Override
-  public List<Cart> getCarts(Integer userId) {
-    Criteria criteria = getSession().createCriteria(Cart.class);
-    criteria.add(Restrictions.eq("user_id", userId));
-    return (List<Cart>) criteria.list();
-  }
+	@SuppressWarnings("deprecation")
+	@Override
+	public Profile getProfile(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Profile.class);
+		criteria.add(Restrictions.eq("user_id", userId));
+		return (Profile) criteria.uniqueResult();
+	}
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
-  @Override
-  public List<Comment> getComments(Integer userId) {
-    Criteria criteria = getSession().createCriteria(Comment.class);
-    criteria.add(Restrictions.eq("user_id", userId));
-    return (List<Comment>) criteria.list();
-  }
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
+	public List<Order> getOrders(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Order.class);
+		criteria.add(Restrictions.eq("user_id", userId));
+		return (List<Order>) criteria.list();
+	}
 
-  @SuppressWarnings({ "deprecation", "unchecked" })
-  @Override
-  public List<User> getUsers(List<Integer> userIds) {
-    Criteria criteria = getSession().createCriteria(User.class);
-    criteria.add(Restrictions.in("id", userIds));
-    return (List<User>) criteria.list();
-  }
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
+	public List<Cart> getCarts(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Cart.class);
+		criteria.add(Restrictions.eq("user_id", userId));
+		return (List<Cart>) criteria.list();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
+	public List<Comment> getComments(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Comment.class);
+		criteria.add(Restrictions.eq("user_id", userId));
+		return (List<Comment>) criteria.list();
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Override
+	public List<User> getUsers(List<Integer> userIds) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.add(Restrictions.in("id", userIds));
+		return (List<User>) criteria.list();
+	}
 }

@@ -12,6 +12,8 @@ import com.framgia.model.Profile;
 import com.framgia.model.User;
 
 public interface UserService extends BaseService {
+  User findById(Integer id);
+  
   User findByEmail(String email);
 
   Profile getProfile(Integer userId);

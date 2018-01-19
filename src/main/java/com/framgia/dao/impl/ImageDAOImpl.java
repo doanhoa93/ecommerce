@@ -9,12 +9,15 @@ import com.framgia.model.Product;
 
 public class ImageDAOImpl extends BaseDAOImpl<Integer, Image> implements ImageDAO {
 
-  @SuppressWarnings("deprecation")
-  @Override
-  public Product getProduct(Integer imageId) {
-    Criteria criteria = getSession().createCriteria(Product.class);
-    criteria.createAlias("images", "images", Criteria.LEFT_JOIN,
-      Restrictions.eq("images.id", imageId));
-    return (Product) criteria.uniqueResult();
-  }
+	public ImageDAOImpl() {
+		super(Image.class);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public Product getProduct(Integer imageId) {
+		Criteria criteria = getSession().createCriteria(Product.class);
+		criteria.createAlias("images", "images", Criteria.LEFT_JOIN, Restrictions.eq("images.id", imageId));
+		return (Product) criteria.uniqueResult();
+	}
 }

@@ -9,15 +9,17 @@ import com.framgia.model.Profile;
 import com.framgia.model.User;
 
 public interface UserDAO {
-  User findByEmail(String email);
+	User findById(Integer id);
 
-  Profile getProfile(Integer userId);
+	User findByEmail(String email);
 
-  List<Order> getOrders(Integer userId);
+	Profile getProfile(Integer userId);
 
-  List<Cart> getCarts(Integer userId);
+	List<Order> getOrders(Integer userId);
 
-  List<Comment> getComments(Integer userId);
+	List<Cart> getCarts(Integer userId);
 
-  List<User> getUsers(List<Integer> userIds);
+	List<Comment> getComments(Integer userId);
+
+	List<User> getUsers(List<Integer> userIds);
 }

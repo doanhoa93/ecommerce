@@ -15,19 +15,22 @@
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" />
 
-    <set name="orders">
+    <list name="orders">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Order" />
-    </set>
+    </list>
 
-    <set name="carts">
+    <list name="carts">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Cart" />
-    </set>
+    </list>
 
-    <set name="comments">
+    <list name="comments">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Comment" />
-    </set>
+    </list>
   </class>
 </hibernate-mapping>

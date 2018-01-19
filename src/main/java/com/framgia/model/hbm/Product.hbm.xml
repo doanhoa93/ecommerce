@@ -20,9 +20,10 @@
     <many-to-one name="category" column="category_id"
       not-null="true" />
 
-    <set name="images">
+    <list name="images">
       <key column="product_id" />
+      <list-index column="id" />
       <one-to-many class="Image" />
-    </set>
+    </list>
   </class>
 </hibernate-mapping>

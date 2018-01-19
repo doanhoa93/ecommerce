@@ -15,6 +15,11 @@ import com.framgia.service.UserService;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
   @Override
+  public User findById(Integer id) {
+    return getUserDAO().findById(id);
+  }
+  
+  @Override
   public User findByEmail(String email) {
     return getUserDAO().findByEmail(email);
   }

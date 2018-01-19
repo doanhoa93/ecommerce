@@ -1,0 +1,13 @@
+.form-login .checkbox-remember {
+	height: auto !important;
+	width: auto !important;
+	-ms-transform: scale(1.1) !important;
+	-moz-transform: scale(1.1) !important;
+	-webkit-transform: scale(1.1) !important;
+	-o-transform: scale(1.1) !important;
+}
+
+.remember-text {
+	font-size: 18px !important;
+	font-weight: 400 !important;
+}
