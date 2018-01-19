@@ -37,8 +37,8 @@
         <div class="col-sm-4">
           <div class="logo pull-left">
             <a href="${pageContext.request.contextPath}"><img
-              src="${pageContext.request.contextPath}/assets/images/home/logo.png"
-              alt="" /></a>
+              src="${pageContext.request.contextPath}/assets/images/home/logo.jpg"
+              alt="" class="header-logo" /></a>
           </div>
         </div>
         <div class="col-sm-8">

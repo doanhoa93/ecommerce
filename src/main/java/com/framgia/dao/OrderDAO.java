@@ -6,10 +6,8 @@ import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.User;
 
-public interface OrderDAO {
-  User getUser(Integer orderId);
+public interface OrderDAO extends BaseDAO<Integer, Order> {
+	User getUser(Integer orderId);
 
-  List<OrderProduct> getOrderProducts(Integer orderId);
-
-  List<Order> getOrders(List<Integer> orderIds);
+	List<OrderProduct> getOrderProducts(Integer orderId);
 }

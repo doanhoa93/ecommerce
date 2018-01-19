@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.util.List;
 
 import com.framgia.model.Cart;
-import com.framgia.model.CartProduct;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
 import com.framgia.model.Order;
@@ -14,26 +13,22 @@ import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
 import com.framgia.model.User;
 
-public interface ProductService extends BaseService {
-  List<OrderProduct> getOrderProducts(Integer productId);
+public interface ProductService extends BaseService<Integer, Product> {
+	Recent getRecent(Integer productId);
 
-  List<CartProduct> getCartProducts(Integer productId);
+	Promotion getPromotion(Integer productId);
 
-  List<Comment> getComments(Integer productId);
+	Category getCategory(Integer productId);
 
-  List<Image> getImages(Integer productId);
+	List<OrderProduct> getOrderProducts(Integer productId);
 
-  List<Product> getProducts(List<Integer> productIds);
+	List<Comment> getComments(Integer productId);
 
-  Recent getRecent(Integer productId);
+	List<Image> getImages(Integer productId);
 
-  Promotion getPromotion(Integer productId);
+	List<Order> getOrders(Integer productId);
 
-  Category getCategory(Integer productId);
+	List<Cart> getCarts(Integer productId);
 
-  List<Order> getOrders(Integer productId);
-
-  List<Cart> getCarts(Integer productId);
-
-  List<User> getOrderedUser(Integer productId);
+	List<User> getOrderedUser(Integer productId);
 }

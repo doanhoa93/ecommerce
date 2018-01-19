@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="category-tab">
   <!--category-tab-->
@@ -10,316 +11,61 @@
       <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
     </ul>
   </div>
+  
   <div class="tab-content">
     <div class="tab-pane fade active in" id="tshirt">
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery1.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
+      <c:forEach var="i" begin="1" end="4">
+        <div class="col-sm-3">
+          <jsp:include page="/views/products/mini_product.jsp">
+            <jsp:param name="imageSource"
+              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
+          </jsp:include>
         </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery2.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery3.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery4.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </c:forEach>
     </div>
+
     <div class="tab-pane fade" id="blazers">
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery4.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
+      <c:forEach var="i" begin="1" end="5">
+        <div class="col-sm-3">
+          <jsp:include page="/views/products/mini_product.jsp">
+            <jsp:param name="imageSource"
+              value="${pageContext.request.contextPath}/assets/images/home/gallery${5 - i}.jpg" />
+          </jsp:include>
         </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery3.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery2.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery1.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </c:forEach>
     </div>
+
     <div class="tab-pane fade" id="sunglass">
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery3.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
+      <c:forEach var="i" begin="1" end="4">
+        <div class="col-sm-3">
+          <jsp:include page="/views/products/mini_product.jsp">
+            <jsp:param name="imageSource"
+              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
+          </jsp:include>
         </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery4.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery1.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery2.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </c:forEach>
     </div>
+
     <div class="tab-pane fade" id="kids">
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery1.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
+      <c:forEach var="i" begin="1" end="4">
+        <div class="col-sm-3">
+          <jsp:include page="/views/products/mini_product.jsp">
+            <jsp:param name="imageSource"
+              value="${pageContext.request.contextPath}/assets/images/home/gallery${5 - i}.jpg" />
+          </jsp:include>
         </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery2.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery3.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery4.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </c:forEach>
     </div>
+
     <div class="tab-pane fade" id="poloshirt">
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery2.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
+      <c:forEach var="i" begin="1" end="4">
+        <div class="col-sm-3">
+          <jsp:include page="/views/products/mini_product.jsp">
+            <jsp:param name="imageSource"
+              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
+          </jsp:include>
         </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery4.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery3.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="product-image-wrapper">
-          <div class="single-products">
-            <div class="productinfo text-center">
-              <img
-                src="${pageContext.request.contextPath}/assets/images/home/gallery1.jpg"
-                alt="" />
-              <h2>$56</h2>
-              <p>Easy Polo Black Edition</p>
-              <a href="#" class="btn btn-default add-to-cart"><i
-                class="fa fa-shopping-cart"></i>Add to cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </c:forEach>
     </div>
   </div>
 </div>

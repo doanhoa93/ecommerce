@@ -12,7 +12,6 @@
     <property name="hibernate.show_sql">true</property>
 
     <mapping resource="com/framgia/model/hbm/Cart.hbm.xml" />
-    <mapping resource="com/framgia/model/hbm/CartProduct.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Category.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Comment.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Image.hbm.xml" />

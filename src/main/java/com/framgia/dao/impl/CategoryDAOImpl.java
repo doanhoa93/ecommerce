@@ -33,15 +33,7 @@ public class CategoryDAOImpl extends BaseDAOImpl<Integer, Category> implements C
 	public List<Product> getProducts(Integer categoryId) {
 		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.add(Restrictions.eq("category_id", categoryId));
+		criteria.add(Restrictions.eq("category.id", categoryId));
 		return (List<Product>) criteria.list();
-	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	public List<Category> getCatgories(List<Integer> categoryIds) {
-		Criteria criteria = getSession().createCriteria(Category.class);
-		criteria.add(Restrictions.in("id", categoryIds));
-		return (List<Category>) criteria.list();
 	}
 }

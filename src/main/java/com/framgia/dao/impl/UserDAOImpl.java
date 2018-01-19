@@ -19,11 +19,6 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 	}
 
 	@Override
-	public User findById(Integer id) {
-		return findBy("id", id);
-	}
-
-	@Override
 	public User findByEmail(String email) {
 		return findBy("email", email);
 	}
@@ -32,7 +27,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 	@Override
 	public Profile getProfile(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Profile.class);
-		criteria.add(Restrictions.eq("user_id", userId));
+		criteria.add(Restrictions.eq("user.id", userId));
 		return (Profile) criteria.uniqueResult();
 	}
 
@@ -40,7 +35,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 	@Override
 	public List<Order> getOrders(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Order.class);
-		criteria.add(Restrictions.eq("user_id", userId));
+		criteria.add(Restrictions.eq("user.id", userId));
 		return (List<Order>) criteria.list();
 	}
 
@@ -48,7 +43,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 	@Override
 	public List<Cart> getCarts(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Cart.class);
-		criteria.add(Restrictions.eq("user_id", userId));
+		criteria.add(Restrictions.eq("user.id", userId));
 		return (List<Cart>) criteria.list();
 	}
 
@@ -56,15 +51,16 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 	@Override
 	public List<Comment> getComments(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Comment.class);
-		criteria.add(Restrictions.eq("user_id", userId));
+		criteria.add(Restrictions.eq("user.id", userId));
 		return (List<Comment>) criteria.list();
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings("deprecation")
 	@Override
-	public List<User> getUsers(List<Integer> userIds) {
-		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.add(Restrictions.in("id", userIds));
-		return (List<User>) criteria.list();
+	public Cart getCart(Integer userId, Integer productId) {
+		Criteria criteria = getSession().createCriteria(Cart.class);
+		criteria.add(Restrictions.eq("user.id", userId));
+		criteria.add(Restrictions.eq("product.id", productId));
+		return (Cart) criteria.uniqueResult();
 	}
 }

@@ -7,23 +7,33 @@
       <generator class="increment" />
     </id>
 
-    <property name="isPromotion" column="is_promotion" type="boolean" />
+    <property name="isPromotion" type="boolean">
+      <column name="is_promotion" default="false" />
+    </property>
     <property name="promotionId" column="promotion_id" type="integer" />
-    <property name="saleOf" column="sale_of" type="float" />
+    <property name="saleOf" type="float">
+      <column name="sale_of" default="0" />
+    </property>
     <property name="name" column="name" type="string" />
     <property name="avatar" column="avatar" type="string" />
     <property name="information" column="information" type="string" />
-    <property name="price" column="price" type="float" />
-    <property name="rating" column="rating" type="float" />
-    <property name="number" column="number" type="integer" />
+    <property name="price" type="float">
+      <column name="price" default="0" />
+    </property>
+    <property name="rating" type="float">
+      <column name="rating" default="0" />
+    </property>
+    <property name="number" type="integer">
+      <column name="number" default="0" />
+    </property>
 
-    <many-to-one name="category" column="category_id"
-      not-null="true" />
+    <many-to-one name="category" class="Category">
+      <column name="category_id" not-null="true" />
+    </many-to-one>      
 
-    <list name="images">
+    <bag name="images" order-by="id asc">
       <key column="product_id" />
-      <list-index column="id" />
       <one-to-many class="Image" />
-    </list>
+    </bag>
   </class>
 </hibernate-mapping>

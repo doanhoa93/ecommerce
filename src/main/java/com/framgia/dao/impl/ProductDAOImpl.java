@@ -7,7 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.ProductDAO;
-import com.framgia.model.CartProduct;
+import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
 import com.framgia.model.OrderProduct;
@@ -50,17 +50,17 @@ public class ProductDAOImpl extends BaseDAOImpl<Integer, Product> implements Pro
 	public List<OrderProduct> getOrderProducts(Integer productId) {
 		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(OrderProduct.class);
-		criteria.add(Restrictions.eq("product_id", productId));
+		criteria.add(Restrictions.eq("product.id", productId));
 		return (List<OrderProduct>) criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CartProduct> getCartProducts(Integer productId) {
+	public List<Cart> getCarts(Integer productId) {
 		@SuppressWarnings("deprecation")
-		Criteria criteria = getSession().createCriteria(CartProduct.class);
-		criteria.add(Restrictions.eq("product_id", productId));
-		return (List<CartProduct>) criteria.list();
+		Criteria criteria = getSession().createCriteria(Cart.class);
+		criteria.add(Restrictions.eq("product.id", productId));
+		return (List<Cart>) criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,7 +68,7 @@ public class ProductDAOImpl extends BaseDAOImpl<Integer, Product> implements Pro
 	public List<Comment> getComments(Integer productId) {
 		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Comment.class);
-		criteria.add(Restrictions.eq("product_id", productId));
+		criteria.add(Restrictions.eq("product.id", productId));
 		return (List<Comment>) criteria.list();
 	}
 
@@ -77,15 +77,7 @@ public class ProductDAOImpl extends BaseDAOImpl<Integer, Product> implements Pro
 	public List<Image> getImages(Integer productId) {
 		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Image.class);
-		criteria.add(Restrictions.eq("product_id", productId));
+		criteria.add(Restrictions.eq("product.id", productId));
 		return (List<Image>) criteria.list();
-	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	public List<Product> getProducts(List<Integer> productIds) {
-		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.add(Restrictions.in("id", productIds));
-		return (List<Product>) criteria.list();
 	}
 }

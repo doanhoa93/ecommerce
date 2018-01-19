@@ -5,10 +5,8 @@ import java.util.List;
 import com.framgia.model.Category;
 import com.framgia.model.Product;
 
-public interface CategoryDAO {
-  Category getParentCategory(Integer categoryId);
+public interface CategoryDAO extends BaseDAO<Integer, Category> {
+	Category getParentCategory(Integer categoryId);
 
-  List<Product> getProducts(Integer categoryId);
-
-  List<Category> getCatgories(List<Integer> categoryIds);
+	List<Product> getProducts(Integer categoryId);
 }

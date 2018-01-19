@@ -1,12 +1,10 @@
 package com.framgia.bean;
 
-import com.framgia.model.Status;
-
 public class OrderInfo {
 	private Integer id;
 	private Integer userId;
 	private float totalPrice;
-	private Status status;
+	private int status;
 
 	public OrderInfo() {
 		super();
@@ -17,7 +15,7 @@ public class OrderInfo {
 		this.id = id;
 	}
 
-	public OrderInfo(Integer id, Integer userId, float totalPrice, Status status) {
+	public OrderInfo(Integer id, Integer userId, float totalPrice, int status) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -49,11 +47,11 @@ public class OrderInfo {
 		this.totalPrice = totalPrice;
 	}
 
-	public Status getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 }

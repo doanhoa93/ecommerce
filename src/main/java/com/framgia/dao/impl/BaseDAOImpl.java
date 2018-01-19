@@ -1,7 +1,9 @@
 package com.framgia.dao.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -24,6 +26,23 @@ public class BaseDAOImpl<PK, T> {
 
 	public T findById(Serializable key) {
 		return findBy("id", key);
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<T> getList() {
+		return (List<T>) getSession().createCriteria(typeClass).list();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<T> getList(List<Integer> keys) {
+		return (List<T>) getSession().createCriteria(typeClass).add(Restrictions.in("id", keys)).list();
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public List<T> getList(int limit) {
+		Criteria criteria = getSession().createCriteria(typeClass);
+		criteria.setMaxResults(limit);
+		return (List<T>) criteria.list();
 	}
 
 	public void delete(T entity) {

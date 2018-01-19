@@ -2,12 +2,10 @@ package com.framgia.bean;
 
 import java.util.Date;
 
-import com.framgia.model.Gender;
-
 public class ProfileInfo {
 	private Integer id;
 	private Integer userId;
-	private Gender gender;
+	private int gender;
 	private Date birthday;
 	private String address;
 
@@ -15,7 +13,7 @@ public class ProfileInfo {
 		super();
 	}
 
-	public ProfileInfo(Integer id, Integer userId, Gender gender, Date birthday, String address) {
+	public ProfileInfo(Integer id, Integer userId, int gender, Date birthday, String address) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -40,11 +38,11 @@ public class ProfileInfo {
 		this.userId = userId;
 	}
 
-	public Gender getGender() {
+	public int getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 

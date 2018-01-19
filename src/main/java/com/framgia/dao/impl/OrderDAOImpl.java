@@ -29,16 +29,7 @@ public class OrderDAOImpl extends BaseDAOImpl<Integer, Order> implements OrderDA
 	public List<OrderProduct> getOrderProducts(Integer orderId) {
 		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(OrderProduct.class);
-		criteria.add(Restrictions.eq("order_id", orderId));
+		criteria.add(Restrictions.eq("order.id", orderId));
 		return (List<OrderProduct>) criteria.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Order> getOrders(List<Integer> orderIds) {
-		@SuppressWarnings("deprecation")
-		Criteria criteria = getSession().createCriteria(Order.class);
-		criteria.add(Restrictions.in("id", orderIds));
-		return (List<Order>) criteria.list();
 	}
 }

@@ -1,13 +1,11 @@
 package com.framgia.dao.impl;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.CartDAO;
 import com.framgia.model.Cart;
-import com.framgia.model.CartProduct;
+import com.framgia.model.Product;
 import com.framgia.model.User;
 
 public class CartDAOImpl extends BaseDAOImpl<Integer, Cart> implements CartDAO {
@@ -24,21 +22,11 @@ public class CartDAOImpl extends BaseDAOImpl<Integer, Cart> implements CartDAO {
 		return (User) criteria.uniqueResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<CartProduct> getCartProducts(Integer cartId) {
+	public Product getProduct(Integer cartId) {
 		@SuppressWarnings("deprecation")
-		Criteria criteria = getSession().createCriteria(CartProduct.class);
-		criteria.add(Restrictions.eq("cart_id", cartId));
-		return (List<CartProduct>) criteria.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Cart> getCarts(List<Integer> cartIds) {
-		@SuppressWarnings("deprecation")
-		Criteria criteria = getSession().createCriteria(Cart.class);
-		criteria.add(Restrictions.in("id", cartIds));
-		return (List<Cart>) criteria.list();
+		Criteria criteria = getSession().createCriteria(Product.class);
+		criteria.add(Restrictions.in("id", cartId));
+		return (Product) criteria.uniqueResult();
 	}
 }

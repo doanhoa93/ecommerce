@@ -9,7 +9,12 @@
 
     <property name="content" column="content" type="string" />
 
-    <many-to-one name="user" column="user_id" not-null="true" />
-    <many-to-one name="product" column="product_id" not-null="true" />
+    <many-to-one name="user" class="User">
+      <column name="user_id" not-null="true" />
+    </many-to-one>
+
+    <many-to-one name="product" class="Product">
+      <column name="product_id" not-null="true" />
+    </many-to-one>
   </class>
 </hibernate-mapping>
