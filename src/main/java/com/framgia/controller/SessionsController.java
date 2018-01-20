@@ -21,10 +21,12 @@ public class SessionsController extends BaseController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("user") UserInfo userInfo) {
+	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
 			if (userService.validate(userInfo)) {
 				return new ModelAndView("redirect:/");
+			} else {
+				return new ModelAndView("login", "message", "Email or password invalid");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,6 +36,7 @@ public class SessionsController extends BaseController {
 
 	@RequestMapping(value = "/delete")
 	public String destroy(HttpServletRequest request) {
+		userService.unremember(currentUser());
 		request.getSession().invalidate();
 		return "redirect:/";
 	}

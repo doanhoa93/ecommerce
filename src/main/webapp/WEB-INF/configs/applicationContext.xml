@@ -25,4 +25,11 @@
   <!-- Load Hibernate related configuration -->
   <import resource="spring-datasource-config.xml" />
 
+  <mvc:interceptors>
+    <mvc:interceptor>
+      <mvc:mapping path="/carts" />
+      <mvc:mapping path="/*/*/carts/*" />
+      <bean class="com.framgia.interceptor.LoginInterceptor" />
+    </mvc:interceptor>
+  </mvc:interceptors>
 </beans>
