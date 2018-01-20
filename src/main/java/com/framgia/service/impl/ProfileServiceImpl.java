@@ -43,17 +43,17 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public List<Profile> getList() {
-		return getProfileDAO().getList();
+	public List<Profile> getObjects() {
+		return getProfileDAO().getObjects();
 	}
 
 	@Override
-	public List<Profile> getList(List<Integer> keys) {
-		return getProfileDAO().getList(keys);
+	public List<Profile> getObjectsByIds(List<Integer> keys) {
+		return getProfileDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Profile> getList(int limit) {
-		return getProfileDAO().getList(limit);
+	public List<Profile> getObjects(int limit) {
+		return getProfileDAO().getObjects(limit);
 	}
 }

@@ -18,7 +18,7 @@
       <ref bean="sessionFactory" />
     </property>
   </bean>
-
+  
   <bean id="CommentDAO" class="com.framgia.dao.impl.CommentDAOImpl">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />

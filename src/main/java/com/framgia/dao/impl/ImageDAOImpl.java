@@ -7,7 +7,7 @@ import com.framgia.dao.ImageDAO;
 import com.framgia.model.Image;
 import com.framgia.model.Product;
 
-public class ImageDAOImpl extends BaseDAOImpl<Integer, Image> implements ImageDAO {
+public class ImageDAOImpl extends BaseDAOAbstract<Integer, Image> implements ImageDAO {
 
 	public ImageDAOImpl() {
 		super(Image.class);

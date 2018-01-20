@@ -7,7 +7,7 @@ import com.framgia.dao.RecentDAO;
 import com.framgia.model.Product;
 import com.framgia.model.Recent;
 
-public class RecentDAOImpl extends BaseDAOImpl<Integer, Recent> implements RecentDAO {
+public class RecentDAOImpl extends BaseDAOAbstract<Integer, Recent> implements RecentDAO {
 
 	public RecentDAOImpl() {
 		super(Recent.class);

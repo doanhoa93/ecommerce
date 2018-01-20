@@ -49,18 +49,17 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public List<Comment> getList() {
-		return getCommentDAO().getList();
+	public List<Comment> getObjects() {
+		return getCommentDAO().getObjects();
 	}
 
 	@Override
-	public List<Comment> getList(List<Integer> keys) {
-		return getCommentDAO().getList(keys);
+	public List<Comment> getObjectsByIds(List<Integer> keys) {
+		return getCommentDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Comment> getList(int limit) {
-		return getCommentDAO().getList(limit);
+	public List<Comment> getObjects(int limit) {
+		return getCommentDAO().getObjects(limit);
 	}
-
 }

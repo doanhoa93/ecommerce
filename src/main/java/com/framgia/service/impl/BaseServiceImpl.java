@@ -1,5 +1,10 @@
 package com.framgia.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.framgia.dao.CartDAO;
 import com.framgia.dao.CategoryDAO;
 import com.framgia.dao.CommentDAO;
@@ -24,6 +29,12 @@ public class BaseServiceImpl {
 	protected PromotionDAO promotionDAO;
 	protected RecentDAO recentDAO;
 	protected UserDAO userDAO;
+
+	@Autowired
+	public HttpServletRequest request;
+
+	@Autowired
+	HttpServletResponse response;
 
 	public CartDAO getCartDAO() {
 		return cartDAO;

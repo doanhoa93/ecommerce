@@ -57,17 +57,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getList() {
-		return getOrderDAO().getList();
+	public List<Order> getObjects() {
+		return getOrderDAO().getObjects();
 	}
 
 	@Override
-	public List<Order> getList(List<Integer> keys) {
-		return getOrderDAO().getList(keys);
+	public List<Order> getObjectsByIds(List<Integer> keys) {
+		return getOrderDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Order> getList(int limit) {
-		return getOrderDAO().getList(limit);
+	public List<Order> getObjects(int limit) {
+		return getOrderDAO().getObjects(limit);
 	}
 }

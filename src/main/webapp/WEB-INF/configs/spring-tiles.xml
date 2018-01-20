@@ -51,4 +51,9 @@
       <add-attribute value="/assets/css/custom/login.css" />
     </put-list-attribute>
   </definition>
+
+  <definition name="carts" extends="baselayout">
+    <put-attribute name="title" value="Your carts | Ecommerce" />
+    <put-attribute name="body" value="/views/carts/index.jsp" />
+  </definition>
 </tiles-definitions>

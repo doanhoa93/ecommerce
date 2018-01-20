@@ -4,69 +4,29 @@
   <!--category-tab-->
   <div class="col-sm-12">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
-      <li><a href="#blazers" data-toggle="tab">Blazers</a></li>
-      <li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-      <li><a href="#kids" data-toggle="tab">Kids</a></li>
-      <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
+      <c:forEach var="index" begin="0"
+        end="${params.categories.size() - 1}">
+        <li class="${index == 0 ? 'active' : '' }"><a
+          href="#category-${params.categories.get(index).getId()}"
+          data-toggle="tab">
+            ${params.categories.get(index).getName()} </a></li>
+      </c:forEach>
     </ul>
   </div>
-  
+
   <div class="tab-content">
-    <div class="tab-pane fade active in" id="tshirt">
-      <c:forEach var="i" begin="1" end="4">
-        <div class="col-sm-3">
-          <jsp:include page="/views/products/mini_product.jsp">
-            <jsp:param name="imageSource"
-              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
-          </jsp:include>
-        </div>
-      </c:forEach>
-    </div>
-
-    <div class="tab-pane fade" id="blazers">
-      <c:forEach var="i" begin="1" end="5">
-        <div class="col-sm-3">
-          <jsp:include page="/views/products/mini_product.jsp">
-            <jsp:param name="imageSource"
-              value="${pageContext.request.contextPath}/assets/images/home/gallery${5 - i}.jpg" />
-          </jsp:include>
-        </div>
-      </c:forEach>
-    </div>
-
-    <div class="tab-pane fade" id="sunglass">
-      <c:forEach var="i" begin="1" end="4">
-        <div class="col-sm-3">
-          <jsp:include page="/views/products/mini_product.jsp">
-            <jsp:param name="imageSource"
-              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
-          </jsp:include>
-        </div>
-      </c:forEach>
-    </div>
-
-    <div class="tab-pane fade" id="kids">
-      <c:forEach var="i" begin="1" end="4">
-        <div class="col-sm-3">
-          <jsp:include page="/views/products/mini_product.jsp">
-            <jsp:param name="imageSource"
-              value="${pageContext.request.contextPath}/assets/images/home/gallery${5 - i}.jpg" />
-          </jsp:include>
-        </div>
-      </c:forEach>
-    </div>
-
-    <div class="tab-pane fade" id="poloshirt">
-      <c:forEach var="i" begin="1" end="4">
-        <div class="col-sm-3">
-          <jsp:include page="/views/products/mini_product.jsp">
-            <jsp:param name="imageSource"
-              value="${pageContext.request.contextPath}/assets/images/home/gallery${i}.jpg" />
-          </jsp:include>
-        </div>
-      </c:forEach>
-    </div>
+    <c:forEach var="index" begin="0"
+      end="${params.categories.size() - 1}">
+      <div class="tab-pane fade ${index == 0 ? 'active in' : '' }"
+        id="category-${params.categories.get(index).getId()}">
+        <c:forEach var="product"
+          items="${params.categories.get(index).getProducts()}">
+          <div class="col-sm-3">
+            <c:import url="/views/products/mini_product.jsp" />
+            <c:set var="product" value="${product}" scope="session" />
+          </div>
+        </c:forEach>
+      </div>
+    </c:forEach>
   </div>
 </div>
-<!--/category-tab-->

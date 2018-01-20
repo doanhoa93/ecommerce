@@ -10,7 +10,7 @@ import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.User;
 
-public class OrderDAOImpl extends BaseDAOImpl<Integer, Order> implements OrderDAO {
+public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements OrderDAO {
 
 	public OrderDAOImpl() {
 		super(Order.class);
@@ -27,7 +27,6 @@ public class OrderDAOImpl extends BaseDAOImpl<Integer, Order> implements OrderDA
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderProduct> getOrderProducts(Integer orderId) {
-		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(OrderProduct.class);
 		criteria.add(Restrictions.eq("order.id", orderId));
 		return (List<OrderProduct>) criteria.list();

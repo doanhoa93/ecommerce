@@ -12,11 +12,11 @@
       <column name="total_price" default="0" />
     </property>
 
-    <many-to-one name="user" class="User">
+    <many-to-one name="user" class="User" lazy="false">
       <column name="user_id" not-null="true" />
     </many-to-one>
 
-    <bag name="orderProducts" order-by="id asc">
+    <bag name="orderProducts" order-by="id asc" lazy="false">
       <key column="order_id" />
       <one-to-many class="OrderProduct" />
     </bag>

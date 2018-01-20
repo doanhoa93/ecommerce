@@ -9,7 +9,7 @@ import com.framgia.dao.CategoryDAO;
 import com.framgia.model.Category;
 import com.framgia.model.Product;
 
-public class CategoryDAOImpl extends BaseDAOImpl<Integer, Category> implements CategoryDAO {
+public class CategoryDAOImpl extends BaseDAOAbstract<Integer, Category> implements CategoryDAO {
 
 	public CategoryDAOImpl() {
 		super(Category.class);
@@ -17,7 +17,6 @@ public class CategoryDAOImpl extends BaseDAOImpl<Integer, Category> implements C
 
 	@Override
 	public Category getParentCategory(Integer categoryId) {
-		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Category.class);
 		criteria.add(Restrictions.eq("id", categoryId));
 		Category category = (Category) criteria.uniqueResult();
@@ -31,7 +30,6 @@ public class CategoryDAOImpl extends BaseDAOImpl<Integer, Category> implements C
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProducts(Integer categoryId) {
-		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Product.class);
 		criteria.add(Restrictions.eq("category.id", categoryId));
 		return (List<Product>) criteria.list();

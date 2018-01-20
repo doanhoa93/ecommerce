@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <header id="header">
   <!--header_top-->
   <div class="header_top">
@@ -44,28 +46,26 @@
         <div class="col-sm-8">
           <div class="shop-menu pull-right">
             <ul class="nav navbar-nav">
-              <%
-              	if (session.getAttribute("userId") != null) {
-              %>
-              <li><a href="#"><i class="fa fa-user"></i>
-                  Account</a></li>
-              <li><a href="cart.html"><i
-                  class="fa fa-shopping-cart"></i> Cart</a></li>
-              <li><a
-                href="${pageContext.request.contextPath}/sessions/delete"
-                class="logout-btn"><i class="fa fa-lock"></i>Logout</a></li>
-              <%
-              	} else {
-              %>
-              <li><a
-                href="${pageContext.request.contextPath}/sessions/new"><i
-                  class="fa fa-lock"></i> Login</a></li>
-              <li><a
-                href="${pageContext.request.contextPath}/registrations/new"><i
-                  class="fa fa-lock"></i> Signup</a></li>
-              <%
-              	}
-              %>
+              <c:choose>
+                <c:when test="${currentUser != null}">
+                  <li><a href="#"><i class="fa fa-user"></i>
+                      Account</a></li>
+                  <li><a
+                    href="${pageContext.request.contextPath}/carts"><i
+                      class="fa fa-shopping-cart"></i> Cart</a></li>
+                  <li><a
+                    href="${pageContext.request.contextPath}/sessions/delete"
+                    class="logout-btn"><i class="fa fa-lock"></i>Logout</a></li>
+                </c:when>
+                <c:otherwise>
+                  <li><a
+                    href="${pageContext.request.contextPath}/sessions/new"><i
+                      class="fa fa-lock"></i> Login</a></li>
+                  <li><a
+                    href="${pageContext.request.contextPath}/registrations/new"><i
+                      class="fa fa-lock"></i> Signup</a></li>
+                </c:otherwise>
+              </c:choose>
             </ul>
           </div>
         </div>
