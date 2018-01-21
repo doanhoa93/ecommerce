@@ -7,12 +7,10 @@ import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
 import com.framgia.model.User;
 
-public interface OrderService extends BaseService {
+public interface OrderService extends BaseService<Integer, Order> {
   User getUser(Integer orderId);
 
   List<OrderProduct> getOrderProducts(Integer orderId);
-
-  List<Order> getOrders(List<Integer> orderIds);
 
   List<Product> getProducts(Integer orderId);
 }

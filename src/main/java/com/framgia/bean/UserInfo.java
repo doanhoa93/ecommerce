@@ -1,14 +1,12 @@
 package com.framgia.bean;
 
-import com.framgia.model.Role;
-
 public class UserInfo {
 	private Integer id;
 	private String email;
 	private String password;
 	private String name;
 	private String avatar;
-	private Role role;
+	private String role;
 	private ProfileInfo profileInfo;
 	private boolean remember;
 
@@ -16,7 +14,7 @@ public class UserInfo {
 		super();
 	}
 
-	public UserInfo(Integer id, String email, String password, String name, String avatar, Role role,
+	public UserInfo(Integer id, String email, String password, String name, String avatar, String role,
 	        ProfileInfo profileInfo) {
 		super();
 		this.id = id;
@@ -68,11 +66,11 @@ public class UserInfo {
 		this.avatar = avatar;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

@@ -13,12 +13,6 @@
     </property>
   </bean>
 
-  <bean id="CartProductDAO" class="com.framgia.dao.impl.CartProductDAOImpl">
-    <property name="sessionFactory">
-      <ref bean="sessionFactory" />
-    </property>
-  </bean>
-
   <bean id="CategoryDAO" class="com.framgia.dao.impl.CategoryDAOImpl">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />

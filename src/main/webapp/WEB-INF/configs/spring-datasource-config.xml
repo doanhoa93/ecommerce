@@ -44,7 +44,6 @@
     <property name="mappingResources">
       <list>
         <value>com/framgia/model/hbm/Cart.hbm.xml</value>
-        <value>com/framgia/model/hbm/CartProduct.hbm.xml</value>
         <value>com/framgia/model/hbm/Category.hbm.xml</value>
         <value>com/framgia/model/hbm/Comment.hbm.xml</value>
         <value>com/framgia/model/hbm/Image.hbm.xml</value>

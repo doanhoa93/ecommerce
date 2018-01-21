@@ -7,30 +7,10 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-  <bean id="CartProductService" parent="transactionProxyTemplate">
-    <property name="target">
-      <bean class="com.framgia.service.impl.CartProductServiceImpl">
-        <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
-        <property name="categoryDAO" ref="CategoryDAO"></property>
-        <property name="commentDAO" ref="CommentDAO"></property>
-        <property name="imageDAO" ref="ImageDAO"></property>
-        <property name="orderDAO" ref="OrderDAO"></property>
-        <property name="orderProductDAO" ref="OrderProductDAO"></property>
-        <property name="productDAO" ref="ProductDAO"></property>
-        <property name="profileDAO" ref="ProfileDAO"></property>
-        <property name="promotionDAO" ref="PromotionDAO"></property>
-        <property name="recentDAO" ref="RecentDAO"></property>
-        <property name="userDAO" ref="UserDAO"></property>
-      </bean>
-    </property>
-  </bean>
-
   <bean id="CartService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.CartServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -49,7 +29,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.CategoryServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -68,7 +47,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.CommentServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -87,7 +65,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.ImageServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -106,7 +83,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.OrderProductServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -125,7 +101,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.OrderServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -144,7 +119,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.ProductServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -163,7 +137,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.ProfileServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -182,7 +155,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.PromotionServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -201,7 +173,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.RecentServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>
@@ -220,7 +191,6 @@
     <property name="target">
       <bean class="com.framgia.service.impl.UserServiceImpl">
         <property name="cartDAO" ref="CartDAO"></property>
-        <property name="cartProductDAO" ref="CartProductDAO"></property>
         <property name="categoryDAO" ref="CategoryDAO"></property>
         <property name="commentDAO" ref="CommentDAO"></property>
         <property name="imageDAO" ref="ImageDAO"></property>

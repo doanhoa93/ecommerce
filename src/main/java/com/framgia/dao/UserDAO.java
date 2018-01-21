@@ -8,18 +8,16 @@ import com.framgia.model.Order;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
 
-public interface UserDAO {
-	User findById(Integer id);
-
+public interface UserDAO extends BaseDAO<Integer, User> {
 	User findByEmail(String email);
 
 	Profile getProfile(Integer userId);
+
+	Cart getCart(Integer userId, Integer productId);
 
 	List<Order> getOrders(Integer userId);
 
 	List<Cart> getCarts(Integer userId);
 
 	List<Comment> getComments(Integer userId);
-
-	List<User> getUsers(List<Integer> userIds);
 }

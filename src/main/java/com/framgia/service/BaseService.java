@@ -1,7 +1,9 @@
 package com.framgia.service;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.framgia.dao.CartDAO;
-import com.framgia.dao.CartProductDAO;
 import com.framgia.dao.CategoryDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
@@ -13,28 +15,40 @@ import com.framgia.dao.PromotionDAO;
 import com.framgia.dao.RecentDAO;
 import com.framgia.dao.UserDAO;
 
-public interface BaseService {
-  CartDAO getCartDAO();
+public interface BaseService<PK, T> {
+	CartDAO getCartDAO();
 
-  CartProductDAO getCartProductDAO();
+	CategoryDAO getCategoryDAO();
 
-  CategoryDAO getCategoryDAO();
+	CommentDAO getCommentDAO();
 
-  CommentDAO getCommentDAO();
+	ImageDAO getImageDAO();
 
-  ImageDAO getImageDAO();
+	OrderDAO getOrderDAO();
 
-  OrderDAO getOrderDAO();
+	OrderProductDAO getOrderProductDAO();
 
-  OrderProductDAO getOrderProductDAO();
+	ProductDAO getProductDAO();
 
-  ProductDAO getProductDAO();
+	ProfileDAO getProfileDAO();
 
-  ProfileDAO getProfileDAO();
+	PromotionDAO getPromotionDAO();
 
-  PromotionDAO getPromotionDAO();
+	RecentDAO getRecentDAO();
 
-  RecentDAO getRecentDAO();
+	UserDAO getUserDAO();
 
-  UserDAO getUserDAO();
+	public T findBy(String attribute, Serializable key);
+
+	public T findById(Serializable key);
+
+	public void delete(T entity);
+
+	public void saveOrUpdate(T entity);
+
+	public List<T> getList();
+
+	public List<T> getList(List<Integer> keys);
+
+	public List<T> getList(int limit);
 }

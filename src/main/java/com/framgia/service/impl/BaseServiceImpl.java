@@ -1,7 +1,6 @@
 package com.framgia.service.impl;
 
 import com.framgia.dao.CartDAO;
-import com.framgia.dao.CartProductDAO;
 import com.framgia.dao.CategoryDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
@@ -12,115 +11,105 @@ import com.framgia.dao.ProfileDAO;
 import com.framgia.dao.PromotionDAO;
 import com.framgia.dao.RecentDAO;
 import com.framgia.dao.UserDAO;
-import com.framgia.service.BaseService;
 
-public class BaseServiceImpl implements BaseService {
-  protected CartDAO cartDAO;
-  protected CartProductDAO cartProductDAO;
-  protected CategoryDAO categoryDAO;
-  protected CommentDAO commentDAO;
-  protected ImageDAO imageDAO;
-  protected OrderDAO orderDAO;
-  protected OrderProductDAO orderProductDAO;
-  protected ProductDAO productDAO;
-  protected ProfileDAO profileDAO;
-  protected PromotionDAO promotionDAO;
-  protected RecentDAO recentDAO;
-  protected UserDAO userDAO;
+public class BaseServiceImpl {
+	protected CartDAO cartDAO;
+	protected CategoryDAO categoryDAO;
+	protected CommentDAO commentDAO;
+	protected ImageDAO imageDAO;
+	protected OrderDAO orderDAO;
+	protected OrderProductDAO orderProductDAO;
+	protected ProductDAO productDAO;
+	protected ProfileDAO profileDAO;
+	protected PromotionDAO promotionDAO;
+	protected RecentDAO recentDAO;
+	protected UserDAO userDAO;
 
-  public CartDAO getCartDAO() {
-    return cartDAO;
-  }
+	public CartDAO getCartDAO() {
+		return cartDAO;
+	}
 
-  public void setCartDAO(CartDAO cartDAO) {
-    this.cartDAO = cartDAO;
-  }
+	public void setCartDAO(CartDAO cartDAO) {
+		this.cartDAO = cartDAO;
+	}
 
-  public CartProductDAO getCartProductDAO() {
-    return cartProductDAO;
-  }
+	public CategoryDAO getCategoryDAO() {
+		return categoryDAO;
+	}
 
-  public void setCartProductDAO(CartProductDAO cartProductDAO) {
-    this.cartProductDAO = cartProductDAO;
-  }
+	public void setCategoryDAO(CategoryDAO categoryDAO) {
+		this.categoryDAO = categoryDAO;
+	}
 
-  public CategoryDAO getCategoryDAO() {
-    return categoryDAO;
-  }
+	public CommentDAO getCommentDAO() {
+		return commentDAO;
+	}
 
-  public void setCategoryDAO(CategoryDAO categoryDAO) {
-    this.categoryDAO = categoryDAO;
-  }
+	public void setCommentDAO(CommentDAO commentDAO) {
+		this.commentDAO = commentDAO;
+	}
 
-  public CommentDAO getCommentDAO() {
-    return commentDAO;
-  }
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
 
-  public void setCommentDAO(CommentDAO commentDAO) {
-    this.commentDAO = commentDAO;
-  }
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
 
-  public ImageDAO getImageDAO() {
-    return imageDAO;
-  }
+	public OrderDAO getOrderDAO() {
+		return orderDAO;
+	}
 
-  public void setImageDAO(ImageDAO imageDAO) {
-    this.imageDAO = imageDAO;
-  }
+	public void setOrderDAO(OrderDAO orderDAO) {
+		this.orderDAO = orderDAO;
+	}
 
-  public OrderDAO getOrderDAO() {
-    return orderDAO;
-  }
+	public OrderProductDAO getOrderProductDAO() {
+		return orderProductDAO;
+	}
 
-  public void setOrderDAO(OrderDAO orderDAO) {
-    this.orderDAO = orderDAO;
-  }
+	public void setOrderProductDAO(OrderProductDAO orderProductDAO) {
+		this.orderProductDAO = orderProductDAO;
+	}
 
-  public OrderProductDAO getOrderProductDAO() {
-    return orderProductDAO;
-  }
+	public ProductDAO getProductDAO() {
+		return productDAO;
+	}
 
-  public void setOrderProductDAO(OrderProductDAO orderProductDAO) {
-    this.orderProductDAO = orderProductDAO;
-  }
+	public void setProductDAO(ProductDAO productDAO) {
+		this.productDAO = productDAO;
+	}
 
-  public ProductDAO getProductDAO() {
-    return productDAO;
-  }
+	public ProfileDAO getProfileDAO() {
+		return profileDAO;
+	}
 
-  public void setProductDAO(ProductDAO productDAO) {
-    this.productDAO = productDAO;
-  }
+	public void setProfileDAO(ProfileDAO profileDAO) {
+		this.profileDAO = profileDAO;
+	}
 
-  public ProfileDAO getProfileDAO() {
-    return profileDAO;
-  }
+	public PromotionDAO getPromotionDAO() {
+		return promotionDAO;
+	}
 
-  public void setProfileDAO(ProfileDAO profileDAO) {
-    this.profileDAO = profileDAO;
-  }
+	public void setPromotionDAO(PromotionDAO promotionDAO) {
+		this.promotionDAO = promotionDAO;
+	}
 
-  public PromotionDAO getPromotionDAO() {
-    return promotionDAO;
-  }
+	public RecentDAO getRecentDAO() {
+		return recentDAO;
+	}
 
-  public void setPromotionDAO(PromotionDAO promotionDAO) {
-    this.promotionDAO = promotionDAO;
-  }
+	public void setRecentDAO(RecentDAO recentDAO) {
+		this.recentDAO = recentDAO;
+	}
 
-  public RecentDAO getRecentDAO() {
-    return recentDAO;
-  }
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
 
-  public void setRecentDAO(RecentDAO recentDAO) {
-    this.recentDAO = recentDAO;
-  }
-
-  public UserDAO getUserDAO() {
-    return userDAO;
-  }
-
-  public void setUserDAO(UserDAO userDAO) {
-    this.userDAO = userDAO;
-  }
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
 }
