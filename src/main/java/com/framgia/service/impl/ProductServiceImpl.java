@@ -1,12 +1,12 @@
 package com.framgia.service.impl;
 
-import java.awt.Image;
 import java.io.Serializable;
 import java.util.List;
 
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
+import com.framgia.model.Image;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
@@ -94,17 +94,17 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public List<Product> getList() {
-		return getProductDAO().getList();
+	public List<Product> getObjects() {
+		return getProductDAO().getObjects();
 	}
 
 	@Override
-	public List<Product> getList(List<Integer> keys) {
-		return getProductDAO().getList(keys);
+	public List<Product> getObjectsByIds(List<Integer> keys) {
+		return getProductDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Product> getList(int limit) {
-		return getProductDAO().getList(limit);
+	public List<Product> getObjects(int limit) {
+		return getProductDAO().getObjects(limit);
 	}
 }

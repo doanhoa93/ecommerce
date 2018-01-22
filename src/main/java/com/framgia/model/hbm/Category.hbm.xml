@@ -10,7 +10,7 @@
     <property name="parentId" column="parent_id" type="integer" />
     <property name="name" column="name" type="string" />
 
-    <bag name="products" order-by="id asc">
+    <bag name="products" order-by="id asc" lazy="false">
       <key column="category_id" />
       <one-to-many class="Product" />
     </bag>

@@ -7,7 +7,7 @@ import com.framgia.dao.ProfileDAO;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
 
-public class ProfileDAOImpl extends BaseDAOImpl<Integer, Profile> implements ProfileDAO {
+public class ProfileDAOImpl extends BaseDAOAbstract<Integer, Profile> implements ProfileDAO {
 
 	public ProfileDAOImpl() {
 		super(Profile.class);

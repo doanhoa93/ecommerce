@@ -8,7 +8,7 @@ import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
 
-public class OrderProductDAOImpl extends BaseDAOImpl<Integer, OrderProduct> implements OrderProductDAO {
+public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct> implements OrderProductDAO {
 
 	public OrderProductDAOImpl() {
 		super(OrderProduct.class);

@@ -12,7 +12,7 @@
     <property name="address" column="address" type="string" />
 
 
-    <many-to-one name="user" class="User">
+    <many-to-one name="user" class="User" lazy="false">
       <column name="user_id" not-null="true" />
     </many-to-one>
   </class>

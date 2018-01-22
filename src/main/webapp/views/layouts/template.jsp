@@ -4,6 +4,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
   prefix="tilesx"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,6 +47,10 @@
   <script src="<c:url value='${js}'/>" type="text/javascript"></script>
 </c:forEach>
 </head>
+
+<c:set var="currentUser"
+  value="${request.getSession().getAttribute('currentUser')}"
+  scope="application" />
 
 <body>
   <div class="header">

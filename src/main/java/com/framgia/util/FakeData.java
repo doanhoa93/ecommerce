@@ -104,7 +104,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			@SuppressWarnings({ "deprecation", "unchecked" })
+			@SuppressWarnings({ "unchecked" })
 			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -137,7 +137,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			@SuppressWarnings({ "deprecation", "unchecked" })
+			@SuppressWarnings({ "unchecked" })
 			List<User> users = (List<User>) session.createCriteria(User.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -165,12 +165,12 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			@SuppressWarnings({ "deprecation", "unchecked" })
+			@SuppressWarnings({ "unchecked" })
 			List<User> users = (List<User>) session.createCriteria(User.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
 
-			@SuppressWarnings({ "deprecation", "unchecked" })
+			@SuppressWarnings({ "unchecked" })
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -189,7 +189,7 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static void addComments(Session session) {
 		try {
 			Transaction t = null;
@@ -222,7 +222,7 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static void addOrderProducts(Session session) {
 		try {
 			Transaction t = null;
@@ -256,7 +256,7 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static void addImages(Session session) {
 		try {
 			Transaction t = null;
@@ -284,7 +284,7 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static void addRecents(Session session) {
 		try {
 			Transaction t = null;

@@ -9,11 +9,11 @@
 
     <property name="content" column="content" type="string" />
 
-    <many-to-one name="user" class="User">
+    <many-to-one name="user" class="User" lazy="false">
       <column name="user_id" not-null="true" />
     </many-to-one>
 
-    <many-to-one name="product" class="Product">
+    <many-to-one name="product" class="Product" lazy="false">
       <column name="product_id" not-null="true" />
     </many-to-one>
   </class>

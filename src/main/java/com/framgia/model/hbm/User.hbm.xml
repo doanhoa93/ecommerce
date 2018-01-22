@@ -15,17 +15,17 @@
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
 
-    <bag name="orders" order-by="id asc">
+    <bag name="orders" order-by="id asc" lazy="false">
       <key column="user_id" />
       <one-to-many class="Order" />
     </bag>
 
-    <bag name="carts" order-by="id asc">
+    <bag name="carts" order-by="id asc" lazy="false">
       <key column="user_id" />
       <one-to-many class="Cart" />
     </bag>
 
-    <bag name="comments" order-by="id asc">
+    <bag name="comments" order-by="id asc" lazy="false">
       <key column="user_id" />
       <one-to-many class="Comment" />
     </bag>

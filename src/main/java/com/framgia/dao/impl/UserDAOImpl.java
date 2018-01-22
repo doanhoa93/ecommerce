@@ -12,7 +12,7 @@ import com.framgia.model.Order;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
 
-public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
+public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserDAO {
 
 	public UserDAOImpl() {
 		super(User.class);
@@ -23,7 +23,6 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 		return findBy("email", email);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Profile getProfile(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Profile.class);
@@ -31,7 +30,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 		return (Profile) criteria.uniqueResult();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<Order> getOrders(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Order.class);
@@ -39,7 +38,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 		return (List<Order>) criteria.list();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<Cart> getCarts(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Cart.class);
@@ -47,7 +46,7 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 		return (List<Cart>) criteria.list();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<Comment> getComments(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Comment.class);
@@ -55,7 +54,6 @@ public class UserDAOImpl extends BaseDAOImpl<Integer, User> implements UserDAO {
 		return (List<Comment>) criteria.list();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Cart getCart(Integer userId, Integer productId) {
 		Criteria criteria = getSession().createCriteria(Cart.class);

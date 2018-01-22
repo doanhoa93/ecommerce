@@ -39,17 +39,17 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public List<Promotion> getList() {
-		return getPromotionDAO().getList();
+	public List<Promotion> getObjects() {
+		return getPromotionDAO().getObjects();
 	}
 
 	@Override
-	public List<Promotion> getList(List<Integer> keys) {
-		return getPromotionDAO().getList(keys);
+	public List<Promotion> getObjectsByIds(List<Integer> keys) {
+		return getPromotionDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Promotion> getList(int limit) {
-		return getPromotionDAO().getList(limit);
+	public List<Promotion> getObjects(int limit) {
+		return getPromotionDAO().getObjects(limit);
 	}
 }

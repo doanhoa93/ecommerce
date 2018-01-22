@@ -48,17 +48,17 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<Cart> getList() {
-		return getCartDAO().getList();
+	public List<Cart> getObjects() {
+		return getCartDAO().getObjects();
 	}
 
 	@Override
-	public List<Cart> getList(List<Integer> keys) {
-		return getCartDAO().getList(keys);
+	public List<Cart> getObjectsByIds(List<Integer> keys) {
+		return getCartDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Cart> getList(int limit) {
-		return getList(limit);
+	public List<Cart> getObjects(int limit) {
+		return getObjects(limit);
 	}
 }

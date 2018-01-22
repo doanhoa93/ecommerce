@@ -3,12 +3,11 @@
 <div class="features_items">
   <!--features_items-->
   <h2 class="title text-center">Recently Products</h2>
-  <c:forEach var="i" begin="1" end="6">
+  <c:forEach var="product"
+    items="${params.recentProducts}">
     <div class="col-sm-4">
-      <jsp:include page="/views/products/mini_product.jsp">
-        <jsp:param name="imageSource"
-          value="${pageContext.request.contextPath}/assets/images/home/product${i}.jpg" />
-      </jsp:include>
+      <c:import url="/views/products/mini_product.jsp" />
+      <c:set var="product" value="${product}" scope="session" />
     </div>
   </c:forEach>
 </div>

@@ -46,9 +46,9 @@ public interface BaseService<PK, T> {
 
 	public void saveOrUpdate(T entity);
 
-	public List<T> getList();
+	public List<T> getObjects();
 
-	public List<T> getList(List<Integer> keys);
+	public List<T> getObjectsByIds(List<Integer> keys);
 
-	public List<T> getList(int limit);
+	public List<T> getObjects(int limit);
 }

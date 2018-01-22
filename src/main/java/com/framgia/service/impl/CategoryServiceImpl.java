@@ -67,17 +67,17 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public List<Category> getList() {
-		return getCategoryDAO().getList();
+	public List<Category> getObjects() {
+		return getCategoryDAO().getObjects();
 	}
 
 	@Override
-	public List<Category> getList(List<Integer> keys) {
-		return getCategoryDAO().getList(keys);
+	public List<Category> getObjectsByIds(List<Integer> keys) {
+		return getCategoryDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Category> getList(int limit) {
-		return getCategoryDAO().getList(limit);
+	public List<Category> getObjects(int limit) {
+		return getCategoryDAO().getObjects(limit);
 	}
 }

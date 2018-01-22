@@ -8,19 +8,19 @@
         <div id="slider-carousel" class="carousel slide"
           data-ride="carousel">
           <ol class="carousel-indicators">
-            <c:forEach var="i" begin="0" end="2">
+            <c:forEach var="i" begin="0"
+              end="${params.hotProducts.size() - 1}">
               <li data-target="#slider-carousel" data-slide-to="${i}"
                 class="${i == 0 ? 'active' : '' }"></li>
             </c:forEach>
           </ol>
 
           <div class="carousel-inner">
-            <c:forEach var="i" begin="1" end="3">
-              <jsp:include page="/views/products/medium_product.jsp">
-                <jsp:param name="index" value="${i}" />
-                <jsp:param name="imageSource"
-                  value="${pageContext.request.contextPath}/assets/images/home/girl${i}.jpg" />
-              </jsp:include>
+            <c:forEach var="product" items="${params.hotProducts}"
+              varStatus="loop">
+              <c:import url="/views/products/medium_product.jsp" />
+              <c:set var="index" value="${loop.index}" scope="session" />
+              <c:set var="product" value="${product}" scope="session" />
             </c:forEach>
           </div>
 

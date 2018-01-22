@@ -43,17 +43,17 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public List<Recent> getList() {
-		return getRecentDAO().getList();
+	public List<Recent> getObjects() {
+		return getRecentDAO().getObjects();
 	}
 
 	@Override
-	public List<Recent> getList(List<Integer> keys) {
-		return getRecentDAO().getList(keys);
+	public List<Recent> getObjectsByIds(List<Integer> keys) {
+		return getRecentDAO().getObjectsByIds(keys);
 	}
 
 	@Override
-	public List<Recent> getList(int limit) {
-		return getRecentDAO().getList(limit);
+	public List<Recent> getObjects(int limit) {
+		return getRecentDAO().getObjects(limit);
 	}
 }

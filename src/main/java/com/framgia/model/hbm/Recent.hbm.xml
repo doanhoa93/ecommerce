@@ -11,7 +11,7 @@
       <column name="viewed" default="0" />
     </property>
 
-    <many-to-one name="product" class="Product">
+    <many-to-one name="product" class="Product" lazy="false">
       <column name="product_id" not-null="true" />
     </many-to-one>
   </class>

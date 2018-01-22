@@ -9,7 +9,7 @@
 
     <property name="image" column="image" type="string" not-null="true" />
 
-    <many-to-one name="product" class="Product">
+    <many-to-one name="product" class="Product" lazy="false">
       <column name="product_id" not-null="true" />
     </many-to-one>
   </class>

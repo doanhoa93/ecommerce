@@ -8,7 +8,7 @@ import com.framgia.model.Cart;
 import com.framgia.model.Product;
 import com.framgia.model.User;
 
-public class CartDAOImpl extends BaseDAOImpl<Integer, Cart> implements CartDAO {
+public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartDAO {
 
 	public CartDAOImpl() {
 		super(Cart.class);
@@ -24,7 +24,6 @@ public class CartDAOImpl extends BaseDAOImpl<Integer, Cart> implements CartDAO {
 
 	@Override
 	public Product getProduct(Integer cartId) {
-		@SuppressWarnings("deprecation")
 		Criteria criteria = getSession().createCriteria(Product.class);
 		criteria.add(Restrictions.in("id", cartId));
 		return (Product) criteria.uniqueResult();

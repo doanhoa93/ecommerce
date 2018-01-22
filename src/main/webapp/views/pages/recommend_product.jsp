@@ -7,23 +7,23 @@
     data-ride="carousel">
     <div class="carousel-inner">
       <div class="item active">
-        <c:forEach var="i" begin="1" end="3">
+        <c:forEach var="index" begin="0" end="2">
           <div class="col-sm-4">
-            <jsp:include page="/views/products/mini_product.jsp">
-              <jsp:param name="imageSource"
-                value="${pageContext.request.contextPath}/assets/images/home/recommend${i}.jpg" />
-            </jsp:include>
+            <c:import url="/views/products/mini_product.jsp" />
+            <c:set var="product"
+              value="${params.recommendProducts.get(index)}"
+              scope="session" />
           </div>
         </c:forEach>
       </div>
 
       <div class="item">
-        <c:forEach var="i" begin="1" end="3">
+        <c:forEach var="index" begin="3" end="5">
           <div class="col-sm-4">
-            <jsp:include page="/views/products/mini_product.jsp">
-              <jsp:param name="imageSource"
-                value="${pageContext.request.contextPath}/assets/images/home/recommend${4 - i}.jpg" />
-            </jsp:include>
+            <c:import url="/views/products/mini_product.jsp" />
+            <c:set var="product"
+              value="${params.recommendProducts.get(index)}"
+              scope="session" />
           </div>
         </c:forEach>
       </div>

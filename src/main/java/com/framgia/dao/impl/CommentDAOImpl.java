@@ -8,7 +8,7 @@ import com.framgia.model.Comment;
 import com.framgia.model.Product;
 import com.framgia.model.User;
 
-public class CommentDAOImpl extends BaseDAOImpl<Integer, Comment> implements CommentDAO {
+public class CommentDAOImpl extends BaseDAOAbstract<Integer, Comment> implements CommentDAO {
 
 	public CommentDAOImpl() {
 		super(Comment.class);
