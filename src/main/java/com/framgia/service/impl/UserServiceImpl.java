@@ -119,8 +119,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if (user == null) {
 			user = findByEmail(userInfo.getEmail());
 			if (user != null && user.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
-				if (userInfo.isRemember())
-					response.addCookie(new Cookie("email", userInfo.getEmail()));
+				if (userInfo.isRemember()) {
+					Cookie cookie = new Cookie("email", userInfo.getEmail());
+					cookie.setMaxAge(1);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
 
 				request.getSession().putValue("currentUser", user);
 				return true;
@@ -140,5 +144,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				break;
 		}
 		return user;
+	}
+
+	@Override
+	public void unremember(User user) {
+		Cookie cookie = new Cookie("email", "");
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		cookie.setValue(null);
+		response.addCookie(cookie);
 	}
 }

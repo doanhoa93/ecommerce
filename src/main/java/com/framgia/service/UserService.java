@@ -31,4 +31,6 @@ public interface UserService extends BaseService<Integer, User> {
 	List<Product> getCartedProducts(Integer userId);
 
 	boolean validate(UserInfo userInfo);
+	
+	void unremember(User user);
 }
