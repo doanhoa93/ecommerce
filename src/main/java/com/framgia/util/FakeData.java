@@ -63,7 +63,7 @@ public class FakeData {
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
 			profile.setGender(Gender.MALE);
-			profile.setBirthday(new Date(1995, 11, 05));
+			profile.setBirthday(new Date(1995 - 1900, 11, 05));
 
 			session.save(profile);
 
@@ -80,7 +80,7 @@ public class FakeData {
 				profile.setUser(user);
 				profile.setAddress("Ha Noi");
 				profile.setGender(Gender.MALE);
-				profile.setBirthday(new Date(1995, 11, 05));
+				profile.setBirthday(new Date(1995 - 1900, 11, 05));
 
 				session.save(profile);
 			}
@@ -164,6 +164,7 @@ public class FakeData {
 				order.setUser(users.get(i - 1));
 				order.setStatus(Status.WAITING);
 				order.setTotalPrice(new Float(100));
+				order.setCreatedAt(new Date());
 
 				session.save(order);
 			}

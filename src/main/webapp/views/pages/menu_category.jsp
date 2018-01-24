@@ -6,17 +6,18 @@
     <div class="brands-name">
       <ul class="nav nav-pills nav-stacked">
         <c:forEach var="category" items="${params.categories}">
-          <li><a href="#"> <span class="pull-right">(${category.getProducts().size()})
-            </span> ${category.getName()}
-          </a></li>
+          <li>
+            <a href="#"> 
+              <span class="pull-right">(${category.getProducts().size()})</span> 
+              ${category.getName()}
+            </a>
+          </li>
         </c:forEach>
       </ul>
     </div>
   </div>
 
   <div class="shipping text-center">
-    <img
-      src="${contextPath}/assets/images/home/shipping.jpg"
-      alt="" />
+    <img src="${contextPath}/assets/images/home/shipping.jpg" alt="" />
   </div>
 </div>

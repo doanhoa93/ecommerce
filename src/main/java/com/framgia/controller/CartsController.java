@@ -46,7 +46,6 @@ public class CartsController extends BaseController {
 			cartService.saveOrUpdate(cart);
 			return "redirect:/carts";
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "";
 		}
 	}
@@ -64,7 +63,6 @@ public class CartsController extends BaseController {
 			hashMap.put("msg", "success");
 		} catch (Exception e) {
 			hashMap.put("msg", "error");
-			e.printStackTrace();
 		}
 		return toJson(hashMap);
 	}

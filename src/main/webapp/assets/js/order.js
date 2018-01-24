@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	initTotalPrice();
-	
+
 	$('.cart-close').on('click', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
@@ -14,7 +14,7 @@ $(document).ready(function() {
 		    }
 		});
 	});
-	
+
 	function handleCloseSuccess(id) {
 		var cartProduct = $('.cart-product-' + id);
     	var cartSize = Number($('.carts-size').text());
@@ -24,10 +24,10 @@ $(document).ready(function() {
     	setTotalMoney(totalMoney - quantityCart * moneyCart);
     	if(cartSize > 0)
     		$('.carts-size').text(cartSize - 1);
-    	
+
     	cartProduct.remove();
 	}
-	
+
 
 	$('.quantity-minus').on('click', function() {
 		var parent = $(this).parent();
@@ -45,7 +45,7 @@ $(document).ready(function() {
 					cartQuantity.val(Number(cartQuantity.val()) - 1);
 					var money = convertToMoney($('.total-money-value').text());
 					var moneyProduct = convertToMoney($('.cart-product-' + id + ' .cart-product-price').text());
-					setTotalMoney(money - moneyProduct);					
+					setTotalMoney(money - moneyProduct);
 				}
 			});
 
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 	$('.quantity-plus').on('click', function() {
 		var parent = $(this).parent();
-		var id = parent.data('id');		
+		var id = parent.data('id');
 		var cartQuantity = parent.find('.cart-quantity').first();
 		var data = {quantity: Number(cartQuantity.val()) + 1};
 		$.ajax({
@@ -69,9 +69,9 @@ $(document).ready(function() {
 				var moneyProduct = convertToMoney($('.cart-product-' + id + ' .cart-product-price').text());
 				setTotalMoney(money + moneyProduct);
 			}
-		});		
+		});
 	});
-	
+
 	$('.btn-order').on('click', function() {
 		var cartIds = [];
 		$('.cart-product-select:checked').each(function(index, cart) {
@@ -84,7 +84,6 @@ $(document).ready(function() {
 			dataType: 'json',
 		    contentType: 'application/json',
 		    success: function(data) {
-		    	debugger;
 		    	if (data.msg == 'error') {
 		    		$('.alert-warning').show();
 		    		var keys = Object.keys(data.error);
@@ -97,19 +96,19 @@ $(document).ready(function() {
 		    		window.location.replace(getContextPath() + data.url);
 		    	}
 		    }
-		});		
+		});
 	});
-	
+
 	function setTotalMoney(price) {
 		price = price.toLocaleString('en-US', {currency: 'USD', style: 'currency'});
 		$('.total-money-value').html(price);
 	}
-	
+
 	function convertToMoney(money) {
 		money = money.replace(/[^0-9-.]/g, '');
 		return Number(money);
 	}
-	
+
 	function initTotalPrice() {
 		var money = 0;
 		var quantity = 0;
@@ -119,7 +118,7 @@ $(document).ready(function() {
 		});
 		setTotalMoney(money);
 	}
-	
+
 	function getContextPath() {
 		return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 	}

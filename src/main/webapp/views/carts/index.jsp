@@ -69,8 +69,10 @@
 
   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 carts-right">
     <div class="total-money">
-      <b>Total money:</b> <span class="total-money-value"> <fmt:setLocale
-          value="en_US" /> <fmt:formatNumber value="" type="currency" />
+      <b>Total money:</b>
+      <span class="total-money-value">
+        <fmt:setLocale value="en_US" />
+        <fmt:formatNumber value="" type="currency" />
       </span>
     </div>
 

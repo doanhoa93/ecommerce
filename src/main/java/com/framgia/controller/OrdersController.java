@@ -10,15 +10,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.framgia.bean.OrderInfo;
+import com.framgia.helper.ModelToBean;
+import com.framgia.model.Order;
+import com.framgia.model.Status;
 
 @Controller
 public class OrdersController extends BaseController {
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String index() {
-		return "orders";
+	public ModelAndView index() {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		List<Order> orders = userService.getOrders(currentUser().getId());
+		List<OrderInfo> orderInfos = orders.stream().map(order -> {
+			OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
+			orderInfo.setProductQuantity(orderService.getProductQuantity(order.getId()));
+			return orderInfo;
+		}).collect(Collectors.toList());
+		hashMap.put("orders", orderInfos);
+		hashMap.put("status", Status.statuses);
+		return new ModelAndView("orders", "params", hashMap);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,7 +53,6 @@ public class OrdersController extends BaseController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
-			e.printStackTrace();
 			hashMap.clear();
 			hashMap.put("msg", "error");
 			hashMap.put("error", "No product is selected, please select product which you want buy.");
