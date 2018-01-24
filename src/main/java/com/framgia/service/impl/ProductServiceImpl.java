@@ -76,20 +76,22 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public void delete(Product entity) {
+	public boolean delete(Product entity) {
 		try {
 			getProductDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Product entity) {
+	public boolean saveOrUpdate(Product entity) {
 		try {
 			getProductDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

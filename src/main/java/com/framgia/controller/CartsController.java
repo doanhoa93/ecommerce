@@ -1,6 +1,5 @@
 package com.framgia.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
@@ -32,43 +31,51 @@ public class CartsController extends BaseController {
 
 	@RequestMapping(value = "/products/{productId}/carts", method = RequestMethod.POST)
 	public String create(@PathVariable Integer productId, @ModelAttribute("cartInfo") CartInfo cartInfo) {
-		Cart cart = userService.getCart(currentUser().getId(), productId);
-		if (cartInfo.getQuantity() == 0)
-			cartInfo.setQuantity(1);
+		try {
+			Cart cart = userService.getCart(currentUser().getId(), productId);
+			if (cartInfo.getQuantity() == 0)
+				cartInfo.setQuantity(1);
 
-		if (cart != null) {
-			cart.setQuantity(cartInfo.getQuantity() + cart.getQuantity());
-		} else {
-			cartInfo.setProductId(productId);
-			cartInfo.setUserId(currentUser().getId());
-			cart = BeanToModel.toCart(cartInfo);
+			if (cart != null) {
+				cart.setQuantity(cartInfo.getQuantity() + cart.getQuantity());
+			} else {
+				cartInfo.setProductId(productId);
+				cartInfo.setUserId(currentUser().getId());
+				cart = BeanToModel.toCart(cartInfo);
+			}
+			cartService.saveOrUpdate(cart);
+			return "redirect:/carts";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
 		}
-		cartService.saveOrUpdate(cart);
-		return "redirect:/carts";
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/carts/{id}", method = RequestMethod.PATCH)
-	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id) throws IOException {
-		HashMap<String, Object> hashMap = toHashMap(data);
-		Cart cart = cartService.findById(id);
-		if (cart != null) {
+	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id)
+	        throws JsonProcessingException {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		try {
+			hashMap = toHashMap(data);
+			Cart cart = cartService.findById(id);
 			cart.setQuantity((Integer) hashMap.get("quantity"));
 			cartService.saveOrUpdate(cart);
 			hashMap.put("msg", "success");
-		} else
+		} catch (Exception e) {
 			hashMap.put("msg", "error");
+			e.printStackTrace();
+		}
 		return toJson(hashMap);
 	}
 
 	@RequestMapping(value = "/carts/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable("id") Integer id) throws JsonProcessingException {
-		Cart cart = cartService.findById(id);
 		HashMap<String, Object> hashMap = new HashMap<>();
-		if (cart != null) {
-			cartService.delete(cart);
+		Cart cart = cartService.findById(id);
+		if (cartService.delete(cart))
 			hashMap.put("msg", "success");
-		} else
+		else
 			hashMap.put("msg", "error");
 		return toJson(hashMap);
 	}

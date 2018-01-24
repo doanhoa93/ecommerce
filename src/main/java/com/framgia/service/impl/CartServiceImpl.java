@@ -31,19 +31,22 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public void delete(Cart entity) {
+	public boolean delete(Cart entity) {
 		try {
 			getCartDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Cart entity) {
+	public boolean saveOrUpdate(Cart entity) {
 		try {
 			getCartDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
+			throw e;
 		}
 	}
 

@@ -7,6 +7,7 @@ public class UserInfo {
 	private String name;
 	private String avatar;
 	private String role;
+	private String gender;
 	private ProfileInfo profileInfo;
 	private boolean remember;
 
@@ -14,7 +15,7 @@ public class UserInfo {
 		super();
 	}
 
-	public UserInfo(Integer id, String email, String password, String name, String avatar, String role,
+	public UserInfo(Integer id, String email, String password, String name, String gender, String avatar, String role,
 	        ProfileInfo profileInfo) {
 		super();
 		this.id = id;
@@ -24,6 +25,7 @@ public class UserInfo {
 		this.avatar = avatar;
 		this.role = role;
 		this.profileInfo = profileInfo;
+		this.gender = gender;
 	}
 
 	public Integer getId() {
@@ -88,5 +90,13 @@ public class UserInfo {
 
 	public void setRemember(boolean remember) {
 		this.remember = remember;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

@@ -25,20 +25,22 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public void delete(Image entity) {
+	public boolean delete(Image entity) {
 		try {
 			getImageDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Image entity) {
+	public boolean saveOrUpdate(Image entity) {
 		try {
 			getImageDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

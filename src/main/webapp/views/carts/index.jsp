@@ -36,11 +36,16 @@
           </div>
 
           <div class="cart-quantity-form" data-id="${cart.getId()}">
-            <span class="quantity-minus"> <i>-</i>
-            </span> <input class="cart-quantity" type="text"
+            <span class="quantity-minus"> 
+              <i>-</i>
+            </span>
+             
+            <input class="cart-quantity" type="text"
               readonly="readonly" value="${cart.getQuantity()}"
-              placeholder="0"> <span class="quantity-plus">
-              <i>+</i>
+              placeholder="0">
+               
+             <span class="quantity-plus">
+                <i>+</i>
             </span>
           </div>
           <div class="clearfix"></div>

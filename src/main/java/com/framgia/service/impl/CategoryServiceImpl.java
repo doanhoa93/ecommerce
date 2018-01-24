@@ -49,20 +49,22 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public void delete(Category entity) {
+	public boolean delete(Category entity) {
 		try {
 			getCategoryDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Category entity) {
+	public boolean saveOrUpdate(Category entity) {
 		try {
 			getCategoryDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

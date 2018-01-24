@@ -80,20 +80,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(User entity) {
+	public boolean delete(User entity) {
 		try {
 			getUserDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(User entity) {
+	public boolean saveOrUpdate(User entity) {
 		try {
 			getUserDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

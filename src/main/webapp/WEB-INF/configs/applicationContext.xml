@@ -28,8 +28,14 @@
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/carts" />
-      <mvc:mapping path="/*/*/carts/*" />
+      <mvc:mapping path="/*/*/carts" />
+      <mvc:mapping path="/carts/*" />
       <bean class="com.framgia.interceptor.LoginInterceptor" />
+    </mvc:interceptor>
+
+    <mvc:interceptor>
+      <mvc:mapping path="/sessions/*" />
+      <bean class="com.framgia.interceptor.LoggedinInterceptor" />
     </mvc:interceptor>
   </mvc:interceptors>
 </beans>

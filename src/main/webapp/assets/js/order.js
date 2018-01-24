@@ -7,8 +7,8 @@ $(document).ready(function() {
 		$.ajax({
 		    method: 'DELETE',
 		    url: getContextPath() + '/carts/' + id,
-			dataType: "json",
-		    contentType: "application/json",
+			dataType: 'json',
+		    contentType: 'application/json',
 		    success: function(data) {
 		    	handleCloseSuccess(id);
 		    }
@@ -39,8 +39,8 @@ $(document).ready(function() {
 				method: 'PATCH',
 				url: getContextPath() + '/carts/' + id,
 				data: JSON.stringify(data),
-				dataType: "json",
-			    contentType: "application/json",
+				dataType: 'json',
+			    contentType: 'application/json',
 				success: function(data) {
 					cartQuantity.val(Number(cartQuantity.val()) - 1);
 					var money = convertToMoney($('.total-money-value').text());
@@ -61,8 +61,8 @@ $(document).ready(function() {
 			method: 'PATCH',
 			url: getContextPath() + '/carts/' + id,
 			data: JSON.stringify(data),
-			dataType: "json",
-		    contentType: "application/json",
+			dataType: 'json',
+		    contentType: 'application/json',
 			success: function(data) {
 				cartQuantity.val(Number(cartQuantity.val()) + 1);
 				var money = convertToMoney($('.total-money-value').text());
@@ -81,14 +81,20 @@ $(document).ready(function() {
 			method: 'POST',
 			url: getContextPath() + '/orders',
 			data: JSON.stringify({cartIds: cartIds}),
-			dataType: "json",
-		    contentType: "application/json",
+			dataType: 'json',
+		    contentType: 'application/json',
 		    success: function(data) {
-		    	if (data.url != undefined)
-		    		window.location.replace(getContextPath() + data.url);
-		    	else if (data.error != undefined) {
+		    	debugger;
+		    	if (data.msg == 'error') {
 		    		$('.alert-warning').show();
-		    		$('.alert-warning').text(data.error);
+		    		var keys = Object.keys(data.error);
+		    		var content = '';
+		    		for(i = 0; i < keys.length; i++) {
+		    			content += data.error[keys[i]] + '<br>';
+		    		}
+		    		$('.alert-warning').html(content);
+		    	} else {
+		    		window.location.replace(getContextPath() + data.url);
 		    	}
 		    }
 		});		

@@ -25,20 +25,22 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public void delete(Profile entity) {
+	public boolean delete(Profile entity) {
 		try {
 			getProfileDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Profile entity) {
+	public boolean saveOrUpdate(Profile entity) {
 		try {
 			getProfileDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

@@ -42,9 +42,9 @@ public interface BaseService<PK, T> {
 
 	public T findById(Serializable key);
 
-	public void delete(T entity);
+	public boolean delete(T entity);
 
-	public void saveOrUpdate(T entity);
+	public boolean saveOrUpdate(T entity);
 
 	public List<T> getObjects();
 
