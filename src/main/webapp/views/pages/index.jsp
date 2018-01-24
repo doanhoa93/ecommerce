@@ -1,4 +1,6 @@
-<%@include file="hot_trend_product.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:import url="/views/pages/hot_trend_product.jsp" />
 
 <section>
   <div class="container">
@@ -8,11 +10,9 @@
       </div>
 
       <div class="col-sm-9 padding-right">
-        <%@include file="recently_product.jsp"%>
-
-        <%@include file="hot_trend_category.jsp"%>
-
-        <%@include file="recommend_product.jsp"%>
+        <c:import url="/views/pages/recently_product.jsp" />
+        <c:import url="/views/pages/hot_trend_category.jsp" />
+        <c:import url="/views/pages/recommend_product.jsp" />
       </div>
     </div>
   </div>

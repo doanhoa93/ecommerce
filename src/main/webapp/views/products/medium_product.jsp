@@ -9,7 +9,7 @@
       now</button>
   </div>
   <div class="col-sm-6">
-    <img src="${pageContext.request.contextPath}/${product.getAvatar()}"
+    <img src="${contextPath}/${product.getAvatar()}"
       class="girl img-responsive" alt="" /> <img>
   </div>
 </div>

@@ -8,11 +8,15 @@
         <div class="col-sm-6">
           <div class="contactinfo">
             <ul class="nav nav-pills">
-              <li><a href="#"> <i class="fa fa-phone"></i>
-                  +84123456789
-              </a></li>
-              <li><a href="#"><i class="fa fa-envelope"></i>
-                  nguyen.huu.tienc@framgia.com</a></li>
+              <li>
+                <a href="#"> <i class="fa fa-phone"></i>+84123456789</a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="fa fa-envelope"></i>nguyen.huu.tienc@framgia.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -38,8 +42,8 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="logo pull-left">
-            <a href="${pageContext.request.contextPath}"><img
-              src="${pageContext.request.contextPath}/assets/images/home/logo.jpg"
+            <a href="${contextPath}"><img
+              src="${contextPath}/assets/images/home/logo.jpg"
               alt="" class="header-logo" /></a>
           </div>
         </div>
@@ -51,18 +55,18 @@
                   <li><a href="#"><i class="fa fa-user"></i>
                       Account</a></li>
                   <li><a
-                    href="${pageContext.request.contextPath}/carts"><i
+                    href="${contextPath}/carts"><i
                       class="fa fa-shopping-cart"></i> Cart</a></li>
                   <li><a
-                    href="${pageContext.request.contextPath}/sessions/delete"
+                    href="${contextPath}/sessions/delete"
                     class="logout-btn"><i class="fa fa-lock"></i>Logout</a></li>
                 </c:when>
                 <c:otherwise>
                   <li><a
-                    href="${pageContext.request.contextPath}/sessions/new"><i
+                    href="${contextPath}/sessions/new"><i
                       class="fa fa-lock"></i> Login</a></li>
                   <li><a
-                    href="${pageContext.request.contextPath}/registrations/new"><i
+                    href="${contextPath}/registrations/new"><i
                       class="fa fa-lock"></i> Signup</a></li>
                 </c:otherwise>
               </c:choose>
@@ -89,7 +93,9 @@
           </div>
           <div class="mainmenu pull-left">
             <ul class="nav navbar-nav collapse navbar-collapse">
-              <li><a href="" class="active">Home</a></li>
+              <li>
+                <a href="${contextPath}" class="active">Home</a>
+              </li>
               <li><a href="">Products</a></li>
               <li><a href="">Categories</a></li>
             </ul>

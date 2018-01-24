@@ -27,8 +27,11 @@ public class CartsController extends BaseController {
 	}
 
 	@RequestMapping(value = "products/{productId}/carts/create", method = RequestMethod.POST)
-	public String create(@PathVariable Integer productId, @ModelAttribute("cart") CartInfo cartInfo) {
+	public String create(@PathVariable Integer productId, @ModelAttribute("cartInfo") CartInfo cartInfo) {
 		Cart cart = userService.getCart(currentUser().getId(), productId);
+		if (cartInfo.getQuantity() == 0)
+			cartInfo.setQuantity(1);
+
 		if (cart != null) {
 			cart.setQuantity(cartInfo.getQuantity());
 		} else {

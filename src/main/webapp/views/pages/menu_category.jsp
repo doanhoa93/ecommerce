@@ -16,7 +16,7 @@
 
   <div class="shipping text-center">
     <img
-      src="${pageContext.request.contextPath}/assets/images/home/shipping.jpg"
+      src="${contextPath}/assets/images/home/shipping.jpg"
       alt="" />
   </div>
 </div>

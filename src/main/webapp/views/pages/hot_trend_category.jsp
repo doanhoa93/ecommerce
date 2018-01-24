@@ -1,29 +1,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<c:set var="categories" value="${params.categories}" />
 <div class="category-tab">
   <!--category-tab-->
   <div class="col-sm-12">
     <ul class="nav nav-tabs">
-      <c:forEach var="index" begin="0"
-        end="${params.categories.size() - 1}">
-        <li class="${index == 0 ? 'active' : '' }"><a
-          href="#category-${params.categories.get(index).getId()}"
-          data-toggle="tab">
-            ${params.categories.get(index).getName()} </a></li>
+      <c:forEach var="category" items="${categories}" varStatus="loop">
+        <li class="${loop.index == 0 ? 'active' : '' }"><a
+          href="#category-${category.getId()}" data-toggle="tab">
+            ${category.getName()} </a></li>
       </c:forEach>
     </ul>
   </div>
 
   <div class="tab-content">
-    <c:forEach var="index" begin="0"
-      end="${params.categories.size() - 1}">
-      <div class="tab-pane fade ${index == 0 ? 'active in' : '' }"
-        id="category-${params.categories.get(index).getId()}">
-        <c:forEach var="product"
-          items="${params.categories.get(index).getProducts()}">
+    <c:forEach var="category" items="${categories}" varStatus="loop">
+      <div class="tab-pane fade ${loop.index == 0 ? 'active in' : '' }"
+        id="category-${category.getId()}">
+        <c:forEach var="product" items="${category.getProducts()}">
           <div class="col-sm-3">
-            <c:import url="/views/products/mini_product.jsp" />
-            <c:set var="product" value="${product}" scope="session" />
+            <div class="product-image-wrapper">
+              <div class="single-products">
+                <div class="productinfo text-center">
+                  <img class="product-image"
+                    src="${contextPath}/${product.getAvatar()}" alt="" />
+                  <h2>$${product.getPrice()}</h2>
+                  <p>${product.getName()}</p>
+                  <form:form
+                    action="${contextPath}/products/${product.getId()}/carts/create"
+                    method="POST" modelAttribute="cartInfo">
+                    <button class="btn btn-default add-to-cart"
+                      type="submit">
+                      <i class="fa fa-shopping-cart"></i>Add to cart
+                    </button>
+                  </form:form>
+                </div>
+              </div>
+            </div>
           </div>
         </c:forEach>
       </div>
