@@ -24,9 +24,9 @@
       <column name="rating" default="0" />
     </property>
     <property name="number" type="integer">
-      <column name="number" default="0" />
+      <column name="number" default="0" check="number >= 0" />
     </property>
-
+    
     <many-to-one name="category" class="Category" lazy="false">
       <column name="category_id" not-null="true" />
     </many-to-one>

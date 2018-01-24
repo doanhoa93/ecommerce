@@ -30,8 +30,8 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	}
 
 	@Override
-	public OrderProduct findBy(String attribute, Serializable key) {
-		return getOrderProductDAO().findBy(attribute, key);
+	public OrderProduct findBy(String attribute, Serializable key, boolean lock) {
+		return getOrderProductDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

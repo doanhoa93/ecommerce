@@ -40,7 +40,7 @@
 	right: 5px;
 }
 
-.cart-product .cart-left .product-image {
+.cart-product .cart-left .cart-product-image {
 	height: auto !important;
 	display: inline-block;
 }
@@ -54,11 +54,11 @@
 	display: inline-block;
 }
 
-.cart-product .product-info {
+.cart-product .cart-product-info {
 	display: inline-block;
 }
 
-.cart-right .product-price {
+.cart-right .cart-product-price {
 	font-size: 30px;
 	line-height: 100px;
 	width: 150px;
@@ -104,4 +104,8 @@
 	border: solid 1px #e0e0e0;
 	border-left: none;
 	border-right: none;
+}
+
+.carts .alert-warning {
+	display: none;
 }

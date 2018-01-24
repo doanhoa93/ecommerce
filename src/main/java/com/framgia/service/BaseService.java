@@ -38,7 +38,7 @@ public interface BaseService<PK, T> {
 
 	UserDAO getUserDAO();
 
-	public T findBy(String attribute, Serializable key);
+	public T findBy(String attribute, Serializable key, boolean lock);
 
 	public T findById(Serializable key);
 

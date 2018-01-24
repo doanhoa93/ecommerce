@@ -15,8 +15,8 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public Image findBy(String attribute, Serializable key) {
-		return getImageDAO().findBy(attribute, key);
+	public Image findBy(String attribute, Serializable key, boolean lock) {
+		return getImageDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

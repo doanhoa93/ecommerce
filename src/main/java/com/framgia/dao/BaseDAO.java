@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface BaseDAO<PK, T> {
-	public T findBy(String attribute, Serializable key);
+	public T findBy(String attribute, Serializable key, boolean lock);
 
 	public T findById(Serializable key);
 

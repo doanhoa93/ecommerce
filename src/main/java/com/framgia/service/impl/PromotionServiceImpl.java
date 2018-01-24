@@ -15,8 +15,8 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public Promotion findBy(String attribute, Serializable key) {
-		return getPromotionDAO().findBy(attribute, key);
+	public Promotion findBy(String attribute, Serializable key, boolean lock) {
+		return getPromotionDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

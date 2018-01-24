@@ -15,24 +15,24 @@
 
     <!-- import css -->
     <put-list-attribute name="default-css">
-      <add-attribute value="/assets/css/animate.css" />
-      <add-attribute value="/assets/css/bootstrap.min.css" />
-      <add-attribute value="/assets/css/font-awesome.min.css" />
-      <add-attribute value="/assets/css/main.css" />
-      <add-attribute value="/assets/css/prettyPhoto.css" />
-      <add-attribute value="/assets/css/price-range.css" />
-      <add-attribute value="/assets/css/responsive.css" />
-      <add-attribute value="/assets/css/custom/page.css" />
+      <add-attribute value="/assets/lib-css/animate.css" />
+      <add-attribute value="/assets/lib-css/bootstrap.min.css" />
+      <add-attribute value="/assets/lib-css/font-awesome.min.css" />
+      <add-attribute value="/assets/lib-css/main.css" />
+      <add-attribute value="/assets/lib-css/prettyPhoto.css" />
+      <add-attribute value="/assets/lib-css/price-range.css" />
+      <add-attribute value="/assets/lib-css/responsive.css" />
+      <add-attribute value="/assets/css/page.css" />
     </put-list-attribute>
 
     <!-- import js -->
     <put-list-attribute name="default-js">
-      <add-attribute value="/assets/js/jquery.js" />
-      <add-attribute value="/assets/js/bootstrap.min.js" />
-      <add-attribute value="/assets/js/jquery.scrollUp.min.js" />
-      <add-attribute value="/assets/js/price-range.js" />
-      <add-attribute value="/assets/js/jquery.prettyPhoto.js" />
-      <add-attribute value="/assets/js/main.js" />
+      <add-attribute value="/assets/lib-js/jquery.js" />
+      <add-attribute value="/assets/lib-js/bootstrap.min.js" />
+      <add-attribute value="/assets/lib-js/jquery.scrollUp.min.js" />
+      <add-attribute value="/assets/lib-js/price-range.js" />
+      <add-attribute value="/assets/lib-js/jquery.prettyPhoto.js" />
+      <add-attribute value="/assets/lib-js/main.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -48,7 +48,7 @@
     <put-attribute name="title" value="Login | Ecommerce" />
     <put-attribute name="body" value="/views/sessions/new.jsp" />
     <put-list-attribute name="css">
-      <add-attribute value="/assets/css/custom/login.css" />
+      <add-attribute value="/assets/css/login.css" />
     </put-list-attribute>
   </definition>
 
@@ -56,7 +56,16 @@
     <put-attribute name="title" value="Your carts | Ecommerce" />
     <put-attribute name="body" value="/views/carts/index.jsp" />
     <put-list-attribute name="css">
-      <add-attribute value="/assets/css/custom/cart.css" />
+      <add-attribute value="/assets/css/cart.css" />
     </put-list-attribute>
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/order.js" />
+    </put-list-attribute>    
   </definition>
+  
+  <definition name="orders" extends="baselayout">
+    <put-attribute name="title" value="Your orders | Ecommerce" />
+    <put-attribute name="body" value="/views/orders/index.jsp" />
+  </definition>  
 </tiles-definitions>

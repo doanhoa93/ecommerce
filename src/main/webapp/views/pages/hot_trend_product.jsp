@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:set var="hotProducts" value="${params.hotProducts}" scope="page" />
 <section id="slider">
@@ -26,8 +27,13 @@
                   </h1>
                   <h2>${product.getName()}</h2>
                   <p>${product.getInformation()}</p>
-                  <button type="button" class="btn btn-default get">Get
-                    it now</button>
+                  <form:form
+                    action="${contextPath}/products/${product.getId()}/carts"
+                    method="POST" modelAttribute="cartInfo">
+                    <button type="submit" class="btn btn-default get">
+                      Get it now
+                    </button>                    
+                  </form:form>                    
                 </div>
                 <div class="col-sm-6">
                   <img src="${contextPath}/${product.getAvatar()}"

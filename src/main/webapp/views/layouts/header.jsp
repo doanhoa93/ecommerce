@@ -54,20 +54,36 @@
                 <c:when test="${currentUser != null}">
                   <li><a href="#"><i class="fa fa-user"></i>
                       Account</a></li>
-                  <li><a
-                    href="${contextPath}/carts"><i
-                      class="fa fa-shopping-cart"></i> Cart</a></li>
-                  <li><a
-                    href="${contextPath}/sessions/delete"
-                    class="logout-btn"><i class="fa fa-lock"></i>Logout</a></li>
+                  <li>
+                    <a href="${contextPath}/carts">
+                      <i class="fa fa-shopping-cart"></i> Carts
+                    </a>
+                   </li>
+                   
+                   <li>
+                    <a href="${contextPath}/orders">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders
+                    </a>
+                   </li>                      
+                   
+                  <li>
+                    <a href="${contextPath}/sessions/delete"
+                    class="logout-btn"><i class="fa fa-lock"></i>Logout
+                    </a>
+                  </li>
                 </c:when>
                 <c:otherwise>
-                  <li><a
-                    href="${contextPath}/sessions/new"><i
-                      class="fa fa-lock"></i> Login</a></li>
-                  <li><a
-                    href="${contextPath}/registrations/new"><i
-                      class="fa fa-lock"></i> Signup</a></li>
+                  <li>
+                    <a href="${contextPath}/sessions/new"><i
+                      class="fa fa-lock"></i> Login
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href="${contextPath}/registrations/new">
+                      <i class="fa fa-lock"></i> Signup
+                    </a>
+                  </li>
                 </c:otherwise>
               </c:choose>
             </ul>

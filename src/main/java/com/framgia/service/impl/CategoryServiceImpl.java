@@ -39,8 +39,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public Category findBy(String attribute, Serializable key) {
-		return getCategoryDAO().findBy(attribute, key);
+	public Category findBy(String attribute, Serializable key, boolean lock) {
+		return getCategoryDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart findBy(String attribute, Serializable key) {
-		return getCartDAO().findBy(attribute, key);
+	public Cart findBy(String attribute, Serializable key, boolean lock) {
+		return getCartDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public Comment findBy(String attribute, Serializable key) {
-		return getCommentDAO().findBy(attribute, key);
+	public Comment findBy(String attribute, Serializable key, boolean lock) {
+		return getCommentDAO().findBy(attribute, key, lock);
 	}
 
 	@Override
