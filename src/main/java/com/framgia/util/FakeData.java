@@ -50,15 +50,32 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			for (int i = 1; i < 10; i++) {
-				User user = new User();
+
+			User user = new User();
+			user.setId(1);
+			user.setEmail("tiennh1995@gmail.com");
+			user.setPassword(Encode.encode("123456"));
+			user.setRole(Role.User);
+			user.setName("Nguyen Huu Tien");
+			session.save(user);
+			Profile profile = new Profile();
+			profile.setId(1);
+			profile.setUser(user);
+			profile.setAddress("Ha Noi");
+			profile.setGender(Gender.MALE);
+			profile.setBirthday(new Date(1995, 11, 05));
+
+			session.save(profile);
+
+			for (int i = 2; i < 10; i++) {
+				user = new User();
 				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");
 				user.setPassword(Encode.encode("123456"));
 				user.setRole(Role.User);
 				user.setName("Example-" + i);
 				session.save(user);
-				Profile profile = new Profile();
+				profile = new Profile();
 				profile.setId(i);
 				profile.setUser(user);
 				profile.setAddress("Ha Noi");

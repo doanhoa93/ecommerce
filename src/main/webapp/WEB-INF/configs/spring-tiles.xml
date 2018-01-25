@@ -55,5 +55,8 @@
   <definition name="carts" extends="baselayout">
     <put-attribute name="title" value="Your carts | Ecommerce" />
     <put-attribute name="body" value="/views/carts/index.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/custom/cart.css" />
+    </put-list-attribute>
   </definition>
 </tiles-definitions>

@@ -51,6 +51,8 @@
 <c:set var="currentUser"
   value="${request.getSession().getAttribute('currentUser')}"
   scope="application" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}"
+  scope="application" />
 
 <body>
   <div class="header">
@@ -58,7 +60,9 @@
   </div>
 
   <div class="body">
-    <tiles:insertAttribute name="body" ignore="true" />
+    <div class="container">
+      <tiles:insertAttribute name="body" ignore="true" />
+    </div>
   </div>
 
   <div class="footer">
