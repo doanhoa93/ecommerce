@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -36,13 +37,16 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 		return sessionFactory.getCurrentSession();
 	}
 
-	@SuppressWarnings("unchecked")
-	public T findBy(String attribute, Serializable key) {
-		return (T) createEntityCriteria().add(Restrictions.eq(attribute, key)).uniqueResult();
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public T findBy(String attribute, Serializable key, boolean lock) {
+		Criteria criteria = createEntityCriteria();
+		if (lock)
+			criteria.setLockMode(LockMode.UPGRADE);
+		return (T) criteria.add(Restrictions.eq(attribute, key)).uniqueResult();
 	}
 
 	public T findById(Serializable key) {
-		return findBy("id", key);
+		return findBy("id", key, true);
 	}
 
 	public void persist(T entity) {

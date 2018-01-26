@@ -20,7 +20,7 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 
 	@Override
 	public User findByEmail(String email) {
-		return findBy("email", email);
+		return findBy("email", email, true);
 	}
 
 	@Override

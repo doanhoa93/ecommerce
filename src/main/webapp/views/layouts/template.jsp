@@ -36,10 +36,6 @@
   <script src="<c:url value='${js}'/>" type="text/javascript"></script>
 </c:forEach>
 
-<script src="${pageContext.request.contextPath}/assets/js/html5shiv.js"></script>
-<script
-  src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
-
 <!-- Addition JS -->
 <tilesx:useAttribute id="additionJavascripts" name="js"
   classname="java.util.List" />

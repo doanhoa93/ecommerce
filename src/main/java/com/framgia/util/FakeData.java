@@ -132,7 +132,7 @@ public class FakeData {
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
 				product.setIsPromotion(false);
-				product.setNumber(100);
+				product.setNumber(10);
 				product.setPrice(new Float(100.0));
 				product.setRating(new Float(4.0));
 				product.setAvatar("assets/images/home/product" + i + ".jpg");

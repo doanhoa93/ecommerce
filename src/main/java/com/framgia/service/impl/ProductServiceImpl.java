@@ -66,8 +66,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public Product findBy(String attribute, Serializable key) {
-		return getProductDAO().findBy(attribute, key);
+	public Product findBy(String attribute, Serializable key, boolean lock) {
+		return getProductDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

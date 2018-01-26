@@ -15,8 +15,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public Profile findBy(String attribute, Serializable key) {
-		return getProfileDAO().findBy(attribute, key);
+	public Profile findBy(String attribute, Serializable key, boolean lock) {
+		return getProfileDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

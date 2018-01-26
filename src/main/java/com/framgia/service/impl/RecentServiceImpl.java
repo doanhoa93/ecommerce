@@ -15,8 +15,8 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public Recent findBy(String attribute, Serializable key) {
-		return getRecentDAO().findBy(attribute, key);
+	public Recent findBy(String attribute, Serializable key, boolean lock) {
+		return getRecentDAO().findBy(attribute, key, lock);
 	}
 
 	@Override

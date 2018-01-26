@@ -65,18 +65,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findBy(String attribute, Serializable key) {
-		return getUserDAO().findBy(attribute, key);
+	public User findBy(String attribute, Serializable key, boolean lock) {
+		return getUserDAO().findBy(attribute, key, lock);
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		return findBy("email", email);
+		return findBy("email", email, true);
 	}
 
 	@Override
 	public User findById(Serializable key) {
-		return findBy("id", key);
+		return findBy("id", key, true);
 	}
 
 	@Override
