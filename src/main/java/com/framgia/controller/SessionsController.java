@@ -20,7 +20,7 @@ public class SessionsController extends BaseController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
 			if (userService.validate(userInfo)) {
@@ -30,8 +30,8 @@ public class SessionsController extends BaseController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ModelAndView("redirect:/sessions/new");
 		}
-		return new ModelAndView("redirect:/sessions/new");
 	}
 
 	@RequestMapping(value = "/delete")

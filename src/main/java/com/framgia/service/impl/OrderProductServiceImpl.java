@@ -40,20 +40,22 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	}
 
 	@Override
-	public void delete(OrderProduct entity) {
+	public boolean delete(OrderProduct entity) {
 		try {
 			getOrderProductDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(OrderProduct entity) {
+	public boolean saveOrUpdate(OrderProduct entity) {
 		try {
 			getOrderProductDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

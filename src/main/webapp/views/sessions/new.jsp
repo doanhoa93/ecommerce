@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <section id="form">
   <div class="container">
@@ -8,14 +8,13 @@
       <div class="col-sm-4">
         <div class="login-form">
 
-          <!--login form-->
           <h2>Login to your account</h2>
           <c:if test="${message != null}">
             <div class="alert alert-warning">${message}</div>
           </c:if>
 
           <form:form
-            action="${contextPath}/sessions/create"
+            action="${contextPath}/sessions"
             method="POST" modelAttribute="userInfo" class="form-login">
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />

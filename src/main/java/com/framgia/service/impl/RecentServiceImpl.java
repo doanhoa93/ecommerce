@@ -25,20 +25,22 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public void delete(Recent entity) {
+	public boolean delete(Recent entity) {
 		try {
 			getRecentDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Recent entity) {
+	public boolean saveOrUpdate(Recent entity) {
 		try {
 			getRecentDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

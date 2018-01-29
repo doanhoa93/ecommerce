@@ -26,16 +26,24 @@ public class OrdersController extends BaseController {
 	public @ResponseBody String create(@RequestBody String data)
 	        throws JsonParseException, JsonMappingException, IOException {
 		HashMap<String, Object> hashMap = toHashMap(data);
-		List<String> strCartIds = (List<String>) hashMap.get("cartIds");
-		if (!strCartIds.isEmpty()) {
+		try {
+			List<String> strCartIds = (List<String>) hashMap.get("cartIds");
 			List<Integer> cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
 			hashMap.clear();
-			if (orderService.createOrder(currentUser().getId(), cartIds))
+			if (orderService.createOrder(currentUser().getId(), cartIds)) {
+				hashMap.put("msg", "success");
 				hashMap.put("url", "/orders");
-			else
-				hashMap.put("error", "Cannot create this order");
+			} else {
+				hashMap.put("msg", "error");
+				hashMap.put("error", request.getAttribute("error"));
+			}
+			return toJson(hashMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			hashMap.clear();
+			hashMap.put("msg", "error");
+			hashMap.put("error", "No product is selected, please select product which you want buy.");
 			return toJson(hashMap);
 		}
-		return "";
 	}
 }

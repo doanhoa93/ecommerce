@@ -25,17 +25,23 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public void delete(Promotion entity) {
+	public boolean delete(Promotion entity) {
 		try {
 			getPromotionDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Promotion entity) {
-		getPromotionDAO().saveOrUpdate(entity);
+	public boolean saveOrUpdate(Promotion entity) {
+		try {
+			getPromotionDAO().saveOrUpdate(entity);
+			return true;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override

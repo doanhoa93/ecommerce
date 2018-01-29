@@ -31,20 +31,22 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public void delete(Comment entity) {
+	public boolean delete(Comment entity) {
 		try {
 			getCommentDAO().delete(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(Comment entity) {
+	public boolean saveOrUpdate(Comment entity) {
 		try {
 			getCommentDAO().saveOrUpdate(entity);
+			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			throw e;
 		}
 	}
 

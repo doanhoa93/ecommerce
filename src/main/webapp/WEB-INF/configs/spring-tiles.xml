@@ -51,6 +51,14 @@
       <add-attribute value="/assets/css/login.css" />
     </put-list-attribute>
   </definition>
+  
+  <definition name="signup" extends="baselayout">
+    <put-attribute name="title" value="Signup | Ecommerce" />
+    <put-attribute name="body" value="/views/registrations/new.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/signup.css" />
+    </put-list-attribute>
+  </definition>  
 
   <definition name="carts" extends="baselayout">
     <put-attribute name="title" value="Your carts | Ecommerce" />
