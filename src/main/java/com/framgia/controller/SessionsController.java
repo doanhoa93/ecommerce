@@ -29,7 +29,6 @@ public class SessionsController extends BaseController {
 				return new ModelAndView("login", "message", "Email or password invalid");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ModelAndView("redirect:/sessions/new");
 		}
 	}

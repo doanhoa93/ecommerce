@@ -3,7 +3,6 @@
 
 <c:set var="hotProducts" value="${params.hotProducts}" scope="page" />
 <section id="slider">
-  <!--slider-->
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
@@ -20,34 +19,18 @@
           <div class="carousel-inner">
             <c:forEach var="product" items="${hotProducts}"
               varStatus="loop">
-              <div class="item ${loop.index == 1 ? 'active' : ''}">
-                <div class="col-sm-6">
-                  <h1>
-                    <span>ECOMMERCE</span>
-                  </h1>
-                  <h2>${product.getName()}</h2>
-                  <p>${product.getInformation()}</p>
-                  <form:form
-                    action="${contextPath}/products/${product.getId()}/carts"
-                    method="POST" modelAttribute="cartInfo">
-                    <button type="submit" class="btn btn-default get">
-                      Get it now
-                    </button>                    
-                  </form:form>                    
-                </div>
-                <div class="col-sm-6">
-                  <img src="${contextPath}/${product.getAvatar()}"
-                    class="girl img-responsive" alt="" />
-                </div>
-              </div>
+              <c:set var="product" value="${product}" scope="session" />
+              <c:set var="index" value="${loop.index}" scope="session" />
+              <c:import url="/views/products/medium_product.jsp" />
+              <c:remove var="product" scope="session" />
+              <c:remove var="index" scope="session" />
             </c:forEach>
           </div>
 
           <a href="#slider-carousel"
             class="left control-carousel hidden-xs" data-slide="prev">
             <i class="fa fa-angle-left"></i>
-          </a> 
-          <a href="#slider-carousel"
+          </a> <a href="#slider-carousel"
             class="right control-carousel hidden-xs" data-slide="next">
             <i class="fa fa-angle-right"></i>
           </a>
@@ -56,4 +39,3 @@
     </div>
   </div>
 </section>
-<!--/slider-->

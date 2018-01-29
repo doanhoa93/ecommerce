@@ -52,8 +52,6 @@
             <ul class="nav navbar-nav">
               <c:choose>
                 <c:when test="${currentUser != null}">
-                  <li><a href="#"><i class="fa fa-user"></i>
-                      Account</a></li>
                   <li>
                     <a href="${contextPath}/carts">
                       <i class="fa fa-shopping-cart"></i> Carts
@@ -66,6 +64,12 @@
                     </a>
                    </li>                      
                    
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user"></i>Account
+                    </a>
+                  </li>
+                  
                   <li>
                     <a href="${contextPath}/sessions/delete"
                     class="logout-btn"><i class="fa fa-lock"></i>Logout

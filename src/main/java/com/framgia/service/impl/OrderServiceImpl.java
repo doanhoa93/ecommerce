@@ -1,6 +1,7 @@
 package com.framgia.service.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,7 +105,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			}
 		}
 
-		// Neu khong du thi tao mot exception, de thong bao cho client biet
+		// Neu khong du thi return false, va tao message error de thong bao cho
+		// client biet
 		if (error) {
 			request.setAttribute("error", hashMap);
 			return false;
@@ -114,6 +116,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			Order order = new Order();
 			order.setStatus(Status.WAITING);
 			order.setUser(new User(userId));
+			order.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang
 			float totalPrice = 0;
@@ -130,6 +133,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				orderProduct.setOrder(order);
 				orderProduct.setProduct(cart.getProduct());
 				orderProduct.setPrice(cart.getProduct().getPrice());
+				orderProduct.setQuantity(cart.getQuantity());
 				orderProductService.saveOrUpdate(orderProduct);
 
 				Product product = cart.getProduct();
@@ -139,7 +143,6 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			}
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			hashMap.put("order", "Error when try save order!");
 			request.setAttribute("error", hashMap);
 			throw e;
@@ -150,5 +153,12 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		if (cart.getQuantity() <= cart.getProduct().getNumber())
 			return true;
 		return false;
+	}
+
+	@Override
+	public int getProductQuantity(Integer orderId) {
+		List<OrderProduct> orderProducts = getOrderProducts(orderId);
+		return orderProducts.stream().map(OrderProduct::getQuantity).mapToInt(Integer::intValue).sum();
+
 	}
 }

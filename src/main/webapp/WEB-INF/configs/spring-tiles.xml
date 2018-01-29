@@ -75,5 +75,8 @@
   <definition name="orders" extends="baselayout">
     <put-attribute name="title" value="Your orders | Ecommerce" />
     <put-attribute name="body" value="/views/orders/index.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/order.css" />
+    </put-list-attribute>
   </definition>  
 </tiles-definitions>
