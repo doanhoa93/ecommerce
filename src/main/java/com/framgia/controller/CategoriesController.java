@@ -15,11 +15,12 @@ import com.framgia.constant.ProductFilter;
 import com.framgia.model.Product;
 
 @Controller
-@RequestMapping(value = "/products")
-public class ProductsController extends BaseController {
+@RequestMapping(value = "categories")
+public class CategoriesController extends BaseController {
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView index(@RequestParam(value = "priceLow", required = false) String priceLow,
+	@RequestMapping(value = "{categoryId}", method = RequestMethod.GET)
+	public ModelAndView show(@PathVariable Integer categoryId,
+	        @RequestParam(value = "priceLow", required = false) String priceLow,
 	        @RequestParam(value = "priceHigh", required = false) String priceHigh,
 	        @RequestParam(value = "name", required = false) String name,
 	        @RequestParam(value = "page", required = false) String page) {
@@ -27,36 +28,20 @@ public class ProductsController extends BaseController {
 		List<Product> products = null;
 		ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
 		if (productFilter.isFilterProduct()) {
-			products = productService.filterProducts(null, productFilter, page, Paginate.PRODUCT_LIMIT);
+			products = productService.filterProducts(categoryId, productFilter, page, Paginate.PRODUCT_LIMIT);
 			model.setViewName("productsPartial");
 		} else {
 			model.addObject("categories", categoryService.getObjects());
 			model.addObject("maxPrice", Price.MAX_PRICE);
 			model.addObject("minPrice", Price.MIN_PRICE);
-			products = productService.getProducts(null, page, Paginate.PRODUCT_LIMIT);
+			products = productService.getProducts(categoryId, page, Paginate.PRODUCT_LIMIT);
 			model.setViewName("products");
 		}
+
 		model.addObject("paginate", setPaginate(products.size(), page, Paginate.PRODUCT_LIMIT));
 		model.addObject("title", "products");
+		model.addObject("categoryId", categoryId);
 		model.addObject("products", products);
 		return model;
-	}
-
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ModelAndView show(@PathVariable Integer id) {
-		Product product = productService.findById(id);
-		ModelAndView model = new ModelAndView();
-		if (product != null) {
-			int size = product.getImages().size() / 3;
-			if (product.getImages().size() % 3 > 0)
-				size++;
-			model.addObject("product", product);
-			model.addObject("slideSize", size);
-			model.setViewName("product");
-			return model;
-		} else {
-			model.setViewName("redirect:/");
-			return model;
-		}
 	}
 }

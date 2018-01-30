@@ -13,10 +13,10 @@ public class PagesController extends BaseController {
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView model = new ModelAndView("homePage");
 		model.addObject("flash", redirect.getFlashAttributes().get("flash"));
-		model.addObject("categories", categoryService.getObjects(7));
-		model.addObject("hotProducts", productService.getObjects(3));
-		model.addObject("recentProducts", productService.getObjects(6));
-		model.addObject("recommendProducts", productService.getObjects(6));
+		model.addObject("categories", categoryService.getObjects(0, 7));
+		model.addObject("hotProducts", productService.getObjects(0, 3));
+		model.addObject("recentProducts", productService.getObjects(0, 6));
+		model.addObject("recommendProducts", productService.getObjects(0, 6));
 		return model;
 	}
 }

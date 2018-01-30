@@ -46,3 +46,11 @@
    text-align: right;
    z-index: 11;
  }
+
+ .pagination {
+ 	width: 100%;
+ }
+ 
+ .pagination .paginate-a {
+ 	cursor: pointer;
+ }

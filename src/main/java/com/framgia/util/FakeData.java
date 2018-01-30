@@ -9,10 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import com.framgia.constant.Gender;
+import com.framgia.constant.Role;
+import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
-import com.framgia.model.Gender;
 import com.framgia.model.Image;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
@@ -20,8 +22,6 @@ import com.framgia.model.Product;
 import com.framgia.model.Profile;
 import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
-import com.framgia.model.Role;
-import com.framgia.model.Status;
 import com.framgia.model.User;
 
 public class FakeData {
@@ -125,17 +125,18 @@ public class FakeData {
 			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
-			for (int i = 1; i < 10; i++) {
+			for (int i = 1; i < 100; i++) {
 				Product product = new Product();
+				int j = i % 10;
 				product.setId(i);
-				product.setCategory(categories.get(i - 1));
+				product.setCategory(categories.get(j == 9 ? 8 : j));
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
 				product.setIsPromotion(false);
 				product.setNumber(10);
 				product.setPrice(new Float(100.0));
 				product.setRating(new Float(4.0));
-				product.setAvatar("assets/images/home/product" + i + ".jpg");
+				product.setAvatar("assets/images/home/product" + (j == 0 ? 1 : j) + ".jpg");
 
 				session.save(product);
 			}

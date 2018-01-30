@@ -1,4 +1,4 @@
-package com.framgia.model;
+package com.framgia.constant;
 
 public class Role {
 	public static final String Admin = "Admin";

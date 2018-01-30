@@ -50,5 +50,5 @@ public interface BaseService<PK, T> {
 
 	public List<T> getObjectsByIds(List<Integer> keys);
 
-	public List<T> getObjects(int limit);
+	public List<T> getObjects(int off, int limit);
 }

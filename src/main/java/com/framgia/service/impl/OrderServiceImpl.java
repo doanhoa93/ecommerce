@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
-import com.framgia.model.Status;
 import com.framgia.model.User;
 import com.framgia.service.CartService;
 import com.framgia.service.OrderProductService;
@@ -114,9 +114,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getObjects(int limit) {
+	public List<Order> getObjects(int off, int limit) {
 		try {
-			return getOrderDAO().getObjects(limit);
+			return getOrderDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

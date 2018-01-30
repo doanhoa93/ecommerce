@@ -18,10 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
+import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
 import com.framgia.mailer.ApplicationMailer;
 import com.framgia.model.Order;
-import com.framgia.model.Status;
 
 @Controller
 @RequestMapping(value = "/orders")

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.framgia.constant.ProductFilter;
 import com.framgia.dao.ProductDAO;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -87,12 +88,15 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> filterProducts(Integer categoryId, String name, float priceLow, float priceHigh) {
+	public List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit) {
 		Criteria criteria = getSession().createCriteria(Product.class);
 		if (categoryId != null)
 			criteria.add(Restrictions.eq("category.id", categoryId));
-		criteria.add(Restrictions.like("name", "%" + name + "%"));
-		criteria.add(Restrictions.between("price", priceLow, priceHigh));
+		criteria.add(Restrictions.like("name", "%" + productFilter.getName() + "%"));
+		criteria.add(Restrictions.between("price", productFilter.getPriceLow(), productFilter.getPriceHigh()));
+		criteria.setFirstResult(off);
+		if (limit != 0)
+			criteria.setMaxResults(limit);
 		return (List<Product>) criteria.list();
 	}
 }

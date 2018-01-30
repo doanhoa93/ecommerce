@@ -2,6 +2,7 @@ package com.framgia.dao;
 
 import java.util.List;
 
+import com.framgia.constant.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
@@ -25,8 +26,8 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 	List<Comment> getComments(Integer productId);
 
 	List<Image> getImages(Integer productId);
-	
+
 	List<Product> getProducts(Integer categoryId);
 
-	List<Product> filterProducts(Integer categoryId, String name, float priceLow, float priceHigh);
+	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit);
 }

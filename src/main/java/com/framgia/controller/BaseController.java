@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -36,9 +37,9 @@ public class BaseController {
 
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
-	MessageSource messageSource;	
+	MessageSource messageSource;
 
 	@Autowired
 	HttpServletRequest request;
@@ -57,5 +58,32 @@ public class BaseController {
 	@SuppressWarnings("rawtypes")
 	public HashMap toHashMap(String data) throws JsonParseException, JsonMappingException, IOException {
 		return new ObjectMapper().readValue(data, HashMap.class);
+	}
+
+	public HashMap<String, Object> setPaginate(int length, String page, int limit) {
+		int start, end;
+		boolean more;
+		if (StringUtils.isEmpty(page))
+			start = 1;
+		else
+			start = Integer.parseInt(page);
+
+		if (start == 1 && length < limit)
+			end = 1;
+		else if (length == limit)
+			end = start + 1;
+		else
+			end = 2;
+
+		if (length == limit)
+			more = true;
+		else
+			more = false;
+
+		HashMap<String, Object> paginate = new HashMap<>();
+		paginate.put("start", start);
+		paginate.put("end", end);
+		paginate.put("more", more);
+		return paginate;
 	}
 }

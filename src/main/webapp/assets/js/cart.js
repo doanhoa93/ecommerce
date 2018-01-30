@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	initTotalPrice();
 
-	$('.cart-close').on('click', function(event) {
+	$(document).on('click', '.cart-close', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
 		$.ajax({
@@ -28,8 +28,7 @@ $(document).ready(function() {
     	cartProduct.remove();
 	}
 
-
-	$('.quantity-minus').on('click', function() {
+	$(document).on('click', '.quantity-minus', function() {
 		var parent = $(this).parent();
 		var id = parent.data('id');
 		var cartQuantity = parent.find('.cart-quantity').first();
@@ -52,7 +51,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.quantity-plus').on('click', function() {
+	$(document).on('click', '.quantity-plus', function() {
 		var parent = $(this).parent();
 		var id = parent.data('id');
 		var cartQuantity = parent.find('.cart-quantity').first();
@@ -72,7 +71,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.btn-order').on('click', function() {
+	$(document).on('click', '.btn-order', function() {
 		var cartIds = [];
 		$('.cart-product-select:checked').each(function(index, cart) {
 			cartIds.push(cart.value);

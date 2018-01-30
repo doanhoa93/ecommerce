@@ -101,9 +101,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public List<Category> getObjects(int limit) {
+	public List<Category> getObjects(int off, int limit) {
 		try {
-			return getCategoryDAO().getObjects(limit);
+			return getCategoryDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

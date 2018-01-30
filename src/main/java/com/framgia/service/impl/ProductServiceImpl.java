@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.framgia.constant.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
 import com.framgia.model.Image;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
-import com.framgia.model.Price;
 import com.framgia.model.Product;
 import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
@@ -160,32 +160,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public List<Product> getObjects(int limit) {
+	public List<Product> getObjects(int off, int limit) {
 		try {
-			return getProductDAO().getObjects(limit);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
-	public List<Product> filterProducts(Integer categoryId, String name, String priceLow, String priceHigh) {
-		try {
-			float low, high;
-			if (StringUtils.isEmpty(name))
-				name = "";
-
-			if (StringUtils.isEmpty(priceLow))
-				low = Price.MIN_PRICE;
-			else
-				low = Float.parseFloat(priceLow);
-
-			if (StringUtils.isEmpty(priceHigh))
-				high = Price.MAX_PRICE;
-			else
-				high = Float.parseFloat(priceHigh);
-
-			return getProductDAO().filterProducts(categoryId, name, low, high);
+			return getProductDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}
@@ -195,6 +172,36 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<Product> getProducts(Integer categoryId) {
 		try {
 			return getProductDAO().getProducts(categoryId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Product> getProducts(Integer categoryId, String page, int limit) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page))
+				off = 0;
+			else
+				off = (Integer.parseInt(page) - 1) * limit;
+
+			return getProductDAO().filterProducts(categoryId, new ProductFilter(null, null, null), off, limit);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, String page, Integer limit) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page)) {
+				off = 0;
+			} else
+				off = (Integer.parseInt(page) - 1) * limit;
+
+			return getProductDAO().filterProducts(categoryId, productFilter, off, limit);
 		} catch (Exception e) {
 			return null;
 		}

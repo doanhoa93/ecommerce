@@ -75,9 +75,9 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public List<Promotion> getObjects(int limit) {
+	public List<Promotion> getObjects(int off, int limit) {
 		try {
-			return getPromotionDAO().getObjects(limit);
+			return getPromotionDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

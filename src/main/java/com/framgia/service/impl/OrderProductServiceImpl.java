@@ -98,9 +98,9 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	}
 
 	@Override
-	public List<OrderProduct> getObjects(int limit) {
+	public List<OrderProduct> getObjects(int off, int limit) {
 		try {
-			return getOrderProductDAO().getObjects(limit);
+			return getOrderProductDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

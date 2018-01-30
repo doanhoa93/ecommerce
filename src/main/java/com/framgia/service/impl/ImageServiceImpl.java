@@ -75,9 +75,9 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<Image> getObjects(int limit) {
+	public List<Image> getObjects(int off, int limit) {
 		try {
-			return getImageDAO().getObjects(limit);
+			return getImageDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

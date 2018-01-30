@@ -161,9 +161,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getObjects(int limit) {
+	public List<User> getObjects(int off, int limit) {
 		try {
-			return getUserDAO().getObjects(limit);
+			return getUserDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

@@ -75,9 +75,9 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public List<Profile> getObjects(int limit) {
+	public List<Profile> getObjects(int off, int limit) {
 		try {
-			return getProfileDAO().getObjects(limit);
+			return getProfileDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

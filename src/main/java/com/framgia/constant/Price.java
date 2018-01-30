@@ -1,4 +1,4 @@
-package com.framgia.model;
+package com.framgia.constant;
 
 public class Price {
 	public static float MAX_PRICE = 600;
