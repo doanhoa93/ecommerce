@@ -2,13 +2,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <h3>
-  Your cart (<span class="carts-size">${params.carts.size()}</span>
+  Your cart (<span class="carts-size">${carts.size()}</span>
   products)
 </h3>
 <div class="carts">
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 alert alert-warning"></div>
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 carts-left">
-    <c:forEach var="cart" items="${params.carts}">
+    <c:forEach var="cart" items="${carts}">
       <c:set var="product" value="${cart.getProduct()}" scope="page" />
 
       <div class="cart-product cart-product-${cart.getId()}"

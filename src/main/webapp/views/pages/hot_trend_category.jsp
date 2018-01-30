@@ -2,9 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="categories" value="${params.categories}" />
 <div class="category-tab">
-  <!--category-tab-->
   <div class="col-sm-12">
     <ul class="nav nav-tabs">
       <c:forEach var="category" items="${categories}" varStatus="loop">

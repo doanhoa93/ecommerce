@@ -5,13 +5,18 @@
 <div class="product-image-wrapper">
   <div class="single-products">
     <div class="productinfo text-center">
-      <img class="product-image"
-        src="${contextPath}/${product.getAvatar()}" alt="" />
+      <a href="${contextPath}/products/${product.getId()}">
+        <img class="product-image" src="${contextPath}/${product.getAvatar()}" alt="" />
+      </a>
       <h2>            
         <fmt:setLocale value="en_US" />
         <fmt:formatNumber value="${product.getPrice()}" type="currency" />
       </h2>
-      <p>${product.getName()}</p>
+      <p>
+        <a href="${contextPath}/products/${product.getId()}" class="product-name">
+          ${product.getName()}
+        </a>
+      </p>
       <form:form
         action="${contextPath}/products/${product.getId()}/carts"
         method="POST" modelAttribute="cartInfo">

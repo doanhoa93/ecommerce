@@ -11,14 +11,15 @@ import com.framgia.helper.BeanToModel;
 import com.framgia.model.User;
 
 @Controller
-@RequestMapping(value = "/registrations", method = RequestMethod.GET)
+@RequestMapping(value = "/registrations")
 public class RegistrationsController extends BaseController {
+	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView getNew() {
 		return new ModelAndView("signup", "userInfo", new UserInfo());
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
 			User user = BeanToModel.toUser(userInfo);

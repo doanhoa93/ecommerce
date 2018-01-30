@@ -18,3 +18,11 @@
 .center {
 	text-align: center;
 }
+
+.product-image-wrapper .product-name {
+	color: #696763;
+}
+
+.item .product-name {
+	color: #696763;
+} 

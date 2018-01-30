@@ -51,14 +51,14 @@
       <add-attribute value="/assets/css/login.css" />
     </put-list-attribute>
   </definition>
-  
+
   <definition name="signup" extends="baselayout">
     <put-attribute name="title" value="Signup | Ecommerce" />
     <put-attribute name="body" value="/views/registrations/new.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/signup.css" />
     </put-list-attribute>
-  </definition>  
+  </definition>
 
   <definition name="carts" extends="baselayout">
     <put-attribute name="title" value="Your carts | Ecommerce" />
@@ -66,17 +66,29 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/cart.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/order.js" />
-    </put-list-attribute>    
+    </put-list-attribute>
   </definition>
-  
+
   <definition name="orders" extends="baselayout">
     <put-attribute name="title" value="Your orders | Ecommerce" />
     <put-attribute name="body" value="/views/orders/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/order.css" />
     </put-list-attribute>
-  </definition>  
+  </definition>
+
+  <definition name="product" extends="baselayout">
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="body" value="/views/products/show.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/product.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/fb.js" />
+    </put-list-attribute>
+  </definition>
 </tiles-definitions>

@@ -6,7 +6,11 @@
     <h1>
       <span>ECOMMERCE</span>
     </h1>
-    <h2>${product.getName()}</h2>
+    <h2>
+      <a href="${contextPath}/products/${product.getId()}" class="product-name">
+        ${product.getName()}
+      </a>
+    </h2>
     <p>${product.getInformation()}</p>
     <form:form
       action="${contextPath}/products/${product.getId()}/carts"

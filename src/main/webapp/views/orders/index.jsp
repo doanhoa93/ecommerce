@@ -14,7 +14,7 @@
   </thead>
 
   <tbody>
-    <c:forEach items="${params.orders}" var="order" varStatus="loop">
+    <c:forEach items="${orders}" var="order" varStatus="loop">
       <tr>
         <td>${loop.index + 1}</td>
         <td>${order.getProductQuantity()}</td>
@@ -25,7 +25,7 @@
         <td>${order.getCreatedAt()}</td>
         <c:set var="status" value="${order.getStatus() - 1}"
           scope="page" />
-        <td>${params.status[status]}</td>
+        <td>${statuses[status]}</td>
       </tr>
     </c:forEach>
   </tbody>

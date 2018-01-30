@@ -5,7 +5,7 @@
     <h2>Categories</h2>
     <div class="brands-name">
       <ul class="nav nav-pills nav-stacked">
-        <c:forEach var="category" items="${params.categories}">
+        <c:forEach var="category" items="${categories}">
           <li>
             <a href="#"> 
               <span class="pull-right">(${category.getProducts().size()})</span> 
