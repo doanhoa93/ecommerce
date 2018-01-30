@@ -2,6 +2,7 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -17,11 +18,10 @@ import com.framgia.service.ProductService;
 
 public class ProductServiceImpl extends BaseServiceImpl implements ProductService {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> getOrders(Integer productId) {
 		List<OrderProduct> orderProducts = getProductDAO().getOrderProducts(productId);
-		return (List<Order>) orderProducts.stream().map(OrderProduct::getOrder);
+		return (List<Order>) orderProducts.stream().map(OrderProduct::getOrder).collect(Collectors.toList());
 	}
 
 	@Override
@@ -29,10 +29,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		return (List<Cart>) getProductDAO().getCarts(productId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getOrderedUser(Integer productId) {
-		return (List<User>) getOrders(productId).stream().map(Order::getUser);
+		return (List<User>) getOrders(productId).stream().map(Order::getUser).collect(Collectors.toList());
 	}
 
 	@Override

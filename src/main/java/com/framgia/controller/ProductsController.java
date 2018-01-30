@@ -15,13 +15,18 @@ public class ProductsController extends BaseController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
 		Product product = productService.findById(id);
-		int size = product.getImages().size() / 3;
-		if (product.getImages().size() % 3 > 0)
-			size++;
 		ModelAndView model = new ModelAndView();
-		model.addObject("product", product);
-		model.addObject("slideSize", size);
-		model.setViewName("product");
-		return model;
+		if (product != null) {
+			int size = product.getImages().size() / 3;
+			if (product.getImages().size() % 3 > 0)
+				size++;
+			model.addObject("product", product);
+			model.addObject("slideSize", size);
+			model.setViewName("product");
+			return model;
+		} else {
+			model.setViewName("redirect:/");
+			return model;
+		}
 	}
 }

@@ -68,8 +68,8 @@
     </put-list-attribute>
 
     <put-list-attribute name="js">
-      <add-attribute value="/assets/js/order.js" />
-    </put-list-attribute>
+      <add-attribute value="/assets/js/cart.js" />
+    </put-list-attribute>    
   </definition>
 
   <definition name="orders" extends="baselayout">
@@ -78,8 +78,24 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/order.css" />
     </put-list-attribute>
-  </definition>
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/order.js" />
+    </put-list-attribute>        
+  </definition>  
+  
+  <definition name="order" extends="baselayout">
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="body" value="/views/orders/show.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/order.css" />
+    </put-list-attribute>
 
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/order.js" />
+    </put-list-attribute>
+  </definition>  
+  
   <definition name="product" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/products/show.jsp" />

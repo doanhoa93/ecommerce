@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +60,18 @@ public class OrdersController extends BaseController {
 			hashMap.put("msg", "error");
 			hashMap.put("error", "No product is selected, please select product which you want buy.");
 			return toJson(hashMap);
+		}
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public ModelAndView show(@PathVariable Integer id) {
+		ModelAndView model = new ModelAndView("order");
+		if (orderService.findById(id) != null) {
+			model.addObject("orderProducts", orderService.getOrderProducts(id));
+			return model;
+		} else {
+			model.setViewName("redirect:/");
+			return model;
 		}
 	}
 }

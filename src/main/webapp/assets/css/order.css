@@ -1,3 +1,84 @@
 .orders-table {
 	width: 100%;
 }
+
+.orders-table .order-tr {
+	cursor: pointer;
+}
+
+.orders-table .order-tr:hover {
+	background: #F9F9F9F9;
+}
+
+.orders .orders-left {
+	background: #fff;
+	border: 1px solid #e4e4e4;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding-left: 0px;
+}
+
+.orders .orders-right .total-money {
+	font-size: 30px;
+}
+
+.orders-right .btn-order {
+	width: 100%;
+}
+
+.orders-left .order-left {
+	padding-left: 0px;
+}
+
+.order-product {
+	border-bottom: 1px solid #e2e2e2;
+	height: auto;
+	padding: 5px;
+	position: relative;
+}
+
+.order-product .order-left .order-product-image {
+	height: auto !important;
+	display: inline-block;
+}
+
+.order-product .order-left .order-product-image {
+	display: inline-block;
+	max-height: 160px;
+}
+
+.order-product .order-left .order-product-image-panel {
+	display: inline-block;
+}
+
+.order-product .order-product-info {
+	display: inline-block;
+}
+
+.order-right .order-product-price {
+	font-size: 20px;
+	line-height: 40px;
+	width: 150px;
+}
+
+.order-right .order-quantity-form {
+	display: inline-block;
+	font-size: 16px;
+}
+
+.order-quantity-form .order-quantity {
+	width: 40px;
+	height: 28px;
+	text-align: center;
+	font-size: 13px;
+	color: #555;
+	border: solid 1px #e0e0e0;
+	border-left: none;
+	border-right: none;
+}
+
+.order-product .total-money {
+	font-size: 20px;
+	line-height: 60px;
+}

@@ -21,7 +21,9 @@
 
           <div class="cart-product-info">
             <div class="cart-product-name">
-              <b>${product.getName()}</b>
+              <a href="${contextPath}/products/${product.getId()}">
+                <b>${product.getName()}</b>
+              </a>
             </div>
             <div>${product.getInformation()}</div>
           </div>

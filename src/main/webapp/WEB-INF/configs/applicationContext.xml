@@ -31,6 +31,7 @@
       <mvc:mapping path="/*/*/carts" />
       <mvc:mapping path="/carts/*" />
       <mvc:mapping path="/orders" />
+      <mvc:mapping path="/orders/*" />
       <bean class="com.framgia.interceptor.LoginInterceptor" />
     </mvc:interceptor>
 
