@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,11 +39,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		return getOrderDAO().getOrderProducts(orderId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProducts(Integer orderId) {
 		List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderId);
-		return (List<Product>) orderProducts.stream().map(OrderProduct::getProduct);
+		return (List<Product>) orderProducts.stream().map(OrderProduct::getProduct).collect(Collectors.toList());
 	}
 
 	@Override

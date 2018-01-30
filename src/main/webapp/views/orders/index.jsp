@@ -15,7 +15,7 @@
 
   <tbody>
     <c:forEach items="${orders}" var="order" varStatus="loop">
-      <tr>
+      <tr class="order-tr" data-href="/orders/${order.getId()}">
         <td>${loop.index + 1}</td>
         <td>${order.getProductQuantity()}</td>
         <td>

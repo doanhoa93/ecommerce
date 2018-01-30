@@ -2,6 +2,7 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -39,24 +40,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return getUserDAO().getComments(userId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderProduct> getOrderProducts(Integer userId) {
 		List<Order> orders = getUserDAO().getOrders(userId);
-		List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId);
+		List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId).collect(Collectors.toList());
 		return getOrderProductDAO().getObjectsByIds(orderIds);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getOrderedProducts(Integer userId) {
-		return (List<Product>) getOrderProducts(userId).stream().map(OrderProduct::getProduct);
+		return (List<Product>) getOrderProducts(userId).stream().map(OrderProduct::getProduct)
+		        .collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getCartedProducts(Integer userId) {
-		return (List<Product>) getCarts(userId).stream().map(Cart::getProduct);
+		return (List<Product>) getCarts(userId).stream().map(Cart::getProduct).collect(Collectors.toList());
 	}
 
 	@Override
