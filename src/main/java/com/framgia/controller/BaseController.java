@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,7 +21,7 @@ import com.framgia.service.ProductService;
 import com.framgia.service.UserService;
 
 public class BaseController {
-	
+
 	@Autowired
 	CartService cartService;
 
@@ -32,9 +33,12 @@ public class BaseController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	MessageSource messageSource;	
 
 	@Autowired
 	HttpServletRequest request;
@@ -45,7 +49,6 @@ public class BaseController {
 	public User currentUser() {
 		return (User) request.getSession().getAttribute("currentUser");
 	}
-	
 
 	public String toJson(HashMap<String, Object> hashMap) throws JsonProcessingException {
 		return new ObjectMapper().writeValueAsString(hashMap);
@@ -54,5 +57,5 @@ public class BaseController {
 	@SuppressWarnings("rawtypes")
 	public HashMap toHashMap(String data) throws JsonParseException, JsonMappingException, IOException {
 		return new ObjectMapper().readValue(data, HashMap.class);
-	}	
+	}
 }

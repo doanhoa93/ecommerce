@@ -1,5 +1,7 @@
 package com.framgia.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import com.framgia.bean.UserInfo;
 @Controller
 @RequestMapping(value = "/sessions")
 public class SessionsController extends BaseController {
-	
+
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String getNew(ModelMap model) {
 		model.addAttribute("userInfo", new UserInfo());
@@ -27,7 +29,7 @@ public class SessionsController extends BaseController {
 			if (userService.validate(userInfo)) {
 				return new ModelAndView("redirect:/");
 			} else {
-				return new ModelAndView("login", "message", "Email or password invalid");
+				return new ModelAndView("login", "message", messageSource.getMessage("session.error", null, Locale.US));
 			}
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/sessions/new");

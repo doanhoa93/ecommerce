@@ -49,6 +49,13 @@
     </property>
   </bean>
 
+  <!-- Load message.properties. Nhu I18n -->
+  <bean id="messageSource"
+    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <property name="basename" value="classpath:messages" />
+    <property name="fallbackToSystemLocale" value="false" />
+  </bean>
+
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/carts" />

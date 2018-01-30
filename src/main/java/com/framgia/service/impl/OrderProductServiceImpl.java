@@ -13,30 +13,50 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 
 	@Override
 	public User getUser(Integer orderProductId) {
-		Order order = getOrderProductDAO().getOrder(orderProductId);
-		if (order != null)
-			return getOrderDAO().getUser(order.getId());
-		return null;
+		try {
+			Order order = getOrderProductDAO().getOrder(orderProductId);
+			if (order != null)
+				return getOrderDAO().getUser(order.getId());
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Order getOrder(Integer orderProductId) {
-		return getOrderProductDAO().getOrder(orderProductId);
+		try {
+			return getOrderProductDAO().getOrder(orderProductId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Product getProduct(Integer orderProductId) {
-		return getOrderProductDAO().getProduct(orderProductId);
+		try {
+			return getOrderProductDAO().getProduct(orderProductId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public OrderProduct findBy(String attribute, Serializable key, boolean lock) {
-		return getOrderProductDAO().findBy(attribute, key, lock);
+		try {
+			return getOrderProductDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public OrderProduct findById(Serializable key) {
-		return getOrderProductDAO().findById(key);
+		try {
+			return getOrderProductDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -61,16 +81,28 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 
 	@Override
 	public List<OrderProduct> getObjects() {
-		return getOrderProductDAO().getObjects();
+		try {
+			return getOrderProductDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<OrderProduct> getObjectsByIds(List<Integer> keys) {
-		return getOrderProductDAO().getObjectsByIds(keys);
+		try {
+			return getOrderProductDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<OrderProduct> getObjects(int limit) {
-		return getOrderProductDAO().getObjects(limit);
+		try {
+			return getOrderProductDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

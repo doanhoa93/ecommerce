@@ -11,17 +11,29 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
 	@Override
 	public User getUser(Integer profileId) {
-		return getProfileDAO().getUser(profileId);
+		try {
+			return getProfileDAO().getUser(profileId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Profile findBy(String attribute, Serializable key, boolean lock) {
-		return getProfileDAO().findBy(attribute, key, lock);
+		try {
+			return getProfileDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Profile findById(Serializable key) {
-		return getProfileDAO().findById(key);
+		try {
+			return getProfileDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -46,16 +58,28 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
 	@Override
 	public List<Profile> getObjects() {
-		return getProfileDAO().getObjects();
+		try {
+			return getProfileDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Profile> getObjectsByIds(List<Integer> keys) {
-		return getProfileDAO().getObjectsByIds(keys);
+		try {
+			return getProfileDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Profile> getObjects(int limit) {
-		return getProfileDAO().getObjects(limit);
+		try {
+			return getProfileDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

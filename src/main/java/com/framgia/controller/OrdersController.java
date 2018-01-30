@@ -3,6 +3,7 @@ package com.framgia.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,22 +54,22 @@ public class OrdersController extends BaseController {
 			hashMap.clear();
 			Order order = orderService.createOrder(currentUser().getId(), cartIds);
 			if (order != null) {
-				hashMap.put("msg", "success");
+				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 				hashMap.put("url", "/orders");
-				
+
 				// Send email
-				mailer.sendMail(currentUser().getEmail(), "Order product in Ecommerce website",
-						"Thanks for ordering product in Ecommerce website!");
+				mailer.sendMail(currentUser().getEmail(), messageSource.getMessage("mail.title", null, Locale.US),
+				        messageSource.getMessage("mail.content", null, Locale.US));
 			} else {
-				hashMap.put("msg", "error");
+				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 				hashMap.put("error", request.getAttribute("error"));
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
 			hashMap.clear();
-			hashMap.put("msg", "error");
+			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			HashMap<String, Object> error = new HashMap<>();
-			error.put("error", "No product is selected, please select product which you want buy.");
+			error.put("error", messageSource.getMessage("order.no_select", null, Locale.US));
 			hashMap.put("error", error);
 			return toJson(hashMap);
 		}

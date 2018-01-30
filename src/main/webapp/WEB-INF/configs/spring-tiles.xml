@@ -33,6 +33,7 @@
       <add-attribute value="/assets/lib-js/price-range.js" />
       <add-attribute value="/assets/lib-js/jquery.prettyPhoto.js" />
       <add-attribute value="/assets/lib-js/main.js" />
+      <add-attribute value="/assets/js/page.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />

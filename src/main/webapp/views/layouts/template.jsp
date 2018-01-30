@@ -52,6 +52,11 @@
 
 <body>
   <div class="header">
+    <c:if test="${flash != null}">
+      <div class="flash">
+        <div class="alert alert-${flash.type}">${flash.content}</div>
+      </div>
+    </c:if>  
     <tiles:insertAttribute name="header" ignore="true" />
   </div>
 

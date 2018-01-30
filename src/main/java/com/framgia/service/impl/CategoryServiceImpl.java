@@ -11,35 +11,55 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 
 	@Override
 	public Category getParentCategory(Integer categoryId) {
-		return getCategoryDAO().getParentCategory(categoryId);
+		try {
+			return getCategoryDAO().getParentCategory(categoryId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Category> getChildCategories(Integer categoryId) {
-		Category category = null;
-		List<Category> categories = new ArrayList<Category>();
-		do {
-			category = getCategoryDAO().getParentCategory(categoryId);
-			if (category != null) {
-				categories.add(category);
-				categoryId = category.getId();
-			}
-		} while (category != null);
-		return categories;
+		try {
+			Category category = null;
+			List<Category> categories = new ArrayList<Category>();
+			do {
+				category = getCategoryDAO().getParentCategory(categoryId);
+				if (category != null) {
+					categories.add(category);
+					categoryId = category.getId();
+				}
+			} while (category != null);
+			return categories;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public Category getCategory(Integer id) {
-		return getCategoryDAO().findById(id);
+		try {
+			return getCategoryDAO().findById(id);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Category findBy(String attribute, Serializable key, boolean lock) {
-		return getCategoryDAO().findBy(attribute, key, lock);
+		try {
+			return getCategoryDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Category findById(Serializable key) {
-		return getCategoryDAO().findById(key);
+		try {
+			return getCategoryDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -64,16 +84,28 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 
 	@Override
 	public List<Category> getObjects() {
-		return getCategoryDAO().getObjects();
+		try {
+			return getCategoryDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Category> getObjectsByIds(List<Integer> keys) {
-		return getCategoryDAO().getObjectsByIds(keys);
+		try {
+			return getCategoryDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Category> getObjects(int limit) {
-		return getCategoryDAO().getObjects(limit);
+		try {
+			return getCategoryDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

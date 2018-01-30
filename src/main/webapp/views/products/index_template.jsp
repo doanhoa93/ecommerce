@@ -11,7 +11,8 @@
         <ul class="nav nav-pills nav-stacked">
           <c:forEach var="category" items="${categories}">
             <li>
-              <a href="${contextPath}/categories/${category.getId()}/products">
+              <a href="${contextPath}/categories/${category.getId()}/products" 
+                class="${categoryId == category.getId() ? 'active' : ''}">
                 <span class="pull-right">(${category.getProducts().size()})</span>
                 ${category.getName()}
               </a>
