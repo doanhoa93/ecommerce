@@ -2,12 +2,12 @@
 
 <div class="left-sidebar">
   <div class="brands_products">
-    <h2>Categories</h2>
+    <h2>Hot Categories</h2>
     <div class="brands-name">
       <ul class="nav nav-pills nav-stacked">
         <c:forEach var="category" items="${categories}">
           <li>
-            <a href="#"> 
+            <a href="${contextPath}/categories/${category.getId()}/products"> 
               <span class="pull-right">(${category.getProducts().size()})</span> 
               ${category.getName()}
             </a>

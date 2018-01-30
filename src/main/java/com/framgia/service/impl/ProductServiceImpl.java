@@ -10,11 +10,13 @@ import com.framgia.model.Comment;
 import com.framgia.model.Image;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
+import com.framgia.model.Price;
 import com.framgia.model.Product;
 import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
 import com.framgia.model.User;
 import com.framgia.service.ProductService;
+import com.mysql.jdbc.StringUtils;
 
 public class ProductServiceImpl extends BaseServiceImpl implements ProductService {
 
@@ -107,5 +109,29 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<Product> getObjects(int limit) {
 		return getProductDAO().getObjects(limit);
+	}
+
+	@Override
+	public List<Product> filterProducts(Integer categoryId, String name, String priceLow, String priceHigh) {
+		float low, high;
+		if (StringUtils.isNullOrEmpty(name))
+			name = "";
+
+		if (StringUtils.isNullOrEmpty(priceLow))
+			low = Price.MIN_PRICE;
+		else
+			low = Float.parseFloat(priceLow);
+
+		if (StringUtils.isNullOrEmpty(priceHigh))
+			high = Price.MAX_PRICE;
+		else
+			high = Float.parseFloat(priceHigh);
+
+		return getProductDAO().filterProducts(categoryId, name, low, high);
+	}
+
+	@Override
+	public List<Product> getProducts(Integer categoryId) {
+		return getProductDAO().getProducts(categoryId);
 	}
 }

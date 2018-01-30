@@ -116,8 +116,7 @@
               <li>
                 <a href="${contextPath}" class="active">Home</a>
               </li>
-              <li><a href="">Products</a></li>
-              <li><a href="">Categories</a></li>
+              <li><a href="${contextPath}/products">Products</a></li>
             </ul>
           </div>
         </div>

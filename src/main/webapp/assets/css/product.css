@@ -48,3 +48,37 @@
 .product-footer {
 	border-top: 1px solid #e7e7e7;
 }
+
+.products .categories {
+	max-height: 400px;
+	height: auto;
+	overflow-x: auto;
+}
+
+.products-left .btn-filter {
+	width: 100%;
+}
+
+.products-left .name-range-input {
+	border: 1px solid #ccc;
+	color: #696763;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	height: 40px;
+	margin-bottom: 10px;
+	outline: medium none;
+	padding-left: 10px;
+	width: 100%;
+}
+
+.products-left .price-range .price {
+	background-color: #FFFFFF;
+	border: 1px solid #F7F7F0;
+	padding: 20px 10px;
+}
+
+.products-left .price-range .price-range-input {
+	width: 90%;
+}

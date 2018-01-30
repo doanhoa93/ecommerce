@@ -76,4 +76,23 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 		criteria.add(Restrictions.eq("product.id", productId));
 		return (List<Image>) criteria.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getProducts(Integer categoryId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("category.id", categoryId));
+		return (List<Product>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> filterProducts(Integer categoryId, String name, float priceLow, float priceHigh) {
+		Criteria criteria = getSession().createCriteria(Product.class);
+		if (categoryId != null)
+			criteria.add(Restrictions.eq("category.id", categoryId));
+		criteria.add(Restrictions.like("name", "%" + name + "%"));
+		criteria.add(Restrictions.between("price", priceLow, priceHigh));
+		return (List<Product>) criteria.list();
+	}
 }
