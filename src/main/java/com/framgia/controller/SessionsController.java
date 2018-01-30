@@ -14,13 +14,14 @@ import com.framgia.bean.UserInfo;
 @Controller
 @RequestMapping(value = "/sessions")
 public class SessionsController extends BaseController {
+	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String getNew(ModelMap model) {
 		model.addAttribute("userInfo", new UserInfo());
 		return "login";
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
 			if (userService.validate(userInfo)) {

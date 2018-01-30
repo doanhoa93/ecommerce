@@ -64,5 +64,6 @@
   <div class="footer">
     <tiles:insertAttribute name="footer" ignore="true" />
   </div>
+  <div id="fb-root"></div>  
 </body>
 </html>

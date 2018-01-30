@@ -20,23 +20,25 @@ import com.framgia.model.Order;
 import com.framgia.model.Status;
 
 @Controller
+@RequestMapping(value = "/orders")
 public class OrdersController extends BaseController {
-	@RequestMapping(value = "/orders", method = RequestMethod.GET)
+
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		HashMap<String, Object> hashMap = new HashMap<>();
+		ModelAndView model = new ModelAndView("orders");
 		List<Order> orders = userService.getOrders(currentUser().getId());
 		List<OrderInfo> orderInfos = orders.stream().map(order -> {
 			OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
 			orderInfo.setProductQuantity(orderService.getProductQuantity(order.getId()));
 			return orderInfo;
 		}).collect(Collectors.toList());
-		hashMap.put("orders", orderInfos);
-		hashMap.put("status", Status.statuses);
-		return new ModelAndView("orders", "params", hashMap);
+		model.addObject("orders", orderInfos);
+		model.addObject("statuses", Status.statuses);
+		return model;
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/orders", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody String create(@RequestBody String data)
 	        throws JsonParseException, JsonMappingException, IOException {
 		HashMap<String, Object> hashMap = toHashMap(data);

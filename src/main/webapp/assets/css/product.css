@@ -1,0 +1,50 @@
+.product {
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+}
+
+.product-header {
+	margin-bottom: 10px;
+}
+
+.product-header-left .product-name {
+	font-size: 24px;
+	color: #3d3d3d;
+}
+
+.product-header .product-rate .active {
+	color: #f5b70ce6
+}
+
+.product-body {
+	border-top: 1px solid #e7e7e7;
+	margin-bottom: 10px;
+	padding: 10px 0;
+}
+
+.product-body .product-price {
+	font-size: 26px;
+	font-weight: bold;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.product-body .product-category .category-title {
+	font-size: 18px;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.product-body .product-number .number-title {
+	font-size: 18px;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.product-body-right .product-information {
+	padding: 10px;
+}
+
+.product-footer {
+	border-top: 1px solid #e7e7e7;
+}

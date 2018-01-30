@@ -4,7 +4,7 @@
 
 <div class="features_items">
   <h2 class="title text-center">Recently Products</h2>
-  <c:forEach var="product" items="${params.recentProducts}">
+  <c:forEach var="product" items="${recentProducts}">
     <div class="col-sm-4">
       <c:set var="product" value="${product}" scope="session" />
       <c:import url="/views/products/mini_product.jsp" />

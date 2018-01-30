@@ -18,14 +18,12 @@ import com.framgia.model.Cart;
 
 @Controller
 public class CartsController extends BaseController {
+	
 	@RequestMapping(value = "/carts", method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView();
-		HashMap<String, Object> hashMap = new HashMap<>();
-		hashMap.put("currentUser", currentUser());
-		hashMap.put("carts", userService.getCarts(currentUser().getId()));
+		modelAndView.addObject("carts", userService.getCarts(currentUser().getId()));
 		modelAndView.setViewName("carts");
-		modelAndView.addObject("params", hashMap);
 		return modelAndView;
 	}
 
