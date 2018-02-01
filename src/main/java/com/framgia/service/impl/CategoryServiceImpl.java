@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.framgia.model.Category;
-import com.framgia.model.Product;
 import com.framgia.service.CategoryService;
 
 public class CategoryServiceImpl extends BaseServiceImpl implements CategoryService {
@@ -13,11 +12,6 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public Category getParentCategory(Integer categoryId) {
 		return getCategoryDAO().getParentCategory(categoryId);
-	}
-
-	@Override
-	public List<Product> getProducts(Integer categoryId) {
-		return getCategoryDAO().getProducts(categoryId);
 	}
 
 	@Override

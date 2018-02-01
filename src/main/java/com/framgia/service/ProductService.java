@@ -31,4 +31,8 @@ public interface ProductService extends BaseService<Integer, Product> {
 	List<Cart> getCarts(Integer productId);
 
 	List<User> getOrderedUser(Integer productId);
+	
+	List<Product> getProducts(Integer categoryId);
+
+	List<Product> filterProducts(Integer categoryId, String name, String priceLow, String priceHigh);
 }

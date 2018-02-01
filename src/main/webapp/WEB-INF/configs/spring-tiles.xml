@@ -96,6 +96,24 @@
     </put-list-attribute>
   </definition>  
   
+  <definition name="products" extends="baselayout">
+    <put-attribute name="title" value="Products | Ecommerce" />
+    <put-attribute name="body" value="productIndex" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/product.css" />
+    </put-list-attribute>
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/product.js" />
+    </put-list-attribute>    
+  </definition>  
+  
+  <definition name="productIndex" template="/views/products/index_template.jsp">
+    <put-attribute name="products" value="productsPartial" />
+  </definition>
+  
+  <definition name="productsPartial" template="/views/products/index.jsp" />
+  
   <definition name="product" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/products/show.jsp" />

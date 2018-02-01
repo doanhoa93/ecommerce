@@ -1,13 +1,10 @@
 package com.framgia.dao.impl;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.CategoryDAO;
 import com.framgia.model.Category;
-import com.framgia.model.Product;
 
 public class CategoryDAOImpl extends BaseDAOAbstract<Integer, Category> implements CategoryDAO {
 
@@ -25,13 +22,5 @@ public class CategoryDAOImpl extends BaseDAOAbstract<Integer, Category> implemen
 			return (Category) criteria.uniqueResult();
 		}
 		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Product> getProducts(Integer categoryId) {
-		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.add(Restrictions.eq("category.id", categoryId));
-		return (List<Product>) criteria.list();
 	}
 }
