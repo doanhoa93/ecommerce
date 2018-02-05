@@ -31,28 +31,48 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	@Override
 	public User getUser(Integer orderId) {
-		return getOrderDAO().getUser(orderId);
+		try {
+			return getOrderDAO().getUser(orderId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<OrderProduct> getOrderProducts(Integer orderId) {
-		return getOrderDAO().getOrderProducts(orderId);
+		try {
+			return getOrderDAO().getOrderProducts(orderId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Product> getProducts(Integer orderId) {
-		List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderId);
-		return (List<Product>) orderProducts.stream().map(OrderProduct::getProduct).collect(Collectors.toList());
+		try {
+			List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderId);
+			return (List<Product>) orderProducts.stream().map(OrderProduct::getProduct).collect(Collectors.toList());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Order findBy(String attribute, Serializable key, boolean lock) {
-		return getOrderDAO().findBy(attribute, key, lock);
+		try {
+			return getOrderDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Order findById(Serializable key) {
-		return getOrderDAO().findById(key);
+		try {
+			return getOrderDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -77,17 +97,29 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> getObjects() {
-		return getOrderDAO().getObjects();
+		try {
+			return getOrderDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Order> getObjectsByIds(List<Integer> keys) {
-		return getOrderDAO().getObjectsByIds(keys);
+		try {
+			return getOrderDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Order> getObjects(int limit) {
-		return getOrderDAO().getObjects(limit);
+		try {
+			return getOrderDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -157,8 +189,11 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	@Override
 	public int getProductQuantity(Integer orderId) {
-		List<OrderProduct> orderProducts = getOrderProducts(orderId);
-		return orderProducts.stream().map(OrderProduct::getQuantity).mapToInt(Integer::intValue).sum();
-
+		try {
+			List<OrderProduct> orderProducts = getOrderProducts(orderId);
+			return orderProducts.stream().map(OrderProduct::getQuantity).mapToInt(Integer::intValue).sum();
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 }

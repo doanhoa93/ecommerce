@@ -11,17 +11,29 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 
 	@Override
 	public Product getProduct(Integer promotionId) {
-		return getPromotionDAO().getProduct(promotionId);
+		try {
+			return getPromotionDAO().getProduct(promotionId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Promotion findBy(String attribute, Serializable key, boolean lock) {
-		return getPromotionDAO().findBy(attribute, key, lock);
+		try {
+			return getPromotionDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Promotion findById(Serializable key) {
-		return getPromotionDAO().findById(key);
+		try {
+			return getPromotionDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -46,16 +58,28 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 
 	@Override
 	public List<Promotion> getObjects() {
-		return getPromotionDAO().getObjects();
+		try {
+			return getPromotionDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Promotion> getObjectsByIds(List<Integer> keys) {
-		return getPromotionDAO().getObjectsByIds(keys);
+		try {
+			return getPromotionDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Promotion> getObjects(int limit) {
-		return getPromotionDAO().getObjects(limit);
+		try {
+			return getPromotionDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

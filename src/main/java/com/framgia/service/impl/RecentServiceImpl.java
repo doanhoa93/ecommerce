@@ -11,17 +11,30 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 
 	@Override
 	public Product getProduct(Integer recentId) {
-		return getRecentDAO().getProduct(recentId);
+		try {
+			return getRecentDAO().getProduct(recentId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
+
 	public Recent findBy(String attribute, Serializable key, boolean lock) {
-		return getRecentDAO().findBy(attribute, key, lock);
+		try {
+			return getRecentDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Recent findById(Serializable key) {
-		return getRecentDAO().findById(key);
+		try {
+			return getRecentDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -46,16 +59,28 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 
 	@Override
 	public List<Recent> getObjects() {
-		return getRecentDAO().getObjects();
+		try {
+			return getRecentDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Recent> getObjectsByIds(List<Integer> keys) {
-		return getRecentDAO().getObjectsByIds(keys);
+		try {
+			return getRecentDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Recent> getObjects(int limit) {
-		return getRecentDAO().getObjects(limit);
+		try {
+			return getRecentDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

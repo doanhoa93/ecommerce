@@ -25,4 +25,24 @@
 
 .item .product-name {
 	color: #696763;
-} 
+}
+
+.alert-error {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
+.header {
+	position: relative;
+}
+
+ .flash {
+   position: absolute;
+   top: 40px;
+   right: 50px;
+   width: auto;
+   word-wrap: break-word;
+   text-align: right;
+   z-index: 11;
+ }

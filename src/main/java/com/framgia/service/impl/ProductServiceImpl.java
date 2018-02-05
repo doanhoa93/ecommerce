@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
@@ -16,64 +18,107 @@ import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
 import com.framgia.model.User;
 import com.framgia.service.ProductService;
-import com.mysql.jdbc.StringUtils;
 
 public class ProductServiceImpl extends BaseServiceImpl implements ProductService {
 
 	@Override
 	public List<Order> getOrders(Integer productId) {
-		List<OrderProduct> orderProducts = getProductDAO().getOrderProducts(productId);
-		return (List<Order>) orderProducts.stream().map(OrderProduct::getOrder).collect(Collectors.toList());
+		try {
+			List<OrderProduct> orderProducts = getProductDAO().getOrderProducts(productId);
+			return (List<Order>) orderProducts.stream().map(OrderProduct::getOrder).collect(Collectors.toList());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Cart> getCarts(Integer productId) {
-		return (List<Cart>) getProductDAO().getCarts(productId);
+		try {
+			return (List<Cart>) getProductDAO().getCarts(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<User> getOrderedUser(Integer productId) {
-		return (List<User>) getOrders(productId).stream().map(Order::getUser).collect(Collectors.toList());
+		try {
+			return (List<User>) getOrders(productId).stream().map(Order::getUser).collect(Collectors.toList());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<OrderProduct> getOrderProducts(Integer productId) {
-		return getProductDAO().getOrderProducts(productId);
+		try {
+			return getProductDAO().getOrderProducts(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Comment> getComments(Integer productId) {
-		return getProductDAO().getComments(productId);
+		try {
+			return getProductDAO().getComments(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Image> getImages(Integer productId) {
-		return getProductDAO().getImages(productId);
+		try {
+			return getProductDAO().getImages(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Recent getRecent(Integer productId) {
-		return getProductDAO().getRecent(productId);
+		try {
+			return getProductDAO().getRecent(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Promotion getPromotion(Integer productId) {
-		return getProductDAO().getPromotion(productId);
+		try {
+			return getProductDAO().getPromotion(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Category getCategory(Integer productId) {
-		return getProductDAO().getCategory(productId);
+		try {
+			return getProductDAO().getCategory(productId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Product findBy(String attribute, Serializable key, boolean lock) {
-		return getProductDAO().findBy(attribute, key, lock);
+		try {
+			return getProductDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Product findById(Serializable key) {
-		return getProductDAO().findById(key);
+		try {
+			return getProductDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -98,40 +143,60 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 	@Override
 	public List<Product> getObjects() {
-		return getProductDAO().getObjects();
+		try {
+			return getProductDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Product> getObjectsByIds(List<Integer> keys) {
-		return getProductDAO().getObjectsByIds(keys);
+		try {
+			return getProductDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Product> getObjects(int limit) {
-		return getProductDAO().getObjects(limit);
+		try {
+			return getProductDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Product> filterProducts(Integer categoryId, String name, String priceLow, String priceHigh) {
-		float low, high;
-		if (StringUtils.isNullOrEmpty(name))
-			name = "";
+		try {
+			float low, high;
+			if (StringUtils.isEmpty(name))
+				name = "";
 
-		if (StringUtils.isNullOrEmpty(priceLow))
-			low = Price.MIN_PRICE;
-		else
-			low = Float.parseFloat(priceLow);
+			if (StringUtils.isEmpty(priceLow))
+				low = Price.MIN_PRICE;
+			else
+				low = Float.parseFloat(priceLow);
 
-		if (StringUtils.isNullOrEmpty(priceHigh))
-			high = Price.MAX_PRICE;
-		else
-			high = Float.parseFloat(priceHigh);
+			if (StringUtils.isEmpty(priceHigh))
+				high = Price.MAX_PRICE;
+			else
+				high = Float.parseFloat(priceHigh);
 
-		return getProductDAO().filterProducts(categoryId, name, low, high);
+			return getProductDAO().filterProducts(categoryId, name, low, high);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Product> getProducts(Integer categoryId) {
-		return getProductDAO().getProducts(categoryId);
+		try {
+			return getProductDAO().getProducts(categoryId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

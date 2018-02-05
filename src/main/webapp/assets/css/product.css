@@ -82,3 +82,7 @@
 .products-left .price-range .price-range-input {
 	width: 90%;
 }
+
+.categories .active {
+	background-color: #fdb45e !important;
+}

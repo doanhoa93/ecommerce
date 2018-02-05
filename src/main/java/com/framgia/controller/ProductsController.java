@@ -2,6 +2,7 @@ package com.framgia.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,16 +22,17 @@ public class ProductsController extends BaseController {
 	        @RequestParam(value = "name", required = false) String name) {
 		ModelAndView model = new ModelAndView();
 		List<Product> products = null;
-		if (name != null || priceLow != null || priceHigh != null) {
+		if (!StringUtils.isEmpty(name) || !StringUtils.isEmpty(priceLow) || !StringUtils.isEmpty(priceHigh)) {
+			products = productService.filterProducts(null, name, priceLow, priceHigh);
+			model.setViewName("productsPartial");
+		} else {
 			model.addObject("categories", categoryService.getObjects());
 			model.addObject("maxPrice", Price.MAX_PRICE);
 			model.addObject("minPrice", Price.MIN_PRICE);
 			products = productService.getObjects();
 			model.setViewName("products");
-		} else {
-			products = productService.filterProducts(null, name, priceLow, priceHigh);
-			model.setViewName("productsPartial");
 		}
+		model.addObject("title", "products");
 		model.addObject("products", products);
 		return model;
 	}
@@ -42,16 +44,18 @@ public class ProductsController extends BaseController {
 	        @RequestParam(value = "name", required = false) String name) {
 		ModelAndView model = new ModelAndView();
 		List<Product> products = null;
-		if (name != null || priceLow != null || priceHigh != null) {
-			model.addObject("categories", categoryService.getObjects());
-			model.addObject("maxPrice", Price.MAX_PRICE);
-			model.addObject("minPrice", Price.MIN_PRICE);			
-			products = productService.getProducts(categoryId);
-			model.setViewName("products");
-		} else {
+		if (!StringUtils.isEmpty(name) || !StringUtils.isEmpty(priceLow) || !StringUtils.isEmpty(priceHigh)) {
 			products = productService.filterProducts(categoryId, name, priceLow, priceHigh);
 			model.setViewName("productsPartial");
+		} else {
+			model.addObject("categories", categoryService.getObjects());
+			model.addObject("maxPrice", Price.MAX_PRICE);
+			model.addObject("minPrice", Price.MIN_PRICE);
+			products = productService.getProducts(categoryId);
+			model.setViewName("products");
 		}
+		model.addObject("title", "products");
+		model.addObject("categoryId", categoryId);
 		model.addObject("products", products);
 		return model;
 	}

@@ -12,22 +12,38 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 
 	@Override
 	public User getUser(Integer commentId) {
-		return getCommentDAO().getUser(commentId);
+		try {
+			return getCommentDAO().getUser(commentId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Product getProduct(Integer commentId) {
-		return getCommentDAO().getProduct(commentId);
+		try {
+			return getCommentDAO().getProduct(commentId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Comment findBy(String attribute, Serializable key, boolean lock) {
-		return getCommentDAO().findBy(attribute, key, lock);
+		try {
+			return getCommentDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Comment findById(Serializable key) {
-		return getCommentDAO().findById(key);
+		try {
+			return getCommentDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -52,16 +68,28 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 
 	@Override
 	public List<Comment> getObjects() {
-		return getCommentDAO().getObjects();
+		try {
+			return getCommentDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Comment> getObjectsByIds(List<Integer> keys) {
-		return getCommentDAO().getObjectsByIds(keys);
+		try {
+			return getCommentDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Comment> getObjects(int limit) {
-		return getCommentDAO().getObjects(limit);
+		try {
+			return getCommentDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

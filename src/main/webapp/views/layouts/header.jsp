@@ -114,9 +114,15 @@
           <div class="mainmenu pull-left">
             <ul class="nav navbar-nav collapse navbar-collapse">
               <li>
-                <a href="${contextPath}" class="active">Home</a>
+                <a href="${contextPath}" class="${title == null ? 'active' : ''}">
+                  Home
+                </a>
               </li>
-              <li><a href="${contextPath}/products">Products</a></li>
+              <li>
+                <a href="${contextPath}/products" class="${title == 'products' ? 'active' : ''}">
+                  Products
+                </a>
+              </li>
             </ul>
           </div>
         </div>

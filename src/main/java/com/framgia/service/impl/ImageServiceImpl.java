@@ -11,17 +11,29 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
 	@Override
 	public Product getProduct(Integer imageId) {
-		return getImageDAO().getProduct(imageId);
+		try {
+			return getImageDAO().getProduct(imageId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Image findBy(String attribute, Serializable key, boolean lock) {
-		return getImageDAO().findBy(attribute, key, lock);
+		try {
+			return getImageDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Image findById(Serializable key) {
-		return getImageDAO().findById(key);
+		try {
+			return getImageDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -46,16 +58,28 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
 	@Override
 	public List<Image> getObjects() {
-		return getImageDAO().getObjects();
+		try {
+			return getImageDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Image> getObjectsByIds(List<Integer> keys) {
-		return getImageDAO().getObjectsByIds(keys);
+		try {
+			return getImageDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Image> getObjects(int limit) {
-		return getImageDAO().getObjects(limit);
+		try {
+			return getImageDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

@@ -12,22 +12,38 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 
 	@Override
 	public User getUser(Integer cartId) {
-		return getCartDAO().getUser(cartId);
+		try {
+			return getCartDAO().getUser(cartId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Product getProduct(Integer cartId) {
-		return getCartDAO().getProduct(cartId);
+		try {
+			return getCartDAO().getProduct(cartId);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Cart findBy(String attribute, Serializable key, boolean lock) {
-		return getCartDAO().findBy(attribute, key, lock);
+		try {
+			return getCartDAO().findBy(attribute, key, lock);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Cart findById(Serializable key) {
-		return getCartDAO().findById(key);
+		try {
+			return getCartDAO().findById(key);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -52,16 +68,28 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> getObjects() {
-		return getCartDAO().getObjects();
+		try {
+			return getCartDAO().getObjects();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Cart> getObjectsByIds(List<Integer> keys) {
-		return getCartDAO().getObjectsByIds(keys);
+		try {
+			return getCartDAO().getObjectsByIds(keys);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Cart> getObjects(int limit) {
-		return getObjects(limit);
+		try {
+			return getCartDAO().getObjects(limit);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

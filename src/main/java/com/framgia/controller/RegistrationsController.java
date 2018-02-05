@@ -1,5 +1,7 @@
 package com.framgia.controller;
 
+import java.util.Locale;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,7 @@ import com.framgia.model.User;
 @Controller
 @RequestMapping(value = "/registrations")
 public class RegistrationsController extends BaseController {
-	
+
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView getNew() {
 		return new ModelAndView("signup", "userInfo", new UserInfo());
@@ -26,7 +28,8 @@ public class RegistrationsController extends BaseController {
 			userService.saveOrUpdate(user);
 			return new ModelAndView("redirect:/");
 		} catch (Exception e) {
-			return new ModelAndView("signup", "message", "Signup false");
+			return new ModelAndView("signup", "message",
+			        messageSource.getMessage("registration.error", null, Locale.US));
 		}
 	}
 }
