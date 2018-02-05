@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +18,15 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.helper.ModelToBean;
+import com.framgia.mailer.ApplicationMailer;
 import com.framgia.model.Order;
 import com.framgia.model.Status;
 
 @Controller
 @RequestMapping(value = "/orders")
 public class OrdersController extends BaseController {
+	@Autowired
+	private ApplicationMailer mailer;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -47,9 +51,14 @@ public class OrdersController extends BaseController {
 			List<String> strCartIds = (List<String>) hashMap.get("cartIds");
 			List<Integer> cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
 			hashMap.clear();
-			if (orderService.createOrder(currentUser().getId(), cartIds)) {
+			Order order = orderService.createOrder(currentUser().getId(), cartIds);
+			if (order != null) {
 				hashMap.put("msg", "success");
 				hashMap.put("url", "/orders");
+				
+				// Send email
+				mailer.sendMail(currentUser().getEmail(), "Order product in Ecommerce website",
+						"Thanks for ordering product in Ecommerce website!");
 			} else {
 				hashMap.put("msg", "error");
 				hashMap.put("error", request.getAttribute("error"));
@@ -58,7 +67,9 @@ public class OrdersController extends BaseController {
 		} catch (Exception e) {
 			hashMap.clear();
 			hashMap.put("msg", "error");
-			hashMap.put("error", "No product is selected, please select product which you want buy.");
+			HashMap<String, Object> error = new HashMap<>();
+			error.put("error", "No product is selected, please select product which you want buy.");
+			hashMap.put("error", error);
 			return toJson(hashMap);
 		}
 	}

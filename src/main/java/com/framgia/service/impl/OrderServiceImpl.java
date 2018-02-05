@@ -91,7 +91,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean createOrder(Integer userId, List<Integer> cartIds) {
+	public Order createOrder(Integer userId, List<Integer> cartIds) {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		List<Cart> carts = cartService.getObjectsByIds(cartIds);
 		boolean error = false;
@@ -109,7 +109,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		// client biet
 		if (error) {
 			request.setAttribute("error", hashMap);
-			return false;
+			return null;
 		}
 
 		try {
@@ -141,7 +141,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				productService.saveOrUpdate(product);
 				cartService.delete(cart);
 			}
-			return true;
+			return order;
 		} catch (Exception e) {
 			hashMap.put("order", "Error when try save order!");
 			request.setAttribute("error", hashMap);

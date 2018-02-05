@@ -13,10 +13,6 @@
 
   <tx:annotation-driven proxy-target-class="true"
     transaction-manager="transactionManager" />
-    
-  <!-- Load database's config. Example: url, username, password -->
-  <context:property-placeholder
-    location="classpath:spring-server-config.properties" />
 
   <bean id="dataSource"
     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -41,6 +37,7 @@
         <prop key="hibernate.c3p0.timeout">1800</prop>
         <prop key="hibernate.show_sql">${jdbc.showSql}</prop>
         <prop key="hbm2ddl.auto">create</prop>
+        <prop key="hibernate.format_sql">true</prop>        
       </props>
     </property>
 
