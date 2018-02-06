@@ -85,9 +85,9 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public List<Comment> getObjects(int limit) {
+	public List<Comment> getObjects(int off, int limit) {
 		try {
-			return getCommentDAO().getObjects(limit);
+			return getCommentDAO().getObjects(off, limit);
 		} catch (Exception e) {
 			return null;
 		}

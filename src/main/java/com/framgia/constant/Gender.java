@@ -1,4 +1,4 @@
-package com.framgia.model;
+package com.framgia.constant;
 
 public class Gender {
 	public static final int MALE = 1;

@@ -12,7 +12,7 @@ public interface BaseDAO<PK, T> {
 
 	public List<T> getObjectsByIds(List<Integer> keys);
 
-	public List<T> getObjects(int limit);
+	public List<T> getObjects(int off, int limit);
 
 	public void delete(T entity);
 

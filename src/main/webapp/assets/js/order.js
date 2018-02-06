@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('.order-tr').on('click', function() {
+	$(document).on('click', '.order-tr', function() {
 		var href = $(this).data('href');
 		window.location.replace(getContextPath() + href);
 	});

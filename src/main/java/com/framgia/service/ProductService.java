@@ -2,6 +2,7 @@ package com.framgia.service;
 
 import java.util.List;
 
+import com.framgia.constant.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
@@ -31,8 +32,10 @@ public interface ProductService extends BaseService<Integer, Product> {
 	List<Cart> getCarts(Integer productId);
 
 	List<User> getOrderedUser(Integer productId);
-	
+
 	List<Product> getProducts(Integer categoryId);
 
-	List<Product> filterProducts(Integer categoryId, String name, String priceLow, String priceHigh);
+	List<Product> getProducts(Integer categoryId, String page, int limit);
+
+	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, String page, Integer limit);
 }

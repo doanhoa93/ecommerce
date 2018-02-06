@@ -64,27 +64,35 @@
       <hr>
       <div id="recommended-item-carousel" class="carousel slide"
         data-ride="carousel">
-        <div class="carousel-inner">
-          <c:forEach begin="0" end="${slideSize - 1}" varStatus="loop">
-            <div class="item ${loop.index == 0 ? 'active' : ''}">
-              <c:forEach var="image" items="${product.getImages()}" begin="${loop.index * 3}" 
-                end="${loop.index * 3 + 2}">
-                <div class="col-sm-4">
-                  <img class="product-image" src="${contextPath}/${image.getImage()}" alt="" />
+        <c:choose>
+          <c:when test="${slideSize > 0}">
+            <div class="carousel-inner">
+              <c:forEach begin="0" end="${slideSize - 1}" varStatus="loop">
+                <div class="item ${loop.index == 0 ? 'active' : ''}">
+                  <c:forEach var="image" items="${product.getImages()}" begin="${loop.index * 3}" 
+                    end="${loop.index * 3 + 2}">
+                    <div class="col-sm-4">
+                      <img class="product-image" src="${contextPath}/${image.getImage()}" alt="" />
+                    </div>
+                  </c:forEach>
                 </div>
               </c:forEach>
             </div>
-          </c:forEach>
-        </div>
-    
-        <a class="left recommended-item-control"
-          href="#recommended-item-carousel" data-slide="prev"> 
-          <i class="fa fa-angle-left"></i>
-        </a> 
-        <a class="right recommended-item-control"
-          href="#recommended-item-carousel" data-slide="next"> 
-          <i class="fa fa-angle-right"></i>
-        </a>
+        
+            <a class="left recommended-item-control"
+              href="#recommended-item-carousel" data-slide="prev"> 
+              <i class="fa fa-angle-left"></i>
+            </a> 
+            <a class="right recommended-item-control"
+              href="#recommended-item-carousel" data-slide="next"> 
+              <i class="fa fa-angle-right"></i>
+            </a>
+          </c:when>
+          
+          <c:otherwise>
+            <h3>No images</h3>
+          </c:otherwise>
+        </c:choose>        
       </div>
     </div>
 

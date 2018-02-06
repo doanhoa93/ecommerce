@@ -1,4 +1,4 @@
-package com.framgia.model;
+package com.framgia.constant;
 
 public class Status {
 	public static final int WAITING = 1;
