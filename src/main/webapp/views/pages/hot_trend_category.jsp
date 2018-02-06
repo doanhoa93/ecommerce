@@ -17,7 +17,7 @@
     <c:forEach var="category" items="${categories}" varStatus="loop">
       <div class="tab-pane fade ${loop.index == 0 ? 'active in' : '' }"
         id="category-${category.getId()}">
-        <c:forEach var="product" items="${category.getProducts()}">
+        <c:forEach var="product" items="${category.getProducts()}" begin="1" end="3">
           <div class="col-sm-4">
             <c:set var="product" value="${product}" scope="session" />
             <c:import url="/views/products/mini_product.jsp" />

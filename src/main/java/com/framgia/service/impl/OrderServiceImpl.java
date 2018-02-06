@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.constant.Status;
@@ -194,6 +195,20 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			return orderProducts.stream().map(OrderProduct::getQuantity).mapToInt(Integer::intValue).sum();
 		} catch (Exception e) {
 			return 0;
+		}
+	}
+
+	@Override
+	public List<Order> getOrders(Integer userId, String page, int limit) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page)) {
+				off = 0;
+			} else
+				off = (Integer.parseInt(page) - 1) * limit;
+			return getOrderDAO().getOrders(userId, off, limit);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 }

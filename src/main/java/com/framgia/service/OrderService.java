@@ -8,13 +8,15 @@ import com.framgia.model.Product;
 import com.framgia.model.User;
 
 public interface OrderService extends BaseService<Integer, Order> {
-  User getUser(Integer orderId);
+	User getUser(Integer orderId);
 
-  List<OrderProduct> getOrderProducts(Integer orderId);
+	List<OrderProduct> getOrderProducts(Integer orderId);
 
-  List<Product> getProducts(Integer orderId);
-  
-  Order createOrder(Integer userId, List<Integer> cartIds);
-  
-  int getProductQuantity(Integer orderId);
+	List<Product> getProducts(Integer orderId);
+
+	Order createOrder(Integer userId, List<Integer> cartIds);
+
+	List<Order> getOrders(Integer userId, String page, int limit);
+
+	int getProductQuantity(Integer orderId);
 }

@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
+import com.framgia.constant.Paginate;
 import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
 import com.framgia.mailer.ApplicationMailer;
@@ -30,15 +32,17 @@ public class OrdersController extends BaseController {
 	private ApplicationMailer mailer;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("orders");
-		List<Order> orders = userService.getOrders(currentUser().getId());
+		List<Order> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT);
 		List<OrderInfo> orderInfos = orders.stream().map(order -> {
 			OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
 			orderInfo.setProductQuantity(orderService.getProductQuantity(order.getId()));
 			return orderInfo;
 		}).collect(Collectors.toList());
+		model.addObject("paginate", setPaginate(orderInfos.size(), page, Paginate.ORDER_LIMIT));
 		model.addObject("orders", orderInfos);
+		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0).size());
 		model.addObject("statuses", Status.statuses);
 		return model;
 	}

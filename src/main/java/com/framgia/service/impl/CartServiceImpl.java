@@ -3,6 +3,8 @@ package com.framgia.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.framgia.model.Cart;
 import com.framgia.model.Product;
 import com.framgia.model.User;
@@ -88,6 +90,20 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	public List<Cart> getObjects(int off, int limit) {
 		try {
 			return getCartDAO().getObjects(off, limit);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Cart> getCarts(Integer userId, String page, int limit) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page)) {
+				off = 0;
+			} else
+				off = (Integer.parseInt(page) - 1) * limit;
+			return getCartDAO().getCarts(userId, off, limit);
 		} catch (Exception e) {
 			return null;
 		}
