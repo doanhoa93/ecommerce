@@ -169,15 +169,6 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public List<Product> getProducts(Integer categoryId) {
-		try {
-			return getProductDAO().getProducts(categoryId);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public List<Product> getProducts(Integer categoryId, String page, int limit) {
 		try {
 			int off;

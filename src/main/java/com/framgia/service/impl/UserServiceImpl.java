@@ -30,24 +30,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Order> getOrders(Integer userId) {
-		try {
-			return getUserDAO().getOrders(userId);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
-	public List<Cart> getCarts(Integer userId) {
-		try {
-			return getUserDAO().getCarts(userId);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public List<Comment> getComments(Integer userId) {
 		try {
 			return getUserDAO().getComments(userId);
@@ -59,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<OrderProduct> getOrderProducts(Integer userId) {
 		try {
-			List<Order> orders = getUserDAO().getOrders(userId);
+			List<Order> orders = getOrderDAO().getOrders(userId, 0, 0);
 			List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId).collect(Collectors.toList());
 			return getOrderProductDAO().getObjectsByIds(orderIds);
 		} catch (Exception e) {
@@ -80,7 +62,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<Product> getCartedProducts(Integer userId) {
 		try {
-			return (List<Product>) getCarts(userId).stream().map(Cart::getProduct).collect(Collectors.toList());
+			return (List<Product>) getCartDAO().getCarts(userId, 0, 0).stream().map(Cart::getProduct)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}

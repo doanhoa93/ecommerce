@@ -10,4 +10,6 @@ public interface OrderDAO extends BaseDAO<Integer, Order> {
 	User getUser(Integer orderId);
 
 	List<OrderProduct> getOrderProducts(Integer orderId);
+	
+	List<Order> getOrders(Integer userId, int off, int limit);	
 }

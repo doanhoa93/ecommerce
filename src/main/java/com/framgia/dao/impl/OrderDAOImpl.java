@@ -31,4 +31,15 @@ public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements Ord
 		criteria.add(Restrictions.eq("order.id", orderId));
 		return (List<OrderProduct>) criteria.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getOrders(Integer userId, int off, int limit) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("user.id", userId));
+		criteria.setFirstResult(off);
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+		return (List<Order>) criteria.list();
+	}
 }

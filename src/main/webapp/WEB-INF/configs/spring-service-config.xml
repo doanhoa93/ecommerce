@@ -93,6 +93,8 @@
       <bean class="com.framgia.service.impl.UserServiceImpl">
         <property name="orderProductDAO" ref="OrderProductDAO"></property>
         <property name="userDAO" ref="UserDAO"></property>
+        <property name="cartDAO" ref="CartDAO"></property>
+        <property name="orderDAO" ref="OrderDAO"></property>
       </bean>
     </property>
   </bean>

@@ -109,3 +109,7 @@
 .carts .alert-warning {
 	display: none;
 }
+
+.carts-paginate {
+	margin-top: 20px;
+}

@@ -1,6 +1,7 @@
 package com.framgia.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
@@ -9,24 +10,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.CartInfo;
+import com.framgia.constant.Paginate;
 import com.framgia.helper.BeanToModel;
 import com.framgia.model.Cart;
 
 @Controller
 public class CartsController extends BaseController {
-	
+
 	@RequestMapping(value = "/carts", method = RequestMethod.GET)
-	public ModelAndView index() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("carts", userService.getCarts(currentUser().getId()));
-		modelAndView.setViewName("carts");
-		return modelAndView;
+	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
+		ModelAndView model = new ModelAndView("carts");
+		List<Cart> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT);
+		model.addObject("carts", carts);
+		model.addObject("cartsSize", cartService.getCarts(currentUser().getId(), null, 0).size());
+		model.addObject("paginate", setPaginate(carts.size(), page, Paginate.PRODUCT_LIMIT));
+		return model;
 	}
 
 	@RequestMapping(value = "/products/{productId}/carts", method = RequestMethod.POST)

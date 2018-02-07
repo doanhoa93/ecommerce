@@ -8,7 +8,6 @@ import org.hibernate.criterion.Restrictions;
 import com.framgia.dao.UserDAO;
 import com.framgia.model.Cart;
 import com.framgia.model.Comment;
-import com.framgia.model.Order;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
 
@@ -28,22 +27,6 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 		Criteria criteria = getSession().createCriteria(Profile.class);
 		criteria.add(Restrictions.eq("user.id", userId));
 		return (Profile) criteria.uniqueResult();
-	}
-
-	@SuppressWarnings({ "unchecked" })
-	@Override
-	public List<Order> getOrders(Integer userId) {
-		Criteria criteria = getSession().createCriteria(Order.class);
-		criteria.add(Restrictions.eq("user.id", userId));
-		return (List<Order>) criteria.list();
-	}
-
-	@SuppressWarnings({ "unchecked" })
-	@Override
-	public List<Cart> getCarts(Integer userId) {
-		Criteria criteria = getSession().createCriteria(Cart.class);
-		criteria.add(Restrictions.eq("user.id", userId));
-		return (List<Cart>) criteria.list();
 	}
 
 	@SuppressWarnings({ "unchecked" })
