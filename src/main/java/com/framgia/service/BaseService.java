@@ -12,7 +12,9 @@ import com.framgia.dao.OrderProductDAO;
 import com.framgia.dao.ProductDAO;
 import com.framgia.dao.ProfileDAO;
 import com.framgia.dao.PromotionDAO;
+import com.framgia.dao.RateDAO;
 import com.framgia.dao.RecentDAO;
+import com.framgia.dao.SuggestDAO;
 import com.framgia.dao.UserDAO;
 
 public interface BaseService<PK, T> {
@@ -34,7 +36,11 @@ public interface BaseService<PK, T> {
 
 	PromotionDAO getPromotionDAO();
 
+	RateDAO getRateDAO();
+
 	RecentDAO getRecentDAO();
+
+	SuggestDAO getSuggestDAO();
 
 	UserDAO getUserDAO();
 

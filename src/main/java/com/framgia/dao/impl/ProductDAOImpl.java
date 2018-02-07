@@ -80,14 +80,6 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> getProducts(Integer categoryId) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("category.id", categoryId));
-		return (List<Product>) criteria.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit) {
 		Criteria criteria = getSession().createCriteria(Product.class);
 		if (categoryId != null)

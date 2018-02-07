@@ -20,7 +20,9 @@
     <mapping resource="com/framgia/model/hbm/Product.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Profile.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Promotion.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Rate.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Recent.hbm.xml" />
+    <mapping resource="com/framgia/model/hbm/Suggest.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/User.hbm.xml" />
   </session-factory>
 </hibernate-configuration>

@@ -14,7 +14,9 @@ import com.framgia.dao.OrderProductDAO;
 import com.framgia.dao.ProductDAO;
 import com.framgia.dao.ProfileDAO;
 import com.framgia.dao.PromotionDAO;
+import com.framgia.dao.RateDAO;
 import com.framgia.dao.RecentDAO;
+import com.framgia.dao.SuggestDAO;
 import com.framgia.dao.UserDAO;
 
 public class BaseServiceImpl {
@@ -27,7 +29,9 @@ public class BaseServiceImpl {
 	protected ProductDAO productDAO;
 	protected ProfileDAO profileDAO;
 	protected PromotionDAO promotionDAO;
+	protected RateDAO rateDAO;
 	protected RecentDAO recentDAO;
+	protected SuggestDAO suggestDAO;
 	protected UserDAO userDAO;
 
 	@Autowired
@@ -108,12 +112,28 @@ public class BaseServiceImpl {
 		this.promotionDAO = promotionDAO;
 	}
 
+	public RateDAO getRateDAO() {
+		return rateDAO;
+	}
+
+	public void setRateDAO(RateDAO rateDAO) {
+		this.rateDAO = rateDAO;
+	}
+
 	public RecentDAO getRecentDAO() {
 		return recentDAO;
 	}
 
 	public void setRecentDAO(RecentDAO recentDAO) {
 		this.recentDAO = recentDAO;
+	}
+
+	public SuggestDAO getSuggestDAO() {
+		return suggestDAO;
+	}
+
+	public void setSuggestDAO(SuggestDAO suggestDAO) {
+		this.suggestDAO = suggestDAO;
 	}
 
 	public UserDAO getUserDAO() {

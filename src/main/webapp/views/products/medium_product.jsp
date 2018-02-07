@@ -21,7 +21,7 @@
     </form:form>                    
   </div>
   <div class="col-sm-6">
-    <img src="${contextPath}/${product.getAvatar()}"
+    <img src="${product.getAvatar()}"
       class="girl img-responsive" alt="" />
   </div>
 </div>

@@ -37,7 +37,7 @@
         <prop key="hibernate.c3p0.timeout">1800</prop>
         <prop key="hibernate.show_sql">${jdbc.showSql}</prop>
         <prop key="hbm2ddl.auto">create</prop>
-        <prop key="hibernate.format_sql">true</prop>        
+        <prop key="hibernate.format_sql">true</prop>
       </props>
     </property>
 
@@ -53,7 +53,9 @@
         <value>com/framgia/model/hbm/Product.hbm.xml</value>
         <value>com/framgia/model/hbm/Profile.hbm.xml</value>
         <value>com/framgia/model/hbm/Promotion.hbm.xml</value>
+        <value>com/framgia/model/hbm/Rate.hbm.xml</value>
         <value>com/framgia/model/hbm/Recent.hbm.xml</value>
+        <value>com/framgia/model/hbm/Suggest.hbm.xml</value>
         <value>com/framgia/model/hbm/User.hbm.xml</value>
       </list>
     </property>

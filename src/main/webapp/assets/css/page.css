@@ -54,3 +54,25 @@
  .pagination .paginate-a {
  	cursor: pointer;
  }
+ 
+ .header .sub-menu {
+ 	background-color: white;
+ 	width: 150px;
+ }
+ 
+ .header .sub-menu hr {
+ 	margin: 5px 0;
+ }
+ 
+.sub-menu-item:last-child {
+ 	padding-bottom: 10px !important;
+ }
+ 
+ .header .sub-menu .sub-menu-item {
+ 	display: block;
+ }
+ 
+  .header .sub-menu .sub-menu-item a {
+  	color: inherit;
+  	background-color: inherit;
+  }

@@ -19,6 +19,7 @@ import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
 import com.framgia.service.OrderService;
 import com.framgia.service.ProductService;
+import com.framgia.service.SuggestService;
 import com.framgia.service.UserService;
 
 public class BaseController {
@@ -37,6 +38,9 @@ public class BaseController {
 
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	SuggestService suggestService;	
 
 	@Autowired
 	MessageSource messageSource;

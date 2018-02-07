@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Status;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Cart;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
@@ -169,9 +171,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				orderProduct.setQuantity(cart.getQuantity());
 				orderProductService.saveOrUpdate(orderProduct);
 
-				Product product = cart.getProduct();
-				product.setNumber(product.getNumber() - cart.getQuantity());
-				productService.saveOrUpdate(product);
+				ProductInfo productInfo = ModelToBean.toProductInfo(cart.getProduct());
+				productInfo.setNumber(productInfo.getNumber() - cart.getQuantity());
+				productService.saveOrUpdate(productInfo);
 				cartService.delete(cart);
 			}
 			return order;
