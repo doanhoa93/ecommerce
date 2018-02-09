@@ -1,7 +1,16 @@
 .admin-body .row-panel {
 	padding-top: 20px;
-} 
+}
 
 .navbar-static-top .dropdown {
 	cursor: pointer;
+}
+
+.table.dataTable thead .sorting_desc:after, .table.dataTable thead .sorting_asc:after,
+	.table.dataTable thead .sorting:after {
+	content: "";
+}
+
+.admin-body .input-sm {
+	width: auto !important;
 }
