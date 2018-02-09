@@ -194,11 +194,19 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/lib-css/morris.css" />
     </put-list-attribute>
-
   </definition>
 
   <definition name="adminOrders" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/orders/index.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/order.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/js/order.js" />
+    </put-list-attribute>
   </definition>
+
+  <definition name="adminOrder" template="/views/admin/orders/show.jsp" />
 </tiles-definitions>

@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 import com.framgia.bean.ProductInfo;
-import com.framgia.constant.ProductFilter;
 import com.framgia.helper.BeanToModel;
 import com.framgia.helper.ModelToBean;
+import com.framgia.helper.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;

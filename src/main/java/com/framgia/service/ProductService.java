@@ -3,7 +3,7 @@ package com.framgia.service;
 import java.util.List;
 
 import com.framgia.bean.ProductInfo;
-import com.framgia.constant.ProductFilter;
+import com.framgia.helper.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;

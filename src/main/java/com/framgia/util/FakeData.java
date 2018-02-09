@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -38,21 +37,26 @@ import com.framgia.model.User;
 
 public class FakeData {
 	public static void main(String[] args) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		destroy();
-		addUsers(session);
-		addCategories(session);
-		addProducts(session);
-		addImages(session);
-		addRecents(session);
-		addPromotions(session);
-		addComments(session);
-		addCarts(session);
-		addOrders(session);
-		addOrderProducts(session);
-		addSuggests(session);
-		addRates(session);
-		System.exit(0);
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			destroy();
+			addUsers(session);
+			addCategories(session);
+			addProducts(session);
+			addImages(session);
+			addRecents(session);
+			addPromotions(session);
+			addComments(session);
+			addCarts(session);
+			addOrders(session);
+			addOrderProducts(session);
+			addSuggests(session);
+			addRates(session);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			System.exit(0);
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -66,8 +70,23 @@ public class FakeData {
 
 			t = session.beginTransaction();
 
+			User admin = new User();
+			admin.setId(1);
+			admin.setEmail("admin@gmail.com");
+			admin.setPassword(Encode.encode("123456"));
+			admin.setRole(Role.Admin);
+			admin.setName("Admin");
+			session.save(admin);
+			Profile profileA = new Profile();
+			profileA.setId(2);
+			profileA.setUser(admin);
+			profileA.setAddress("Ha Noi");
+			profileA.setGender(Gender.MALE);
+			profileA.setBirthday(new Date(1995 - 1900, 11, 05));
+			session.save(profileA);
+
 			User user = new User();
-			user.setId(1);
+			user.setId(2);
 			user.setEmail("tiennh1995@gmail.com");
 			user.setPassword(Encode.encode("123456"));
 			user.setRole(Role.User);
@@ -78,25 +97,10 @@ public class FakeData {
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
 			profile.setGender(Gender.MALE);
-			profile.setBirthday(new Date(1995 - 1900, 11, 05));			
+			profile.setBirthday(new Date(1995 - 1900, 11, 05));
 			session.save(profile);
 
-			User admin = new User();
-			admin.setId(2);
-			admin.setEmail("admin@gmail.com");
-			admin.setPassword(Encode.encode("123456"));
-			admin.setRole(Role.Admin);
-			admin.setName("Nguyen Huu Tien");
-			session.save(admin);
-			Profile profileA = new Profile();
-			profileA.setId(2);
-			profileA.setUser(user);
-			profileA.setAddress("Ha Noi");
-			profileA.setGender(Gender.MALE);
-			profileA.setBirthday(new Date(1995 - 1900, 11, 05));			
-			session.save(profileA);
-			
-			for (int i = 3; i < 10; i++) {
+			for (int i = 3; i < 11; i++) {
 				user = new User();
 				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");
@@ -190,7 +194,7 @@ public class FakeData {
 			t = session.beginTransaction();
 			@SuppressWarnings({ "unchecked" })
 			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
 			for (int i = 1; i < 10; i++) {
 				Order order = new Order();
@@ -219,7 +223,7 @@ public class FakeData {
 			t = session.beginTransaction();
 			@SuppressWarnings({ "unchecked" })
 			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
 
 			@SuppressWarnings({ "unchecked" })
@@ -251,9 +255,8 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
-
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -406,7 +409,7 @@ public class FakeData {
 			for (int i = 1; i < 10; i++) {
 				Suggest suggest = new Suggest();
 				suggest.setId(i);
-				suggest.setUser(new User(i));
+				suggest.setUser(new User(i + 1));
 				suggest.setPrice(100);
 				map = upload(new File(
 				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
@@ -436,7 +439,7 @@ public class FakeData {
 			for (int i = 1; i < 10; i++) {
 				Rate rate = new Rate();
 				rate.setId(i);
-				rate.setUser(new User(i));
+				rate.setUser(new User(i + 1));
 				rate.setProduct(new Product(i));
 				rate.setRating(3);
 				session.save(rate);
@@ -451,18 +454,6 @@ public class FakeData {
 	@SuppressWarnings("rawtypes")
 	public static Map upload(File file) throws IOException {
 		Map uploadParams = ObjectUtils.asMap("invalidate", true);
-		return getCloudinary().uploader().upload(file, uploadParams);
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static Map upload(byte[] bytes) throws IOException {
-		Map uploadParams = ObjectUtils.asMap("invalidate", true);
-		File file = new File("Pictures/Ecommerce/temp.jpg");
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-		}
-		FileUtils.writeByteArrayToFile(file, bytes);
 		return getCloudinary().uploader().upload(file, uploadParams);
 	}
 

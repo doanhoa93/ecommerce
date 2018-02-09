@@ -1,6 +1,8 @@
-package com.framgia.constant;
+package com.framgia.helper;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.framgia.constant.Price;
 
 public class ProductFilter {
 	private String name;

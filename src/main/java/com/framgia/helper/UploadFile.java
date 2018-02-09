@@ -17,10 +17,6 @@ public class UploadFile {
 	@SuppressWarnings("rawtypes")
 	public Map upload(File file) throws IOException {
 		Map uploadParams = ObjectUtils.asMap("invalidate", true);
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-		}
 		return getCloudinary().uploader().upload(file, uploadParams);
 	}
 

@@ -1,6 +1,6 @@
 package com.framgia.constant;
 
-public class Role {
-	public static final String Admin = "Admin";
-	public static final String User = "User";
+public interface Role {
+	final String Admin = "Admin";
+	final String User = "User";
 }
