@@ -25,14 +25,21 @@ public class SessionsController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
+		ModelAndView model = new ModelAndView();
 		try {
 			if (userService.validate(userInfo)) {
-				return new ModelAndView("redirect:/");
+				if (isAdmin(currentUser()))
+					model.setViewName("redirect:/admin");
+				else
+					model.setViewName("redirect:/");
 			} else {
-				return new ModelAndView("login", "message", messageSource.getMessage("session.error", null, Locale.US));
+				model.setViewName("login");
+				model.addObject("message", messageSource.getMessage("session.error", null, Locale.US));
 			}
+			return model;
 		} catch (Exception e) {
-			return new ModelAndView("redirect:/sessions/new");
+			model.setViewName("redirect:/sessions/new");
+			return model;
 		}
 	}
 

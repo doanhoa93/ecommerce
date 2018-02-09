@@ -6,12 +6,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
 
-<!-- Meta -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <!-- Default CSS -->
@@ -52,24 +55,17 @@
   scope="application" />
 
 <body>
-  <div class="header">
+  <div id="wrapper">
     <c:if test="${flash != null}">
       <div class="flash">
         <div class="alert alert-${flash.type}">${flash.content}</div>
       </div>
-    </c:if>  
+    </c:if>
     <tiles:insertAttribute name="header" ignore="true" />
-  </div>
 
-  <div class="body">
-    <div class="container">
+    <div id="page-wrapper" class="admin-body">
       <tiles:insertAttribute name="body" ignore="true" />
     </div>
   </div>
-
-  <div class="footer">
-    <tiles:insertAttribute name="footer" ignore="true" />
-  </div>
-  <div id="fb-root"></div>  
 </body>
 </html>

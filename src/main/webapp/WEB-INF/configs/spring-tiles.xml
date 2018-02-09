@@ -132,18 +132,56 @@
     <put-attribute name="body" value="/views/suggests/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/suggest.css" />
-    </put-list-attribute>    
+    </put-list-attribute>
   </definition>
-  
+
   <definition name="suggestNew" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/suggests/new.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/suggest.css" />
-    </put-list-attribute>    
-    
+    </put-list-attribute>
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/suggest.js" />
-    </put-list-attribute>    
-  </definition>  
+    </put-list-attribute>
+  </definition>
+
+  <!-- ADMIN -->
+  <definition name="adminBaseLayout" template="/views/admin/layouts/template.jsp">
+
+    <!-- Set header, footer, body -->
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="header" value="/views/admin/layouts/header.jsp" />
+    <put-attribute name="body" value="/views/admin/layouts/body.jsp" />
+
+    <!-- import css -->
+    <put-list-attribute name="default-css">
+      <add-attribute value="/assets/admin/lib-css/bootstrap.min.css" />
+      <add-attribute value="/assets/admin/lib-css/metisMenu.min.css" />
+      <add-attribute value="/assets/admin/lib-css/sb-admin-2.css" />
+      <add-attribute value="/assets/admin/lib-css/morris.css" />
+      <add-attribute value="/assets/admin/lib-css/font-awesome.min.css" />
+      <add-attribute value="/assets/admin/css/page.css" />
+    </put-list-attribute>
+
+    <!-- import js -->
+    <put-list-attribute name="default-js">
+      <add-attribute value="/assets/admin/lib-js/jquery.min.js" />
+      <add-attribute value="/assets/admin/lib-js/bootstrap.min.js" />
+      <add-attribute value="/assets/admin/lib-js/metisMenu.min.js" />
+      <add-attribute value="/assets/admin/lib-js/raphael.min.js" />
+      <add-attribute value="/assets/admin/lib-js/morris.min.js" />
+      <add-attribute value="/assets/admin/lib-js/morris-data.js" />
+      <add-attribute value="/assets/admin/lib-js/sb-admin-2.min.js" />
+    </put-list-attribute>
+
+    <put-list-attribute name="css" />
+    <put-list-attribute name="js" />
+  </definition>
+
+  <definition name="adminHomePage" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/pages/index.jsp" />
+  </definition>
 </tiles-definitions>
