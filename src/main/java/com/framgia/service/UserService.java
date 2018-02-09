@@ -2,30 +2,30 @@ package com.framgia.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.framgia.bean.CommentInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
-import com.framgia.model.Cart;
-import com.framgia.model.Comment;
-import com.framgia.model.OrderProduct;
-import com.framgia.model.Product;
-import com.framgia.model.Profile;
-import com.framgia.model.User;
 
-public interface UserService extends BaseService<Integer, User> {
-	User findByEmail(String email);
+public interface UserService extends BaseService<Integer, UserInfo> {
+	UserInfo findByEmail(String email);
 
-	Profile getProfile(Integer userId);
+	ProfileInfo getProfile(Integer userId);
 
-	Cart getCart(Integer userId, Integer productId);
+	List<CommentInfo> getComments(Integer userId);
 
-	List<Comment> getComments(Integer userId);
+	List<OrderProductInfo> getOrderProducts(Integer userId);
 
-	List<OrderProduct> getOrderProducts(Integer userId);
+	List<ProductInfo> getOrderedProducts(Integer userId);
 
-	List<Product> getOrderedProducts(Integer userId);
+	List<ProductInfo> getCartedProducts(Integer userId);
 
-	List<Product> getCartedProducts(Integer userId);
+	boolean validate(UserInfo user);
 
-	boolean validate(UserInfo userInfo);
-	
-	void unremember(User user);
+	UserInfo getFromCookie(HttpServletRequest request);
+
+	void unremember();
 }

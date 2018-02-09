@@ -14,7 +14,7 @@ import com.framgia.constant.Status;
 @Component
 public class SuggestValidator implements Validator {
 	private static final List<String> IMAGE_TYPES = Arrays.asList("image/png", "image/jpeg", "image/gif");
-	public static final long MAX_SIZE = 1048576;
+	private static final long MAX_SIZE = 1048576;
 
 	@Override
 	public boolean supports(Class<?> clazz) {

@@ -2,21 +2,21 @@ package com.framgia.service;
 
 import java.util.List;
 
-import com.framgia.model.Order;
-import com.framgia.model.OrderProduct;
-import com.framgia.model.Product;
-import com.framgia.model.User;
+import com.framgia.bean.OrderInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.UserInfo;
 
-public interface OrderService extends BaseService<Integer, Order> {
-	User getUser(Integer orderId);
+public interface OrderService extends BaseService<Integer, OrderInfo> {
+	UserInfo getUser(Integer orderId);
 
-	List<OrderProduct> getOrderProducts(Integer orderId);
+	List<OrderProductInfo> getOrderProducts(Integer orderId);
 
-	List<Product> getProducts(Integer orderId);
+	List<ProductInfo> getProducts(Integer orderId);
 
-	Order createOrder(Integer userId, List<Integer> cartIds);
+	OrderInfo createOrder(Integer userId, List<Integer> cartIds);
 
-	List<Order> getOrders(Integer userId, String page, int limit);
+	List<OrderInfo> getOrders(Integer userId, String page, int limit);
 
 	int getProductQuantity(Integer orderId);
 }

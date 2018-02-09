@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.util.WebUtils;
+
+import com.framgia.bean.CommentInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
-import com.framgia.model.Cart;
-import com.framgia.model.Comment;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
-import com.framgia.model.OrderProduct;
-import com.framgia.model.Product;
-import com.framgia.model.Profile;
 import com.framgia.model.User;
 import com.framgia.service.UserService;
 import com.framgia.util.Encode;
@@ -21,38 +23,30 @@ import com.framgia.util.Encode;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	@Override
-	public Profile getProfile(Integer userId) {
+	public ProfileInfo getProfile(Integer userId) {
 		try {
-			return getUserDAO().getProfile(userId);
+			return ModelToBean.toProfileInfo(getUserDAO().getProfile(userId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Comment> getComments(Integer userId) {
+	public List<CommentInfo> getComments(Integer userId) {
 		try {
-			return getUserDAO().getComments(userId);
+			return getUserDAO().getComments(userId).stream().map(ModelToBean::toCommentInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<OrderProduct> getOrderProducts(Integer userId) {
+	public List<OrderProductInfo> getOrderProducts(Integer userId) {
 		try {
 			List<Order> orders = getOrderDAO().getOrders(userId, 0, 0);
 			List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId).collect(Collectors.toList());
-			return getOrderProductDAO().getObjectsByIds(orderIds);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
-	public List<Product> getOrderedProducts(Integer userId) {
-		try {
-			return (List<Product>) getOrderProducts(userId).stream().map(OrderProduct::getProduct)
+			return getOrderProductDAO().getObjectsByIds(orderIds).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
@@ -60,35 +54,36 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Product> getCartedProducts(Integer userId) {
+	public List<ProductInfo> getOrderedProducts(Integer userId) {
 		try {
-			return (List<Product>) getCartDAO().getCarts(userId, 0, 0).stream().map(Cart::getProduct)
-			        .collect(Collectors.toList());
+			return getOrderProducts(userId).stream().map(OrderProductInfo::getProduct).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Cart getCart(Integer userId, Integer productId) {
+	public List<ProductInfo> getCartedProducts(Integer userId) {
 		try {
-			return getUserDAO().getCart(userId, productId);
+			return getCartDAO().getCarts(userId, 0, 0).stream().map(cart -> {
+				return ModelToBean.toProductInfo(cart.getProduct());
+			}).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public User findBy(String attribute, Serializable key, boolean lock) {
+	public UserInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getUserDAO().findBy(attribute, key, lock);
+			return ModelToBean.toUserInfo(getUserDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public User findByEmail(String email) {
+	public UserInfo findByEmail(String email) {
 		try {
 			return findBy("email", email, true);
 		} catch (Exception e) {
@@ -97,7 +92,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findById(Serializable key) {
+	public UserInfo findById(Serializable key) {
 		try {
 			return findBy("id", key, true);
 		} catch (Exception e) {
@@ -106,9 +101,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean delete(User entity) {
+	public boolean delete(UserInfo entity) {
 		try {
-			getUserDAO().delete(entity);
+			getUserDAO().delete(toUser(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
@@ -116,62 +111,62 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean saveOrUpdate(User entity) {
+	public UserInfo saveOrUpdate(UserInfo entity) {
 		try {
-			getUserDAO().saveOrUpdate(entity);
-			return true;
+			return ModelToBean.toUserInfo(getUserDAO().saveOrUpdate(toUser(entity)));
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<User> getObjects() {
+	public List<UserInfo> getObjects() {
 		try {
-			return getUserDAO().getObjects();
+			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<User> getObjectsByIds(List<Integer> keys) {
+	public List<UserInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getUserDAO().getObjectsByIds(keys);
+			return getUserDAO().getObjectsByIds(keys).stream().map(ModelToBean::toUserInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<User> getObjects(int off, int limit) {
+	public List<UserInfo> getObjects(int off, int limit) {
 		try {
-			return getUserDAO().getObjects(off, limit);
+			return getUserDAO().getObjects(off, limit).stream().map(ModelToBean::toUserInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean validate(UserInfo userInfo) {
 		try {
-			User user = checkCookie(request);
-			if (user == null) {
-				user = findByEmail(userInfo.getEmail());
-				if (user != null && user.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
+			UserInfo userInf = getFromCookie(request);
+			if (userInf == null) {
+				userInf = findByEmail(userInfo.getEmail());
+				if (userInf != null && userInf.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
 					if (userInfo.isRemember()) {
 						Cookie cookie = new Cookie("email", userInfo.getEmail());
-						cookie.setMaxAge(1);
 						cookie.setPath("/");
+						cookie.setMaxAge(2592000);
 						response.addCookie(cookie);
 					}
 
-					request.getSession().putValue("currentUser", user);
+					request.getSession().setAttribute("currentUser", userInf);
 					return true;
 				}
 			} else {
-				request.getSession().putValue("currentUser", user);
+				request.getSession().setAttribute("currentUser", userInf);
 				return true;
 			}
 			return false;
@@ -180,26 +175,38 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
-	private User checkCookie(HttpServletRequest request) {
-		User user = null;
-		for (Cookie cookie : request.getCookies()) {
-			user = findByEmail(cookie.getValue());
-			if (user != null)
-				break;
-		}
-		return user;
+	public UserInfo getFromCookie(HttpServletRequest request) {
+		Cookie cookie = WebUtils.getCookie(request, "email");
+		if (cookie == null)
+			return null;
+		return findByEmail(cookie.getValue());
 	}
 
 	@Override
-	public void unremember(User user) {
+	public void unremember() {
 		try {
 			Cookie cookie = new Cookie("email", "");
-			cookie.setMaxAge(0);
 			cookie.setPath("/");
-			cookie.setValue(null);
+			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		} catch (Exception e) {
 			return;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private User toUser(UserInfo userInfo) {
+		User user = getUserDAO().getFromSession(userInfo.getId());
+		if (user == null) {
+			user = new User();
+			user.setId(userInfo.getId());
+		}
+
+		user.setName(userInfo.getName());
+		user.setEmail(userInfo.getEmail());
+		user.setPassword(Encode.encode(userInfo.getPassword()));
+		user.setRole(userInfo.getRole());
+		user.setAvatar(userInfo.getAvatar());
+		return user;
 	}
 }

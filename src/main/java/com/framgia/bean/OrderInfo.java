@@ -1,6 +1,7 @@
 package com.framgia.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderInfo {
 	private Integer id;
@@ -8,14 +9,15 @@ public class OrderInfo {
 	private float totalPrice;
 	private int status;
 	private Date createdAt;
-	private int getProductQuantity;
-	
+	private int productQuantity;
+	private UserInfo user;
+	private List<OrderProductInfo> orderProducts;
+
 	public OrderInfo() {
 		super();
 	}
 
 	public OrderInfo(Integer id) {
-		super();
 		this.id = id;
 	}
 
@@ -69,10 +71,26 @@ public class OrderInfo {
 	}
 
 	public int getProductQuantity() {
-		return getProductQuantity;
+		return productQuantity;
 	}
 
-	public void setProductQuantity(int getProductQuantity) {
-		this.getProductQuantity = getProductQuantity;
+	public void setProductQuantity(int productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
+	public UserInfo getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfo user) {
+		this.user = user;
+	}
+
+	public List<OrderProductInfo> getOrderProducts() {
+		return orderProducts;
+	}
+
+	public void setOrderProducts(List<OrderProductInfo> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 }

@@ -2,8 +2,6 @@ package com.framgia.bean;
 
 import java.util.List;
 
-import com.framgia.model.Image;
-
 public class ProductInfo {
 	private Integer id;
 	private Integer categoryId;
@@ -16,7 +14,8 @@ public class ProductInfo {
 	private String avatar;
 	private String information;
 	private int number;
-	private List<Image> images;
+	private CategoryInfo category;
+	private List<ImageInfo> images;
 
 	public ProductInfo() {
 		super();
@@ -126,11 +125,19 @@ public class ProductInfo {
 		this.number = number;
 	}
 
-	public List<Image> getImages() {
+	public CategoryInfo getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryInfo category) {
+		this.category = category;
+	}
+
+	public List<ImageInfo> getImages() {
 		return images;
 	}
 
-	public void setImages(List<Image> images) {
+	public void setImages(List<ImageInfo> images) {
 		this.images = images;
 	}
 }

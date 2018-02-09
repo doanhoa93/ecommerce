@@ -4,6 +4,7 @@
 
 <div class="category-tab">
   <div class="col-sm-12">
+    <h2 class="title text-center">Hot categories</h2>    
     <ul class="nav nav-tabs">
       <c:forEach var="category" items="${categories}" varStatus="loop">
         <li class="${loop.index == 0 ? 'active' : '' }">
@@ -17,7 +18,7 @@
     <c:forEach var="category" items="${categories}" varStatus="loop">
       <div class="tab-pane fade ${loop.index == 0 ? 'active in' : '' }"
         id="category-${category.getId()}">
-        <c:forEach var="product" items="${category.getProducts()}" begin="1" end="3">
+        <c:forEach var="product" items="${category.getProducts()}" end="2">
           <div class="col-sm-4">
             <c:set var="product" value="${product}" scope="session" />
             <c:import url="/views/products/mini_product.jsp" />

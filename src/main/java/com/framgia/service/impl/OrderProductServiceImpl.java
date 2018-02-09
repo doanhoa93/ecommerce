@@ -2,107 +2,127 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.framgia.bean.OrderInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.UserInfo;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
-import com.framgia.model.User;
 import com.framgia.service.OrderProductService;
 
 public class OrderProductServiceImpl extends BaseServiceImpl implements OrderProductService {
 
 	@Override
-	public User getUser(Integer orderProductId) {
+	public UserInfo getUser(Integer orderProductId) {
 		try {
 			Order order = getOrderProductDAO().getOrder(orderProductId);
-			if (order != null)
-				return getOrderDAO().getUser(order.getId());
-			return null;
+			return ModelToBean.toUserInfo(order.getUser());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Order getOrder(Integer orderProductId) {
+	public OrderInfo getOrder(Integer orderProductId) {
 		try {
-			return getOrderProductDAO().getOrder(orderProductId);
+			return ModelToBean.toOrderInfo(getOrderProductDAO().getOrder(orderProductId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Product getProduct(Integer orderProductId) {
+	public ProductInfo getProduct(Integer orderProductId) {
 		try {
-			return getOrderProductDAO().getProduct(orderProductId);
+			return ModelToBean.toProductInfo(getOrderProductDAO().getProduct(orderProductId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public OrderProduct findBy(String attribute, Serializable key, boolean lock) {
+	public OrderProductInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getOrderProductDAO().findBy(attribute, key, lock);
+			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public OrderProduct findById(Serializable key) {
+	public OrderProductInfo findById(Serializable key) {
 		try {
-			return getOrderProductDAO().findById(key);
+			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(OrderProduct entity) {
+	public boolean delete(OrderProductInfo entity) {
 		try {
-			getOrderProductDAO().delete(entity);
+			getOrderProductDAO().delete(toOrderProduct(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@Override
-	public boolean saveOrUpdate(OrderProduct entity) {
+	public OrderProductInfo saveOrUpdate(OrderProductInfo entity) {
 		try {
-			getOrderProductDAO().saveOrUpdate(entity);
-			return true;
+			OrderProduct orderProduct = getOrderProductDAO().saveOrUpdate(toOrderProduct(entity));
+			return ModelToBean.toOrderProductInfo(orderProduct);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<OrderProduct> getObjects() {
+	public List<OrderProductInfo> getObjects() {
 		try {
-			return getOrderProductDAO().getObjects();
+			return getOrderProductDAO().getObjects().stream().map(ModelToBean::toOrderProductInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<OrderProduct> getObjectsByIds(List<Integer> keys) {
+	public List<OrderProductInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getOrderProductDAO().getObjectsByIds(keys);
+			return getOrderProductDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderProductInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<OrderProduct> getObjects(int off, int limit) {
+	public List<OrderProductInfo> getObjects(int off, int limit) {
 		try {
-			return getOrderProductDAO().getObjects(off, limit);
+			return getOrderProductDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderProductInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private OrderProduct toOrderProduct(OrderProductInfo orderProductInfo) {
+		OrderProduct orderProduct = getOrderProductDAO().getFromSession(orderProductInfo.getId());
+		if (orderProduct != null) {
+			orderProduct = new OrderProduct();
+			orderProduct.setId(orderProductInfo.getId());
+			orderProduct.setOrder(new Order(orderProductInfo.getOrderId()));
+			orderProduct.setProduct(new Product(orderProductInfo.getProductId()));
+		}
+
+		orderProduct.setPrice(orderProductInfo.getPrice());
+		orderProduct.setQuantity(orderProductInfo.getQuantity());
+		return orderProduct;
 	}
 }

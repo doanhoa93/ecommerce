@@ -14,8 +14,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.framgia.bean.UserInfo;
 import com.framgia.constant.Role;
-import com.framgia.model.User;
 import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
 import com.framgia.service.OrderService;
@@ -39,9 +39,9 @@ public class BaseController {
 
 	@Autowired
 	public OrderService orderService;
-	
+
 	@Autowired
-	public SuggestService suggestService;	
+	public SuggestService suggestService;
 
 	@Autowired
 	public MessageSource messageSource;
@@ -52,8 +52,11 @@ public class BaseController {
 	@Autowired
 	public HttpServletResponse response;
 
-	public User currentUser() {
-		return (User) request.getSession().getAttribute("currentUser");
+	public UserInfo currentUser() {
+		UserInfo userInfo = (UserInfo) request.getSession().getAttribute("currentUser");
+		if (userInfo == null)
+			userInfo = userService.getFromCookie(request);
+		return userInfo;
 	}
 
 	public String toJson(HashMap<String, Object> hashMap) throws JsonProcessingException {
@@ -92,7 +95,7 @@ public class BaseController {
 		return paginate;
 	}
 
-	public boolean isAdmin(User user) {
-		return user.getRole().equals(Role.Admin);
+	public boolean isAdmin(UserInfo userInfo) {
+		return userInfo.getRole().equals(Role.Admin);
 	}
 }

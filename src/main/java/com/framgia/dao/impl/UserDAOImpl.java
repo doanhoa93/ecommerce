@@ -6,7 +6,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.UserDAO;
-import com.framgia.model.Cart;
 import com.framgia.model.Comment;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
@@ -35,13 +34,5 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 		Criteria criteria = getSession().createCriteria(Comment.class);
 		criteria.add(Restrictions.eq("user.id", userId));
 		return (List<Comment>) criteria.list();
-	}
-
-	@Override
-	public Cart getCart(Integer userId, Integer productId) {
-		Criteria criteria = getSession().createCriteria(Cart.class);
-		criteria.add(Restrictions.eq("user.id", userId));
-		criteria.add(Restrictions.eq("product.id", productId));
-		return (Cart) criteria.uniqueResult();
 	}
 }

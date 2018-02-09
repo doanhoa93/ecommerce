@@ -2,7 +2,11 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.RecentInfo;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Product;
 import com.framgia.model.Recent;
 import com.framgia.service.RecentService;
@@ -10,9 +14,9 @@ import com.framgia.service.RecentService;
 public class RecentServiceImpl extends BaseServiceImpl implements RecentService {
 
 	@Override
-	public Product getProduct(Integer recentId) {
+	public ProductInfo getProduct(Integer recentId) {
 		try {
-			return getRecentDAO().getProduct(recentId);
+			return ModelToBean.toProductInfo(getRecentDAO().getProduct(recentId));
 		} catch (Exception e) {
 			return null;
 		}
@@ -20,27 +24,27 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 
 	@Override
 
-	public Recent findBy(String attribute, Serializable key, boolean lock) {
+	public RecentInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getRecentDAO().findBy(attribute, key, lock);
+			return ModelToBean.toRecentInfo(getRecentDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Recent findById(Serializable key) {
+	public RecentInfo findById(Serializable key) {
 		try {
-			return getRecentDAO().findById(key);
+			return ModelToBean.toRecentInfo(getRecentDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(Recent entity) {
+	public boolean delete(RecentInfo entity) {
 		try {
-			getRecentDAO().delete(entity);
+			getRecentDAO().delete(toRecent(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
@@ -48,39 +52,53 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public boolean saveOrUpdate(Recent entity) {
+	public RecentInfo saveOrUpdate(RecentInfo entity) {
 		try {
-			getRecentDAO().saveOrUpdate(entity);
-			return true;
+			return ModelToBean.toRecentInfo(getRecentDAO().saveOrUpdate(toRecent(entity)));
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Recent> getObjects() {
+	public List<RecentInfo> getObjects() {
 		try {
-			return getRecentDAO().getObjects();
+			return getRecentDAO().getObjects().stream().map(ModelToBean::toRecentInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Recent> getObjectsByIds(List<Integer> keys) {
+	public List<RecentInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getRecentDAO().getObjectsByIds(keys);
+			return getRecentDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRecentInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Recent> getObjects(int off, int limit) {
+	public List<RecentInfo> getObjects(int off, int limit) {
 		try {
-			return getRecentDAO().getObjects(off, limit);
+			return getRecentDAO().getObjects(off, limit).stream().map(ModelToBean::toRecentInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private Recent toRecent(RecentInfo recentInfo) {
+		Recent recent = getRecentDAO().getFromSession(recentInfo.getId());
+		if (recent == null) {
+			recent = new Recent();
+			recent.setId(recentInfo.getId());
+			recent.setProduct(new Product(recentInfo.getProductId()));
+		}
+
+		recent.setViewed(recentInfo.getViewed());
+		return recent;
 	}
 }

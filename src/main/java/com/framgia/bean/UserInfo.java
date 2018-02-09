@@ -1,5 +1,7 @@
 package com.framgia.bean;
 
+import java.util.List;
+
 public class UserInfo {
 	private Integer id;
 	private String email;
@@ -8,8 +10,11 @@ public class UserInfo {
 	private String avatar;
 	private String role;
 	private String gender;
-	private ProfileInfo profileInfo;
 	private boolean remember;
+	private ProfileInfo profileInfo;
+	private List<OrderInfo> orders;
+	private List<CartInfo> carts;
+	private List<CommentInfo> comments;
 
 	public UserInfo() {
 		super();
@@ -98,5 +103,29 @@ public class UserInfo {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public List<OrderInfo> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<OrderInfo> orders) {
+		this.orders = orders;
+	}
+
+	public List<CartInfo> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<CartInfo> carts) {
+		this.carts = carts;
+	}
+
+	public List<CommentInfo> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentInfo> comments) {
+		this.comments = comments;
 	}
 }

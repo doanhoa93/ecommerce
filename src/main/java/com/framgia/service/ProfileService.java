@@ -1,8 +1,8 @@
 package com.framgia.service;
 
-import com.framgia.model.Profile;
-import com.framgia.model.User;
+import com.framgia.bean.ProfileInfo;
+import com.framgia.bean.UserInfo;
 
-public interface ProfileService extends BaseService<Integer, Profile> {
-  User getUser(Integer profileId);
+public interface ProfileService extends BaseService<Integer, ProfileInfo> {
+	UserInfo getUser(Integer profileId);
 }

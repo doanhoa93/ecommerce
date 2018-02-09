@@ -1,14 +1,14 @@
 package com.framgia.service;
 
-import com.framgia.model.Order;
-import com.framgia.model.OrderProduct;
-import com.framgia.model.Product;
-import com.framgia.model.User;
+import com.framgia.bean.OrderInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.UserInfo;
 
-public interface OrderProductService extends BaseService<Integer, OrderProduct> {
-  User getUser(Integer orderProductId);
+public interface OrderProductService extends BaseService<Integer, OrderProductInfo> {
+	UserInfo getUser(Integer orderProductId);
 
-  Order getOrder(Integer orderProductId);
+	OrderInfo getOrder(Integer orderProductId);
 
-  Product getProduct(Integer orderProductId);
+	ProductInfo getProduct(Integer orderProductId);
 }

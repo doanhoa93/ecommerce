@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.framgia.bean.SuggestInfo;
 import com.framgia.constant.Status;
-import com.framgia.helper.ModelToBean;
-import com.framgia.model.Suggest;
 import com.framgia.validator.SuggestValidator;
 
 @Controller("admin/suggest")
@@ -36,7 +35,7 @@ public class SuggestsController extends AdminController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		Suggest suggest = suggestService.findById(id);
+		SuggestInfo suggest = suggestService.findById(id);
 		ModelAndView model = new ModelAndView("adminSuggest");
 		if (suggest != null) {
 			model.addObject("suggest", suggest);
@@ -52,8 +51,8 @@ public class SuggestsController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			Suggest suggest = suggestService.findById(id);
-			suggestValidator.validStatus((int) hashMap.get("status"), ModelToBean.toSuggestInfo(suggest), result);
+			SuggestInfo suggest = suggestService.findById(id);
+			suggestValidator.validStatus((int) hashMap.get("status"), suggest, result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			} else {

@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.framgia.bean.UserInfo;
-import com.framgia.helper.BeanToModel;
-import com.framgia.model.User;
+import com.framgia.constant.Role;
 
 @Controller
 @RequestMapping(value = "/registrations")
@@ -24,8 +23,8 @@ public class RegistrationsController extends BaseController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
-			User user = BeanToModel.toUser(userInfo);
-			userService.saveOrUpdate(user);
+			userInfo.setRole(Role.User);
+			userService.saveOrUpdate(userInfo);
 			return new ModelAndView("redirect:/");
 		} catch (Exception e) {
 			return new ModelAndView("signup", "message",

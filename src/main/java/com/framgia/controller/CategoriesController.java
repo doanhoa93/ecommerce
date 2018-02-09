@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
 import com.framgia.helper.ProductFilter;
-import com.framgia.model.Product;
 
 @Controller
 @RequestMapping(value = "categories")
@@ -25,7 +25,7 @@ public class CategoriesController extends BaseController {
 	        @RequestParam(value = "name", required = false) String name,
 	        @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		List<Product> products = null;
+		List<ProductInfo> products = null;
 		ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
 		if (productFilter.isFilterProduct()) {
 			products = productService.filterProducts(categoryId, productFilter, page, Paginate.PRODUCT_LIMIT);

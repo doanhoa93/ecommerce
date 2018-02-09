@@ -18,8 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.CartInfo;
 import com.framgia.constant.Paginate;
-import com.framgia.helper.BeanToModel;
-import com.framgia.model.Cart;
 
 @Controller
 public class CartsController extends BaseController {
@@ -27,7 +25,7 @@ public class CartsController extends BaseController {
 	@RequestMapping(value = "/carts", method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("carts");
-		List<Cart> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT);
+		List<CartInfo> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT);
 		model.addObject("carts", carts);
 		model.addObject("cartsSize", cartService.getCarts(currentUser().getId(), null, 0).size());
 		model.addObject("paginate", setPaginate(carts.size(), page, Paginate.PRODUCT_LIMIT));
@@ -39,23 +37,25 @@ public class CartsController extends BaseController {
 	        @ModelAttribute("cartInfo") CartInfo cartInfo) {
 		HashMap<String, Object> flash = new HashMap<>();
 		try {
-			Cart cart = userService.getCart(currentUser().getId(), productId);
+			CartInfo cartInf = cartService.getCart(currentUser().getId(), productId);
+			cartInfo.setProductId(productId);
+			cartInfo.setUserId(currentUser().getId());
+
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
 
-			if (cart != null) {
-				cart.setQuantity(cartInfo.getQuantity() + cart.getQuantity());
-			} else {
-				cartInfo.setProductId(productId);
-				cartInfo.setUserId(currentUser().getId());
-				cart = BeanToModel.toCart(cartInfo);
+			if (cartInf != null) {
+				cartInfo.setId(cartInf.getId());
+				cartInfo.setQuantity(cartInfo.getQuantity() + cartInf.getQuantity());
 			}
-			cartService.saveOrUpdate(cart);
+
+			cartService.saveOrUpdate(cartInfo);
 			flash.put("type", "success");
 			flash.put("content", messageSource.getMessage("cart.success", null, Locale.US));
 			redirect.addFlashAttribute("flash", flash);
 			return "redirect:/carts";
 		} catch (Exception e) {
+			e.printStackTrace();
 			flash.put("type", "error");
 			flash.put("content", messageSource.getMessage("cart.error", null, Locale.US));
 			redirect.addFlashAttribute("flash", flash);
@@ -70,9 +70,9 @@ public class CartsController extends BaseController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			Cart cart = cartService.findById(id);
-			cart.setQuantity((Integer) hashMap.get("quantity"));
-			cartService.saveOrUpdate(cart);
+			CartInfo cartInfo = cartService.findById(id);
+			cartInfo.setQuantity((Integer) hashMap.get("quantity"));
+			cartService.saveOrUpdate(cartInfo);
 			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 		} catch (Exception e) {
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
@@ -83,8 +83,8 @@ public class CartsController extends BaseController {
 	@RequestMapping(value = "/carts/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable("id") Integer id) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		Cart cart = cartService.findById(id);
-		if (cartService.delete(cart))
+		CartInfo cartInfo = cartService.findById(id);
+		if (cartService.delete(cartInfo))
 			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 		else
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));

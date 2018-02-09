@@ -79,14 +79,14 @@
       </bean>
     </property>
   </bean>
-  
+
   <bean id="RateService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.RateServiceImpl">
         <property name="rateDAO" ref="RateDAO"></property>
       </bean>
     </property>
-  </bean>    
+  </bean>
 
   <bean id="RecentService" parent="transactionProxyTemplate">
     <property name="target">
@@ -95,14 +95,14 @@
       </bean>
     </property>
   </bean>
-  
+
   <bean id="SuggestService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.SuggestServiceImpl">
         <property name="suggestDAO" ref="SuggestDAO"></property>
       </bean>
     </property>
-  </bean>  
+  </bean>
 
   <bean id="UserService" parent="transactionProxyTemplate">
     <property name="target">

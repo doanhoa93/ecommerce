@@ -21,9 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Status;
-import com.framgia.helper.ModelToBean;
 import com.framgia.mailer.ApplicationMailer;
-import com.framgia.model.Order;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -34,14 +32,9 @@ public class OrdersController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("orders");
-		List<Order> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT);
-		List<OrderInfo> orderInfos = orders.stream().map(order -> {
-			OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
-			orderInfo.setProductQuantity(orderService.getProductQuantity(order.getId()));
-			return orderInfo;
-		}).collect(Collectors.toList());
-		model.addObject("paginate", setPaginate(orderInfos.size(), page, Paginate.ORDER_LIMIT));
-		model.addObject("orders", orderInfos);
+		List<OrderInfo> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT);
+		model.addObject("paginate", setPaginate(orders.size(), page, Paginate.ORDER_LIMIT));
+		model.addObject("orders", orders);
 		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0).size());
 		model.addObject("statuses", Status.statuses);
 		return model;
@@ -56,7 +49,7 @@ public class OrdersController extends BaseController {
 			List<String> strCartIds = (List<String>) hashMap.get("cartIds");
 			List<Integer> cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
 			hashMap.clear();
-			Order order = orderService.createOrder(currentUser().getId(), cartIds);
+			OrderInfo order = orderService.createOrder(currentUser().getId(), cartIds);
 			if (order != null) {
 				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 				hashMap.put("url", "/orders");
@@ -70,6 +63,7 @@ public class OrdersController extends BaseController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
+			e.printStackTrace();
 			hashMap.clear();
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			HashMap<String, Object> error = new HashMap<>();

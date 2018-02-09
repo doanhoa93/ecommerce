@@ -5,6 +5,8 @@ public class CartInfo {
 	private Integer userId;
 	private Integer productId;
 	private int quantity;
+	private UserInfo user;
+	private ProductInfo product;
 
 	public CartInfo() {
 		super();
@@ -47,5 +49,21 @@ public class CartInfo {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public UserInfo getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfo user) {
+		this.user = user;
+	}
+
+	public ProductInfo getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductInfo product) {
+		this.product = product;
 	}
 }
