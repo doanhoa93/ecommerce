@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.framgia.constant.Role;
 import com.framgia.model.User;
 import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
@@ -25,31 +26,31 @@ import com.framgia.service.UserService;
 public class BaseController {
 
 	@Autowired
-	CartService cartService;
+	public CartService cartService;
 
 	@Autowired
-	CategoryService categoryService;
+	public CategoryService categoryService;
 
 	@Autowired
-	ProductService productService;
+	public ProductService productService;
 
 	@Autowired
-	UserService userService;
+	public UserService userService;
 
 	@Autowired
-	OrderService orderService;
+	public OrderService orderService;
 	
 	@Autowired
-	SuggestService suggestService;	
+	public SuggestService suggestService;	
 
 	@Autowired
-	MessageSource messageSource;
+	public MessageSource messageSource;
 
 	@Autowired
-	HttpServletRequest request;
+	public HttpServletRequest request;
 
 	@Autowired
-	HttpServletResponse response;
+	public HttpServletResponse response;
 
 	public User currentUser() {
 		return (User) request.getSession().getAttribute("currentUser");
@@ -89,5 +90,9 @@ public class BaseController {
 		paginate.put("end", end);
 		paginate.put("more", more);
 		return paginate;
+	}
+
+	public boolean isAdmin(User user) {
+		return user.getRole().equals(Role.Admin);
 	}
 }

@@ -78,11 +78,25 @@ public class FakeData {
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
 			profile.setGender(Gender.MALE);
-			profile.setBirthday(new Date(1995 - 1900, 11, 05));
-
+			profile.setBirthday(new Date(1995 - 1900, 11, 05));			
 			session.save(profile);
 
-			for (int i = 2; i < 10; i++) {
+			User admin = new User();
+			admin.setId(2);
+			admin.setEmail("admin@gmail.com");
+			admin.setPassword(Encode.encode("123456"));
+			admin.setRole(Role.Admin);
+			admin.setName("Nguyen Huu Tien");
+			session.save(admin);
+			Profile profileA = new Profile();
+			profileA.setId(2);
+			profileA.setUser(user);
+			profileA.setAddress("Ha Noi");
+			profileA.setGender(Gender.MALE);
+			profileA.setBirthday(new Date(1995 - 1900, 11, 05));			
+			session.save(profileA);
+			
+			for (int i = 3; i < 10; i++) {
 				user = new User();
 				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");

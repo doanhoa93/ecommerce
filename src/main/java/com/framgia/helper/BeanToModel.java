@@ -20,7 +20,7 @@ public class BeanToModel {
 		user.setName(userInfo.getName());
 		user.setEmail(userInfo.getEmail());
 		user.setPassword(Encode.encode(userInfo.getPassword()));
-		user.setRole("User");
+		user.setRole(userInfo.getRole());
 		user.setAvatar(userInfo.getAvatar());
 		return user;
 	}
