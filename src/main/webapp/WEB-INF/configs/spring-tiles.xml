@@ -209,4 +209,18 @@
   </definition>
 
   <definition name="adminOrder" template="/views/admin/orders/show.jsp" />
+  
+  <definition name="adminSuggests" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/suggests/index.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/suggest.css" />
+    </put-list-attribute>
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/js/suggest.js" />
+    </put-list-attribute>    
+  </definition>  
+  
+  <definition name="adminSuggest" template="/views/admin/suggests/show.jsp" />
 </tiles-definitions>

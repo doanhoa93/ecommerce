@@ -25,6 +25,9 @@
     <property name="createdAt" type="date">
       <column name="created_at" />
     </property>
+    <property name="status" type="integer">
+      <column name="status" default="0" />
+    </property>    
 
     <many-to-one name="user" class="User" lazy="false">
       <column name="user_id" not-null="true" />

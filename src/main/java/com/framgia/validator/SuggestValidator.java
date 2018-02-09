@@ -9,6 +9,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.framgia.bean.SuggestInfo;
+import com.framgia.constant.Status;
 
 @Component
 public class SuggestValidator implements Validator {
@@ -31,5 +32,12 @@ public class SuggestValidator implements Validator {
 		} else if (avatar.getSize() > MAX_SIZE) {
 			errors.rejectValue("avatar", "upload.exceeded.file.size");
 		}
+	}
+
+	public void validStatus(int newStatus, Object target, Errors errors) {
+		SuggestInfo suggestInfo = (SuggestInfo) target;
+		int status = suggestInfo.getStatus();
+		if (status < Status.WAITING || status > Status.CANCEL)
+			errors.rejectValue("status", "suggest.status.inlavid");
 	}
 }

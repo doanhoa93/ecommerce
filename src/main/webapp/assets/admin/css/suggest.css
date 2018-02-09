@@ -1,0 +1,70 @@
+.admin-suggest-table .tr-href {
+	cursor: pointer;
+}
+
+.suggest-actions .btn-suggest-update {
+	float: right;
+	margin-right: 10px;
+}
+
+.admin-suggest .suggest-detail-customer, .admin-suggest .suggest-detail-price {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.admin-suggest .suggest-detail-info {
+	margin-bottom: 20px;
+}
+
+.admin-suggest .modal-dialog {
+	max-width: 90%;
+	width: auto;
+}
+
+.suggest-table .suggest-avatar {
+	max-height: 150px;
+}
+
+.admin-suggest-table .center {
+	text-align: center;
+}
+
+.suggest-status {
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.status-0 {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
+
+.status-1 {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.status-2 {
+	color: #fff;
+	background-color: #d9534f;
+	border-color: #d43f3a;
+}
+
+.status-3 {
+	color: #fff;
+	background-color: #f0ad4e;
+	border-color: #eea236;
+}
+
+.suggest-detail-info .suggest-field {
+	margin-bottom: 20px;
+}
