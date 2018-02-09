@@ -70,7 +70,7 @@
 
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/cart.js" />
-    </put-list-attribute>    
+    </put-list-attribute>
   </definition>
 
   <definition name="orders" extends="baselayout">
@@ -79,12 +79,12 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/order.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/order.js" />
-    </put-list-attribute>        
-  </definition>  
-  
+    </put-list-attribute>
+  </definition>
+
   <definition name="order" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/orders/show.jsp" />
@@ -95,26 +95,26 @@
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
-  </definition>  
-  
+  </definition>
+
   <definition name="products" extends="baselayout">
     <put-attribute name="title" value="Products | Ecommerce" />
     <put-attribute name="body" value="productIndex" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/product.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/product.js" />
-    </put-list-attribute>    
-  </definition>  
-  
+    </put-list-attribute>
+  </definition>
+
   <definition name="productIndex" template="/views/products/index_template.jsp">
     <put-attribute name="products" value="productsPartial" />
   </definition>
-  
+
   <definition name="productsPartial" template="/views/products/index.jsp" />
-  
+
   <definition name="product" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/products/show.jsp" />
@@ -126,4 +126,24 @@
       <add-attribute value="/assets/js/fb.js" />
     </put-list-attribute>
   </definition>
+
+  <definition name="suggests" extends="baselayout">
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="body" value="/views/suggests/index.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/suggest.css" />
+    </put-list-attribute>    
+  </definition>
+  
+  <definition name="suggestNew" extends="baselayout">
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="body" value="/views/suggests/new.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/suggest.css" />
+    </put-list-attribute>    
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/suggest.js" />
+    </put-list-attribute>    
+  </definition>  
 </tiles-definitions>

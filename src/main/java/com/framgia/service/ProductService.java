@@ -2,6 +2,7 @@ package com.framgia.service;
 
 import java.util.List;
 
+import com.framgia.bean.ProductInfo;
 import com.framgia.constant.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -14,7 +15,7 @@ import com.framgia.model.Promotion;
 import com.framgia.model.Recent;
 import com.framgia.model.User;
 
-public interface ProductService extends BaseService<Integer, Product> {
+public interface ProductService extends BaseService<Integer, ProductInfo> {
 	Recent getRecent(Integer productId);
 
 	Promotion getPromotion(Integer productId);

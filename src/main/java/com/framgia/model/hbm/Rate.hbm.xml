@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="Rate" table="rates">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <property name="rating" type="integer">
+      <column name="rating" default="1" />
+    </property>
+
+    <many-to-one name="user" class="User" lazy="false">
+      <column name="user_id" not-null="true" />
+    </many-to-one>
+    <many-to-one name="product" class="Product" lazy="false">
+      <column name="product_id" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

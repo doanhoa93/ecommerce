@@ -1,0 +1,23 @@
+.suggest-paginate {
+	margin-top: 20px;
+}
+
+.suggest-header .btn-create-suggest {
+	display: -webkit-inline-box;
+}
+
+.btn-create-suggest .fa-plus {
+	margin-right: 5px;
+}
+
+.suggest-form .field {
+	margin-bottom: 20px;
+}
+
+.suggest-form .field .avatar {
+	display: inline-block;
+}
+
+.suggests-table .suggest-avatar {
+	max-height: 200px;
+}

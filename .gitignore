@@ -2,3 +2,4 @@
 .settings/*
 /log
 /src/main/resources/email-config.properties
+/src/main/resources/cloudinary-config.properties

@@ -27,7 +27,5 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 
 	List<Image> getImages(Integer productId);
 
-	List<Product> getProducts(Integer categoryId);
-
 	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit);
 }

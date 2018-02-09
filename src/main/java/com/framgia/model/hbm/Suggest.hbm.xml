@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="Suggest" table="suggests">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <property name="name" type="string">
+      <column name="name" not-null="true" />
+    </property>
+    <property name="information" type="string">
+      <column name="information" />
+    </property>
+    <property name="category" type="string">
+      <column name="category" />
+    </property>
+    <property name="avatar" type="string">
+      <column name="avatar" />
+    </property>
+    <property name="price" type="float">
+      <column name="price" default="0" />
+    </property>
+    <property name="createdAt" type="date">
+      <column name="created_at" />
+    </property>
+
+    <many-to-one name="user" class="User" lazy="false">
+      <column name="user_id" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

@@ -22,6 +22,10 @@ public class Product implements Serializable {
 		super();
 	}
 
+	public Product(Integer id) {
+		this.id = id;
+	}
+
 	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId, float saleOf, String name,
 	        float price, float rating, String avatar, String information, int number) {
 		super();

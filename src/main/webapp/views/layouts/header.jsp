@@ -63,17 +63,26 @@
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders
                     </a>
                    </li>                      
-                   
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user"></i>Account
-                    </a>
-                  </li>
                   
-                  <li>
-                    <a href="${contextPath}/sessions/delete"
-                    class="logout-btn"><i class="fa fa-lock"></i>Logout
-                    </a>
+                  <li class="dropdown">
+                    <a href="#">Account<i class="fa fa-angle-down"></i></a>
+                    <ul role="menu" class="sub-menu">
+                      <li class="sub-menu-item">
+                        <a href="#"><i class="fa fa-user"></i>My profile</a>
+                        <hr>
+                      </li>
+                      
+                      <li class="sub-menu-item">
+                        <a href="${contextPath}/suggests"><i class="fa fa-edit"></i>My suggests</a>
+                        <hr>                      
+                      </li>
+                      
+                      <li class="sub-menu-item">
+                        <a href="${contextPath}/sessions/delete">
+                          <i class="fa fa-lock"></i>Logout
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </c:when>
                 <c:otherwise>

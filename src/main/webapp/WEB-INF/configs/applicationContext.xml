@@ -31,6 +31,7 @@
       <list>
         <value>classpath:spring-server-config.properties</value>
         <value>classpath:email-config.properties</value>
+        <value>classpath:cloudinary-config.properties</value>
       </list>
     </property>
   </bean>
@@ -49,6 +50,12 @@
     </property>
   </bean>
 
+  <bean id="uploadFile" class="com.framgia.helper.UploadFile">
+    <property name="cloudName" value="${cloudinary.cloud_name}" />
+    <property name="apiKey" value="${cloudinary.api_key}" />
+    <property name="apiSecret" value="${cloudinary.api_secret}" />
+  </bean>
+
   <!-- Load message.properties. Nhu I18n -->
   <bean id="messageSource"
     class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -63,11 +70,13 @@
       <mvc:mapping path="/carts/*" />
       <mvc:mapping path="/orders" />
       <mvc:mapping path="/orders/*" />
+      <mvc:mapping path="/suggests" />
       <bean class="com.framgia.interceptor.LoginInterceptor" />
     </mvc:interceptor>
 
     <mvc:interceptor>
       <mvc:mapping path="/sessions/*" />
+      <mvc:mapping path="/registrations/*" />
       <bean class="com.framgia.interceptor.LoggedinInterceptor" />
     </mvc:interceptor>
   </mvc:interceptors>

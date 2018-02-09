@@ -18,7 +18,7 @@
       <ref bean="sessionFactory" />
     </property>
   </bean>
-  
+
   <bean id="CommentDAO" class="com.framgia.dao.impl.CommentDAOImpl">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />
@@ -61,7 +61,19 @@
     </property>
   </bean>
 
+  <bean id="RateDAO" class="com.framgia.dao.impl.RateDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
   <bean id="RecentDAO" class="com.framgia.dao.impl.RecentDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
+  <bean id="SuggestDAO" class="com.framgia.dao.impl.SuggestDAOImpl">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />
     </property>

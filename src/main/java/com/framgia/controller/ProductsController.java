@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
 import com.framgia.constant.ProductFilter;
@@ -44,13 +45,13 @@ public class ProductsController extends BaseController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		Product product = productService.findById(id);
+		ProductInfo productInfo = productService.findById(id);
 		ModelAndView model = new ModelAndView();
-		if (product != null) {
-			int size = product.getImages().size() / 3;
-			if (product.getImages().size() % 3 > 0)
+		if (productInfo != null) {
+			int size = productInfo.getImages().size() / 3;
+			if (productInfo.getImages().size() % 3 > 0)
 				size++;
-			model.addObject("product", product);
+			model.addObject("product", productInfo);
 			model.addObject("slideSize", size);
 			model.setViewName("product");
 			return model;

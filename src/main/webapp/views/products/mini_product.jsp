@@ -6,7 +6,7 @@
   <div class="single-products">
     <div class="productinfo text-center">
       <a href="${contextPath}/products/${product.getId()}">
-        <img class="product-image" src="${contextPath}/${product.getAvatar()}" alt="" />
+        <img class="product-image" src="${product.getAvatar()}" alt="" />
       </a>
       <h2>            
         <fmt:setLocale value="en_US" />

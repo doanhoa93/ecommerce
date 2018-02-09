@@ -14,6 +14,10 @@ public class Category implements Serializable {
 		super();
 	}
 
+	public Category(Integer id) {
+		this.id = id;
+	}
+
 	public Category(Integer id, Integer parentId, String name) {
 		super();
 		this.id = id;
