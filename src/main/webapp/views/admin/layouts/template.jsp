@@ -32,20 +32,6 @@
   <link rel="stylesheet" href="<c:url value='${css}'/>" type="text/css"
     media="screen" />
 </c:forEach>
-
-<!-- Default JS -->
-<tilesx:useAttribute id="javascripts" name="default-js"
-  classname="java.util.List" />
-<c:forEach var="js" items="${javascripts}">
-  <script src="<c:url value='${js}'/>" type="text/javascript"></script>
-</c:forEach>
-
-<!-- Addition JS -->
-<tilesx:useAttribute id="additionJavascripts" name="js"
-  classname="java.util.List" />
-<c:forEach var="js" items="${additionJavascripts}">
-  <script src="<c:url value='${js}'/>" type="text/javascript"></script>
-</c:forEach>
 </head>
 
 <c:set var="currentUser"
@@ -67,5 +53,19 @@
       <tiles:insertAttribute name="body" ignore="true" />
     </div>
   </div>
+
+  <!-- Default JS -->
+  <tilesx:useAttribute id="javascripts" name="default-js"
+    classname="java.util.List" />
+  <c:forEach var="js" items="${javascripts}">
+    <script src="<c:url value='${js}'/>" type="text/javascript"></script>
+  </c:forEach>
+
+  <!-- Addition JS -->
+  <tilesx:useAttribute id="additionJavascripts" name="js"
+    classname="java.util.List" />
+  <c:forEach var="js" items="${additionJavascripts}">
+    <script src="<c:url value='${js}'/>" type="text/javascript"></script>
+  </c:forEach>
 </body>
 </html>

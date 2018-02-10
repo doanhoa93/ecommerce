@@ -160,9 +160,10 @@
       <add-attribute value="/assets/admin/lib-css/bootstrap.min.css" />
       <add-attribute value="/assets/admin/lib-css/metisMenu.min.css" />
       <add-attribute value="/assets/admin/lib-css/sb-admin-2.css" />
-      <add-attribute value="/assets/admin/lib-css/morris.css" />
       <add-attribute value="/assets/admin/lib-css/font-awesome.min.css" />
       <add-attribute value="/assets/admin/css/page.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.responsive.css" />
     </put-list-attribute>
 
     <!-- import js -->
@@ -171,9 +172,11 @@
       <add-attribute value="/assets/admin/lib-js/bootstrap.min.js" />
       <add-attribute value="/assets/admin/lib-js/metisMenu.min.js" />
       <add-attribute value="/assets/admin/lib-js/raphael.min.js" />
-      <add-attribute value="/assets/admin/lib-js/morris.min.js" />
-      <add-attribute value="/assets/admin/lib-js/morris-data.js" />
       <add-attribute value="/assets/admin/lib-js/sb-admin-2.min.js" />
+      <add-attribute value="/assets/admin/lib-js/jquery.dataTables.min.js" />
+      <add-attribute value="/assets/admin/lib-js/dataTables.bootstrap.min.js" />
+      <add-attribute value="/assets/admin/lib-js/dataTables.responsive.js" />
+      <add-attribute value="/assets/admin/js/datatable.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -183,5 +186,19 @@
   <definition name="adminHomePage" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/pages/index.jsp" />
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/lib-js/morris.min.js" />
+      <add-attribute value="/assets/admin/lib-js/morris-data.js" />
+    </put-list-attribute>
+
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/lib-css/morris.css" />
+    </put-list-attribute>
+
+  </definition>
+
+  <definition name="adminOrders" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/orders/index.jsp" />
   </definition>
 </tiles-definitions>

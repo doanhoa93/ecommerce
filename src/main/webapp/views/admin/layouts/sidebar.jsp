@@ -14,7 +14,7 @@
       </li>
       
       <li>
-        <a href="tables.html">
+        <a href="${contextPath}/admin/orders">
           <i class="fa fa-shopping-cart fa-fw"></i> Orders
         </a>
       </li>
