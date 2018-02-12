@@ -44,7 +44,7 @@
       </li>      
           
       <li>
-        <a href="tables.html">
+        <a href="${contextPath}/admin/suggests">
           <i class="fa fa-edit fa-fw"></i> Suggests
         </a>
       </li>

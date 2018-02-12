@@ -1,6 +1,6 @@
 package com.framgia.constant;
 
 public interface Price {
-	float MAX_PRICE = 600;
-	float MIN_PRICE = 0;
+	final float MAX_PRICE = 600;
+	final float MIN_PRICE = 0;
 }

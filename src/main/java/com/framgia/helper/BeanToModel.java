@@ -63,6 +63,7 @@ public class BeanToModel {
 		suggest.setPrice(suggestInfo.getPrice());
 		suggest.setUser(new User(suggestInfo.getUserId()));
 		suggest.setInformation(suggestInfo.getInformation());
+		suggest.setStatus(suggestInfo.getStatus());
 		return suggest;
 	}
 }

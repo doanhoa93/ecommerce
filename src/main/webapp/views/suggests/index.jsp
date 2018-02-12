@@ -19,6 +19,7 @@
           <th>Product category</th>
           <th>Product price</th>
           <th>Created at</th>
+          <th>Status</th>
         </tr>
       </thead>
     
@@ -35,6 +36,8 @@
               <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />        
             </td>
             <td>${suggest.getCreatedAt()}</td>
+            <c:set var="status" value="${suggest.getStatus()}" scope="page" />
+            <td>${statuses[status]}</td>
           </tr>
         </c:forEach>
       </tbody>

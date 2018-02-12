@@ -15,31 +15,31 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.constant.Status;
-import com.framgia.model.Order;
-import com.framgia.validator.OrderValidator;
+import com.framgia.helper.ModelToBean;
+import com.framgia.model.Suggest;
+import com.framgia.validator.SuggestValidator;
 
-@Controller("admin/order")
-@RequestMapping(value = "/admin/orders")
-public class OrdersController extends AdminController {
+@Controller("admin/suggest")
+@RequestMapping(value = "admin/suggests")
+public class SuggestsController extends AdminController {
 
 	@Autowired
-	private OrderValidator orderValidator;
+	private SuggestValidator suggestValidator;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("adminOrders");
-		model.addObject("orders", orderService.getObjects());
+		ModelAndView model = new ModelAndView("adminSuggests");
 		model.addObject("statuses", Status.statuses);
+		model.addObject("suggests", suggestService.getObjects());
 		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		Order order = orderService.findById(id);
-		ModelAndView model = new ModelAndView("adminOrder");
-		if (order != null) {
-			model.addObject("order", order);
-			model.addObject("orderProducts", order.getOrderProducts());
+		Suggest suggest = suggestService.findById(id);
+		ModelAndView model = new ModelAndView("adminSuggest");
+		if (suggest != null) {
+			model.addObject("suggest", suggest);
 			model.addObject("statuses", Status.statuses);
 		}
 		return model;
@@ -52,13 +52,13 @@ public class OrdersController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			Order order = orderService.findById(id);
-			orderValidator.validStatus((int) hashMap.get("status"), order, result);
+			Suggest suggest = suggestService.findById(id);
+			suggestValidator.validStatus((int) hashMap.get("status"), ModelToBean.toSuggestInfo(suggest), result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			} else {
-				order.setStatus((int) hashMap.get("status"));
-				orderService.saveOrUpdate(order);
+				suggest.setStatus((int) hashMap.get("status"));
+				suggestService.saveOrUpdate(suggest);
 				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 				hashMap.put("statuses", Status.statuses);
 			}

@@ -13,6 +13,7 @@ public class SuggestInfo {
 	private String avatar;
 	private float price;
 	private Date createdAt;
+	private int status;
 	private MultipartFile avatarFile;
 
 	public SuggestInfo(Integer id, Integer userId, String name, String information, String category, String avatar,
@@ -102,5 +103,13 @@ public class SuggestInfo {
 
 	public void setAvatarFile(MultipartFile avatarFile) {
 		this.avatarFile = avatarFile;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

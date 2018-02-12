@@ -13,6 +13,7 @@ public class Suggest implements Serializable {
 	private String avatar;
 	private float price;
 	private Date createdAt;
+	private int status;
 
 	public Suggest(Integer id, User user, String name, String information, String category, String avatar, float price,
 	        Date createdAt) {
@@ -93,5 +94,13 @@ public class Suggest implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }
