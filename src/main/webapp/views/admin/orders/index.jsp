@@ -11,7 +11,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-body">
-        <table class="table table-striped table-bordered table-hover"
+        <table class="table table-striped table-bordered table-hover admin-order-table"
           id="dataTables-example" style="width: 100%">
           <thead>
             <tr>
@@ -25,22 +25,25 @@
           </thead>
           <tbody>
             <c:forEach items="${orders}" var="order" varStatus="loop">
-              <tr class="odd gradeA">
+              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href order-${order.getId()}"
+                data-href="${contextPath}/admin/orders/${order.getId()}">
                 <td>${loop.index + 1}</td>
                 <td>${order.getUser().getName()}</td>
                 <td>${order.getOrderProducts().size()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${order.getTotalPrice() + loop.index}" type="currency" />                  
+                  <fmt:formatNumber value="${order.getTotalPrice() + loop.index}" type="currency" />
                 </td>
                 <td>${order.getCreatedAt()}</td>
-                <c:set var="status" value="${order.getStatus() - 1}"
-                  scope="page" />                
-                <td class="center">${statuses[status]}</td>
+                <c:set var="status" value="${order.getStatus()}" scope="page" />
+                <td class="center order-status status-${status}">
+                  ${statuses[status]}
+                </td>
               </tr>
             </c:forEach>
           </tbody>
         </table>
+        <div id="form-order" class="modal fade" role="dialog"></div>
       </div>
     </div>
   </div>

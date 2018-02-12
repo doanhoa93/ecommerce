@@ -1,9 +1,9 @@
 package com.framgia.constant;
 
-public class Status {
-	public static final int WAITING = 1;
-	public static final int ACCEPT = 2;
-	public static final int REJECT = 3;
-	public static final int CANCEL = 4;
-	public static final String[] statuses = { "WAITING", "ACCEPT", "REJECT", "CANCEL" };
+public interface Status {
+	final int WAITING = 0;
+	final int ACCEPT = 1;
+	final int REJECT = 2;
+	final int CANCEL = 3;
+	final String[] statuses = { "WAITING", "ACCEPT", "REJECT", "CANCEL" };
 }

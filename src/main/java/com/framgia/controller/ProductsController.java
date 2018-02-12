@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
-import com.framgia.constant.ProductFilter;
+import com.framgia.helper.ProductFilter;
 import com.framgia.model.Product;
 
 @Controller

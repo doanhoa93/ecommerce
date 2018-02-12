@@ -14,7 +14,7 @@
           <th>Status</th>
         </tr>
       </thead>
-    
+
       <tbody>
         <c:forEach items="${orders}" var="order" varStatus="loop">
           <tr class="order-tr" data-href="/orders/${order.getId()}">
@@ -22,25 +22,25 @@
             <td>${order.getProductQuantity()}</td>
             <td>
               <fmt:setLocale value="en_US" />
-              <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />        
+              <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
             </td>
             <td>${order.getCreatedAt()}</td>
-            <c:set var="status" value="${order.getStatus() - 1}"
+            <c:set var="status" value="${order.getStatus()}"
               scope="page" />
             <td>${statuses[status]}</td>
           </tr>
         </c:forEach>
       </tbody>
     </table>
-    
+
     <div class="orders-paginate">
       <c:set var="paginate" value="${paginate}" scope="session" />
       <c:import url="/views/shared/paginate.jsp" />
       <c:remove var="paginate" scope="session" />
       <c:remove var="paginateJS" scope="session" />
-    </div>    
+    </div>
   </c:when>
-  
+
   <c:otherwise>
     <h3>No orders</h3>
   </c:otherwise>

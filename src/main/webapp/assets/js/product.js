@@ -7,8 +7,8 @@ $(document).ready(function() {
 		$.ajax({
 		    method: 'GET',
 		    headers: {
-		    	"Accept" : "text/html",
-		    	"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+		    	'Accept' : 'text/html',
+		    	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		    },
 		    url: window.location.pathname,
 		    data: data
@@ -30,8 +30,8 @@ $(document).ready(function() {
 		$.ajax({
 		    method: 'GET',
 		    headers: {
-		    	"Accept" : "text/html",
-		    	"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+		    	'Accept' : 'text/html',
+		    	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		    },
 		    url: url,
 		    data: data
