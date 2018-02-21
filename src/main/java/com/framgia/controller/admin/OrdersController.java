@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.OrderInfo;
-import com.framgia.constant.Status;
 import com.framgia.validator.OrderValidator;
 
 @Controller("admin/order")
@@ -29,7 +28,6 @@ public class OrdersController extends AdminController {
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("adminOrders");
 		model.addObject("orders", orderService.getObjects());
-		model.addObject("statuses", Status.statuses);
 		return model;
 	}
 
@@ -40,7 +38,6 @@ public class OrdersController extends AdminController {
 		if (order != null) {
 			model.addObject("order", order);
 			model.addObject("orderProducts", order.getOrderProducts());
-			model.addObject("statuses", Status.statuses);
 		}
 		return model;
 	}
@@ -53,14 +50,13 @@ public class OrdersController extends AdminController {
 		try {
 			hashMap = toHashMap(data);
 			OrderInfo order = orderService.findById(id);
-			orderValidator.validStatus((int) hashMap.get("status"), order, result);
+			orderValidator.validStatus((String) hashMap.get("status"), order, result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			} else {
-				order.setStatus((int) hashMap.get("status"));
+				order.setStatus((String) hashMap.get("status"));
 				orderService.saveOrUpdate(order);
 				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-				hashMap.put("statuses", Status.statuses);
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {

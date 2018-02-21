@@ -37,9 +37,8 @@
                   <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />
                 </td>
                 <td>${suggest.getCreatedAt()}</td>
-                <c:set var="status" value="${suggest.getStatus()}" />
-                <td class="center suggest-status status-${status}">
-                  ${statuses[status]}
+                <td class="center suggest-status status-${suggest.getStatus()}">
+                  ${suggest.getStatus()}
                 </td>
               </tr>
             </c:forEach>

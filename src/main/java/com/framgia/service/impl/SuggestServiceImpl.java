@@ -11,6 +11,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.bean.SuggestInfo;
+import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
 import com.framgia.helper.UploadFile;
 import com.framgia.model.Suggest;
@@ -131,7 +132,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		suggest.setCreatedAt(new Date());
 		suggest.setPrice(suggestInfo.getPrice());
 		suggest.setInformation(suggestInfo.getInformation());
-		suggest.setStatus(suggestInfo.getStatus());
+		suggest.setStatus(Status.getIntStatus(suggestInfo.getStatus()));
 		return suggest;
 	}
 }

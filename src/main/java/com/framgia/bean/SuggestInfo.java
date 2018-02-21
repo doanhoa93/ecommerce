@@ -13,13 +13,15 @@ public class SuggestInfo {
 	private String avatar;
 	private float price;
 	private Date createdAt;
-	private int status;
+	private String status;
 	private MultipartFile avatarFile;
 	private UserInfo user;
+	
+	public SuggestInfo() {
+	}
 
 	public SuggestInfo(Integer id, Integer userId, String name, String information, String category, String avatar,
 	        float price, Date createdAt) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -28,10 +30,6 @@ public class SuggestInfo {
 		this.avatar = avatar;
 		this.price = price;
 		this.createdAt = createdAt;
-	}
-
-	public SuggestInfo() {
-		super();
 	}
 
 	public Integer getId() {
@@ -106,11 +104,11 @@ public class SuggestInfo {
 		this.avatarFile = avatarFile;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

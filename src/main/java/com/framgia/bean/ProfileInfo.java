@@ -11,11 +11,9 @@ public class ProfileInfo {
 	private UserInfo user;
 
 	public ProfileInfo() {
-		super();
 	}
 
 	public ProfileInfo(Integer id, Integer userId, int gender, Date birthday, String address) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.gender = gender;

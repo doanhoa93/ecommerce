@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.SuggestInfo;
-import com.framgia.constant.Status;
 import com.framgia.validator.SuggestValidator;
 
 @Controller("admin/suggest")
@@ -28,7 +27,6 @@ public class SuggestsController extends AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("adminSuggests");
-		model.addObject("statuses", Status.statuses);
 		model.addObject("suggests", suggestService.getObjects());
 		return model;
 	}
@@ -39,7 +37,8 @@ public class SuggestsController extends AdminController {
 		ModelAndView model = new ModelAndView("adminSuggest");
 		if (suggest != null) {
 			model.addObject("suggest", suggest);
-			model.addObject("statuses", Status.statuses);
+		} else {
+			model.setViewName("redirect:/admin");
 		}
 		return model;
 	}
@@ -52,14 +51,13 @@ public class SuggestsController extends AdminController {
 		try {
 			hashMap = toHashMap(data);
 			SuggestInfo suggest = suggestService.findById(id);
-			suggestValidator.validStatus((int) hashMap.get("status"), suggest, result);
+			suggestValidator.validStatus((String) hashMap.get("status"), result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			} else {
-				suggest.setStatus((int) hashMap.get("status"));
+				suggest.setStatus((String) hashMap.get("status"));
 				suggestService.saveOrUpdate(suggest);
 				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-				hashMap.put("statuses", Status.statuses);
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {

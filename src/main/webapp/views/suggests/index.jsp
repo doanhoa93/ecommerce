@@ -36,8 +36,7 @@
               <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />        
             </td>
             <td>${suggest.getCreatedAt()}</td>
-            <c:set var="status" value="${suggest.getStatus()}" scope="page" />
-            <td>${statuses[status]}</td>
+            <td>${suggest.getStatus()}</td>
           </tr>
         </c:forEach>
       </tbody>

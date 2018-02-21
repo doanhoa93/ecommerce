@@ -29,7 +29,7 @@ $(document).ready(function() {
 				$('#form-order').html('');
 	        	$('#form-order').modal('hide');
 	        	$('.order-' + id + ' .order-status').attr('class', 'order-status status-' + (status));
-	        	$('.order-' + id + ' .order-status').html(data.statuses[status]);
+	        	$('.order-' + id + ' .order-status').html(status);
 	        	table.rows().invalidate();
 			}
         })	    

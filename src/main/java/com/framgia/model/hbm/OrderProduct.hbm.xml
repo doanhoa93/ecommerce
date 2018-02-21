@@ -13,6 +13,9 @@
     <property name="quantity" type="integer">
       <column name="quantity" default="1" />
     </property>
+    <property name="status" type="integer">
+      <column name="status" default="0" />
+    </property>    
 
     <many-to-one name="order" class="Order" lazy="false">
       <column name="order_id" not-null="true" />

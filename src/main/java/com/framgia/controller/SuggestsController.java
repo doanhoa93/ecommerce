@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.framgia.bean.SuggestInfo;
 import com.framgia.constant.Paginate;
-import com.framgia.constant.Status;
 import com.framgia.validator.SuggestValidator;
 
 @Controller
@@ -34,7 +33,6 @@ public class SuggestsController extends BaseController {
 		model.addObject("suggests", suggests);
 		model.addObject("suggestsSize",
 		        suggestService.getSuggests(currentUser().getId(), null, 0, Order.desc("id")).size());
-		model.addObject("statuses", Status.statuses);
 		return model;
 	}
 

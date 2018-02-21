@@ -41,25 +41,25 @@
 	border-radius: 4px;
 }
 
-.status-0 {
+.status-WAITING {
 	color: #333;
 	background-color: #fff;
 	border-color: #ccc;
 }
 
-.status-1 {
+.status-ACCEPT {
 	color: #fff;
 	background-color: #337ab7;
 	border-color: #2e6da4;
 }
 
-.status-2 {
+.status-REJECT {
 	color: #fff;
 	background-color: #d9534f;
 	border-color: #d43f3a;
 }
 
-.status-3 {
+.status-CANCEL {
 	color: #fff;
 	background-color: #f0ad4e;
 	border-color: #eea236;

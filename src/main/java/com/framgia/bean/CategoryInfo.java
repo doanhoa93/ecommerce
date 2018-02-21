@@ -9,11 +9,9 @@ public class CategoryInfo {
 	private List<ProductInfo> products;
 
 	public CategoryInfo() {
-		super();
 	}
 
 	public CategoryInfo(Integer id, Integer parentId, String name) {
-		super();
 		this.id = id;
 		this.parentId = parentId;
 		this.name = name;

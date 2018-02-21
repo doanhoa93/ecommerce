@@ -7,11 +7,9 @@ public class ImageInfo {
 	private ProductInfo product;
 
 	public ImageInfo() {
-		super();
 	}
 
 	public ImageInfo(Integer id, Integer productId, String image) {
-		super();
 		this.id = id;
 		this.productId = productId;
 		this.image = image;

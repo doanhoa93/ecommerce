@@ -8,6 +8,7 @@ import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
@@ -123,6 +124,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 
 		orderProduct.setPrice(orderProductInfo.getPrice());
 		orderProduct.setQuantity(orderProductInfo.getQuantity());
+		orderProduct.setStatus(Status.getIntStatus(orderProductInfo.getStatus()));
 		return orderProduct;
 	}
 }

@@ -7,11 +7,9 @@ public class RecentInfo {
 	private ProductInfo product;
 
 	public RecentInfo() {
-		super();
 	}
 
 	public RecentInfo(Integer id, Integer productId, int viewed) {
-		super();
 		this.id = id;
 		this.productId = productId;
 		this.viewed = viewed;

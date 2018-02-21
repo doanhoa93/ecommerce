@@ -1,52 +1,59 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:forEach var="orderProduct" items="${orderProducts}" varStatus="loop">
-  <c:set var="product" value="${orderProduct.getProduct()}" />
-
-  <div class="order-product">
-    <div class="col-lg-1 col-md-1">
-      <label>#${loop.index + 1}</label>
-    </div>
-    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 order-left">
-      <div class="order-product-image-panel">
-        <img src="${product.getAvatar()}"
-          class="img-responsive order-product-image">
-      </div>
-
-      <div class="order-product-info">
-        <div class="order-product-name">
-          <a href="${contextPath}/products/${product.getId()}">
-            <b>${product.getName()}</b>
-          </a>
-        </div>
-        <div>${product.getInformation()}</div>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 order-right">
-      <div class="order-product-price">
+<div class="order">
+  <div class="order-detail-info">
+    <div class="order-field">
+      <span>Total Price: </span>
+      <span class="order-detail-price">
         <fmt:setLocale value="en_US" />
-        <fmt:formatNumber value="${product.getPrice()}"
-          type="currency" />
-      </div>
-
-      <div class="order-quantity-form">
-        <span>Quantity: <label>${orderProduct.getQuantity()}</label></span>
-      </div>
-
-      <div class="total-money">
-        <span>Total:
-          <label>
-            <fmt:setLocale value="en_US" />
-            <fmt:formatNumber value="${orderProduct.getQuantity() * product.getPrice()}"
-              type="currency" />
-          </label>
-       </span>
-      </div>
-      <div class="clearfix"></div>
+        <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
+      </span>              
     </div>
-    <div class="clearfix"></div>
+    
+    <div class="order-field">
+      <span>Status: </span>
+      <span class="order-status status-${order.getStatus()}">
+        ${order.getStatus()}
+      </span>              
+    </div>          
   </div>
-</c:forEach>
+  <table class="table table-bordered order-table" style="width: 100%">
+    <thead class="">
+      <tr>
+        <th>#</th>
+        <th>Product's avatar</th>
+        <th>Product's name</th>
+        <th>Product's price</th>
+        <th>Quantity</th>
+        <th>Sum price</th>
+        <th>Status</th>            
+      </tr>
+    </thead>
+  
+    <tbody>
+      <c:forEach items="${orderProducts}" var="orderProduct" varStatus="loop">
+        <c:set var="product" value="${orderProduct.getProduct()}" scope="page" />
+        <tr>
+          <td>${loop.index + 1}</td>
+          <td><img src="${product.getAvatar()}" class="img-responsive order-avatar" /></td>
+          <td>${product.getName()}</td>
+          <td>
+            <fmt:setLocale value="en_US" />
+            <fmt:formatNumber value="${product.getPrice()}" type="currency" />        
+          </td>
+          <td>${orderProduct.getQuantity()}</td>
+          <td>
+            <fmt:setLocale value="en_US" />
+            <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
+              type="currency" />              
+          </td>
+          <td class="center order-product-status">
+            ${orderProduct.getStatus()}
+          </td>
+        </tr>
+      </c:forEach>
+    </tbody>
+  </table>      
+</div>
+

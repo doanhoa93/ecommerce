@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Paginate;
-import com.framgia.constant.Status;
 import com.framgia.mailer.ApplicationMailer;
 
 @Controller
@@ -36,7 +35,6 @@ public class OrdersController extends BaseController {
 		model.addObject("paginate", setPaginate(orders.size(), page, Paginate.ORDER_LIMIT));
 		model.addObject("orders", orders);
 		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0).size());
-		model.addObject("statuses", Status.statuses);
 		return model;
 	}
 
@@ -76,7 +74,9 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
 		ModelAndView model = new ModelAndView("order");
-		if (orderService.findById(id) != null) {
+		OrderInfo order = orderService.findById(id);
+		if (order != null) {
+			model.addObject("order", order);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
 			return model;
 		} else {

@@ -27,9 +27,8 @@
           
           <div class="order-field">
             <span>Status: </span>
-            <c:set var="status" value="${order.getStatus()}" scope="page" />
-            <span class="order-status status-${status}">
-              ${statuses[status]}
+            <span class="order-status status-${order.getStatus()}">
+              ${order.getStatus()}
             </span>              
           </div>          
         </div>
@@ -42,6 +41,7 @@
               <th>Product's price</th>
               <th>Quantity</th>
               <th>Sum price</th>
+              <th>Status</th>            
             </tr>
           </thead>
         
@@ -62,16 +62,17 @@
                   <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
                     type="currency" />              
                 </td>
+                <td class="center order-product-status">
+                  ${orderProduct.getStatus()}
+                </td>
               </tr>
             </c:forEach>
           </tbody>
         </table>      
         <div>
           <c:set var="order" value="${order}" scope="session" />
-          <c:set var="statuses" value="${statuses}" scope="session" />
           <c:import url="/views/admin/orders/form.jsp" />
           <c:remove var="order" scope="session"/>
-          <c:remove var="statuses" scope="session"/>
         </div>
       </div>
     </div>
