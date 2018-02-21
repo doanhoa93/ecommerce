@@ -1,8 +1,8 @@
 package com.framgia.service;
 
-import com.framgia.model.Product;
-import com.framgia.model.Promotion;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.PromotionInfo;
 
-public interface PromotionService extends BaseService<Integer, Promotion> {
-  Product getProduct(Integer promotionId);
+public interface PromotionService extends BaseService<Integer, PromotionInfo> {
+	ProductInfo getProduct(Integer promotionId);
 }

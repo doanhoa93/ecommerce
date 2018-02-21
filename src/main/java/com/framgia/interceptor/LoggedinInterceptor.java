@@ -3,17 +3,27 @@ package com.framgia.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.framgia.bean.UserInfo;
 import com.framgia.constant.Role;
-import com.framgia.model.User;
+import com.framgia.service.UserService;
 
 public class LoggedinInterceptor extends HandlerInterceptorAdapter {
+	@Autowired
+	UserService userService;
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	        throws Exception {
-		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		UserInfo currentUser = (UserInfo) request.getSession().getAttribute("currentUser");
+		if (currentUser == null) {
+			currentUser = userService.getFromCookie(request);
+			request.getSession().setAttribute("currentUser", currentUser);
+		}
+
 		String uri = request.getRequestURI();
 		if (currentUser != null
 		        && (uri.equals("/Ecommerce/sessions/new") || uri.equals("/Ecommerce/registrations/new"))) {

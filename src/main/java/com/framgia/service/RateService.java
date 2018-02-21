@@ -2,8 +2,8 @@ package com.framgia.service;
 
 import java.util.List;
 
-import com.framgia.model.Rate;
+import com.framgia.bean.RateInfo;
 
-public interface RateService extends BaseService<Integer, Rate> {
-	List<Rate> getRates(Integer productId);
+public interface RateService extends BaseService<Integer, RateInfo> {
+	List<RateInfo> getRates(Integer productId);
 }

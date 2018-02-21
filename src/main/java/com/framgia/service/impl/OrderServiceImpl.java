@@ -9,134 +9,137 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.framgia.bean.CartInfo;
+import com.framgia.bean.OrderInfo;
+import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
+import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
-import com.framgia.model.Cart;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
-import com.framgia.model.Product;
 import com.framgia.model.User;
 import com.framgia.service.CartService;
 import com.framgia.service.OrderProductService;
 import com.framgia.service.OrderService;
-import com.framgia.service.ProductService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
-	@Autowired
-	CartService cartService;
 
 	@Autowired
-	OrderProductService orderProductService;
+	private CartService cartService;
 
 	@Autowired
-	ProductService productService;
+	private OrderProductService orderProductService;
 
 	@Override
-	public User getUser(Integer orderId) {
+	public UserInfo getUser(Integer orderId) {
 		try {
-			return getOrderDAO().getUser(orderId);
+			return ModelToBean.toUserInfo(getOrderDAO().getUser(orderId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<OrderProduct> getOrderProducts(Integer orderId) {
+	public List<OrderProductInfo> getOrderProducts(Integer orderId) {
 		try {
-			return getOrderDAO().getOrderProducts(orderId);
+			return getOrderDAO().getOrderProducts(orderId).stream().map(ModelToBean::toOrderProductInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Product> getProducts(Integer orderId) {
+	public List<ProductInfo> getProducts(Integer orderId) {
 		try {
 			List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderId);
-			return (List<Product>) orderProducts.stream().map(OrderProduct::getProduct).collect(Collectors.toList());
+			return (List<ProductInfo>) orderProducts.stream().map(orderProduct -> {
+				return ModelToBean.toProductInfo(orderProduct.getProduct());
+			}).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Order findBy(String attribute, Serializable key, boolean lock) {
+	public OrderInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getOrderDAO().findBy(attribute, key, lock);
+			return ModelToBean.toOrderInfo(getOrderDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Order findById(Serializable key) {
+	public OrderInfo findById(Serializable key) {
 		try {
-			return getOrderDAO().findById(key);
+			return ModelToBean.toOrderInfo(getOrderDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(Order entity) {
+	public boolean delete(OrderInfo entity) {
 		try {
-			getOrderDAO().delete(entity);
+			getOrderDAO().delete(toOrder(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@Override
-	public boolean saveOrUpdate(Order entity) {
+	public OrderInfo saveOrUpdate(OrderInfo entity) {
 		try {
-			getOrderDAO().saveOrUpdate(entity);
-			return true;
+			Order order = getOrderDAO().saveOrUpdate(toOrder(entity));
+			return ModelToBean.toOrderInfo(order);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Order> getObjects() {
+	public List<OrderInfo> getObjects() {
 		try {
-			return getOrderDAO().getObjects();
+			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Order> getObjectsByIds(List<Integer> keys) {
+	public List<OrderInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getOrderDAO().getObjectsByIds(keys);
+			return getOrderDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Order> getObjects(int off, int limit) {
+	public List<OrderInfo> getObjects(int off, int limit) {
 		try {
-			return getOrderDAO().getObjects(off, limit);
+			return getOrderDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Order createOrder(Integer userId, List<Integer> cartIds) {
+	public OrderInfo createOrder(Integer userId, List<Integer> cartIds) {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		List<Cart> carts = cartService.getObjectsByIds(cartIds);
+		List<CartInfo> cartInfos = cartService.getObjectsByIds(cartIds);
 		boolean error = false;
 
 		// Kiem tra so luong san pham con du de dap ung k?
-		for (Cart cart : carts) {
-			if (!checkQuantityProduct(cart)) {
+		for (CartInfo cartInfo : cartInfos) {
+			if (!checkQuantityProduct(cartInfo)) {
 				error = true;
-				hashMap.put(cart.getProduct().getId().toString(), cart.getProduct().getName()
-				        + "'s quantiy is not enough! (" + cart.getProduct().getNumber() + ")");
+				hashMap.put(cartInfo.getProduct().getId().toString(), cartInfo.getProduct().getName()
+				        + "'s quantiy is not enough! (" + cartInfo.getProduct().getNumber() + ")");
 			}
 		}
 
@@ -148,35 +151,34 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		}
 
 		try {
-			Order order = new Order();
-			order.setStatus(Status.WAITING);
-			order.setUser(new User(userId));
-			order.setCreatedAt(new Date());
+			OrderInfo orderInfo = new OrderInfo();
+			orderInfo.setStatus(Status.WAITING);
+			orderInfo.setUserId(userId);
+			orderInfo.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang
 			float totalPrice = 0;
-			for (Cart cart : carts) {
-				totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
+			for (CartInfo cartInfo : cartInfos) {
+				totalPrice += cartInfo.getQuantity() * cartInfo.getProduct().getPrice();
 			}
 
-			order.setTotalPrice(totalPrice);
-			saveOrUpdate(order);
+			orderInfo.setTotalPrice(totalPrice);
+			orderInfo = saveOrUpdate(orderInfo);
 
 			// Voi moi cart, tao mot order_product. Dong thoi xoa bo cart di
-			for (Cart cart : carts) {
-				OrderProduct orderProduct = new OrderProduct();
-				orderProduct.setOrder(order);
-				orderProduct.setProduct(cart.getProduct());
-				orderProduct.setPrice(cart.getProduct().getPrice());
-				orderProduct.setQuantity(cart.getQuantity());
+			for (CartInfo cartInfo : cartInfos) {
+				// Tao orderProduct
+				OrderProductInfo orderProduct = new OrderProductInfo();
+				orderProduct.setOrderId(orderInfo.getId());
+				orderProduct.setProductId(cartInfo.getProduct().getId());
+				orderProduct.setPrice(cartInfo.getProduct().getPrice());
+				orderProduct.setQuantity(cartInfo.getQuantity());
 				orderProductService.saveOrUpdate(orderProduct);
 
-				ProductInfo productInfo = ModelToBean.toProductInfo(cart.getProduct());
-				productInfo.setNumber(productInfo.getNumber() - cart.getQuantity());
-				productService.saveOrUpdate(productInfo);
-				cartService.delete(cart);
+				// Xoa cart
+				cartService.delete(cartInfo);
 			}
-			return order;
+			return orderInfo;
 		} catch (Exception e) {
 			hashMap.put("order", "Error when try save order!");
 			request.setAttribute("error", hashMap);
@@ -184,7 +186,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		}
 	}
 
-	private boolean checkQuantityProduct(Cart cart) {
+	private boolean checkQuantityProduct(CartInfo cart) {
 		if (cart.getQuantity() <= cart.getProduct().getNumber())
 			return true;
 		return false;
@@ -193,24 +195,43 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public int getProductQuantity(Integer orderId) {
 		try {
-			List<OrderProduct> orderProducts = getOrderProducts(orderId);
-			return orderProducts.stream().map(OrderProduct::getQuantity).mapToInt(Integer::intValue).sum();
+			List<OrderProductInfo> orderProducts = getOrderProducts(orderId);
+			return orderProducts.stream().map(OrderProductInfo::getQuantity).mapToInt(Integer::intValue).sum();
 		} catch (Exception e) {
 			return 0;
 		}
 	}
 
 	@Override
-	public List<Order> getOrders(Integer userId, String page, int limit) {
+	public List<OrderInfo> getOrders(Integer userId, String page, int limit) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getOrderDAO().getOrders(userId, off, limit);
+			return getOrderDAO().getOrders(userId, off, limit).stream().map(order -> {
+				OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
+				orderInfo.setProductQuantity(getProductQuantity(order.getId()));
+				return orderInfo;
+			}).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private Order toOrder(OrderInfo orderInfo) {
+		Order order = getOrderDAO().getFromSession(orderInfo.getId());
+		if (order == null) {
+			order = new Order();
+			order.setId(orderInfo.getId());
+			order.setUser(new User(orderInfo.getUserId()));
+		}
+
+		order.setStatus(orderInfo.getStatus());
+		order.setCreatedAt(orderInfo.getCreatedAt());
+		order.setTotalPrice(orderInfo.getTotalPrice());
+		return order;
 	}
 }

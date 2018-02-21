@@ -41,4 +41,12 @@ public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartD
 			criteria.setMaxResults(limit);
 		return (List<Cart>) criteria.list();
 	}
+
+	@Override
+	public Cart getCart(Integer userId, Integer productId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("user.id", userId));
+		criteria.add(Restrictions.eq("product.id", productId));
+		return (Cart) criteria.uniqueResult();
+	}
 }

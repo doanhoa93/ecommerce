@@ -8,6 +8,7 @@ public class ProfileInfo {
 	private int gender;
 	private Date birthday;
 	private String address;
+	private UserInfo user;
 
 	public ProfileInfo() {
 		super();
@@ -60,5 +61,13 @@ public class ProfileInfo {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public UserInfo getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfo user) {
+		this.user = user;
 	}
 }

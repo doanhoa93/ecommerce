@@ -2,34 +2,39 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.framgia.bean.RateInfo;
+import com.framgia.helper.ModelToBean;
+import com.framgia.model.Product;
 import com.framgia.model.Rate;
+import com.framgia.model.User;
 import com.framgia.service.RateService;
 
 public class RateServiceImpl extends BaseServiceImpl implements RateService {
 
 	@Override
-	public Rate findBy(String attribute, Serializable key, boolean lock) {
+	public RateInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getRateDAO().findBy(attribute, key, lock);
+			return ModelToBean.toRateInfo(getRateDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Rate findById(Serializable key) {
+	public RateInfo findById(Serializable key) {
 		try {
-			return getRateDAO().findById(key);
+			return ModelToBean.toRateInfo(getRateDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(Rate entity) {
+	public boolean delete(RateInfo entity) {
 		try {
-			getRateDAO().delete(entity);
+			getRateDAO().delete(toRate(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
@@ -37,48 +42,63 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	}
 
 	@Override
-	public boolean saveOrUpdate(Rate entity) {
+	public RateInfo saveOrUpdate(RateInfo entity) {
 		try {
-			getRateDAO().saveOrUpdate(entity);
-			return true;
+			return ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(toRate(entity)));
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Rate> getObjects() {
+	public List<RateInfo> getObjects() {
 		try {
-			return getRateDAO().getObjects();
+			return getRateDAO().getObjects().stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Rate> getObjectsByIds(List<Integer> keys) {
+	public List<RateInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getRateDAO().getObjectsByIds(keys);
+			return getRateDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRateInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Rate> getObjects(int off, int limit) {
+	public List<RateInfo> getObjects(int off, int limit) {
 		try {
-			return getRateDAO().getObjects(off, limit);
+			return getRateDAO().getObjects(off, limit).stream().map(ModelToBean::toRateInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Rate> getRates(Integer productId) {
+	public List<RateInfo> getRates(Integer productId) {
 		try {
-			return getRateDAO().getRates(productId);
+			return getRateDAO().getRates(productId).stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private Rate toRate(RateInfo rateInfo) {
+		Rate rate = getRateDAO().getFromSession(rateInfo.getId());
+		if (rate == null) {
+			rate = new Rate();
+			rate.setId(rateInfo.getId());
+			rate.setUser(new User(rateInfo.getUserId()));
+			rate.setProduct(new Product(rateInfo.getProductId()));
+		}
+
+		rate.setRating(rateInfo.getRating());
+		return rate;
 	}
 }

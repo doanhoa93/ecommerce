@@ -2,7 +2,11 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.framgia.bean.ImageInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Image;
 import com.framgia.model.Product;
 import com.framgia.service.ImageService;
@@ -10,76 +14,89 @@ import com.framgia.service.ImageService;
 public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
 	@Override
-	public Product getProduct(Integer imageId) {
+	public ProductInfo getProduct(Integer imageId) {
 		try {
-			return getImageDAO().getProduct(imageId);
+			return ModelToBean.toProductInfo(getImageDAO().getProduct(imageId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Image findBy(String attribute, Serializable key, boolean lock) {
+	public ImageInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getImageDAO().findBy(attribute, key, lock);
+			return ModelToBean.toImageInfo(getImageDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Image findById(Serializable key) {
+	public ImageInfo findById(Serializable key) {
 		try {
-			return getImageDAO().findById(key);
+			return ModelToBean.toImageInfo(getImageDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(Image entity) {
+	public boolean delete(ImageInfo entity) {
 		try {
-			getImageDAO().delete(entity);
+			getImageDAO().delete(toImage(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@Override
-	public boolean saveOrUpdate(Image entity) {
+	public ImageInfo saveOrUpdate(ImageInfo entity) {
 		try {
-			getImageDAO().saveOrUpdate(entity);
-			return true;
+			return ModelToBean.toImageInfo(getImageDAO().saveOrUpdate(toImage(entity)));
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Image> getObjects() {
+	public List<ImageInfo> getObjects() {
 		try {
-			return getImageDAO().getObjects();
+			return getImageDAO().getObjects().stream().map(ModelToBean::toImageInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Image> getObjectsByIds(List<Integer> keys) {
+	public List<ImageInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getImageDAO().getObjectsByIds(keys);
+			return getImageDAO().getObjectsByIds(keys).stream().map(ModelToBean::toImageInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Image> getObjects(int off, int limit) {
+	public List<ImageInfo> getObjects(int off, int limit) {
 		try {
-			return getImageDAO().getObjects(off, limit);
+			return getImageDAO().getObjects(off, limit).stream().map(ModelToBean::toImageInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private Image toImage(ImageInfo imageInfo) {
+		Image image = getImageDAO().getFromSession(imageInfo.getId());
+		if (image == null) {
+			image = new Image();
+			image.setId(imageInfo.getId());
+			image.setProduct(new Product(imageInfo.getProductId()));
+		}
+
+		image.setImage(imageInfo.getImage());
+		return image;
 	}
 }

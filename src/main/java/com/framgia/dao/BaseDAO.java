@@ -16,5 +16,7 @@ public interface BaseDAO<PK, T> {
 
 	public void delete(T entity);
 
-	public void saveOrUpdate(T entity);
+	public T saveOrUpdate(T entity);
+
+	public T getFromSession(Serializable key);
 }

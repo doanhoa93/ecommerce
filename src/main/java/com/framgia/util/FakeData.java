@@ -162,17 +162,16 @@ public class FakeData {
 			Map<String, Object> map = null;
 			for (int i = 1; i < 10; i++) {
 				Product product = new Product();
-				int j = i % 10;
 				product.setId(i);
-				product.setCategory(categories.get(j == 9 ? 8 : j));
+				product.setCategory(categories.get(i - 1));
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
 				product.setIsPromotion(false);
 				product.setNumber(10);
 				product.setPrice(new Float(100.0));
 				product.setRating(new Float(4.0));
-				map = upload(new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product"
-				        + (j == 0 ? 1 : j) + ".jpg"));
+				map = upload(new File(
+				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
 				product.setAvatar((String) map.get("url"));
 
 				session.save(product);

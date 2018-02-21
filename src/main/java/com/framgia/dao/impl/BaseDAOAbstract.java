@@ -49,16 +49,19 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 		return findBy("id", key, true);
 	}
 
-	public void persist(T entity) {
-		getSession().persist(entity);
-	}
-
 	public void delete(T entity) {
 		getSession().delete(entity);
 	}
 
-	public void saveOrUpdate(T entity) {
+	public T saveOrUpdate(T entity) {
 		getSession().saveOrUpdate(entity);
+		return entity;
+	}
+
+	public T getFromSession(Serializable key) {
+		if (key == null)
+			return null;
+		return getSession().get(typeClass, key);
 	}
 
 	public Criteria createEntityCriteria() {

@@ -4,33 +4,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Status;
-import com.framgia.model.Order;
 
 @Component
 public class OrderValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Order.class.isAssignableFrom(clazz);
+		return OrderInfo.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Order order = (Order) target;
+		OrderInfo order = (OrderInfo) target;
 		int status = order.getStatus();
 		if (status < Status.WAITING || status > Status.CANCEL)
 			errors.rejectValue("status", "order.status.inlavid");
 	}
 
 	public void validStatus(int newStatus, Object target, Errors errors) {
-		Order orderTemp = new Order();
+		OrderInfo orderTemp = new OrderInfo();
 		orderTemp.setStatus(newStatus);
 		validate(orderTemp, errors);
 		if (errors.hasErrors())
 			return;
 
-		Order order = (Order) target;
+		OrderInfo order = (OrderInfo) target;
 		int status = order.getStatus();
 
 		// Da accept, chi duoc phep len CANCEL.

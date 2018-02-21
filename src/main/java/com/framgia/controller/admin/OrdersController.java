@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Status;
-import com.framgia.model.Order;
 import com.framgia.validator.OrderValidator;
 
 @Controller("admin/order")
@@ -35,7 +35,7 @@ public class OrdersController extends AdminController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		Order order = orderService.findById(id);
+		OrderInfo order = orderService.findById(id);
 		ModelAndView model = new ModelAndView("adminOrder");
 		if (order != null) {
 			model.addObject("order", order);
@@ -52,7 +52,7 @@ public class OrdersController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			Order order = orderService.findById(id);
+			OrderInfo order = orderService.findById(id);
 			orderValidator.validStatus((int) hashMap.get("status"), order, result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
@@ -64,6 +64,7 @@ public class OrdersController extends AdminController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "404";
 		}
 	}

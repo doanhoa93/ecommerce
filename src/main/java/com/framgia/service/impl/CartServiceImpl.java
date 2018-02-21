@@ -2,9 +2,14 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.framgia.bean.CartInfo;
+import com.framgia.bean.ProductInfo;
+import com.framgia.bean.UserInfo;
+import com.framgia.helper.ModelToBean;
 import com.framgia.model.Cart;
 import com.framgia.model.Product;
 import com.framgia.model.User;
@@ -13,99 +18,124 @@ import com.framgia.service.CartService;
 public class CartServiceImpl extends BaseServiceImpl implements CartService {
 
 	@Override
-	public User getUser(Integer cartId) {
+	public UserInfo getUser(Integer cartId) {
 		try {
-			return getCartDAO().getUser(cartId);
+			return ModelToBean.toUserInfo(getCartDAO().getUser(cartId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Product getProduct(Integer cartId) {
+	public ProductInfo getProduct(Integer cartId) {
 		try {
-			return getCartDAO().getProduct(cartId);
+			return ModelToBean.toProductInfo(getCartDAO().getProduct(cartId));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Cart findBy(String attribute, Serializable key, boolean lock) {
+	public CartInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return getCartDAO().findBy(attribute, key, lock);
+			return ModelToBean.toCartInfo(getCartDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Cart findById(Serializable key) {
+	public CartInfo findById(Serializable key) {
 		try {
-			return getCartDAO().findById(key);
+			return ModelToBean.toCartInfo(getCartDAO().findById(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean delete(Cart entity) {
+	public boolean delete(CartInfo entity) {
 		try {
-			getCartDAO().delete(entity);
+			getCartDAO().delete(toCart(entity));
 			return true;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	@Override
-	public boolean saveOrUpdate(Cart entity) {
+	public CartInfo saveOrUpdate(CartInfo entity) {
 		try {
-			getCartDAO().saveOrUpdate(entity);
-			return true;
+			Cart cart = getCartDAO().saveOrUpdate(toCart(entity));
+			return ModelToBean.toCartInfo(cart);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Cart> getObjects() {
+	public List<CartInfo> getObjects() {
 		try {
-			return getCartDAO().getObjects();
+			return getCartDAO().getObjects().stream().map(ModelToBean::toCartInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Cart> getObjectsByIds(List<Integer> keys) {
+	public List<CartInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getCartDAO().getObjectsByIds(keys);
+			return getCartDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCartInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Cart> getObjects(int off, int limit) {
+	public List<CartInfo> getObjects(int off, int limit) {
 		try {
-			return getCartDAO().getObjects(off, limit);
+			return getCartDAO().getObjects(off, limit).stream().map(ModelToBean::toCartInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Cart> getCarts(Integer userId, String page, int limit) {
+	public CartInfo getCart(Integer userId, Integer productId) {
+		try {
+			return ModelToBean.toCartInfo(getCartDAO().getCart(userId, productId));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<CartInfo> getCarts(Integer userId, String page, int limit) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getCartDAO().getCarts(userId, off, limit);
+			return getCartDAO().getCarts(userId, off, limit).stream().map(ModelToBean::toCartInfo)
+			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// ----------------- PRIVATE -------------------------------------
+	private Cart toCart(CartInfo cartInfo) {
+		Cart cart = getCartDAO().getFromSession(cartInfo.getId());
+		if (cart == null) {
+			cart = new Cart();
+			cart.setId(cartInfo.getId());
+			cart.setProduct(new Product(cartInfo.getProductId()));
+			cart.setUser(new User(cartInfo.getUserId()));
+		} 
+		
+		cart.setQuantity(cartInfo.getQuantity());
+		return cart;
 	}
 }

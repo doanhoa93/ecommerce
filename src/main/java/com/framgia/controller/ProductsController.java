@@ -13,7 +13,6 @@ import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
 import com.framgia.helper.ProductFilter;
-import com.framgia.model.Product;
 
 @Controller
 @RequestMapping(value = "/products")
@@ -25,7 +24,7 @@ public class ProductsController extends BaseController {
 	        @RequestParam(value = "name", required = false) String name,
 	        @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		List<Product> products = null;
+		List<ProductInfo> products = null;
 		ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
 		if (productFilter.isFilterProduct()) {
 			products = productService.filterProducts(null, productFilter, page, Paginate.PRODUCT_LIMIT);

@@ -15,6 +15,7 @@ public class SuggestInfo {
 	private Date createdAt;
 	private int status;
 	private MultipartFile avatarFile;
+	private UserInfo user;
 
 	public SuggestInfo(Integer id, Integer userId, String name, String information, String category, String avatar,
 	        float price, Date createdAt) {
@@ -111,5 +112,13 @@ public class SuggestInfo {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public UserInfo getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfo user) {
+		this.user = user;
 	}
 }

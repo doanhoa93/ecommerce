@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.framgia.bean.SuggestInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Status;
-import com.framgia.model.Suggest;
 import com.framgia.validator.SuggestValidator;
 
 @Controller
@@ -29,7 +28,7 @@ public class SuggestsController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("suggests");
-		List<Suggest> suggests = suggestService.getSuggests(currentUser().getId(), page, Paginate.SUGGEST_LIMIT,
+		List<SuggestInfo> suggests = suggestService.getSuggests(currentUser().getId(), page, Paginate.SUGGEST_LIMIT,
 		        Order.desc("id"));
 		model.addObject("paginate", setPaginate(suggests.size(), page, Paginate.SUGGEST_LIMIT));
 		model.addObject("suggests", suggests);
@@ -49,10 +48,11 @@ public class SuggestsController extends BaseController {
 	public String create(@ModelAttribute("suggestInfo") SuggestInfo suggestInfo, BindingResult result) {
 		try {
 			suggestValidator.validate(suggestInfo, result);
-			if(result.hasErrors())
+			if (result.hasErrors())
 				return "suggestNew";
-			
-			if (suggestService.saveOrUpdate(currentUser().getId(), suggestInfo)) {
+
+			suggestInfo.setUserId(currentUser().getId());
+			if (suggestService.saveOrUpdate(suggestInfo) != null) {
 				return "redirect:/suggests";
 			} else {
 				return "suggestNew";
