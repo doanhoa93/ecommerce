@@ -33,7 +33,7 @@
             </div>
     
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 cart-right">
-              <div class="cart-product-price">
+              <div class="cart-product-price cart-product-price-${cart.getId()}">
                 <fmt:setLocale value="en_US" />
                 <fmt:formatNumber value="${product.getPrice()}"
                   type="currency" />
@@ -52,6 +52,13 @@
                     <i>+</i>
                 </span>
               </div>
+              
+              <div class="cart-product-number">
+                Number of product: 
+                <b class="product-number">
+                  ${cart.getProduct().getNumber()}
+                </b>
+              </div>
               <div class="clearfix"></div>
             </div>
     
@@ -60,8 +67,9 @@
             </div>
     
             <div class="cart-select">
-              <label> <input type="checkbox" name="selectCart[]"
-                value="${cart.getId()}" class="cart-product-select">
+              <label> 
+                <input type="checkbox" name="selectCart[]" value="${cart.getId()}" 
+                  class="cart-product-select cart-product-select-${cart.getId()}">
                 Select?
               </label>
             </div>

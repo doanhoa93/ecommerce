@@ -30,13 +30,27 @@
 }
 
 .product-body .product-category .category-title {
-	font-size: 18px;
+	font-size: 16px;
 	color: #4c4c4c;
 	margin-bottom: 10px;
 }
 
 .product-body .product-number .number-title {
-	font-size: 18px;
+	font-size: 16px;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.product-body .product-promotion .promotion-title {
+	font-size: 20px;
+	font-weight: bold;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.product-body .product-promotion .promotion {
+	font-size: 20px;
+	font-weight: bold;
 	color: #4c4c4c;
 	margin-bottom: 10px;
 }

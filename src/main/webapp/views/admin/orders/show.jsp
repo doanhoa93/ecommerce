@@ -38,8 +38,9 @@
               <th>#</th>
               <th>Product's avatar</th>
               <th>Product's name</th>
-              <th>Product's price</th>
+              <th>Product's number</th>
               <th>Quantity</th>
+              <th>Product's price</th>
               <th>Sum price</th>
               <th>Status</th>            
             </tr>
@@ -52,11 +53,12 @@
                 <td>${loop.index + 1}</td>
                 <td><img src="${product.getAvatar()}" class="img-responsive order-avatar" /></td>
                 <td>${product.getName()}</td>
+                <td>${product.getNumber()}</td>
+                <td>${orderProduct.getQuantity()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
                   <fmt:formatNumber value="${product.getPrice()}" type="currency" />        
                 </td>
-                <td>${orderProduct.getQuantity()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
                   <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
