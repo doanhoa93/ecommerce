@@ -72,6 +72,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		}
 	}
 
+	@Override
 	public CategoryInfo saveOrUpdate(CategoryInfo entity) {
 		try {
 			Category category = getCategoryDAO().saveOrUpdate(toCategory(entity));

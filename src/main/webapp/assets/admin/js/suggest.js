@@ -28,7 +28,7 @@ $(document).ready(function() {
 			if(data.msg == 'success') {
 				$('#form-suggest').html('');
 	        	$('#form-suggest').modal('hide');
-	        	$('.suggest-' + id + ' .suggest-status').attr('class', 'suggest-status status-' + (status));
+	        	$('.suggest-' + id + ' .suggest-status').attr('class', 'suggest-status status-' + status);
 	        	$('.suggest-' + id + ' .suggest-status').html(status);
 	        	table.rows().invalidate();
 			}

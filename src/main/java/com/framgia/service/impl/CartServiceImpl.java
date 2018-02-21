@@ -68,6 +68,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		}
 	}
 
+	@Override
 	public CartInfo saveOrUpdate(CartInfo entity) {
 		try {
 			Cart cart = getCartDAO().saveOrUpdate(toCart(entity));

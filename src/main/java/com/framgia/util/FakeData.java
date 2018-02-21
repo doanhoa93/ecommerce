@@ -199,7 +199,7 @@ public class FakeData {
 				Order order = new Order();
 				order.setId(i);
 				order.setUser(users.get(i - 1));
-				order.setStatus(Status.WAITING);
+				order.setStatus(Status.getIntStatus(Status.WAITING));
 				order.setTotalPrice(new Float(100));
 				order.setCreatedAt(new Date());
 

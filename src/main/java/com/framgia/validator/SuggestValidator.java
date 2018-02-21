@@ -36,7 +36,9 @@ public class SuggestValidator implements Validator {
 
 	public void validStatus(String newStatus, Errors errors) {
 		int status = Status.getIntStatus(newStatus);
-		if (status < Status.WAITING || status > Status.CANCEL)
+		int begin = Status.getIntStatus(Status.WAITING);
+		int end = Status.getIntStatus(Status.CANCEL);
+		if (status < begin || status > end)
 			errors.rejectValue("status", "suggest.status.inlavid");
 	}
 }

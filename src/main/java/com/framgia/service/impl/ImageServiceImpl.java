@@ -54,6 +54,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		}
 	}
 
+	@Override
 	public ImageInfo saveOrUpdate(ImageInfo entity) {
 		try {
 			return ModelToBean.toImageInfo(getImageDAO().saveOrUpdate(toImage(entity)));
