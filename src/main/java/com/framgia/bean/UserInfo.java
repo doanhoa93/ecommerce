@@ -17,12 +17,10 @@ public class UserInfo {
 	private List<CommentInfo> comments;
 
 	public UserInfo() {
-		super();
 	}
 
 	public UserInfo(Integer id, String email, String password, String name, String gender, String avatar, String role,
 	        ProfileInfo profileInfo) {
-		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;

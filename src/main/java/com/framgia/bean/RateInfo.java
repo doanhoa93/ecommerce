@@ -9,11 +9,9 @@ public class RateInfo {
 	private ProductInfo product;
 
 	public RateInfo() {
-		super();
 	}
 
 	public RateInfo(Integer id, int rating, int userId, int productId, UserInfo user, ProductInfo product) {
-		super();
 		this.id = id;
 		this.rating = rating;
 		this.userId = userId;

@@ -20,9 +20,8 @@
             
             <div class="suggest-field">
               <span>Status: </span>
-              <c:set var="status" value="${suggest.getStatus()}" scope="page" />
-              <span class="suggest-status status-${status}">
-                ${statuses[status]}
+              <span class="suggest-status status-${suggest.getStatus()}">
+                ${suggest.getStatus()}              
               </span>              
             </div>          
             
@@ -64,10 +63,8 @@
         </table>      
         <div>
           <c:set var="suggest" value="${suggest}" scope="session" />
-          <c:set var="statuses" value="${statuses}" scope="session" />
           <c:import url="/views/admin/suggests/form.jsp" />
           <c:remove var="suggest" scope="session"/>
-          <c:remove var="statuses" scope="session"/>
         </div>
       </div>
     </div>

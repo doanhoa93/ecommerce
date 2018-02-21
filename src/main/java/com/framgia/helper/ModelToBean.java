@@ -15,6 +15,7 @@ import com.framgia.bean.RateInfo;
 import com.framgia.bean.RecentInfo;
 import com.framgia.bean.SuggestInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
@@ -133,7 +134,7 @@ public class ModelToBean {
 		suggestInfo.setCreatedAt(suggest.getCreatedAt());
 		suggestInfo.setPrice(suggest.getPrice());
 		suggestInfo.setInformation(suggest.getInformation());
-		suggestInfo.setStatus(suggest.getStatus());
+		suggestInfo.setStatus(Status.getStrStatus(suggest.getStatus()));
 		suggestInfo.setUser(toUserInfoWithPro(suggest.getUser()));
 		return suggestInfo;
 	}
@@ -183,7 +184,7 @@ public class ModelToBean {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setId(order.getId());
 		orderInfo.setCreatedAt(order.getCreatedAt());
-		orderInfo.setStatus(order.getStatus());
+		orderInfo.setStatus(Status.getStrStatus(order.getStatus()));
 		orderInfo.setTotalPrice(order.getTotalPrice());
 		if (order.getUser() != null)
 			orderInfo.setUser(toUserInfoWithPro(order.getUser()));
@@ -195,6 +196,7 @@ public class ModelToBean {
 		orderProductInfo.setId(orderProduct.getId());
 		orderProductInfo.setPrice(orderProduct.getPrice());
 		orderProductInfo.setQuantity(orderProduct.getQuantity());
+		orderProductInfo.setStatus(Status.getStrStatus(orderProduct.getStatus()));
 		if (orderProduct.getOrder() != null)
 			orderProductInfo.setOrder(toOrderInfoWithPro(orderProduct.getOrder()));
 

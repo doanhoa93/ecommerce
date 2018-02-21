@@ -7,22 +7,20 @@ public class OrderInfo {
 	private Integer id;
 	private Integer userId;
 	private float totalPrice;
-	private int status;
+	private String status;
 	private Date createdAt;
 	private int productQuantity;
 	private UserInfo user;
 	private List<OrderProductInfo> orderProducts;
 
 	public OrderInfo() {
-		super();
 	}
 
 	public OrderInfo(Integer id) {
 		this.id = id;
 	}
 
-	public OrderInfo(Integer id, Integer userId, float totalPrice, int status, Date createdAt) {
-		super();
+	public OrderInfo(Integer id, Integer userId, float totalPrice, String status, Date createdAt) {
 		this.id = id;
 		this.userId = userId;
 		this.totalPrice = totalPrice;
@@ -54,11 +52,11 @@ public class OrderInfo {
 		this.totalPrice = totalPrice;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

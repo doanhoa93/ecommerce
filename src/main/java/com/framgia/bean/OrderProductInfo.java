@@ -6,15 +6,14 @@ public class OrderProductInfo {
 	private Integer productId;
 	private float price;
 	private int quantity;
+	private String status;
 	private OrderInfo order;
 	private ProductInfo product;
 
 	public OrderProductInfo() {
-		super();
 	}
 
 	public OrderProductInfo(Integer id, Integer orderId, Integer productId, float price, int quantity) {
-		super();
 		this.id = id;
 		this.orderId = orderId;
 		this.productId = productId;
@@ -76,5 +75,13 @@ public class OrderProductInfo {
 
 	public void setProduct(ProductInfo product) {
 		this.product = product;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

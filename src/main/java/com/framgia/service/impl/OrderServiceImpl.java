@@ -152,7 +152,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 		try {
 			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setStatus(Status.WAITING);
+			orderInfo.setStatus(Status.getStrStatus(Status.WAITING));
 			orderInfo.setUserId(userId);
 			orderInfo.setCreatedAt(new Date());
 
@@ -229,7 +229,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order.setUser(new User(orderInfo.getUserId()));
 		}
 
-		order.setStatus(orderInfo.getStatus());
+		order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 		order.setCreatedAt(orderInfo.getCreatedAt());
 		order.setTotalPrice(orderInfo.getTotalPrice());
 		return order;

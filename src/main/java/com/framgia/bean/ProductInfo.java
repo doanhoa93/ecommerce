@@ -18,12 +18,10 @@ public class ProductInfo {
 	private List<ImageInfo> images;
 
 	public ProductInfo() {
-		super();
 	}
 
 	public ProductInfo(Integer id, Integer categoryId, Boolean isPromotion, Integer promotionId, float saleOf,
 	        String name, float price, float rating, String avatar, String information, int number) {
-		super();
 		this.id = id;
 		this.categoryId = categoryId;
 		this.isPromotion = isPromotion;

@@ -9,11 +9,9 @@ public class CartInfo {
 	private ProductInfo product;
 
 	public CartInfo() {
-		super();
 	}
 
 	public CartInfo(Integer id, Integer userId, Integer productId) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;

@@ -35,9 +35,8 @@
                   <fmt:formatNumber value="${order.getTotalPrice() + loop.index}" type="currency" />
                 </td>
                 <td>${order.getCreatedAt()}</td>
-                <c:set var="status" value="${order.getStatus()}" scope="page" />
-                <td class="center order-status status-${status}">
-                  ${statuses[status]}
+                <td class="center order-status status-${order.getStatus()}">
+                  ${order.getStatus()}
                 </td>
               </tr>
             </c:forEach>

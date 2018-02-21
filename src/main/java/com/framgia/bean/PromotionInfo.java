@@ -8,11 +8,9 @@ public class PromotionInfo {
   private Date endDate;
 
   public PromotionInfo() {
-    super();
   }
 
   public PromotionInfo(Integer id, Date startDate, Date endDate) {
-    super();
     this.id = id;
     this.startDate = startDate;
     this.endDate = endDate;

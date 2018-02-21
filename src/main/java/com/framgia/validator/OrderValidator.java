@@ -18,12 +18,12 @@ public class OrderValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		OrderInfo order = (OrderInfo) target;
-		int status = order.getStatus();
+		int status = Status.getIntStatus(order.getStatus());
 		if (status < Status.WAITING || status > Status.CANCEL)
 			errors.rejectValue("status", "order.status.inlavid");
 	}
 
-	public void validStatus(int newStatus, Object target, Errors errors) {
+	public void validStatus(String newStatus, Object target, Errors errors) {
 		OrderInfo orderTemp = new OrderInfo();
 		orderTemp.setStatus(newStatus);
 		validate(orderTemp, errors);
@@ -31,14 +31,15 @@ public class OrderValidator implements Validator {
 			return;
 
 		OrderInfo order = (OrderInfo) target;
-		int status = order.getStatus();
+		int status = Status.getIntStatus(order.getStatus());
+		int intStatus = Status.getIntStatus(newStatus);
 
 		// Da accept, chi duoc phep len CANCEL.
 		// Da cancel thi chi duoc phep ve WAITING
 		// Da reject, thi chi duoc phep ve WAITING
-		if ((status == Status.ACCEPT && newStatus != Status.CANCEL)
-		        || (status == Status.CANCEL && newStatus != Status.WAITING) 
-		        || (status == Status.REJECT && newStatus != Status.WAITING))
+		if ((status == Status.ACCEPT && intStatus != Status.CANCEL)
+		        || (status == Status.CANCEL && intStatus != Status.WAITING)
+		        || (status == Status.REJECT && intStatus != Status.WAITING))
 			errors.rejectValue("status", "order.status.inlavid");
 	}
 }

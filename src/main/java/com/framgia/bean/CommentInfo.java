@@ -9,11 +9,9 @@ public class CommentInfo {
 	private ProductInfo product;
 
 	public CommentInfo() {
-		super();
 	}
 
 	public CommentInfo(Integer id, Integer userId, Integer productId, String content) {
-		super();
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;
