@@ -27,6 +27,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return ModelToBean.toProfileInfo(getUserDAO().getProfile(userId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -37,6 +38,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			return getUserDAO().getComments(userId).stream().map(ModelToBean::toCommentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -49,6 +51,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			return getOrderProductDAO().getObjectsByIds(orderIds).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -58,6 +61,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return getOrderProducts(userId).stream().map(OrderProductInfo::getProduct).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -69,6 +73,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				return ModelToBean.toProductInfo(cart.getProduct());
 			}).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -78,6 +83,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return ModelToBean.toUserInfo(getUserDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -87,6 +93,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return findBy("email", email, true);
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -96,6 +103,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return findBy("id", key, true);
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -106,6 +114,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			getUserDAO().delete(toUser(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -115,6 +124,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return ModelToBean.toUserInfo(getUserDAO().saveOrUpdate(toUser(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -124,6 +134,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -134,6 +145,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			return getUserDAO().getObjectsByIds(keys).stream().map(ModelToBean::toUserInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -144,6 +156,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			return getUserDAO().getObjects(off, limit).stream().map(ModelToBean::toUserInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -171,15 +184,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			}
 			return false;
 		} catch (Exception e) {
+			logger.error(e);
 			return false;
 		}
 	}
 
 	public UserInfo getFromCookie(HttpServletRequest request) {
-		Cookie cookie = WebUtils.getCookie(request, "email");
-		if (cookie == null)
+		try {
+			Cookie cookie = WebUtils.getCookie(request, "email");
+			if (cookie == null)
+				return null;
+			return findByEmail(cookie.getValue());
+		} catch (Exception e) {
+			logger.error(e);
 			return null;
-		return findByEmail(cookie.getValue());
+		}
 	}
 
 	@Override
@@ -190,6 +209,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		} catch (Exception e) {
+			logger.error(e);
 			return;
 		}
 	}

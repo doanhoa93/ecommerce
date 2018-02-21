@@ -18,6 +18,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 		try {
 			return ModelToBean.toUserInfo(getProfileDAO().getUser(profileId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -27,6 +28,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 		try {
 			return ModelToBean.toProfileInfo(getProfileDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -36,6 +38,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 		try {
 			return ModelToBean.toProfileInfo(getProfileDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -46,6 +49,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 			getProfileDAO().delete(toProfile(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -55,6 +59,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 		try {
 			return ModelToBean.toProfileInfo(getProfileDAO().saveOrUpdate(toProfile(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -64,6 +69,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 		try {
 			return getProfileDAO().getObjects().stream().map(ModelToBean::toProfileInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -74,6 +80,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 			return getProfileDAO().getObjectsByIds(keys).stream().map(ModelToBean::toProfileInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -84,6 +91,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 			return getProfileDAO().getObjects(off, limit).stream().map(ModelToBean::toProfileInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

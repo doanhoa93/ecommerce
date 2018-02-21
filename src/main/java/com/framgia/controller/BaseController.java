@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -51,6 +52,8 @@ public class BaseController {
 
 	@Autowired
 	public HttpServletResponse response;
+	
+	public Logger logger = Logger.getLogger(this.getClass());	
 
 	public UserInfo currentUser() {
 		UserInfo userInfo = (UserInfo) request.getSession().getAttribute("currentUser");

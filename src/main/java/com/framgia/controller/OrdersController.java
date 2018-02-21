@@ -45,27 +45,34 @@ public class OrdersController extends BaseController {
 		HashMap<String, Object> hashMap = toHashMap(data);
 		try {
 			List<String> strCartIds = (List<String>) hashMap.get("cartIds");
-			List<Integer> cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
 			hashMap.clear();
-			OrderInfo order = orderService.createOrder(currentUser().getId(), cartIds);
-			if (order != null) {
-				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-				hashMap.put("url", "/orders");
+			if (strCartIds != null && !strCartIds.isEmpty()) {
+				List<Integer> cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
+				OrderInfo order = orderService.createOrder(currentUser().getId(), cartIds);
+				if (order != null) {
+					hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
+					hashMap.put("url", "/orders");
 
-				// Send email
-				mailer.sendMail(currentUser().getEmail(), messageSource.getMessage("mail.title", null, Locale.US),
-				        messageSource.getMessage("mail.content", null, Locale.US));
+					// Send email
+					mailer.sendMail(currentUser().getEmail(), messageSource.getMessage("mail.title", null, Locale.US),
+					        messageSource.getMessage("mail.content", null, Locale.US));
+				} else {
+					hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
+					hashMap.put("error", request.getAttribute("error"));
+				}
 			} else {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-				hashMap.put("error", request.getAttribute("error"));
+				HashMap<String, Object> error = new HashMap<>();
+				error.put("error", messageSource.getMessage("order.no_select", null, Locale.US));
+				hashMap.put("error", error);
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			hashMap.clear();
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			HashMap<String, Object> error = new HashMap<>();
-			error.put("error", messageSource.getMessage("order.no_select", null, Locale.US));
+			error.put("error", messageSource.getMessage("system.error", null, Locale.US));
 			hashMap.put("error", error);
 			return toJson(hashMap);
 		}

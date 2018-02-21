@@ -38,6 +38,7 @@ public class SessionsController extends BaseController {
 			}
 			return model;
 		} catch (Exception e) {
+			logger.error(e);
 			model.setViewName("redirect:/sessions/new");
 			return model;
 		}

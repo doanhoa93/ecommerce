@@ -20,6 +20,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return ModelToBean.toUserInfo(getCommentDAO().getUser(commentId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -29,6 +30,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return ModelToBean.toProductInfo(getCommentDAO().getProduct(commentId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -38,6 +40,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return ModelToBean.toCommentInfo(getCommentDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -47,6 +50,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return ModelToBean.toCommentInfo(getCommentDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -57,6 +61,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 			getCommentDAO().delete(toComment(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -65,6 +70,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return ModelToBean.toCommentInfo(getCommentDAO().saveOrUpdate(toComment(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -74,6 +80,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 		try {
 			return getCommentDAO().getObjects().stream().map(ModelToBean::toCommentInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -84,6 +91,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 			return getCommentDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCommentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -94,6 +102,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 			return getCommentDAO().getObjects(off, limit).stream().map(ModelToBean::toCommentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

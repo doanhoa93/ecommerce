@@ -61,6 +61,7 @@ public class SuggestsController extends AdminController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
+			logger.error(e);			
 			return "404";
 		}
 	}

@@ -23,6 +23,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			Order order = getOrderProductDAO().getOrder(orderProductId);
 			return ModelToBean.toUserInfo(order.getUser());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -32,6 +33,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 		try {
 			return ModelToBean.toOrderInfo(getOrderProductDAO().getOrder(orderProductId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -41,6 +43,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 		try {
 			return ModelToBean.toProductInfo(getOrderProductDAO().getProduct(orderProductId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -50,6 +53,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 		try {
 			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -59,6 +63,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 		try {
 			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -69,6 +74,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			getOrderProductDAO().delete(toOrderProduct(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -78,6 +84,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			OrderProduct orderProduct = getOrderProductDAO().saveOrUpdate(toOrderProduct(entity));
 			return ModelToBean.toOrderProductInfo(orderProduct);
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -88,6 +95,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			return getOrderProductDAO().getObjects().stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -98,6 +106,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			return getOrderProductDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -108,6 +117,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 			return getOrderProductDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -115,7 +125,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	// ----------------- PRIVATE -------------------------------------
 	private OrderProduct toOrderProduct(OrderProductInfo orderProductInfo) {
 		OrderProduct orderProduct = getOrderProductDAO().getFromSession(orderProductInfo.getId());
-		if (orderProduct != null) {
+		if (orderProduct == null) {
 			orderProduct = new OrderProduct();
 			orderProduct.setId(orderProductInfo.getId());
 			orderProduct.setOrder(new Order(orderProductInfo.getOrderId()));

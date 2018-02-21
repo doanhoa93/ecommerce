@@ -18,6 +18,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 		try {
 			return ModelToBean.toProductInfo(getRecentDAO().getProduct(recentId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -28,6 +29,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 		try {
 			return ModelToBean.toRecentInfo(getRecentDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -37,6 +39,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 		try {
 			return ModelToBean.toRecentInfo(getRecentDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -47,6 +50,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 			getRecentDAO().delete(toRecent(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -56,6 +60,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 		try {
 			return ModelToBean.toRecentInfo(getRecentDAO().saveOrUpdate(toRecent(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -65,6 +70,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 		try {
 			return getRecentDAO().getObjects().stream().map(ModelToBean::toRecentInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -75,6 +81,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 			return getRecentDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRecentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -85,6 +92,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 			return getRecentDAO().getObjects(off, limit).stream().map(ModelToBean::toRecentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

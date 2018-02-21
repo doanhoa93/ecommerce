@@ -60,7 +60,7 @@ public class OrdersController extends AdminController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			return "404";
 		}
 	}

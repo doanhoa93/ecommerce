@@ -84,26 +84,29 @@ $(document).ready(function() {
 		$('.cart-product-select:checked').each(function(index, cart) {
 			cartIds.push(cart.value);
 		});
-		$.ajax({
-			method: 'POST',
-			url: getContextPath() + '/orders',
-			data: JSON.stringify({cartIds: cartIds}),
-			dataType: 'json',
-		    contentType: 'application/json',
-		    success: function(data) {
-		    	if (data.msg == 'error') {
-		    		$('.alert-warning').show();
-		    		var keys = Object.keys(data.error);
-		    		var content = '';
-		    		for(i = 0; i < keys.length; i++) {
-		    			content += data.error[keys[i]] + '<br>';
-		    		}
-		    		$('.alert-warning').html(content);
-		    	} else {
-		    		window.location.replace(getContextPath() + data.url);
-		    	}
-		    }
-		});
+		
+		if(cartIds.length != 0) {
+			$.ajax({
+				method: 'POST',
+				url: getContextPath() + '/orders',
+				data: JSON.stringify({cartIds: cartIds}),
+				dataType: 'json',
+			    contentType: 'application/json',
+			    success: function(data) {
+			    	if (data.msg == 'error') {
+			    		$('.alert-warning').show();
+			    		var keys = Object.keys(data.error);
+			    		var content = '';
+			    		for(i = 0; i < keys.length; i++) {
+			    			content += data.error[keys[i]] + '<br>';
+			    		}
+			    		$('.alert-warning').html(content);
+			    	} else {
+			    		window.location.replace(getContextPath() + data.url);
+			    	}
+			    }
+			});
+		}
 	});
 	
 	$(document).on('click', '.cart-product-select', function() {

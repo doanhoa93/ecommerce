@@ -55,7 +55,7 @@ public class CartsController extends BaseController {
 			redirect.addFlashAttribute("flash", flash);
 			return "redirect:/carts";
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			flash.put("type", "error");
 			flash.put("content", messageSource.getMessage("cart.error", null, Locale.US));
 			redirect.addFlashAttribute("flash", flash);
@@ -75,6 +75,7 @@ public class CartsController extends BaseController {
 			cartService.saveOrUpdate(cartInfo);
 			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 		} catch (Exception e) {
+			logger.info(e);
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 		}
 		return toJson(hashMap);
