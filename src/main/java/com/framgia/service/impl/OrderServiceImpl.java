@@ -22,6 +22,7 @@ import com.framgia.model.User;
 import com.framgia.service.CartService;
 import com.framgia.service.OrderProductService;
 import com.framgia.service.OrderService;
+import com.framgia.service.ProductService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
@@ -30,6 +31,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderProductService orderProductService;
+
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public UserInfo getUser(Integer orderId) {
@@ -96,6 +100,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
 	public OrderInfo saveOrUpdate(OrderInfo entity) {
 		try {
 			Order order = getOrderDAO().saveOrUpdate(toOrder(entity));
@@ -139,6 +144,36 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<OrderInfo> getOrders(Integer userId, String page, int limit) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page)) {
+				off = 0;
+			} else
+				off = (Integer.parseInt(page) - 1) * limit;
+			return getOrderDAO().getOrders(userId, off, limit).stream().map(order -> {
+				OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
+				orderInfo.setProductQuantity(getProductQuantity(order.getId()));
+				return orderInfo;
+			}).collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public int getProductQuantity(Integer orderId) {
+		try {
+			List<OrderProductInfo> orderProducts = getOrderProducts(orderId);
+			return orderProducts.stream().map(OrderProductInfo::getQuantity).mapToInt(Integer::intValue).sum();
+		} catch (Exception e) {
+			logger.error(e);
+			return 0;
+		}
+	}
+
+	@Override
 	public OrderInfo createOrder(Integer userId, List<Integer> cartIds) {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		List<CartInfo> cartInfos = cartService.getObjectsByIds(cartIds);
@@ -162,7 +197,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 		try {
 			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setStatus(Status.getStrStatus(Status.WAITING));
+			orderInfo.setStatus(Status.WAITING);
 			orderInfo.setUserId(userId);
 			orderInfo.setCreatedAt(new Date());
 
@@ -183,11 +218,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				orderProduct.setProductId(cartInfo.getProduct().getId());
 				orderProduct.setPrice(cartInfo.getProduct().getPrice());
 				orderProduct.setQuantity(cartInfo.getQuantity());
+				orderProduct.setStatus(Status.WAITING);
 				orderProductService.saveOrUpdate(orderProduct);
 
 				// Xoa cart
 				cartService.delete(cartInfo);
 			}
+
 			return orderInfo;
 		} catch (Exception e) {
 			logger.error(e);
@@ -198,32 +235,53 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int getProductQuantity(Integer orderId) {
+	public boolean acceptOrder(OrderInfo orderInfo) {
 		try {
-			List<OrderProductInfo> orderProducts = getOrderProducts(orderId);
-			return orderProducts.stream().map(OrderProductInfo::getQuantity).mapToInt(Integer::intValue).sum();
+			boolean valid = true;
+			List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
+			for (OrderProductInfo orderProductInfo : orderProductInfos) {
+				if (orderProductInfo.getProduct().getNumber() < orderProductInfo.getQuantity()) {
+					orderProductInfo.setStatus(Status.REJECT);
+					orderProductService.saveOrUpdate(orderProductInfo);
+					valid = false;
+				} else {
+					orderProductInfo.setStatus(Status.ACCEPT);
+					orderProductService.saveOrUpdate(orderProductInfo);
+				}
+			}
+
+			if (!valid) {
+				orderInfo.setStatus(Status.REJECT);
+			} else {
+				for (OrderProductInfo orderProductInfo : orderProductInfos) {
+					ProductInfo productInfo = orderProductInfo.getProduct();
+					productInfo.setNumber(productInfo.getNumber() - orderProductInfo.getQuantity());
+					productService.saveOrUpdate(productInfo);
+				}
+			}
+
+			saveOrUpdate(orderInfo);
+			return valid;
 		} catch (Exception e) {
 			logger.error(e);
-			return 0;
+			throw e;
 		}
 	}
 
 	@Override
-	public List<OrderInfo> getOrders(Integer userId, String page, int limit) {
+	public boolean updateStatusOrder(OrderInfo orderInfo) {
 		try {
-			int off;
-			if (StringUtils.isEmpty(page)) {
-				off = 0;
-			} else
-				off = (Integer.parseInt(page) - 1) * limit;
-			return getOrderDAO().getOrders(userId, off, limit).stream().map(order -> {
-				OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
-				orderInfo.setProductQuantity(getProductQuantity(order.getId()));
-				return orderInfo;
-			}).collect(Collectors.toList());
+			if (!orderInfo.getStatus().equals(Status.ACCEPT)) {
+				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
+				for (OrderProductInfo orderProductInfo : orderProductInfos)
+					orderProductInfo.setStatus(orderInfo.getStatus());
+				saveOrUpdate(orderInfo);
+			}
+
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
-			return null;
+			return false;
 		}
 	}
 

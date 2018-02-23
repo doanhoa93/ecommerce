@@ -79,6 +79,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 		}
 	}
 
+	@Override
 	public OrderProductInfo saveOrUpdate(OrderProductInfo entity) {
 		try {
 			OrderProduct orderProduct = getOrderProductDAO().saveOrUpdate(toOrderProduct(entity));

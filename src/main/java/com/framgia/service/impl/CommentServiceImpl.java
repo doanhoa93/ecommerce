@@ -65,7 +65,8 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 			throw e;
 		}
 	}
-
+	
+	@Override
 	public CommentInfo saveOrUpdate(CommentInfo entity) {
 		try {
 			return ModelToBean.toCommentInfo(getCommentDAO().saveOrUpdate(toComment(entity)));

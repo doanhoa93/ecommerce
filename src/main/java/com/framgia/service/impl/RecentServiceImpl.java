@@ -24,7 +24,6 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-
 	public RecentInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toRecentInfo(getRecentDAO().findBy(attribute, key, lock));

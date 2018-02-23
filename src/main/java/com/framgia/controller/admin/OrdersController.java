@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.OrderInfo;
+import com.framgia.constant.Status;
 import com.framgia.validator.OrderValidator;
 
 @Controller("admin/order")
@@ -49,13 +50,17 @@ public class OrdersController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			OrderInfo order = orderService.findById(id);
-			orderValidator.validStatus((String) hashMap.get("status"), order, result);
+			OrderInfo orderInfo = orderService.findById(id);
+			orderValidator.validStatus((String) hashMap.get("status"), orderInfo, result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			} else {
-				order.setStatus((String) hashMap.get("status"));
-				orderService.saveOrUpdate(order);
+				orderInfo.setStatus((String) hashMap.get("status"));
+				if (orderInfo.getStatus().equals(Status.ACCEPT)) {
+					if (!orderService.acceptOrder(orderInfo))
+						hashMap.put("warning", Status.REJECT);
+				} else
+					orderService.updateStatusOrder(orderInfo);
 				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 			}
 			return toJson(hashMap);

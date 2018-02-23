@@ -26,11 +26,14 @@ $(document).ready(function() {
 		    data: JSON.stringify(data)
 		}).done(function(data) {
 			if(data.msg == 'success') {
+				if(data.warning)
+					status = data.warning;
+				
 				$('#form-order').html('');
-	        	$('#form-order').modal('hide');
-	        	$('.order-' + id + ' .order-status').attr('class', 'order-status status-' + (status));
-	        	$('.order-' + id + ' .order-status').html(status);
-	        	table.rows().invalidate();
+				$('#form-order').modal('hide');
+				$('.order-' + id + ' .order-status').attr('class', 'order-status status-' + status);
+				$('.order-' + id + ' .order-status').html(status);
+				table.rows().invalidate();
 			}
         })	    
     });	

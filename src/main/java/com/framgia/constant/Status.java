@@ -1,10 +1,10 @@
 package com.framgia.constant;
 
 public interface Status {
-	final int WAITING = 0;
-	final int ACCEPT = 1;
-	final int REJECT = 2;
-	final int CANCEL = 3;
+	final String WAITING = "WAITING";
+	final String ACCEPT = "ACCEPT";
+	final String REJECT = "REJECT";
+	final String CANCEL = "CANCEL";
 	final String[] statuses = { "WAITING", "ACCEPT", "REJECT", "CANCEL" };
 
 	public static int getIntStatus(String status) {
