@@ -14,3 +14,12 @@
 .admin-body .input-sm {
 	width: auto !important;
 }
+
+.not-found-page {
+	text-align: center;
+}
+
+.not-found-page .not-found-image {
+	display: inline-block;
+	max-height: 300px;
+}

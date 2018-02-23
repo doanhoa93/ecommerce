@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.framgia.bean.CategoryInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
@@ -25,23 +26,27 @@ public class CategoriesController extends BaseController {
 	        @RequestParam(value = "name", required = false) String name,
 	        @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		List<ProductInfo> products = null;
-		ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
-		if (productFilter.isFilterProduct()) {
-			products = productService.filterProducts(categoryId, productFilter, page, Paginate.PRODUCT_LIMIT);
-			model.setViewName("productsPartial");
-		} else {
-			model.addObject("categories", categoryService.getObjects());
-			model.addObject("maxPrice", Price.MAX_PRICE);
-			model.addObject("minPrice", Price.MIN_PRICE);
-			products = productService.getProducts(categoryId, page, Paginate.PRODUCT_LIMIT);
-			model.setViewName("products");
-		}
+		CategoryInfo categoryInfo = categoryService.findById(categoryId);
+		if (categoryInfo != null) {
+			List<ProductInfo> products = null;
+			ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
+			if (productFilter.isFilterProduct()) {
+				products = productService.filterProducts(categoryId, productFilter, page, Paginate.PRODUCT_LIMIT);
+				model.setViewName("productsPartial");
+			} else {
+				model.addObject("categories", categoryService.getObjects());
+				model.addObject("maxPrice", Price.MAX_PRICE);
+				model.addObject("minPrice", Price.MIN_PRICE);
+				products = productService.getProducts(categoryId, page, Paginate.PRODUCT_LIMIT);
+				model.setViewName("products");
+			}
 
-		model.addObject("paginate", setPaginate(products.size(), page, Paginate.PRODUCT_LIMIT));
-		model.addObject("title", "products");
-		model.addObject("categoryId", categoryId);
-		model.addObject("products", products);
+			model.addObject("paginate", setPaginate(products.size(), page, Paginate.PRODUCT_LIMIT));
+			model.addObject("title", "products");
+			model.addObject("categoryId", categoryId);
+			model.addObject("products", products);
+		} else
+			model.setViewName("404");
 		return model;
 	}
 }

@@ -7,9 +7,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping(value = "/")
 public class PagesController extends BaseController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView model = new ModelAndView("homePage");
 		model.addObject("flash", redirect.getFlashAttributes().get("flash"));

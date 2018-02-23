@@ -9,9 +9,9 @@ $(document).ready(function() {
 		    },
 		    url: url,
 		}).done(function(data) {
-	        $('#form-order').modal('show');
-	        $('#form-order').html(data);
-        })	    
+			$('#form-order').modal('show');
+        	$('#form-order').html(data);
+        })
     });
 	
 	$(document).on('click', '.btn-order-update', function() {

@@ -40,6 +40,11 @@
     <put-list-attribute name="js" />
   </definition>
 
+  <definition name="404" extends="baselayout">
+    <put-attribute name="title" value="Not Found | Ecommerce" />
+    <put-attribute name="body" value="/views/shared/404.jsp" />
+  </definition>
+
   <definition name="homePage" extends="baselayout">
     <put-attribute name="title" value="HomePage | Ecommerce" />
     <put-attribute name="body" value="/views/pages/index.jsp" />
@@ -183,6 +188,11 @@
     <put-list-attribute name="js" />
   </definition>
 
+  <definition name="admin404" extends="adminBaseLayout">
+    <put-attribute name="title" value="Not Found | Ecommerce" />
+    <put-attribute name="body" value="/views/shared/404.jsp" />
+  </definition>
+
   <definition name="adminHomePage" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/pages/index.jsp" />
@@ -209,18 +219,18 @@
   </definition>
 
   <definition name="adminOrder" template="/views/admin/orders/show.jsp" />
-  
+
   <definition name="adminSuggests" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/suggests/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/suggest.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/admin/js/suggest.js" />
-    </put-list-attribute>    
-  </definition>  
-  
+    </put-list-attribute>
+  </definition>
+
   <definition name="adminSuggest" template="/views/admin/suggests/show.jsp" />
 </tiles-definitions>

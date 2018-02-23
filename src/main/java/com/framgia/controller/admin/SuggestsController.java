@@ -35,11 +35,10 @@ public class SuggestsController extends AdminController {
 	public ModelAndView show(@PathVariable Integer id) {
 		SuggestInfo suggest = suggestService.findById(id);
 		ModelAndView model = new ModelAndView("adminSuggest");
-		if (suggest != null) {
+		if (suggest != null)
 			model.addObject("suggest", suggest);
-		} else {
-			model.setViewName("redirect:/admin");
-		}
+		else
+			model.setViewName("admin404");
 		return model;
 	}
 
@@ -61,8 +60,8 @@ public class SuggestsController extends AdminController {
 			}
 			return toJson(hashMap);
 		} catch (Exception e) {
-			logger.error(e);			
-			return "404";
+			logger.error(e);
+			return "admin404";
 		}
 	}
 }
