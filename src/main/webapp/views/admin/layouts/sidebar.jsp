@@ -38,7 +38,7 @@
         </a>
         
         <ul class="nav nav-second-level">
-          <li><a href="flot.html">All categories</a></li>
+          <li><a href="${contextPath}/admin/categories">All categories</a></li>
           <li><a href="morris.html">New category</a></li>
         </ul>
       </li>      
