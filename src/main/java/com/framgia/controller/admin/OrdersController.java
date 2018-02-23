@@ -19,7 +19,7 @@ import com.framgia.constant.Status;
 import com.framgia.validator.OrderValidator;
 
 @Controller("admin/order")
-@RequestMapping(value = "/admin/orders")
+@RequestMapping(value = "admin/orders")
 public class OrdersController extends AdminController {
 
 	@Autowired
