@@ -75,6 +75,9 @@
       
       <mvc:mapping path="/admin" />
       <mvc:mapping path="/admin/*" />
+      <mvc:mapping path="/admin/**" />
+      <mvc:mapping path="/admin/***" />
+      <mvc:mapping path="/admin/****" />
       <bean class="com.framgia.interceptor.LoginInterceptor" />
     </mvc:interceptor>
 

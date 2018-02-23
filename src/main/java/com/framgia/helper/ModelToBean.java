@@ -15,6 +15,7 @@ import com.framgia.bean.RateInfo;
 import com.framgia.bean.RecentInfo;
 import com.framgia.bean.SuggestInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Gender;
 import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -33,17 +34,24 @@ import com.framgia.model.User;
 public class ModelToBean {
 	// Cart
 	public static CartInfo toCartInfo(Cart cart) {
-		CartInfo cartInfo = new CartInfo();
-		cartInfo.setId(cart.getId());
-		cartInfo.setQuantity(cart.getQuantity());
-		cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
-		cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
+		CartInfo cartInfo = toCartInfoWithPro(cart);
+		if (cartInfo == null)
+			return null;
+
+		if (cart.getProduct() != null)
+			cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
+
+		if (cart.getUser() != null)
+			cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
 		return cartInfo;
 	}
 
 	// Category
 	public static CategoryInfo toCategoryInfo(Category category) {
 		CategoryInfo categoryInfo = toCategoryInfoWithPro(category);
+		if (categoryInfo == null)
+			return null;
+
 		if (category.getProducts() != null)
 			categoryInfo.setProducts(category.getProducts().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toProductInfoWithPro).collect(Collectors.toList()));
@@ -69,6 +77,9 @@ public class ModelToBean {
 	// Order
 	public static OrderInfo toOrderInfo(Order order) {
 		OrderInfo orderInfo = toOrderInfoWithPro(order);
+		if (orderInfo == null)
+			return null;
+
 		if (order.getOrderProducts() != null)
 			orderInfo.setOrderProducts(order.getOrderProducts().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
@@ -83,6 +94,9 @@ public class ModelToBean {
 	// Product
 	public static ProductInfo toProductInfo(Product product) {
 		ProductInfo productInfo = toProductInfoWithPro(product);
+		if (productInfo == null)
+			return null;
+
 		if (product.getImages() != null)
 			productInfo.setImages(product.getImages().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
@@ -91,12 +105,12 @@ public class ModelToBean {
 
 	// Profile
 	public static ProfileInfo toProfileInfo(Profile profile) {
-		ProfileInfo profileInfo = new ProfileInfo();
-		profileInfo.setAddress(profile.getAddress());
-		profileInfo.setBirthday(profile.getBirthday());
-		profileInfo.setGender(profile.getGender());
-		profileInfo.setId(profile.getId());
-		profileInfo.setUser(toUserInfoWithPro(profile.getUser()));
+		ProfileInfo profileInfo = toProfileInfoWithPro(profile);
+		if (profileInfo == null)
+			return null;
+
+		if (profile.getUser() != null)
+			profileInfo.setUser(toUserInfoWithPro(profile.getUser()));
 		return profileInfo;
 	}
 
@@ -146,11 +160,37 @@ public class ModelToBean {
 	// User
 	public static UserInfo toUserInfo(User user) {
 		UserInfo userInfo = toUserInfoWithPro(user);
+		if (userInfo == null)
+			return null;
+
+		if (user.getProfile() != null)
+			userInfo.setProfile(toProfileInfoWithPro(user.getProfile()));
+
+		if (user.getCarts() != null)
+			userInfo.setCarts(user.getCarts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toCartInfoWithPro).collect(Collectors.toList()));
+
+		if (user.getOrders() != null)
+			userInfo.setOrders(user.getOrders().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toOrderInfoWithPro).collect(Collectors.toList()));
 		return userInfo;
 	}
 
 	// ---------------- PRIVATE -------------------------------------------
+	private static CartInfo toCartInfoWithPro(Cart cart) {
+		if (cart == null)
+			return null;
+
+		CartInfo cartInfo = new CartInfo();
+		cartInfo.setId(cart.getId());
+		cartInfo.setQuantity(cart.getQuantity());
+		return cartInfo;
+	}
+
 	private static CategoryInfo toCategoryInfoWithPro(Category category) {
+		if (category == null)
+			return null;
+
 		CategoryInfo categoryInfo = new CategoryInfo();
 		categoryInfo.setId(category.getId());
 		categoryInfo.setName(category.getName());
@@ -159,6 +199,9 @@ public class ModelToBean {
 	}
 
 	private static ImageInfo toImageInfoWithPro(Image image) {
+		if (image == null)
+			return null;
+
 		ImageInfo imageInfo = new ImageInfo();
 		imageInfo.setId(image.getId());
 		imageInfo.setImage(image.getImage());
@@ -168,6 +211,9 @@ public class ModelToBean {
 	}
 
 	private static ProductInfo toProductInfoWithPro(Product product) {
+		if (product == null)
+			return null;
+
 		ProductInfo productInfo = new ProductInfo();
 		productInfo.setId(product.getId());
 		productInfo.setAvatar(product.getAvatar());
@@ -185,6 +231,9 @@ public class ModelToBean {
 	}
 
 	private static OrderInfo toOrderInfoWithPro(Order order) {
+		if (order == null)
+			return null;
+
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setId(order.getId());
 		orderInfo.setCreatedAt(order.getCreatedAt());
@@ -196,6 +245,9 @@ public class ModelToBean {
 	}
 
 	private static OrderProductInfo toOrderProductInfoWithPro(OrderProduct orderProduct) {
+		if (orderProduct == null)
+			return null;
+
 		OrderProductInfo orderProductInfo = new OrderProductInfo();
 		orderProductInfo.setId(orderProduct.getId());
 		orderProductInfo.setPrice(orderProduct.getPrice());
@@ -209,7 +261,22 @@ public class ModelToBean {
 		return orderProductInfo;
 	}
 
+	private static ProfileInfo toProfileInfoWithPro(Profile profile) {
+		if (profile == null)
+			return null;
+
+		ProfileInfo profileInfo = new ProfileInfo();
+		profileInfo.setAddress(profile.getAddress());
+		profileInfo.setBirthday(profile.getBirthday());
+		profileInfo.setGender(Gender.getStr(profile.getGender()));
+		profileInfo.setId(profile.getId());
+		return profileInfo;
+	}
+
 	private static UserInfo toUserInfoWithPro(User user) {
+		if (user == null)
+			return null;
+
 		UserInfo userInfo = new UserInfo();
 		userInfo.setId(user.getId());
 		userInfo.setName(user.getName());

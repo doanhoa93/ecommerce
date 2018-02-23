@@ -14,6 +14,8 @@
     <property name="name" column="name" type="string" not-null="true" />
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
+    
+    <one-to-one name="profile" class="Profile" cascade="save-update" />
 
     <list name="orders" fetch="join" cascade="delete-orphan"
       inverse="true">
@@ -21,14 +23,12 @@
       <list-index column="id" />
       <one-to-many class="Order" />
     </list>
-
     <list name="carts" fetch="join" cascade="delete-orphan"
       inverse="true">
       <key column="user_id" />
       <list-index column="id" />
       <one-to-many class="Cart" />
     </list>
-
     <list name="comments" fetch="join" cascade="delete-orphan"
       inverse="true">
       <key column="user_id" />

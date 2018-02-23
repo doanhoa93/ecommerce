@@ -214,6 +214,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<UserInfo> getUsers(String role) {
+		try {
+			return getUserDAO().getUsers(role).stream().map(ModelToBean::toUserInfo).collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private User toUser(UserInfo userInfo) {
 		User user = getUserDAO().getFromSession(userInfo.getId());

@@ -11,7 +11,7 @@ public class UserInfo {
 	private String role;
 	private String gender;
 	private boolean remember;
-	private ProfileInfo profileInfo;
+	private ProfileInfo profile;
 	private List<OrderInfo> orders;
 	private List<CartInfo> carts;
 	private List<CommentInfo> comments;
@@ -20,14 +20,14 @@ public class UserInfo {
 	}
 
 	public UserInfo(Integer id, String email, String password, String name, String gender, String avatar, String role,
-	        ProfileInfo profileInfo) {
+	        ProfileInfo profile) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.avatar = avatar;
 		this.role = role;
-		this.profileInfo = profileInfo;
+		this.profile = profile;
 		this.gender = gender;
 	}
 
@@ -79,12 +79,12 @@ public class UserInfo {
 		this.role = role;
 	}
 
-	public ProfileInfo getProfileInfo() {
-		return profileInfo;
+	public ProfileInfo getProfile() {
+		return profile;
 	}
 
-	public void setProfileInfo(ProfileInfo profileInfo) {
-		this.profileInfo = profileInfo;
+	public void setProfile(ProfileInfo profile) {
+		this.profile = profile;
 	}
 
 	public boolean isRemember() {

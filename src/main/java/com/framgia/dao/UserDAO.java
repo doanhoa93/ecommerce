@@ -12,4 +12,6 @@ public interface UserDAO extends BaseDAO<Integer, User> {
 	Profile getProfile(Integer userId);
 	
 	List<Comment> getComments(Integer userId);
+	
+	List<User> getUsers(String role);	
 }

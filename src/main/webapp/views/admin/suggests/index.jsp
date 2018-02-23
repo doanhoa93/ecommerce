@@ -11,7 +11,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-body">
-        <table class="table table-striped table-bsuggested table-hover admin-suggest-table"
+        <table class="table table-striped table-bordered table-hover admin-suggest-table"
           id="dataTables-example" style="width: 100%">
           <thead>
             <tr>
