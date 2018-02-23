@@ -17,6 +17,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 		try {
 			return ModelToBean.toProductInfo(getPromotionDAO().getProduct(promotionId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -26,6 +27,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 		try {
 			return ModelToBean.toPromotionInfo(getPromotionDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -35,6 +37,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 		try {
 			return ModelToBean.toPromotionInfo(getPromotionDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -45,6 +48,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 			getPromotionDAO().delete(toPromotion(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -54,6 +58,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 		try {
 			return ModelToBean.toPromotionInfo(getPromotionDAO().saveOrUpdate(toPromotion(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -64,6 +69,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 			return getPromotionDAO().getObjects().stream().map(ModelToBean::toPromotionInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -74,6 +80,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 			return getPromotionDAO().getObjectsByIds(keys).stream().map(ModelToBean::toPromotionInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -84,6 +91,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 			return getPromotionDAO().getObjects(off, limit).stream().map(ModelToBean::toPromotionInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

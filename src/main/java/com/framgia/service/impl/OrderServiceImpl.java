@@ -36,6 +36,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			return ModelToBean.toUserInfo(getOrderDAO().getUser(orderId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -46,6 +47,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			return getOrderDAO().getOrderProducts(orderId).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -58,6 +60,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				return ModelToBean.toProductInfo(orderProduct.getProduct());
 			}).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -67,6 +70,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			return ModelToBean.toOrderInfo(getOrderDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -76,6 +80,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			return ModelToBean.toOrderInfo(getOrderDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -86,6 +91,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			getOrderDAO().delete(toOrder(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -95,6 +101,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			Order order = getOrderDAO().saveOrUpdate(toOrder(entity));
 			return ModelToBean.toOrderInfo(order);
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -104,6 +111,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -114,6 +122,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			return getOrderDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -124,6 +133,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			return getOrderDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -180,16 +190,11 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			}
 			return orderInfo;
 		} catch (Exception e) {
+			logger.error(e);
 			hashMap.put("order", "Error when try save order!");
 			request.setAttribute("error", hashMap);
 			throw e;
 		}
-	}
-
-	private boolean checkQuantityProduct(CartInfo cart) {
-		if (cart.getQuantity() <= cart.getProduct().getNumber())
-			return true;
-		return false;
 	}
 
 	@Override
@@ -198,6 +203,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			List<OrderProductInfo> orderProducts = getOrderProducts(orderId);
 			return orderProducts.stream().map(OrderProductInfo::getQuantity).mapToInt(Integer::intValue).sum();
 		} catch (Exception e) {
+			logger.error(e);
 			return 0;
 		}
 	}
@@ -216,11 +222,18 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				return orderInfo;
 			}).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
 
 	// ----------------- PRIVATE -------------------------------------
+	private boolean checkQuantityProduct(CartInfo cart) {
+		if (cart.getQuantity() <= cart.getProduct().getNumber())
+			return true;
+		return false;
+	}
+
 	private Order toOrder(OrderInfo orderInfo) {
 		Order order = getOrderDAO().getFromSession(orderInfo.getId());
 		if (order == null) {

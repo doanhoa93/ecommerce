@@ -3,6 +3,7 @@ package com.framgia.service.impl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.dao.CartDAO;
@@ -38,8 +39,10 @@ public class BaseServiceImpl {
 	public HttpServletRequest request;
 
 	@Autowired
-	HttpServletResponse response;
-
+	public HttpServletResponse response;
+	
+	public Logger logger = Logger.getLogger(this.getClass());	
+	
 	public CartDAO getCartDAO() {
 		return cartDAO;
 	}

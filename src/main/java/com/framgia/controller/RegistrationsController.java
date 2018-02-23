@@ -27,6 +27,7 @@ public class RegistrationsController extends BaseController {
 			userService.saveOrUpdate(userInfo);
 			return new ModelAndView("redirect:/");
 		} catch (Exception e) {
+			logger.error(e);
 			return new ModelAndView("signup", "message",
 			        messageSource.getMessage("registration.error", null, Locale.US));
 		}

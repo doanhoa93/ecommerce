@@ -18,6 +18,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return ModelToBean.toRateInfo(getRateDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -27,6 +28,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return ModelToBean.toRateInfo(getRateDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -37,6 +39,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 			getRateDAO().delete(toRate(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -46,6 +49,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(toRate(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -55,6 +59,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return getRateDAO().getObjects().stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -65,6 +70,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 			return getRateDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRateInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -75,6 +81,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 			return getRateDAO().getObjects(off, limit).stream().map(ModelToBean::toRateInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -84,6 +91,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return getRateDAO().getRates(productId).stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

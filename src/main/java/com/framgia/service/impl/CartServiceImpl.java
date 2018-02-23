@@ -22,6 +22,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return ModelToBean.toUserInfo(getCartDAO().getUser(cartId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -31,6 +32,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return ModelToBean.toProductInfo(getCartDAO().getProduct(cartId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -40,6 +42,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return ModelToBean.toCartInfo(getCartDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -49,6 +52,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return ModelToBean.toCartInfo(getCartDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -59,6 +63,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			getCartDAO().delete(toCart(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -68,6 +73,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			Cart cart = getCartDAO().saveOrUpdate(toCart(entity));
 			return ModelToBean.toCartInfo(cart);
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -77,6 +83,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return getCartDAO().getObjects().stream().map(ModelToBean::toCartInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);			
 			return null;
 		}
 	}
@@ -87,6 +94,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			return getCartDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCartInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -97,6 +105,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			return getCartDAO().getObjects(off, limit).stream().map(ModelToBean::toCartInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -106,6 +115,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return ModelToBean.toCartInfo(getCartDAO().getCart(userId, productId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -121,6 +131,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			return getCartDAO().getCarts(userId, off, limit).stream().map(ModelToBean::toCartInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

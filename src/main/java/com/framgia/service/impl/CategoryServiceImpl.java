@@ -17,6 +17,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		try {
 			return ModelToBean.toCategoryInfo(getCategoryDAO().getParentCategory(categoryId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -35,6 +36,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			} while (category != null);
 			return categories;
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -44,6 +46,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		try {
 			return ModelToBean.toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -53,6 +56,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		try {
 			return ModelToBean.toCategoryInfo(getCategoryDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -63,6 +67,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			getCategoryDAO().delete(toCategory(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -72,6 +77,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			Category category = getCategoryDAO().saveOrUpdate(toCategory(entity));
 			return ModelToBean.toCategoryInfo(category);
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -81,6 +87,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		try {
 			return getCategoryDAO().getObjects().stream().map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -91,6 +98,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			return getCategoryDAO().getObjects(off, limit).stream().map(ModelToBean::toCategoryInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -101,6 +109,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			return getCategoryDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCategoryInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

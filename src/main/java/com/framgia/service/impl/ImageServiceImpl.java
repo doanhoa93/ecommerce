@@ -18,6 +18,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		try {
 			return ModelToBean.toProductInfo(getImageDAO().getProduct(imageId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -27,6 +28,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		try {
 			return ModelToBean.toImageInfo(getImageDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -36,6 +38,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		try {
 			return ModelToBean.toImageInfo(getImageDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -46,6 +49,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 			getImageDAO().delete(toImage(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -54,6 +58,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		try {
 			return ModelToBean.toImageInfo(getImageDAO().saveOrUpdate(toImage(entity)));
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -63,6 +68,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 		try {
 			return getImageDAO().getObjects().stream().map(ModelToBean::toImageInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -73,6 +79,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 			return getImageDAO().getObjectsByIds(keys).stream().map(ModelToBean::toImageInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -83,6 +90,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 			return getImageDAO().getObjects(off, limit).stream().map(ModelToBean::toImageInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

@@ -33,6 +33,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				return ModelToBean.toOrderInfo(orderProduct.getOrder());
 			}).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -43,6 +44,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getCarts(productId).stream().map(ModelToBean::toCartInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -52,6 +54,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return getOrders(productId).stream().map(OrderInfo::getUser).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -62,6 +65,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getOrderProducts(productId).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -72,6 +76,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getComments(productId).stream().map(ModelToBean::toCommentInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -82,6 +87,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getImages(productId).stream().map(ModelToBean::toImageInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -91,6 +97,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return ModelToBean.toRecentInfo(getProductDAO().getRecent(productId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -100,6 +107,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return ModelToBean.toPromotionInfo(getProductDAO().getPromotion(productId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -109,6 +117,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return ModelToBean.toCategoryInfo(getProductDAO().getCategory(productId));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -118,6 +127,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return ModelToBean.toProductInfo(getProductDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -127,6 +137,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return ModelToBean.toProductInfo(getProductDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -137,6 +148,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			getProductDAO().delete(toProduct(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -147,7 +159,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			Product product = getProductDAO().saveOrUpdate(toProduct(entity));
 			return ModelToBean.toProductInfo(product);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -157,6 +169,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			return getProductDAO().getObjects().stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -167,6 +180,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getObjectsByIds(keys).stream().map(ModelToBean::toProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -177,6 +191,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().getObjects(off, limit).stream().map(ModelToBean::toProductInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -193,6 +208,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().filterProducts(categoryId, new ProductFilter(null, null, null), off, limit).stream()
 			        .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -210,6 +226,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			return getProductDAO().filterProducts(categoryId, productFilter, off, limit).stream()
 			        .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}

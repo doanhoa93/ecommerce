@@ -28,6 +28,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		try {
 			return ModelToBean.toSuggestInfo(getSuggestDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -37,6 +38,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		try {
 			return ModelToBean.toSuggestInfo(getSuggestDAO().findById(key));
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -47,6 +49,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 			getSuggestDAO().delete(toSuggest(entity));
 			return true;
 		} catch (Exception e) {
+			logger.error(e);
 			throw e;
 		}
 	}
@@ -56,6 +59,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		try {
 			return getSuggestDAO().getObjects().stream().map(ModelToBean::toSuggestInfo).collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -66,6 +70,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 			return getSuggestDAO().getObjectsByIds(keys).stream().map(ModelToBean::toSuggestInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -76,6 +81,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 			return getSuggestDAO().getObjects(off, limit).stream().map(ModelToBean::toSuggestInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -92,6 +98,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 			return getSuggestDAO().getSuggests(userId, off, limit, order).stream().map(ModelToBean::toSuggestInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
+			logger.error(e);
 			return null;
 		}
 	}
@@ -105,15 +112,14 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 				entity.setAvatar(map.get("url"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			return null;
 		}
 
 		try {
 			return ModelToBean.toSuggestInfo(getSuggestDAO().saveOrUpdate(toSuggest(entity)));
 		} catch (Exception e) {
-			e.printStackTrace();
-
+			logger.error(e);
 			throw e;
 		}
 	}
