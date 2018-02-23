@@ -50,7 +50,14 @@
         <span class="number-title">Number: </span>
         <span class="number">${product.getNumber()}</span>
       </div>
-
+      
+      <c:if test="${product.getIsPromotion()}">
+        <div class="product-promotion">
+          <span class="promotion-title">Promotion:</span>
+          <span class="promotion">${product.getSaleOf()}%</span>
+        </div>
+      </c:if>
+      
       <div class="product-information">
         <span class="information">${product.getInformation()}</span>
       </div>

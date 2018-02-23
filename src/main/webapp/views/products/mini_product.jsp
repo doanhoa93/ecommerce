@@ -5,9 +5,30 @@
 <div class="product-image-wrapper">
   <div class="single-products">
     <div class="productinfo text-center">
-      <a href="${contextPath}/products/${product.getId()}">
-        <img class="product-image" src="${product.getAvatar()}" alt="" />
-      </a>
+      <div class="product-avatar">
+        <a href="${contextPath}/products/${product.getId()}">
+          <img class="product-image" src="${product.getAvatar()}" alt="" />
+        </a>
+        
+        <c:if test="${product.getIsPromotion()}">
+          <div class="product-sale">
+            <img alt="" src="${contextPath}/assets/images/home/sale.png" class="img-responsive">
+          </div>
+        </c:if>
+        
+        <div class="product-stock">
+          <span>Status: </span>
+          <c:choose>
+            <c:when test="${product.getNumber() > 0}">
+              <c:out value="Stock" />
+            </c:when>
+            
+            <c:otherwise>
+              <c:out value="Out of stock" />
+            </c:otherwise>
+          </c:choose>
+        </div>        
+      </div>
       <h2>            
         <fmt:setLocale value="en_US" />
         <fmt:formatNumber value="${product.getPrice()}" type="currency" />

@@ -60,8 +60,12 @@
 
 .cart-right .cart-product-price {
 	font-size: 30px;
-	line-height: 100px;
+	line-height: 75px;
 	width: 150px;
+}
+
+.cart-right .cart-product-number {
+	line-height: 40px;
 }
 
 .cart-right .cart-quantity-form {
