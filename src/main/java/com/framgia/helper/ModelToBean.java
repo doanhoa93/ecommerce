@@ -45,9 +45,10 @@ public class ModelToBean {
 	public static CategoryInfo toCategoryInfo(Category category) {
 		CategoryInfo categoryInfo = toCategoryInfoWithPro(category);
 		if (category.getProducts() != null)
-			categoryInfo.setProducts(category.getProducts().stream().map(ModelToBean::toProductInfoWithPro)
-			        .collect(Collectors.toList()));
+			categoryInfo.setProducts(category.getProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toProductInfoWithPro).collect(Collectors.toList()));
 		return categoryInfo;
+
 	}
 
 	// Comment
@@ -69,8 +70,8 @@ public class ModelToBean {
 	public static OrderInfo toOrderInfo(Order order) {
 		OrderInfo orderInfo = toOrderInfoWithPro(order);
 		if (order.getOrderProducts() != null)
-			orderInfo.setOrderProducts(order.getOrderProducts().stream().map(ModelToBean::toOrderProductInfoWithPro)
-			        .collect(Collectors.toList()));
+			orderInfo.setOrderProducts(order.getOrderProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
 		return orderInfo;
 	}
 
@@ -83,8 +84,8 @@ public class ModelToBean {
 	public static ProductInfo toProductInfo(Product product) {
 		ProductInfo productInfo = toProductInfoWithPro(product);
 		if (product.getImages() != null)
-			productInfo.setImages(
-			        product.getImages().stream().map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
+			productInfo.setImages(product.getImages().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
 		return productInfo;
 	}
 

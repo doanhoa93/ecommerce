@@ -7,9 +7,10 @@
       <generator class="increment" />
     </id>
 
-    <property name="image" column="image" type="string" not-null="true" />
+    <property name="image" column="image" type="string"
+      not-null="true" />
 
-    <many-to-one name="product" class="Product" lazy="false">
+    <many-to-one name="product" class="Product">
       <column name="product_id" not-null="true" />
     </many-to-one>
   </class>

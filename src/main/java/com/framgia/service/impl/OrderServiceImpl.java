@@ -273,8 +273,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			if (!orderInfo.getStatus().equals(Status.ACCEPT)) {
 				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
-				for (OrderProductInfo orderProductInfo : orderProductInfos)
+				for (OrderProductInfo orderProductInfo : orderProductInfos) {
 					orderProductInfo.setStatus(orderInfo.getStatus());
+					orderProductService.saveOrUpdate(orderProductInfo);
+				}
 				saveOrUpdate(orderInfo);
 			}
 
@@ -282,6 +284,34 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		} catch (Exception e) {
 			logger.error(e);
 			return false;
+		}
+	}
+
+	@Override
+	public boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProducts) {
+		try {
+			if (orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)) {
+				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
+				for (HashMap<String, Object> orderProduct : orderProducts) {
+					Integer id = (Integer) orderProduct.get("id");
+					int quantity = Integer.parseInt((String) orderProduct.get("quantity"));
+
+					OrderProductInfo orderProductInfo = orderProductService.findById(id);
+					orderProductInfo.setQuantity(quantity);
+					orderProductService.saveOrUpdate(orderProductInfo);
+
+					orderProductInfos.remove(findOrderProduct(id, orderProductInfos));
+				}
+				
+				for (OrderProductInfo orderProductInfo : orderProductInfos)
+					orderProductService.delete(orderProductInfo);
+				
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
 		}
 	}
 
@@ -298,11 +328,19 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order = new Order();
 			order.setId(orderInfo.getId());
 			order.setUser(new User(orderInfo.getUserId()));
-		}
-
+		} 
+		
 		order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 		order.setCreatedAt(orderInfo.getCreatedAt());
 		order.setTotalPrice(orderInfo.getTotalPrice());
 		return order;
+	}
+
+	private int findOrderProduct(Integer id, List<OrderProductInfo> orderProductInfos) {
+		for (int i = 0; i < orderProductInfos.size(); i++)
+			if (orderProductInfos.get(i).getId() == id)
+				return i;
+
+		return -1;
 	}
 }

@@ -20,11 +20,11 @@
           <span>Status: </span>
           <c:choose>
             <c:when test="${product.getNumber() > 0}">
-              <c:out value="Stock" />
+              <span class="stock">Stock</span>
             </c:when>
             
             <c:otherwise>
-              <c:out value="Out of stock" />
+              <span class="out-stock">Out of stock</span>
             </c:otherwise>
           </c:choose>
         </div>        

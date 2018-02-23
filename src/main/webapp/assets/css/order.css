@@ -68,3 +68,159 @@
 .orders-paginate {
 	margin-top: 20px;
 }
+
+.order .order-left {
+	background: #fff;
+	border: 1px solid #e4e4e4;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding-left: 0px;
+}
+
+.order .order-right .total-money {
+	font-size: 30px;
+}
+
+.order-right .btn-order {
+	width: 100%;
+}
+
+.order-left .order-product-left {
+	padding-left: 0px;
+}
+
+.order-product {
+	border-bottom: 1px solid #e2e2e2;
+	height: auto;
+	padding: 5px;
+	position: relative;
+}
+
+.order-product .order-product-close {
+	cursor: pointer;
+	font-size: 20px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.order-product .order-product-left .order-product-image {
+	height: auto !important;
+	display: inline-block;
+}
+
+.order-product-product .order-product-left .order-product-product-image {
+	display: inline-block;
+	max-height: 140px;
+}
+
+.order-product .order-product-left .order-product-image-panel {
+	display: inline-block;
+}
+
+.order-product .order-product-info {
+	display: inline-block;
+}
+
+.order-product-right .order-product-price {
+	font-size: 30px;
+	line-height: 75px;
+	width: 150px;
+}
+
+.order-product-right .order-product-number {
+	line-height: 40px;
+}
+
+.order-product-right .order-product-quantity-form {
+	display: inline-block;
+	font-size: 16px;
+}
+
+.order-product-quantity-form .quantity-minus {
+	float: left;
+	cursor: pointer;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	color: #828282;
+	font-size: 22px;
+	background-color: #f8f8f8;
+	border: solid 1px #dfdfdf;
+}
+
+.order-product-quantity-form .quantity-plus {
+	float: right;
+	cursor: pointer;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	color: #828282;
+	font-size: 22px;
+	background-color: #f8f8f8;
+	border: solid 1px #dfdfdf;
+}
+
+.order-product-quantity-form .order-product-quantity {
+	width: 40px;
+	height: 28px;
+	text-align: center;
+	font-size: 13px;
+	color: #555;
+	border: solid 1px #e0e0e0;
+	border-left: none;
+	border-right: none;
+}
+
+.order .alert-warning {
+	display: none;
+}
+
+.status {
+	text-align: center;
+}
+
+.status-WAITING {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
+
+.status-ACCEPT {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.status-REJECT {
+	color: #fff;
+	background-color: #d9534f;
+	border-color: #d43f3a;
+}
+
+.status-CANCEL {
+	color: #fff;
+	background-color: #f0ad4e;
+	border-color: #eea236;
+}
+
+.order .btn-order-edit {
+	display: inline-block;
+}
+
+.order .btn-order-delete {
+	display: inline-block;
+}
+
+.order .order-field {
+	margin-bottom: 10px;
+}
+
+.order .order-product-status {
+	border: 1px solid #F7F7F0;	
+	border-radius: 2px;	
+	padding: 5px;
+}

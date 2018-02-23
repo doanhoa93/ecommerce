@@ -65,6 +65,12 @@
 	border-color: #eea236;
 }
 
+.admin-order .order-product-status {
+	border: 1px solid #F7F7F0;	
+	border-radius: 2px;	
+	padding: 5px;
+}
+
 .order-detail-info .order-field {
 	margin-bottom: 20px;
 }

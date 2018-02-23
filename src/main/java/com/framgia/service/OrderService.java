@@ -1,5 +1,6 @@
 package com.framgia.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.framgia.bean.OrderInfo;
@@ -23,4 +24,6 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 	boolean acceptOrder(OrderInfo orderInfo);
 
 	boolean updateStatusOrder(OrderInfo orderInfo);
+	
+	boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProducts);
 }

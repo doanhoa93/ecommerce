@@ -11,7 +11,7 @@
     <property name="birthday" column="birthday" type="date" />
     <property name="address" column="address" type="string" />
 
-    <many-to-one name="user" class="User" lazy="false">
+    <many-to-one name="user" class="User">
       <column name="user_id" not-null="true" />
     </many-to-one>
   </class>
