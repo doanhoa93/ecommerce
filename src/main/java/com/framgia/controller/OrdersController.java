@@ -25,6 +25,7 @@ import com.framgia.mailer.ApplicationMailer;
 @Controller
 @RequestMapping(value = "/orders")
 public class OrdersController extends BaseController {
+	
 	@Autowired
 	private ApplicationMailer mailer;
 
@@ -87,7 +88,7 @@ public class OrdersController extends BaseController {
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
 			return model;
 		} else {
-			model.setViewName("redirect:/");
+			model.setViewName("404");
 			return model;
 		}
 	}

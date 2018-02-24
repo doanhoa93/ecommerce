@@ -39,6 +39,8 @@ public class OrdersController extends AdminController {
 		if (order != null) {
 			model.addObject("order", order);
 			model.addObject("orderProducts", order.getOrderProducts());
+		} else {
+			model.setViewName("admin404");
 		}
 		return model;
 	}
@@ -66,7 +68,7 @@ public class OrdersController extends AdminController {
 			return toJson(hashMap);
 		} catch (Exception e) {
 			logger.error(e);
-			return "404";
+			return "admin404";
 		}
 	}
 }
