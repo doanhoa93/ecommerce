@@ -250,4 +250,9 @@
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/users/index.jsp" />
   </definition>
+  
+  <definition name="adminCategories" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/categories/index.jsp" />
+  </definition>  
 </tiles-definitions>
