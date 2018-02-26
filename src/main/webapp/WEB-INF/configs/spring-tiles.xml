@@ -255,4 +255,13 @@
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/categories/index.jsp" />
   </definition>  
+  
+  <definition name="adminProducts" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/products/index.jsp" />
+    
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/product.css" />
+    </put-list-attribute>    
+  </definition>    
 </tiles-definitions>
