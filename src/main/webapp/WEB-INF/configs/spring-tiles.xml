@@ -245,4 +245,9 @@
   </definition>
 
   <definition name="adminSuggest" template="/views/admin/suggests/show.jsp" />
+  
+  <definition name="adminUsers" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/users/index.jsp" />
+  </definition>
 </tiles-definitions>

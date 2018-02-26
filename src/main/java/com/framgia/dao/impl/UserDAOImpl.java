@@ -35,4 +35,12 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 		criteria.add(Restrictions.eq("user.id", userId));
 		return (List<Comment>) criteria.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsers(String role) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("role", role));
+		return (List<User>) criteria.list();
+	}
 }

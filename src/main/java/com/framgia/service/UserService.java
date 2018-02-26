@@ -22,6 +22,8 @@ public interface UserService extends BaseService<Integer, UserInfo> {
 	List<ProductInfo> getOrderedProducts(Integer userId);
 
 	List<ProductInfo> getCartedProducts(Integer userId);
+	
+	List<UserInfo> getUsers(String role);
 
 	boolean validate(UserInfo user);
 

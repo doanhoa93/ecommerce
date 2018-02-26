@@ -11,8 +11,6 @@
     <property name="birthday" column="birthday" type="date" />
     <property name="address" column="address" type="string" />
 
-    <many-to-one name="user" class="User">
-      <column name="user_id" not-null="true" />
-    </many-to-one>
+    <one-to-one name="user" class="User" constrained="true" />
   </class>
 </hibernate-mapping>

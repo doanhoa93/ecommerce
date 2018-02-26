@@ -7,7 +7,7 @@ public interface Status {
 	final String CANCEL = "CANCEL";
 	final String[] statuses = { "WAITING", "ACCEPT", "REJECT", "CANCEL" };
 
-	public static int getIntStatus(String status) {
+	static int getIntStatus(String status) {
 		for (int i = 0; i < statuses.length; i++)
 			if (statuses[i].equals(status))
 				return i;
@@ -15,7 +15,7 @@ public interface Status {
 		return -1;
 	}
 
-	public static String getStrStatus(int status) {
+	static String getStrStatus(int status) {
 		try {
 			return statuses[status];
 		} catch (Exception e) {

@@ -81,7 +81,7 @@ public class FakeData {
 			profileA.setId(2);
 			profileA.setUser(admin);
 			profileA.setAddress("Ha Noi");
-			profileA.setGender(Gender.MALE);
+			profileA.setGender(Gender.getInt(Gender.MALE));
 			profileA.setBirthday(new Date(1995 - 1900, 11, 05));
 			session.save(profileA);
 
@@ -96,7 +96,7 @@ public class FakeData {
 			profile.setId(1);
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
-			profile.setGender(Gender.MALE);
+			profile.setGender(Gender.getInt(Gender.MALE));
 			profile.setBirthday(new Date(1995 - 1900, 11, 05));
 			session.save(profile);
 
@@ -112,7 +112,7 @@ public class FakeData {
 				profile.setId(i);
 				profile.setUser(user);
 				profile.setAddress("Ha Noi");
-				profile.setGender(Gender.MALE);
+				profile.setGender(Gender.getInt(Gender.MALE));
 				profile.setBirthday(new Date(1995 - 1900, 11, 05));
 
 				session.save(profile);

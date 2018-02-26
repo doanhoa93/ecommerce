@@ -11,6 +11,7 @@ public class User implements Serializable {
 	private String name;
 	private String avatar;
 	private String role;
+	private Profile profile;
 	private List<Order> orders;
 	private List<Cart> carts;
 	private List<Comment> comments;
@@ -104,5 +105,13 @@ public class User implements Serializable {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 }

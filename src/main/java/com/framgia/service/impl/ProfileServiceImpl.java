@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Gender;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Profile;
 import com.framgia.model.User;
@@ -107,7 +108,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
 		profile.setAddress(profileInfo.getAddress());
 		profile.setBirthday(profileInfo.getBirthday());
-		profile.setGender(profileInfo.getGender());
+		profile.setGender(Gender.getInt(profileInfo.getGender()));
 		return profile;
 	}
 }

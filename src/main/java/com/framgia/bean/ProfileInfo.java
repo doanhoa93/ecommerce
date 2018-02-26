@@ -5,7 +5,7 @@ import java.util.Date;
 public class ProfileInfo {
 	private Integer id;
 	private Integer userId;
-	private int gender;
+	private String gender;
 	private Date birthday;
 	private String address;
 	private UserInfo user;
@@ -13,7 +13,7 @@ public class ProfileInfo {
 	public ProfileInfo() {
 	}
 
-	public ProfileInfo(Integer id, Integer userId, int gender, Date birthday, String address) {
+	public ProfileInfo(Integer id, Integer userId, String gender, Date birthday, String address) {
 		this.id = id;
 		this.userId = userId;
 		this.gender = gender;
@@ -37,11 +37,11 @@ public class ProfileInfo {
 		this.userId = userId;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

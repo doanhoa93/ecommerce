@@ -50,7 +50,7 @@
       </li>
           
       <li>
-        <a href="forms.html">
+        <a href="${contextPath}/admin/users">
           <i class="fa fa-user fa-fw"></i> Users
         </a>
       </li>
