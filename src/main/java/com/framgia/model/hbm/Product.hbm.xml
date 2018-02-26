@@ -26,14 +26,16 @@
     <property name="number" type="integer">
       <column name="number" default="0" check="number >= 0" />
     </property>
-    
-    <many-to-one name="category" class="Category" lazy="false">
+
+    <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />
     </many-to-one>
 
-    <bag name="images" order-by="id asc" lazy="false">
+    <list name="images" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="product_id" />
+      <list-index column="id" />
       <one-to-many class="Image" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

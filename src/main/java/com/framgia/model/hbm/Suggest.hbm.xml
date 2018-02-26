@@ -29,7 +29,7 @@
       <column name="status" default="0" />
     </property>    
 
-    <many-to-one name="user" class="User" lazy="false">
+    <many-to-one name="user" class="User">
       <column name="user_id" not-null="true" />
     </many-to-one>
   </class>

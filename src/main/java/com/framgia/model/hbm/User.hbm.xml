@@ -15,19 +15,25 @@
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
 
-    <bag name="orders" order-by="id asc" lazy="false">
+    <list name="orders" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Order" />
-    </bag>
+    </list>
 
-    <bag name="carts" order-by="id asc" lazy="false">
+    <list name="carts" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Cart" />
-    </bag>
+    </list>
 
-    <bag name="comments" order-by="id asc" lazy="false">
+    <list name="comments" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="user_id" />
+      <list-index column="id" />
       <one-to-many class="Comment" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

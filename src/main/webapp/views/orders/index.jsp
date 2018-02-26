@@ -25,7 +25,7 @@
               <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
             </td>
             <td>${order.getCreatedAt()}</td>
-            <td>${order.getStatus()}</td>
+            <td class="status status-${order.getStatus()}">${order.getStatus()}</td>
           </tr>
         </c:forEach>
       </tbody>

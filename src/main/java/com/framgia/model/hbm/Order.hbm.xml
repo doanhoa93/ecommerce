@@ -13,13 +13,15 @@
       <column name="total_price" default="0" />
     </property>
 
-    <many-to-one name="user" class="User" lazy="false">
+    <many-to-one name="user" class="User">
       <column name="user_id" not-null="true" />
     </many-to-one>
 
-    <bag name="orderProducts" order-by="id asc" lazy="false">
+    <list name="orderProducts" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="order_id" />
+      <list-index column="id" />
       <one-to-many class="OrderProduct" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

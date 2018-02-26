@@ -16,7 +16,21 @@
       <span class="order-status status-${order.getStatus()}">
         ${order.getStatus()}
       </span>              
-    </div>          
+    </div>
+    
+    <c:if test="${order.getStatus() == 'WAITING' || order.getStatus() == 'REJECT'}">
+      <div class="order-field">
+        <a href="${contextPath}/orders/${order.getId()}/edit" class="btn btn-primary btn-order-edit">
+          Edit this order
+        </a>
+      </div>   
+      
+     <div class="order-field">
+        <a href="${contextPath}/orders/${order.getId()}/delete" class="btn btn-danger btn-order-delete">
+          Delete this order
+        </a>
+      </div>                   
+    </c:if>
   </div>
   <table class="table table-bordered order-table" style="width: 100%">
     <thead class="">
@@ -50,8 +64,10 @@
             <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
               type="currency" />              
           </td>
-          <td class="center order-product-status">
-            ${orderProduct.getStatus()}
+          <td class="order-product-status">
+            <strong class="order-product-status status-${orderProduct.getStatus()}">
+              ${orderProduct.getStatus()}
+            </strong>
           </td>
         </tr>
       </c:forEach>

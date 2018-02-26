@@ -153,12 +153,12 @@ public class FakeData {
 			t = session.beginTransaction();
 			session.createQuery("delete from Product").executeUpdate();
 			t.commit();
-
+			
 			t = session.beginTransaction();
+			session.clear();
 			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
-
 			Map<String, Object> map = null;
 			for (int i = 1; i < 10; i++) {
 				Product product = new Product();
@@ -183,6 +183,7 @@ public class FakeData {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked" })
 	public static void addOrders(Session session) {
 		try {
 			Transaction t = null;
@@ -191,7 +192,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			@SuppressWarnings({ "unchecked" })
+			session.clear();
 			List<User> users = (List<User>) session.createCriteria(User.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
@@ -212,6 +213,7 @@ public class FakeData {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked" })
 	public static void addCarts(Session session) {
 		try {
 			Transaction t = null;
@@ -220,15 +222,14 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			@SuppressWarnings({ "unchecked" })
+			session.clear();
 			List<User> users = (List<User>) session.createCriteria(User.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
-
-			@SuppressWarnings({ "unchecked" })
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
+			
 			for (int i = 1; i < 10; i++) {
 				Cart cart = new Cart();
 				cart.setId(i);
@@ -253,6 +254,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
+			session.clear();
 			List<User> users = (List<User>) session.createCriteria(User.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
 			        .list();
@@ -285,6 +287,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
+			session.clear();
 			List<Order> orders = (List<Order>) session.createCriteria(Order.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -319,6 +322,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
+			session.clear();
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -350,6 +354,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
+			session.clear();
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
@@ -378,7 +383,6 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-
 			for (int i = 1; i < 10; i++) {
 				Promotion promotion = new Promotion();
 				promotion.setId(i);

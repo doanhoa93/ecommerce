@@ -23,7 +23,7 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 			currentUser = userService.getFromCookie(request);
 			request.getSession().setAttribute("currentUser", currentUser);
 		}
-
+		
 		String uri = request.getRequestURI();
 		if (currentUser != null
 		        && (uri.equals("/Ecommerce/sessions/new") || uri.equals("/Ecommerce/registrations/new"))) {

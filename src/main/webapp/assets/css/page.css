@@ -96,6 +96,15 @@
 	width: 100%;
 }
 
+.product-stock .stock {
+	font-weight: bold;
+}
+
+.product-stock .out-stock {
+	color: red;
+	font-weight: bold;
+}
+
 .not-found-page {
 	text-align: center;
 }

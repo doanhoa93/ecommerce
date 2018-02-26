@@ -101,6 +101,18 @@
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
   </definition>
+  
+  <definition name="orderEdit" extends="baselayout">
+    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="body" value="/views/orders/edit.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/order.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/order.js" />
+    </put-list-attribute>
+  </definition>  
 
   <definition name="products" extends="baselayout">
     <put-attribute name="title" value="Products | Ecommerce" />

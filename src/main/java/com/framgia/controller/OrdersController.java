@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Paginate;
@@ -25,7 +26,7 @@ import com.framgia.mailer.ApplicationMailer;
 @Controller
 @RequestMapping(value = "/orders")
 public class OrdersController extends BaseController {
-	
+
 	@Autowired
 	private ApplicationMailer mailer;
 
@@ -86,10 +87,64 @@ public class OrdersController extends BaseController {
 		if (order != null) {
 			model.addObject("order", order);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
-			return model;
 		} else {
 			model.setViewName("404");
-			return model;
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@PathVariable Integer id) {
+		ModelAndView model = new ModelAndView("orderEdit");
+		OrderInfo order = orderService.findById(id);
+		if (order != null && (order.getStatus().equals("WAITING") || order.getStatus().equals("REJECT"))) {
+			model.addObject("order", order);
+			model.addObject("orderProducts", orderService.getOrderProducts(id));
+		} else {
+			model.setViewName("404");
+		}
+		return model;
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
+	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id)
+	        throws JsonProcessingException {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		try {
+			hashMap = toHashMap(data);
+			OrderInfo orderInfo = orderService.findById(id);
+			List<HashMap<String, Object>> orderProducts = (List<HashMap<String, Object>>) hashMap.get("orderProducts");
+			hashMap.clear();
+			if (orderProducts.size() != 0) {
+				if (currentUser().getId() == orderInfo.getUser().getId()) {
+					orderService.updateOrderProduct(orderInfo, orderProducts);
+					hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
+				} else {
+					hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
+				}
+			}
+			return toJson(hashMap);
+		} catch (Exception e) {
+			logger.error(e);
+			return "404";
+		}
+	}
+
+	@RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+	public String delete(@PathVariable("id") Integer id) {
+		try {
+			OrderInfo orderInfo = orderService.findById(id);
+			if (orderInfo != null) {
+				orderService.delete(orderInfo);
+			} else {
+				return "404";	
+			}
+
+			return "redirect:/orders";
+		} catch (Exception e) {
+			logger.error(e);
+			return "404";
 		}
 	}
 }

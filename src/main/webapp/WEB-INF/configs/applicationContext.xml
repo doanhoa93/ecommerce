@@ -70,6 +70,7 @@
       <mvc:mapping path="/carts/*" />
       <mvc:mapping path="/orders" />
       <mvc:mapping path="/orders/*" />
+      <mvc:mapping path="/orders/*/*" />
       <mvc:mapping path="/suggests" />
       
       <mvc:mapping path="/admin" />
@@ -81,6 +82,10 @@
       <mvc:mapping path="/sessions/*"/>
       <mvc:mapping path="/registrations/*"/>
       <mvc:mapping path="/*"/>
+      <mvc:mapping path="/**"/>
+      <mvc:mapping path="/***"/>
+      <mvc:mapping path="/****"/>
+      <mvc:mapping path="/*****"/>
       <bean class="com.framgia.interceptor.LoggedinInterceptor" />
     </mvc:interceptor>
   </mvc:interceptors>

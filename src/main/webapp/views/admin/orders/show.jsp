@@ -64,8 +64,10 @@
                   <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
                     type="currency" />              
                 </td>
-                <td class="center order-product-status">
-                  ${orderProduct.getStatus()}
+                <td class="center">
+                  <strong class="order-product-status status-${orderProduct.getStatus()}">
+                    ${orderProduct.getStatus()}
+                  </strong>
                 </td>
               </tr>
             </c:forEach>

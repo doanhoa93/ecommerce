@@ -10,9 +10,11 @@
     <property name="parentId" column="parent_id" type="integer" />
     <property name="name" column="name" type="string" />
 
-    <bag name="products" order-by="id asc" lazy="false">
+    <list name="products" fetch="join" cascade="delete-orphan"
+      inverse="true">
       <key column="category_id" />
+      <list-index column="id" />
       <one-to-many class="Product" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>
