@@ -23,3 +23,27 @@
 	display: inline-block;
 	max-height: 300px;
 }
+
+.dropdown-max-entries {
+    border: 1px solid #ccc;
+    border-radius: 5px;	
+	display: inline-block;
+	line-height: 25px;
+	list-style: none;
+	margin-right: 10px;
+    padding: 2px;
+}
+
+.max-entries {
+	margin-right: 5px;
+}
+
+.toggle-max-entries {
+	cursor: pointer;
+	padding: 15px;
+    min-height: 50px;
+}
+
+.toggle-max-entries:hover {
+	text-decoration: inherit;
+}
