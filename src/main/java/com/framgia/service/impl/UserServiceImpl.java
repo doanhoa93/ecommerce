@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<OrderProductInfo> getOrderProducts(Integer userId) {
 		try {
-			List<Order> orders = getOrderDAO().getOrders(userId, 0, 0);
+			List<Order> orders = getOrderDAO().getOrders(userId, 0, 0, null);
 			List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId).collect(Collectors.toList());
 			return getOrderProductDAO().getObjectsByIds(orderIds).stream().map(ModelToBean::toOrderProductInfo)
 			        .collect(Collectors.toList());
@@ -69,7 +69,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<ProductInfo> getCartedProducts(Integer userId) {
 		try {
-			return getCartDAO().getCarts(userId, 0, 0).stream().map(cart -> {
+			return getCartDAO().getCarts(userId, 0, 0, null).stream().map(cart -> {
 				return ModelToBean.toProductInfo(cart.getProduct());
 			}).collect(Collectors.toList());
 		} catch (Exception e) {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,9 @@ public class CartsController extends BaseController {
 	@RequestMapping(value = "/carts", method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("carts");
-		List<CartInfo> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT);
+		List<CartInfo> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT, Order.desc("id"));
 		model.addObject("carts", carts);
-		model.addObject("cartsSize", cartService.getCarts(currentUser().getId(), null, 0).size());
+		model.addObject("cartsSize", cartService.getCarts(currentUser().getId(), null, 0, null).size());
 		model.addObject("paginate", setPaginate(carts.size(), page, Paginate.PRODUCT_LIMIT));
 		return model;
 	}

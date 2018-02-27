@@ -11,5 +11,5 @@ public interface OrderDAO extends BaseDAO<Integer, Order> {
 
 	List<OrderProduct> getOrderProducts(Integer orderId);
 	
-	List<Order> getOrders(Integer userId, int off, int limit);	
+	List<Order> getOrders(Integer userId, int off, int limit, org.hibernate.criterion.Order order);	
 }

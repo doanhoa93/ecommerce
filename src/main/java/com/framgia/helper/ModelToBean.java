@@ -34,16 +34,7 @@ import com.framgia.model.User;
 public class ModelToBean {
 	// Cart
 	public static CartInfo toCartInfo(Cart cart) {
-		CartInfo cartInfo = toCartInfoWithPro(cart);
-		if (cartInfo == null)
-			return null;
-
-		if (cart.getProduct() != null)
-			cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
-
-		if (cart.getUser() != null)
-			cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
-		return cartInfo;
+		return toCartInfoWithPro(cart);
 	}
 
 	// Category
@@ -61,12 +52,7 @@ public class ModelToBean {
 
 	// Comment
 	public static CommentInfo toCommentInfo(Comment comment) {
-		CommentInfo commentInfo = new CommentInfo();
-		commentInfo.setId(comment.getId());
-		commentInfo.setContent(comment.getContent());
-		commentInfo.setUser(toUserInfo(comment.getUser()));
-		commentInfo.setProduct(toProductInfoWithPro(comment.getProduct()));
-		return commentInfo;
+		return toCommentInfoWithPro(comment);
 	}
 
 	// Image
@@ -116,45 +102,22 @@ public class ModelToBean {
 
 	// Promotion
 	public static PromotionInfo toPromotionInfo(Promotion promotion) {
-		PromotionInfo promotionInfo = new PromotionInfo();
-		promotionInfo.setId(promotion.getId());
-		promotionInfo.setEndDate(promotion.getEndDate());
-		promotionInfo.setStartDate(promotion.getStartDate());
-		return promotionInfo;
+		return toPromotionInfoWithPro(promotion);
 	}
 
 	// Rate
 	public static RateInfo toRateInfo(Rate rate) {
-		RateInfo rateInfo = new RateInfo();
-		rateInfo.setId(rate.getId());
-		rateInfo.setRating(rate.getRating());
-		rateInfo.setUser(toUserInfoWithPro(rate.getUser()));
-		rateInfo.setProduct(toProductInfoWithPro(rate.getProduct()));
-		return rateInfo;
+		return toRateInfoWithPro(rate);
 	}
 
 	// Recent
 	public static RecentInfo toRecentInfo(Recent recent) {
-		RecentInfo recentInfo = new RecentInfo();
-		recentInfo.setId(recent.getId());
-		recentInfo.setViewed(recent.getViewed());
-		recentInfo.setProduct(toProductInfoWithPro(recent.getProduct()));
-		return recentInfo;
+		return toRecentInfoWithPro(recent);
 	}
 
 	// Suggest
 	public static SuggestInfo toSuggestInfo(Suggest suggest) {
-		SuggestInfo suggestInfo = new SuggestInfo();
-		suggestInfo.setId(suggest.getId());
-		suggestInfo.setCategory(suggest.getCategory());
-		suggestInfo.setAvatar(suggest.getAvatar());
-		suggestInfo.setName(suggest.getName());
-		suggestInfo.setCreatedAt(suggest.getCreatedAt());
-		suggestInfo.setPrice(suggest.getPrice());
-		suggestInfo.setInformation(suggest.getInformation());
-		suggestInfo.setStatus(Status.getStrStatus(suggest.getStatus()));
-		suggestInfo.setUser(toUserInfoWithPro(suggest.getUser()));
-		return suggestInfo;
+		return toSuggestInfoWithPro(suggest);
 	}
 
 	// User
@@ -184,6 +147,11 @@ public class ModelToBean {
 		CartInfo cartInfo = new CartInfo();
 		cartInfo.setId(cart.getId());
 		cartInfo.setQuantity(cart.getQuantity());
+		if (cart.getProduct() != null)
+			cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
+
+		if (cart.getUser() != null)
+			cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
 		return cartInfo;
 	}
 
@@ -196,6 +164,21 @@ public class ModelToBean {
 		categoryInfo.setName(category.getName());
 		categoryInfo.setParentId(category.getParentId());
 		return categoryInfo;
+	}
+
+	private static CommentInfo toCommentInfoWithPro(Comment comment) {
+		if (comment == null)
+			return null;
+
+		CommentInfo commentInfo = new CommentInfo();
+		commentInfo.setId(comment.getId());
+		commentInfo.setContent(comment.getContent());
+		if (comment.getUser() != null)
+			commentInfo.setUser(toUserInfo(comment.getUser()));
+
+		if (comment.getProduct() != null)
+			commentInfo.setProduct(toProductInfoWithPro(comment.getProduct()));
+		return commentInfo;
 	}
 
 	private static ImageInfo toImageInfoWithPro(Image image) {
@@ -228,6 +211,17 @@ public class ModelToBean {
 		if (product.getCategory() != null)
 			productInfo.setCategory(toCategoryInfoWithPro(product.getCategory()));
 		return productInfo;
+	}
+
+	private static PromotionInfo toPromotionInfoWithPro(Promotion promotion) {
+		if (promotion == null)
+			return null;
+
+		PromotionInfo promotionInfo = new PromotionInfo();
+		promotionInfo.setId(promotion.getId());
+		promotionInfo.setEndDate(promotion.getEndDate());
+		promotionInfo.setStartDate(promotion.getStartDate());
+		return promotionInfo;
 	}
 
 	private static OrderInfo toOrderInfoWithPro(Order order) {
@@ -266,11 +260,56 @@ public class ModelToBean {
 			return null;
 
 		ProfileInfo profileInfo = new ProfileInfo();
+		profileInfo.setId(profile.getId());
 		profileInfo.setAddress(profile.getAddress());
 		profileInfo.setBirthday(profile.getBirthday());
 		profileInfo.setGender(Gender.getStr(profile.getGender()));
-		profileInfo.setId(profile.getId());
 		return profileInfo;
+	}
+
+	private static RateInfo toRateInfoWithPro(Rate rate) {
+		if (rate == null)
+			return null;
+
+		RateInfo rateInfo = new RateInfo();
+		rateInfo.setId(rate.getId());
+		rateInfo.setRating(rate.getRating());
+		if (rate.getUser() != null)
+			rateInfo.setUser(toUserInfoWithPro(rate.getUser()));
+
+		if (rate.getProduct() != null)
+			rateInfo.setProduct(toProductInfoWithPro(rate.getProduct()));
+		return rateInfo;
+	}
+
+	private static RecentInfo toRecentInfoWithPro(Recent recent) {
+		if (recent == null)
+			return null;
+
+		RecentInfo recentInfo = new RecentInfo();
+		recentInfo.setId(recent.getId());
+		recentInfo.setViewed(recent.getViewed());
+		if (recent.getProduct() != null)
+			recentInfo.setProduct(toProductInfoWithPro(recent.getProduct()));
+		return recentInfo;
+	}
+
+	private static SuggestInfo toSuggestInfoWithPro(Suggest suggest) {
+		if (suggest == null)
+			return null;
+
+		SuggestInfo suggestInfo = new SuggestInfo();
+		suggestInfo.setId(suggest.getId());
+		suggestInfo.setCategory(suggest.getCategory());
+		suggestInfo.setAvatar(suggest.getAvatar());
+		suggestInfo.setName(suggest.getName());
+		suggestInfo.setCreatedAt(suggest.getCreatedAt());
+		suggestInfo.setPrice(suggest.getPrice());
+		suggestInfo.setInformation(suggest.getInformation());
+		suggestInfo.setStatus(Status.getStrStatus(suggest.getStatus()));
+		if (suggest.getUser() != null)
+			suggestInfo.setUser(toUserInfoWithPro(suggest.getUser()));
+		return suggestInfo;
 	}
 
 	private static UserInfo toUserInfoWithPro(User user) {
