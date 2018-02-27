@@ -53,14 +53,18 @@
               <c:choose>
                 <c:when test="${currentUser != null}">
                   <li>
-                    <a href="${contextPath}/carts">
-                      <i class="fa fa-shopping-cart"></i> Carts
+                    <a href="${contextPath}/carts" class="item-cart">
+                      <i class="fa fa-shopping-cart"></i> 
+                      Carts
+                      <i class="cart-size">${currentUser.getCarts().size()}</i>
                     </a>
                    </li>
                    
                    <li>
-                    <a href="${contextPath}/orders">
-                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders
+                    <a href="${contextPath}/orders" class="item-order">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
+                      Orders
+                      <i class="order-size">${currentUser.getOrders().size()}</i>                      
                     </a>
                    </li>                      
                   

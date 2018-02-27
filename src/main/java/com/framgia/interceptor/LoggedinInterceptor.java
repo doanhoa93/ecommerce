@@ -19,11 +19,14 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	        throws Exception {
 		UserInfo currentUser = (UserInfo) request.getSession().getAttribute("currentUser");
-		if (currentUser == null) {
+		if (currentUser == null)
 			currentUser = userService.getFromCookie(request);
+
+		if (currentUser != null) {
+			currentUser = userService.findById(currentUser.getId());
 			request.getSession().setAttribute("currentUser", currentUser);
 		}
-		
+
 		String uri = request.getRequestURI();
 		if (currentUser != null
 		        && (uri.equals("/Ecommerce/sessions/new") || uri.equals("/Ecommerce/registrations/new"))) {

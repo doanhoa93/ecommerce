@@ -52,13 +52,16 @@ public class BaseController {
 
 	@Autowired
 	public HttpServletResponse response;
-	
-	public Logger logger = Logger.getLogger(this.getClass());	
+
+	public Logger logger = Logger.getLogger(this.getClass());
 
 	public UserInfo currentUser() {
 		UserInfo userInfo = (UserInfo) request.getSession().getAttribute("currentUser");
 		if (userInfo == null)
 			userInfo = userService.getFromCookie(request);
+		
+		if (userInfo != null)
+			userInfo = userService.findById(userInfo.getId());
 		return userInfo;
 	}
 

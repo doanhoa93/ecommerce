@@ -17,14 +17,18 @@ $(document).ready(function() {
 
 	function handleCloseSuccess(id) {
 		var cartProduct = $('.cart-product-' + id);
-    	var cartSize = Number($('.carts-size').text());
-    	var quantityCart = Number(cartProduct.find('.cart-quantity').first().val());
-    	var moneyCart = convertToMoney(cartProduct.find('.cart-product-price').first().text());
-    	var totalMoney = convertToMoney($('.total-money').text());
-    	setTotalMoney(totalMoney - quantityCart * moneyCart);
+		if($('.cart-product-select-' + id).is(':checked')) {
+	    	var cartSize = Number($('.carts-size').text());
+	    	var quantityCart = Number(cartProduct.find('.cart-quantity').first().val());
+	    	var moneyCart = convertToMoney(cartProduct.find('.cart-product-price').first().text());
+	    	var totalMoney = convertToMoney($('.total-money').text());
+	    	setTotalMoney(totalMoney - quantityCart * moneyCart);
+		}
+		
     	if(cartSize > 0)
     		$('.carts-size').text(cartSize - 1);
-
+    	
+    	$('.item-cart .cart-size').text(Number($('.item-cart .cart-size').text()) - 1);
     	cartProduct.remove();
 	}
 
