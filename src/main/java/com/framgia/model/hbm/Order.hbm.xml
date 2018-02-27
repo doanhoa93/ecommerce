@@ -17,11 +17,10 @@
       <column name="user_id" not-null="true" />
     </many-to-one>
 
-    <list name="orderProducts" fetch="join" cascade="delete-orphan"
+    <bag name="orderProducts" batch-size="100" cascade="delete-orphan"
       inverse="true">
       <key column="order_id" />
-      <list-index column="id" />
       <one-to-many class="OrderProduct" />
-    </list>
+    </bag>
   </class>
 </hibernate-mapping>

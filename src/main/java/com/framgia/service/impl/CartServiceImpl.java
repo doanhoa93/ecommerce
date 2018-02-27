@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.ProductInfo;
@@ -122,14 +123,14 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartInfo> getCarts(Integer userId, String page, int limit) {
+	public List<CartInfo> getCarts(Integer userId, String page, int limit, Order order) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getCartDAO().getCarts(userId, off, limit).stream().map(ModelToBean::toCartInfo)
+			return getCartDAO().getCarts(userId, off, limit, order).stream().map(ModelToBean::toCartInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);

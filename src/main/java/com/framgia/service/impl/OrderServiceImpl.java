@@ -144,16 +144,16 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderInfo> getOrders(Integer userId, String page, int limit) {
+	public List<OrderInfo> getOrders(Integer userId, String page, int limit, org.hibernate.criterion.Order order) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getOrderDAO().getOrders(userId, off, limit).stream().map(order -> {
-				OrderInfo orderInfo = ModelToBean.toOrderInfo(order);
-				orderInfo.setProductQuantity(getProductQuantity(order.getId()));
+			return getOrderDAO().getOrders(userId, off, limit, order).stream().map(object -> {
+				OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
+				orderInfo.setProductQuantity(getProductQuantity(object.getId()));
 				return orderInfo;
 			}).collect(Collectors.toList());
 		} catch (Exception e) {
@@ -302,10 +302,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 					orderProductInfos.remove(findOrderProduct(id, orderProductInfos));
 				}
-				
+
 				for (OrderProductInfo orderProductInfo : orderProductInfos)
 					orderProductService.delete(orderProductInfo);
-				
+
 				return true;
 			}
 			return false;
@@ -328,8 +328,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order = new Order();
 			order.setId(orderInfo.getId());
 			order.setUser(new User(orderInfo.getUserId()));
-		} 
-		
+		}
+
 		order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 		order.setCreatedAt(orderInfo.getCreatedAt());
 		order.setTotalPrice(orderInfo.getTotalPrice());

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +34,11 @@ public class OrdersController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("orders");
-		List<OrderInfo> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT);
+		List<OrderInfo> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT,
+		        Order.desc("id"));
 		model.addObject("paginate", setPaginate(orders.size(), page, Paginate.ORDER_LIMIT));
 		model.addObject("orders", orders);
-		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0).size());
+		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0, null).size());
 		return model;
 	}
 
@@ -138,7 +140,7 @@ public class OrdersController extends BaseController {
 			if (orderInfo != null) {
 				orderService.delete(orderInfo);
 			} else {
-				return "404";	
+				return "404";
 			}
 
 			return "redirect:/orders";

@@ -3,6 +3,8 @@ package com.framgia.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.criterion.Order;
+
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
@@ -15,7 +17,7 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	List<ProductInfo> getProducts(Integer orderId);
 
-	List<OrderInfo> getOrders(Integer userId, String page, int limit);
+	List<OrderInfo> getOrders(Integer userId, String page, int limit, Order order);
 
 	int getProductQuantity(Integer orderId);
 

@@ -3,6 +3,7 @@ package com.framgia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.CartDAO;
@@ -33,12 +34,15 @@ public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartD
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cart> getCarts(Integer userId, int off, int limit) {
+	public List<Cart> getCarts(Integer userId, int off, int limit, Order order) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("user.id", userId));
 		criteria.setFirstResult(off);
 		if (limit != 0)
 			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
 		return (List<Cart>) criteria.list();
 	}
 
