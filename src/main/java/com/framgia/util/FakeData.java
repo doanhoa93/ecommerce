@@ -153,7 +153,7 @@ public class FakeData {
 			t = session.beginTransaction();
 			session.createQuery("delete from Product").executeUpdate();
 			t.commit();
-			
+
 			t = session.beginTransaction();
 			session.clear();
 			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
@@ -229,7 +229,7 @@ public class FakeData {
 			List<Product> products = (List<Product>) session.createCriteria(Product.class)
 			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
 			        .list();
-			
+
 			for (int i = 1; i < 10; i++) {
 				Cart cart = new Cart();
 				cart.setId(i);
@@ -328,16 +328,17 @@ public class FakeData {
 			        .list();
 
 			Map<String, Object> map = null;
-			for (int i = 1; i < 10; i++) {
-				Image image = new Image();
-				image.setId(i);
-				image.setProduct(products.get(i - 1));
-				map = upload(new File(
-				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
-				image.setImage((String) map.get("url"));
+			for (int j = 0; j < 5; j++)
+				for (int i = 1; i < 10; i++) {
+					Image image = new Image();
+					image.setId(i);
+					image.setProduct(products.get(i - 1));
+					map = upload(new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product"
+					        + i + ".jpg"));
+					image.setImage((String) map.get("url"));
 
-				session.save(image);
-			}
+					session.save(image);
+				}
 			t.commit();
 		} catch (Exception e) {
 			System.out.println(e);

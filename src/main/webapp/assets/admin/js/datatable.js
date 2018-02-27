@@ -26,4 +26,9 @@ $(document).ready(function() {
 	function capitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);
 	}	
+	
+	$(document).on('click', '.tr-href', function() {
+	    var url = $(this).data('href');
+	    window.location.replace(url);
+    });	
 });

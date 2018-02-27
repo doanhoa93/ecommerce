@@ -25,7 +25,7 @@
           </thead>
           <tbody>
             <c:forEach items="${orders}" var="order" varStatus="loop">
-              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href order-${order.getId()}"
+              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href-js order-${order.getId()}"
                 data-href="${contextPath}/admin/orders/${order.getId()}">
                 <td>${loop.index + 1}</td>
                 <td>${order.getUser().getName()}</td>

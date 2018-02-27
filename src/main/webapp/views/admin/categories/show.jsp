@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">Products</h1>
+    <h1 class="page-header">${category.getName()}</h1>
   </div>
 </div>
 
@@ -18,7 +18,6 @@
               <th>#</th>
               <th>Avatar</th>
               <th>Name</th>
-              <th>Category</th>
               <th>Price</th>
               <th>Number</th>
             </tr>
@@ -30,7 +29,6 @@
                 <td>${loop.index + 1}</td>
                 <td><img src="${product.getAvatar()}" class="img-responsive admin-product-avatar"></td>
                 <td>${product.getName()}</td>
-                <td>${product.getCategory().getName()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
                   <fmt:formatNumber value="${product.getPrice()}" type="currency" />                

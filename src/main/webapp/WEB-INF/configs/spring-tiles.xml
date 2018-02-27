@@ -181,6 +181,7 @@
       <add-attribute value="/assets/admin/css/page.css" />
       <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.css" />
       <add-attribute value="/assets/admin/lib-css/dataTables.responsive.css" />
+      <add-attribute value="/assets/admin/lib-css/main.css" />
     </put-list-attribute>
 
     <!-- import js -->
@@ -256,6 +257,15 @@
     <put-attribute name="body" value="/views/admin/categories/index.jsp" />
   </definition>  
   
+  <definition name="adminCategory" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/categories/show.jsp" />
+    
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/product.css" />
+    </put-list-attribute>    
+  </definition>   
+  
   <definition name="adminProducts" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/products/index.jsp" />
@@ -264,4 +274,13 @@
       <add-attribute value="/assets/admin/css/product.css" />
     </put-list-attribute>    
   </definition>    
+  
+  <definition name="adminProduct" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/products/show.jsp" />
+    
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/product.css" />
+    </put-list-attribute>    
+  </definition>      
 </tiles-definitions>

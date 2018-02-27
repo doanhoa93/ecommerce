@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(document).on('click', '.tr-href', function() {
+	$(document).on('click', '.tr-href-js', function(e) {
 	    var url = $(this).data('href');
 		$.ajax({
 		    method: 'GET',
@@ -11,8 +11,8 @@ $(document).ready(function() {
 		}).done(function(data) {
 			$('#form-order').modal('show');
         	$('#form-order').html(data);
-        })
-    });
+        });
+	});
 	
 	$(document).on('click', '.btn-order-update', function() {
 	    var status = $(this).data('status');

@@ -22,7 +22,8 @@
           </thead>
           <tbody>
             <c:forEach items="${categories}" var="category" varStatus="loop">
-              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'}">
+              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href"
+                data-href="${contextPath}/admin/categories/${category.getId()}">
                 <td>${loop.index + 1}</td>
                 <td>${category.getName()}</td>
                 <td>${category.getProducts().size()}</td>
