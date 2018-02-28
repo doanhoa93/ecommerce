@@ -5,4 +5,5 @@ public interface Paginate {
 	final int CART_LIMIT = 6;
 	final int ORDER_LIMIT = 6;
 	final int SUGGEST_LIMIT = 6;
+	final int ADMIN_OBJECT_LIMIT = 10;
 }

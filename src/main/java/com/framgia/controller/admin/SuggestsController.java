@@ -3,6 +3,7 @@ package com.framgia.controller.admin;
 import java.util.HashMap;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.SuggestInfo;
+import com.framgia.constant.Paginate;
 import com.framgia.validator.SuggestValidator;
 
 @Controller("admin/suggest")
@@ -25,10 +28,16 @@ public class SuggestsController extends AdminController {
 	private SuggestValidator suggestValidator;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
 		ModelAndView model = new ModelAndView("adminSuggests");
-		model.addObject("suggests", suggestService.getObjects());
-		return model;
+		if (StringUtils.isNotEmpty(entries)) {
+			if (entries.equals("all"))
+				model.addObject("suggests", suggestService.getObjects());
+			else
+				model.addObject("suggests", suggestService.getObjects(0, Integer.parseInt(entries)));
+		} else
+			model.addObject("suggests", suggestService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
+		return model;			
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
