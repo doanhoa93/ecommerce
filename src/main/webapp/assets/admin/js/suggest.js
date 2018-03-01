@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(document).on('click', '.tr-href', function() {
+	$(document).on('click', '.tr-href-js', function() {
 	    var url = $(this).data('href');
 		$.ajax({
 		    method: 'GET',

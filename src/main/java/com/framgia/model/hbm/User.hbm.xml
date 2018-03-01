@@ -14,23 +14,24 @@
     <property name="name" column="name" type="string" not-null="true" />
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
-    
-    <one-to-one name="profile" class="Profile" cascade="save-update, delete-orphan" />
 
-    <bag name="orders" batch-size="100" cascade="delete-orphan"
-      inverse="true">
+    <one-to-one name="profile" class="Profile" cascade="save-update, delete" />
+
+    <list name="orders" batch-size="100" cascade="delete" inverse="true">
       <key column="user_id" />
+      <index column="id" />
       <one-to-many class="Order" />
-    </bag>
-    <bag name="carts" batch-size="100" cascade="delete-orphan"
-      inverse="true">
+    </list>
+    <list name="carts" batch-size="100" cascade="delete" inverse="true">
       <key column="user_id" />
+      <index column="id" />
       <one-to-many class="Cart" />
-    </bag>
-    <bag name="comments" batch-size="100" cascade="delete-orphan"
+    </list>
+    <list name="comments" batch-size="100" cascade="delete"
       inverse="true">
       <key column="user_id" />
+      <index column="id" />
       <one-to-many class="Comment" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

@@ -8,12 +8,12 @@
     </id>
 
     <property name="parentId" column="parent_id" type="integer" />
-    <property name="name" column="name" type="string" />
+    <property name="name" column="name" type="string" unique="true" />
 
-    <bag name="products" batch-size="100" cascade="delete-orphan"
-      inverse="true">
+    <list name="products" batch-size="100" cascade="delete">
       <key column="category_id" />
+      <index column="id" />
       <one-to-many class="Product" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

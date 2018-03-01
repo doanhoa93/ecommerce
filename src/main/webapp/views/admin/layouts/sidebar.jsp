@@ -39,7 +39,7 @@
         
         <ul class="nav nav-second-level">
           <li><a href="${contextPath}/admin/categories">All categories</a></li>
-          <li><a href="#">New category</a></li>
+          <li><a data-href="${contextPath}/admin/categories/new" class="new-category">New category</a></li>
         </ul>
       </li>      
           

@@ -31,10 +31,10 @@
       <column name="category_id" not-null="true" />
     </many-to-one>
 
-    <bag name="images" batch-size="100" cascade="delete-orphan"
-      inverse="true">
+    <list name="images" batch-size="100" cascade="delete" inverse="true">
       <key column="product_id" />
+      <index column="id" />
       <one-to-many class="Image" />
-    </bag>
+    </list>
   </class>
 </hibernate-mapping>

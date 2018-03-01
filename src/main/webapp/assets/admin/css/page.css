@@ -48,6 +48,19 @@
 	text-decoration: inherit;
 }
 
-.tr-href {
+.tr-href, 
+.tr-href-js {
 	cursor: pointer;	
+}
+
+.admin-new-category .field {
+	margin-bottom: 10px;
+}
+
+.admin-new-category .btn-create-category {
+	float: right;
+}
+
+.new-category {
+	cursor: pointer;
 }
