@@ -1,3 +1,68 @@
 .admin-product-table .admin-product-avatar {
 	max-height: 100px;
 }
+
+.admin-product {
+	padding: 20px;
+}
+
+.admin-product .product {
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+}
+
+.admin-product .product-header {
+	margin-bottom: 10px;
+}
+
+.admin-product .product-header-left .product-name {
+	font-size: 24px;
+	color: #3d3d3d;
+}
+
+.admin-product .product-header .product-rate .active {
+	color: #f5b70ce6
+}
+
+.admin-product .product-body {
+	border-top: 1px solid #e7e7e7;
+	margin-bottom: 10px;
+	padding: 10px 0;
+}
+
+.admin-product .product-body .product-price {
+	font-size: 26px;
+	font-weight: bold;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.admin-product .product-body .product-category .category-title {
+	font-size: 16px;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.admin-product .product-body .product-number .number-title {
+	font-size: 16px;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.admin-product .product-body .product-promotion .promotion-title {
+	font-size: 20px;
+	font-weight: bold;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.admin-product .product-body .product-promotion .promotion {
+	font-size: 20px;
+	font-weight: bold;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+}
+
+.admin-product .product-body-right .product-information {
+	padding: 10px;
+}

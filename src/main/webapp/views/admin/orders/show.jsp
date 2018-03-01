@@ -51,7 +51,9 @@
               <c:set var="product" value="${orderProduct.getProduct()}" scope="page" />
               <tr>
                 <td>${loop.index + 1}</td>
-                <td><img src="${product.getAvatar()}" class="img-responsive order-avatar" /></td>
+                <td class="tr-href" data-href="${contextPath}/admin/products/${product.getId()}">
+                  <img src="${product.getAvatar()}" class="img-responsive order-avatar" />
+                </td>
                 <td>${product.getName()}</td>
                 <td>${product.getNumber()}</td>
                 <td>${orderProduct.getQuantity()}</td>

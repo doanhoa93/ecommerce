@@ -47,3 +47,7 @@
 .toggle-max-entries:hover {
 	text-decoration: inherit;
 }
+
+.tr-href {
+	cursor: pointer;	
+}
