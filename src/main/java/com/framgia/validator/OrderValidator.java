@@ -1,10 +1,15 @@
 package com.framgia.validator;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.framgia.bean.OrderInfo;
+import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
 
 @Component
@@ -42,5 +47,54 @@ public class OrderValidator implements Validator {
 		        || (status.equals(Status.CANCEL) && !newStatus.equals(Status.WAITING))
 		        || (status.equals(Status.REJECT) && !newStatus.equals(Status.WAITING)))
 			errors.rejectValue("status", "order.status.inlavid");
+	}
+
+	public List<Integer> validateCreate(List<String> strCartIds, Errors errors) {
+		List<Integer> cartIds = null;
+		if (strCartIds == null || strCartIds.isEmpty())
+			errors.rejectValue("carts", "order.carts.invalid");
+		else
+			cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
+		return cartIds;
+	}
+
+	public boolean validateEdit(Object target, UserInfo userInfo) {
+		OrderInfo orderInfo = (OrderInfo) target;
+
+		if (orderInfo == null)
+			return false;
+		else if (orderInfo.getUser().getId() != userInfo.getId())
+			return false;
+
+		if (!(orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)))
+			return false;
+
+		return true;
+	}
+
+	public void validateUpdate(Object target, UserInfo userInfo, List<HashMap<String, Object>> orderProducts,
+	        Errors errors) {
+		OrderInfo orderInfo = (OrderInfo) target;
+
+		if (orderInfo == null)
+			errors.rejectValue("order", "order.null");
+		else if (orderInfo.getUser().getId() != userInfo.getId())
+			errors.rejectValue("user", "system.permission.denied");
+
+		if (!(orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)))
+			errors.rejectValue("status", "order.status.invalid");
+	}
+
+	public boolean validateDelete(Object target, UserInfo userInfo) {
+		OrderInfo orderInfo = (OrderInfo) target;
+
+		if (orderInfo == null)
+			return false;
+		else if (!orderInfo.getStatus().equals(Status.WAITING))
+			return false;
+		else if (userInfo.getId() != orderInfo.getUser().getId())
+			return false;
+
+		return true;
 	}
 }

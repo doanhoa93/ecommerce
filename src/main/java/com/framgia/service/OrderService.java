@@ -21,7 +21,7 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	int getProductQuantity(Integer orderId);
 
-	OrderInfo createOrder(Integer userId, List<Integer> cartIds);
+	boolean createOrder(Integer userId, List<Integer> cartIds);
 
 	boolean acceptOrder(OrderInfo orderInfo);
 

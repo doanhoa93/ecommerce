@@ -18,6 +18,7 @@ import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
 import com.framgia.helper.SendNotification;
+import com.framgia.mailer.ApplicationMailer;
 import com.framgia.model.Cart;
 import com.framgia.model.Notification;
 import com.framgia.model.Order;
@@ -33,6 +34,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 	@Autowired
 	private SendNotification sendNotification;
+
+	@Autowired
+	private ApplicationMailer mailer;
 
 	@Override
 	public UserInfo getUser(Integer orderId) {
@@ -173,7 +177,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderInfo createOrder(Integer userId, List<Integer> cartIds) {
+	public boolean createOrder(Integer userId, List<Integer> cartIds) {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		List<Cart> carts = getCartDAO().getObjectsByIds(cartIds);
 		boolean error = false;
@@ -191,7 +195,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		// client biet
 		if (error) {
 			request.setAttribute("error", hashMap);
-			return null;
+			return false;
 		}
 
 		try {
@@ -224,7 +228,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				getCartDAO().delete(cart);
 			}
 
-			return ModelToBean.toOrderInfo(order);
+			mailer.sendMail(order.getUser().getEmail(), messageSource.getMessage("mail.title", null, Locale.US),
+			        messageSource.getMessage("mail.content", null, Locale.US));
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e);
