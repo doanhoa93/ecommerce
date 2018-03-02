@@ -35,7 +35,13 @@
 	line-height: 25px;
 	list-style: none;
 	margin-right: 10px;
+	margin-bottom: 10px;
 	padding: 2px;
+    padding-left: 10px;		
+}
+
+.dropdown-max-entries ul {
+	text-align: center;
 }
 
 .max-entries {

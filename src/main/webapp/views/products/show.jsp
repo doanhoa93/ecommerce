@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="url" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
+
 <div class="product">
   <div class="product-header">
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 product-header-left">
@@ -16,12 +19,12 @@
         <c:forEach begin="${product.getRating() + 1}" end="5">
           <span class="rate"><i class="fa fa-star"></i></span>
         </c:forEach>
-        <span>(${product.getRating()})</span>
+        <span>(${product.getRating()})</span>        
       </div>
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 product-header-right">
-      <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/"
+      <div class="fb-like" data-href="${url}"
         data-layout="button_count" data-action="like" data-size="small" data-show-faces="true"
         data-share="true">
       </div>
@@ -110,7 +113,7 @@
     <div class="product-comments">
       <h3>Comments</h3>
       <hr>
-      <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
+      <div class="fb-comments" data-href="${url}"
         data-numposts="5" data-width="100%"></div>
     </div>
   </div>

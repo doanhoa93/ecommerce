@@ -19,8 +19,10 @@ public class SuggestDAOImpl extends BaseDAOAbstract<Integer, Suggest> implements
 		criteria.setFirstResult(off);
 		if (limit != 0)
 			criteria.setMaxResults(limit);
-		criteria.addOrder(order);
-		List<Suggest> list = (List<Suggest>) criteria.list();
-		return list;
+		
+		if (order != null)
+			criteria.addOrder(order);
+		
+		return criteria.list();
 	}
 }

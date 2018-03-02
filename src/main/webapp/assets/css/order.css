@@ -2,6 +2,10 @@
 	width: 100%;
 }
 
+.order-table {
+	overflow-x: auto;
+}
+
 .orders-table .order-tr {
 	cursor: pointer;
 }
@@ -185,25 +189,25 @@
 
 .status-WAITING {
 	color: #333;
-	background-color: #fff;
+	background-color: #fff !important;
 	border-color: #ccc;
 }
 
 .status-ACCEPT {
 	color: #fff;
-	background-color: #337ab7;
+	background-color: #337ab7 !important;
 	border-color: #2e6da4;
 }
 
 .status-REJECT {
 	color: #fff;
-	background-color: #d9534f;
+	background-color: #d9534f !important;
 	border-color: #d43f3a;
 }
 
 .status-CANCEL {
 	color: #fff;
-	background-color: #f0ad4e;
+	background-color: #f0ad4e !important;
 	border-color: #eea236;
 }
 
@@ -223,4 +227,45 @@
 	border: 1px solid #F7F7F0;	
 	border-radius: 2px;	
 	padding: 5px;
+}
+
+.dropdown-max-entries {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	display: inline-block;
+	line-height: 25px;
+	list-style: none;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	padding: 2px;
+    padding-left: 10px;	
+    position: relative;
+}
+
+.max-entries {
+	margin-right: 5px;
+}
+
+.toggle-max-entries {
+	cursor: pointer;
+	padding: 15px;
+	min-height: 50px;
+}
+
+.toggle-max-entries:hover {
+	text-decoration: inherit;
+}
+
+.dropdown-max-entries ul {
+    left: 50px;	
+    max-width: 100px;
+    min-width: 100px;
+    padding-left: 0px;
+	position: absolute;
+    text-align: center;
+    top: 30px;
+}
+
+.input-sm {
+	width: auto !important;
 }

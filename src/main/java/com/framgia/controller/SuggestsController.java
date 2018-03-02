@@ -1,8 +1,8 @@
 package com.framgia.controller;
 
 import java.util.HashMap;
-import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.SuggestInfo;
-import com.framgia.constant.Paginate;
 import com.framgia.constant.Status;
 import com.framgia.validator.SuggestValidator;
 
@@ -30,14 +29,17 @@ public class SuggestsController extends BaseController {
 	private SuggestValidator suggestValidator;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
+	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
 		ModelAndView model = new ModelAndView("suggests");
-		List<SuggestInfo> suggests = suggestService.getSuggests(currentUser().getId(), page, Paginate.SUGGEST_LIMIT,
-		        Order.desc("id"));
-		model.addObject("paginate", setPaginate(suggests.size(), page, Paginate.SUGGEST_LIMIT));
-		model.addObject("suggests", suggests);
-		model.addObject("suggestsSize",
-		        suggestService.getSuggests(currentUser().getId(), null, 0, Order.desc("id")).size());
+		if (StringUtils.isNotEmpty(entries)) {
+			if (entries.equals("all"))
+				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, Order.desc("id")));
+			else
+				model.addObject("suggests",
+				        suggestService.getSuggests(currentUser().getId(), Integer.parseInt(entries), Order.desc("id")));
+		} else
+			model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, Order.desc("id")));
+		model.addObject("suggestsSize", suggestService.getSuggests(currentUser().getId(), 0, null).size());
 		return model;
 	}
 

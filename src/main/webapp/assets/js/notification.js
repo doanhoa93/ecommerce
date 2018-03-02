@@ -52,7 +52,5 @@ $(document).ready(function() {
 	
 	$(document).on('click', '.notification', function() {
 		updateNotification($(this).data('id'));
-		$('.notification-size').html(Number($('.notification-size').html()) - 1);
-		$(this).removeClass('unwatched');
 	});
 });

@@ -41,7 +41,11 @@
           <label>Price($): </label>
           <form:input path="price" type="number" step="any" class="form-control" />
         </div>
-        <input type="submit" class="btn btn-primary" value="Save" />
+        
+        <div class="actions">
+          <a href="${contextPath}/suggests" class="btn btn-default btn-suggest">Cancel</a>
+          <input type="submit" class="btn btn-primary btn-suggest" value="Save" />
+        </div>
       </form:form>
     </div>
   </div>

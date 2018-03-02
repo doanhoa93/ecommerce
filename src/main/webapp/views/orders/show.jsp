@@ -28,55 +28,59 @@
       
      <div class="order-field">
        <form:form action="${contextPath}/orders/${order.getId()}" method="DELETE">
-        <input type="submit" class="btn btn-danger btn-order-delete" value="Delete this order" />
+        <input type="submit" class="btn btn-danger btn-order-delete" data-confirm="Delete this order, are you sure?" 
+          value="Delete this order" />
        </form:form>
       </div>                   
     </c:if>
   </div>
-  <table class="table table-bordered order-table" style="width: 100%">
-    <thead class="">
-      <tr>
-        <th>#</th>
-        <th>Product's avatar</th>
-        <th>Product's name</th>
-        <th>Product's number</th>
-        <th>Quantity</th>
-        <th>Product's price</th>
-        <th>Sum price</th>
-        <th>Status</th>            
-      </tr>
-    </thead>
   
-    <tbody>
-      <c:forEach items="${orderProducts}" var="orderProduct" varStatus="loop">
-        <c:set var="product" value="${orderProduct.getProduct()}" scope="page" />
+  <div class="order-table">
+    <table class="table table-bordered order-table" style="width: 100%">
+      <thead class="">
         <tr>
-          <td>${loop.index + 1}</td>
-          <td>
-            <a href="${contextPath}/products/${product.getId()}">
-              <img src="${product.getAvatar()}" class="img-responsive order-avatar" />
-            </a>
-          </td>
-          <td><a href="${contextPath}/products/${product.getId()}">${product.getName()}</a></td>
-          <td>${product.getNumber()}</td>
-          <td>${orderProduct.getQuantity()}</td>
-          <td>
-            <fmt:setLocale value="en_US" />
-            <fmt:formatNumber value="${product.getPrice()}" type="currency" />        
-          </td>
-          <td>
-            <fmt:setLocale value="en_US" />
-            <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
-              type="currency" />              
-          </td>
-          <td class="order-product-status">
-            <strong class="order-product-status status-${orderProduct.getStatus()}">
-              ${orderProduct.getStatus()}
-            </strong>
-          </td>
+          <th>#</th>
+          <th>Product's avatar</th>
+          <th>Product's name</th>
+          <th>Product's number</th>
+          <th>Quantity</th>
+          <th>Product's price</th>
+          <th>Sum price</th>
+          <th>Status</th>            
         </tr>
-      </c:forEach>
-    </tbody>
-  </table>      
+      </thead>
+    
+      <tbody>
+        <c:forEach items="${orderProducts}" var="orderProduct" varStatus="loop">
+          <c:set var="product" value="${orderProduct.getProduct()}" scope="page" />
+          <tr>
+            <td>${loop.index + 1}</td>
+            <td>
+              <a href="${contextPath}/products/${product.getId()}">
+                <img src="${product.getAvatar()}" class="img-responsive order-avatar" />
+              </a>
+            </td>
+            <td><a href="${contextPath}/products/${product.getId()}">${product.getName()}</a></td>
+            <td>${product.getNumber()}</td>
+            <td>${orderProduct.getQuantity()}</td>
+            <td>
+              <fmt:setLocale value="en_US" />
+              <fmt:formatNumber value="${product.getPrice()}" type="currency" />        
+            </td>
+            <td>
+              <fmt:setLocale value="en_US" />
+              <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
+                type="currency" />              
+            </td>
+            <td class="order-product-status">
+              <strong class="order-product-status status-${orderProduct.getStatus()}">
+                ${orderProduct.getStatus()}
+              </strong>
+            </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>  
+  </div>    
 </div>
 

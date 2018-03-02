@@ -87,15 +87,9 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	}
 
 	@Override
-	public List<SuggestInfo> getSuggests(Integer userId, String page, int limit, Order order) {
+	public List<SuggestInfo> getSuggests(Integer userId, int limit, Order order) {
 		try {
-			int off;
-			if (StringUtils.isEmpty(page))
-				off = 0;
-			else
-				off = (Integer.parseInt(page) - 1) * limit;
-
-			return getSuggestDAO().getSuggests(userId, off, limit, order).stream().map(ModelToBean::toSuggestInfo)
+			return getSuggestDAO().getSuggests(userId, 0, limit, order).stream().map(ModelToBean::toSuggestInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);

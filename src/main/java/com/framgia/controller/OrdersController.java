@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
-import com.framgia.constant.Paginate;
 import com.framgia.validator.OrderValidator;
 
 @Controller
@@ -32,13 +32,17 @@ public class OrdersController extends BaseController {
 	private OrderValidator orderValidator;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
+	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
 		ModelAndView model = new ModelAndView("orders");
-		List<OrderInfo> orders = orderService.getOrders(currentUser().getId(), page, Paginate.ORDER_LIMIT,
-		        Order.desc("id"));
-		model.addObject("paginate", setPaginate(orders.size(), page, Paginate.ORDER_LIMIT));
-		model.addObject("orders", orders);
-		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), null, 0, null).size());
+		if (StringUtils.isNotEmpty(entries)) {
+			if (entries.equals("all"))
+				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, Order.desc("id")));
+			else
+				model.addObject("orders",
+				        orderService.getOrders(currentUser().getId(), Integer.parseInt(entries), Order.desc("id")));
+		} else
+			model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, Order.desc("id")));
+		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), 0, null).size());
 		return model;
 	}
 

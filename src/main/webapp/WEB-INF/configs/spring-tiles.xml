@@ -15,27 +15,27 @@
 
     <!-- import css -->
     <put-list-attribute name="default-css">
-      <add-attribute value="/assets/lib-css/animate.css" />
+      <add-attribute value="/assets/lib-css/animate.min.css" />
       <add-attribute value="/assets/lib-css/bootstrap.min.css" />
       <add-attribute value="/assets/lib-css/font-awesome.min.css" />
-      <add-attribute value="/assets/lib-css/main.css" />
-      <add-attribute value="/assets/lib-css/prettyPhoto.css" />
-      <add-attribute value="/assets/lib-css/price-range.css" />
-      <add-attribute value="/assets/lib-css/responsive.css" />
+      <add-attribute value="/assets/lib-css/main.min.css" />
+      <add-attribute value="/assets/lib-css/prettyPhoto.min.css" />
+      <add-attribute value="/assets/lib-css/price-range.min.css" />
+      <add-attribute value="/assets/lib-css/responsive.min.css" />
       <add-attribute value="/assets/css/page.css" />
     </put-list-attribute>
 
     <!-- import js -->
     <put-list-attribute name="default-js">
-      <add-attribute value="/assets/lib-js/jquery.js" />
+      <add-attribute value="/assets/lib-js/jquery.min.js" />
       <add-attribute value="/assets/lib-js/bootstrap.min.js" />
       <add-attribute value="/assets/lib-js/jquery.scrollUp.min.js" />
-      <add-attribute value="/assets/lib-js/price-range.js" />
-      <add-attribute value="/assets/lib-js/jquery.prettyPhoto.js" />
-      <add-attribute value="/assets/lib-js/main.js" />
+      <add-attribute value="/assets/lib-js/price-range.min.js" />
+      <add-attribute value="/assets/lib-js/jquery.prettyPhoto.min.js" />
+      <add-attribute value="/assets/lib-js/main.min.js" />
       <add-attribute value="/assets/lib-js/sockjs.min.js" />
-      <add-attribute value="/assets/lib-js/stomp.js" />
-      <add-attribute value="/assets/lib-js/jquery.timeago.js" />
+      <add-attribute value="/assets/lib-js/stomp.min.js" />
+      <add-attribute value="/assets/lib-js/jquery.timeago.min.js" />
       <add-attribute value="/assets/js/page.js" />
       <add-attribute value="/assets/js/notification.js" />
     </put-list-attribute>
@@ -88,10 +88,16 @@
     <put-attribute name="title" value="Your orders | Ecommerce" />
     <put-attribute name="body" value="/views/orders/index.jsp" />
     <put-list-attribute name="css">
+      <add-attribute value="/assets/lib-css/dataTables.bootstrap.min.css" />
+      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />    
       <add-attribute value="/assets/css/order.css" />
     </put-list-attribute>
 
     <put-list-attribute name="js">
+      <add-attribute value="/assets/lib-js/jquery.dataTables.min.js" />
+      <add-attribute value="/assets/lib-js/dataTables.bootstrap.min.js" />
+      <add-attribute value="/assets/lib-js/dataTables.responsive.min.js" />
+      <add-attribute value="/assets/js/datatable.js" />    
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
   </definition>
@@ -154,7 +160,16 @@
     <put-attribute name="title" value="Your suggests | Ecommerce" />
     <put-attribute name="body" value="/views/suggests/index.jsp" />
     <put-list-attribute name="css">
+      <add-attribute value="/assets/lib-css/dataTables.bootstrap.min.css" />
+      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />       
       <add-attribute value="/assets/css/suggest.css" />
+    </put-list-attribute>
+    
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/lib-js/jquery.dataTables.min.js" />
+      <add-attribute value="/assets/lib-js/dataTables.bootstrap.min.js" />
+      <add-attribute value="/assets/lib-js/dataTables.responsive.min.js" />
+      <add-attribute value="/assets/js/datatable.js" />       
     </put-list-attribute>
   </definition>
 
@@ -194,12 +209,12 @@
     <put-list-attribute name="default-css">
       <add-attribute value="/assets/admin/lib-css/bootstrap.min.css" />
       <add-attribute value="/assets/admin/lib-css/metisMenu.min.css" />
-      <add-attribute value="/assets/admin/lib-css/sb-admin-2.css" />
+      <add-attribute value="/assets/admin/lib-css/sb-admin-2.min.css" />
       <add-attribute value="/assets/admin/lib-css/font-awesome.min.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.min.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.responsive.min.css" />
+      <add-attribute value="/assets/admin/lib-css/main.min.css" />
       <add-attribute value="/assets/admin/css/page.css" />
-      <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.css" />
-      <add-attribute value="/assets/admin/lib-css/dataTables.responsive.css" />
-      <add-attribute value="/assets/admin/lib-css/main.css" />
     </put-list-attribute>
 
     <!-- import js -->
@@ -211,7 +226,7 @@
       <add-attribute value="/assets/admin/lib-js/sb-admin-2.min.js" />
       <add-attribute value="/assets/admin/lib-js/jquery.dataTables.min.js" />
       <add-attribute value="/assets/admin/lib-js/dataTables.bootstrap.min.js" />
-      <add-attribute value="/assets/admin/lib-js/dataTables.responsive.js" />
+      <add-attribute value="/assets/admin/lib-js/dataTables.responsive.min.js" />
       <add-attribute value="/assets/admin/js/datatable.js" />
       <add-attribute value="/assets/admin/js/page.js" />
     </put-list-attribute>
@@ -234,7 +249,7 @@
     </put-list-attribute>
 
     <put-list-attribute name="css">
-      <add-attribute value="/assets/admin/lib-css/morris.css" />
+      <add-attribute value="/assets/admin/lib-css/morris.min.css" />
     </put-list-attribute>
   </definition>
 
