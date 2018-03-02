@@ -44,8 +44,8 @@ public class FakeData {
 			addUsers(session);
 			addCategories(session);
 			addProducts(session);
-			addImages(session);
 			addRecents(session);
+			addImages(session);
 			addPromotions(session);
 			addComments(session);
 			addCarts(session);
@@ -370,7 +370,8 @@ public class FakeData {
 				notification.setId(i + 1);
 				notification.setUser(users.get(i));
 				notification.setOrder(orders.get(i));
-				notification.setContent("The Order (created at: " + orders.get(i).getCreatedAt() + ") was setted with accepted!");
+				notification.setContent(
+				        "The Order (created at: " + orders.get(i).getCreatedAt() + ") was setted with accepted!");
 				notification.setWatched(false);
 				notification.setCreatedAt(new Date());
 
@@ -401,7 +402,7 @@ public class FakeData {
 				Recent recent = new Recent();
 				recent.setId(i);
 				recent.setProduct(products.get(i - 1));
-				recent.setViewed(10);
+				recent.setCreatedAt(new Date());
 
 				session.save(recent);
 			}

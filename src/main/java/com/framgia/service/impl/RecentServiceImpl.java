@@ -105,7 +105,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 			recent.setProduct(new Product(recentInfo.getProductId()));
 		}
 
-		recent.setViewed(recentInfo.getViewed());
+		recent.setCreatedAt(recentInfo.getCreatedAt());
 		return recent;
 	}
 }

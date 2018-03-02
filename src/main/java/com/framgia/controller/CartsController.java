@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,9 +28,10 @@ public class CartsController extends BaseController {
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("carts");
 		List<CartInfo> carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT, Order.desc("id"));
-		model.addObject("carts", carts);
 		model.addObject("cartsSize", cartService.getCarts(currentUser().getId(), null, 0, null).size());
-		model.addObject("paginate", setPaginate(carts.size(), page, Paginate.PRODUCT_LIMIT));
+		model.addObject("carts", carts);
+		if (StringUtils.isNotEmpty(page))
+			model.setViewName("cartsPartial");
 		return model;
 	}
 
@@ -69,16 +71,19 @@ public class CartsController extends BaseController {
 	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id)
 	        throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		try {
-			hashMap = toHashMap(data);
-			CartInfo cartInfo = cartService.findById(id);
-			cartInfo.setQuantity((Integer) hashMap.get("quantity"));
-			cartService.saveOrUpdate(cartInfo);
-			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-		} catch (Exception e) {
-			logger.info(e);
+		CartInfo cartInfo = cartService.findById(id);
+		if (cartInfo.getUser().getId() == currentUser().getId()) {
+			try {
+				hashMap = toHashMap(data);
+				cartInfo.setQuantity((Integer) hashMap.get("quantity"));
+				cartService.saveOrUpdate(cartInfo);
+				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
+			} catch (Exception e) {
+				logger.info(e);
+				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
+			}
+		} else
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-		}
 		return toJson(hashMap);
 	}
 

@@ -1,5 +1,6 @@
 package com.framgia.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.framgia.bean.CartInfo;
@@ -20,11 +21,13 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	PromotionInfo getPromotion(Integer productId);
 
 	CategoryInfo getCategory(Integer productId);
-	
+
 	boolean createProduct(ProductInfo productInfo);
-	
+
 	boolean updateProduct(ProductInfo oldProduct, ProductInfo newProduct);
-	
+
+	boolean updateRecent(ProductInfo productInfo);
+
 	List<OrderProductInfo> getOrderProducts(Integer productId);
 
 	List<CommentInfo> getComments(Integer productId);
@@ -40,4 +43,10 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	List<ProductInfo> getProducts(Integer categoryId, String page, int limit);
 
 	List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter, String page, Integer limit);
+
+	List<ProductInfo> hotProducts(int limit);
+
+	List<ProductInfo> recentProducts(Date date, int limit);
+
+	List<ProductInfo> randomProducts(int limit);
 }

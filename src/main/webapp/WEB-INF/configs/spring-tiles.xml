@@ -81,6 +81,8 @@
       <add-attribute value="/assets/js/cart.js" />
     </put-list-attribute>
   </definition>
+  
+  <definition name="cartsPartial" template="/views/carts/index_partial.jsp" />
 
   <definition name="orders" extends="baselayout">
     <put-attribute name="title" value="Your orders | Ecommerce" />

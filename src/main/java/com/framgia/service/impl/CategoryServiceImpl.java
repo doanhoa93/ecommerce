@@ -176,6 +176,17 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		}
 	}
 
+	@Override
+	public List<CategoryInfo> hotCategories(int limit) {
+		try {
+			return getCategoryDAO().hotCategories(limit).stream().map(ModelToBean::toCategoryInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private Category toCategory(CategoryInfo categoryInfo) {
 		Category category = getCategoryDAO().getFromSession(categoryInfo.getId());

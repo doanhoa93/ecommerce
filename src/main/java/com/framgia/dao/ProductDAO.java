@@ -1,5 +1,6 @@
 package com.framgia.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.framgia.helper.ProductFilter;
@@ -28,4 +29,10 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 	List<Image> getImages(Integer productId);
 
 	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit);
+
+	List<Product> hotProducts(int limit);
+
+	List<Product> recentProducts(Date date, int limit);
+
+	List<Product> randomProducts(int limit);
 }

@@ -191,3 +191,7 @@
 .unwatched {
 	background-color: #f9f9f9;
 }
+
+.girl {
+	max-height: 250px;
+}

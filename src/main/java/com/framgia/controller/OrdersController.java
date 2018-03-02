@@ -138,7 +138,8 @@ public class OrdersController extends BaseController {
 	public String delete(@PathVariable("id") Integer id) {
 		try {
 			OrderInfo orderInfo = orderService.findById(id);
-			if (orderInfo != null) {
+			if (orderInfo != null && orderInfo.getStatus().equals(Status.WAITING)
+			        && currentUser().getId() == orderInfo.getUser().getId()) {
 				orderService.delete(orderInfo);
 			} else {
 				return "404";

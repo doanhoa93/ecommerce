@@ -12,6 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
+import com.framgia.model.Category;
+import com.framgia.model.Product;
+
 public abstract class BaseDAOAbstract<PK extends Serializable, T> extends HibernateDaoSupport {
 
 	private Class<T> typeClass;
@@ -88,5 +91,35 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 	@SuppressWarnings({ "unchecked" })
 	public List<T> getObjectsByIds(List<Integer> keys) {
 		return (List<T>) createEntityCriteria().add(Restrictions.in("id", keys)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByIdsWithOrder(List<Integer> keys) {
+		List<Product> products = createEntityCriteria().add(Restrictions.in("id", keys)).list();
+		Product temp = null;
+		for (int i = 0; i < keys.size(); i++)
+			for (int j = 0; j < products.size(); j++)
+				if (products.get(j).getId() == keys.get(i)) {
+					temp = products.get(i);
+					products.set(i, products.get(j));
+					products.set(j, temp);
+					break;
+				}
+		return products;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Category> getCategoriesByIdsWithOrder(List<Integer> keys) {
+		List<Category> categories = createEntityCriteria().add(Restrictions.in("id", keys)).list();
+		Category temp = null;
+		for (int i = 0; i < keys.size(); i++)
+			for (int j = 0; j < categories.size(); j++)
+				if (categories.get(j).getId() == keys.get(i)) {
+					temp = categories.get(i);
+					categories.set(i, categories.get(j));
+					categories.set(j, temp);
+					break;
+				}
+		return categories;
 	}
 }

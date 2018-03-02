@@ -61,17 +61,19 @@
                     </a>
                                           
                     <ul role="menu" class="sub-menu notifications-body">
-                      <c:forEach var="i" begin="0" end="${currentUser.getNotifications().size() - 1}">
-                        <c:set var="index" value="${currentUser.getNotifications().size() - 1 - i}" />                      
-                        <c:set var="notification" value="${currentUser.getNotifications().get(index)}" scope="page" />
-                        <li class="sub-menu-item notification ${notification.isWatched() ? '' : 'unwatched'}"
-                          data-id="${notification.getId()}">
-                          <a href="${contextPath}/orders/${notification.getOrder().getId()}">
-                            <span class="notification-content">${notification.getContent()}</span>
-                          </a>
-                          <div class="small notification-time">${notification.getCreatedAt()}</div>
-                        </li>
-                      </c:forEach>
+                      <c:if test="${currentUser.getNotifications().size() > 0}">
+                        <c:forEach var="i" begin="0" end="${currentUser.getNotifications().size() - 1}">
+                          <c:set var="index" value="${currentUser.getNotifications().size() - 1 - i}" />                      
+                          <c:set var="notification" value="${currentUser.getNotifications().get(index)}" scope="page" />
+                          <li class="sub-menu-item notification ${notification.isWatched() ? '' : 'unwatched'}"
+                            data-id="${notification.getId()}">
+                            <a href="${contextPath}/orders/${notification.getOrder().getId()}">
+                              <span class="notification-content">${notification.getContent()}</span>
+                            </a>
+                            <div class="small notification-time">${notification.getCreatedAt()}</div>
+                          </li>
+                        </c:forEach>
+                      </c:if>
                     </ul>
                   </li>                  
                 

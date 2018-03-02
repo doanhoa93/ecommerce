@@ -17,11 +17,17 @@
       <column name="user_id" not-null="true" />
     </many-to-one>
 
-    <list name="orderProducts" batch-size="100" cascade="delete"
+    <list name="orderProducts" fetch="select" cascade="delete"
       inverse="true">
       <key column="order_id" />
       <index column="id" />
       <one-to-many class="OrderProduct" />
     </list>
+    <list name="notifications" fetch="select" cascade="delete"
+      inverse="true">
+      <key column="order_id" />
+      <index column="id" />
+      <one-to-many class="Notification" />
+    </list>    
   </class>
 </hibernate-mapping>

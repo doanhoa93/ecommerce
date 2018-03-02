@@ -1,8 +1,13 @@
 package com.framgia.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.ProductDAO;
@@ -90,5 +95,48 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 		if (limit != 0)
 			criteria.setMaxResults(limit);
 		return (List<Product>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> hotProducts(int limit) {
+		Criteria criteria = getSession().createCriteria(OrderProduct.class);
+		ProjectionList projectionList = Projections.projectionList().add(Projections.groupProperty("product.id"))
+		        .add(Projections.count("product.id"), "countProduct");
+		criteria.setProjection(projectionList);
+		criteria.addOrder(Order.desc("countProduct")).setMaxResults(limit);
+
+		List<Object[]> results = criteria.list();
+		List<Integer> productIds = new ArrayList<>();
+		for (Object[] object : results)
+			productIds.add((Integer) object[0]);
+
+		return getProductsByIdsWithOrder(productIds);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> recentProducts(Date date, int limit) {
+		Criteria criteria = getSession().createCriteria(Recent.class);
+		ProjectionList projectionList = Projections.projectionList().add(Projections.groupProperty("product.id"))
+		        .add(Projections.count("product.id"), "countProduct");
+		criteria.setProjection(projectionList);
+		criteria.add(Restrictions.gt("createdAt", date)).addOrder(Order.desc("countProduct")).setMaxResults(limit);
+
+		List<Object[]> results = criteria.list();
+		List<Integer> productIds = new ArrayList<>();
+		for (Object[] object : results)
+			productIds.add((Integer) object[0]);
+
+		return getProductsByIdsWithOrder(productIds);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> randomProducts(int limit) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
+		criteria.setMaxResults(limit);
+		return criteria.list();
 	}
 }

@@ -11,6 +11,7 @@ public class Order implements Serializable {
 	private float totalPrice;
 	private int status;
 	private List<OrderProduct> orderProducts;
+	private List<Notification> notifications;
 	private Date createdAt;
 
 	public Order() {
@@ -77,5 +78,13 @@ public class Order implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 }

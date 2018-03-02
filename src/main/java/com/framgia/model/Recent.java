@@ -1,45 +1,45 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Recent implements Serializable {
-  private Integer id;
-  private Product product;
-  private int viewed;
+	private Integer id;
+	private Date createdAt;
+	private Product product;
 
-  public Recent() {
-    super();
-  }
+	public Recent() {
+		super();
+	}
 
-  public Recent(Integer id, Product product, int viewed) {
-    super();
-    this.id = id;
-    this.product = product;
-    this.viewed = viewed;
-  }
+	public Recent(Integer id, Product product) {
+		super();
+		this.id = id;
+		this.product = product;
+	}
 
-  public Integer getId() {
-    return id;
-  }
+	public Integer getId() {
+		return id;
+	}
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-  public Product getProduct() {
-    return product;
-  }
+	public Product getProduct() {
+		return product;
+	}
 
-  public void setProduct(Product product) {
-    this.product = product;
-  }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-  public int getViewed() {
-    return viewed;
-  }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-  public void setViewed(int viewed) {
-    this.viewed = viewed;
-  }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 }

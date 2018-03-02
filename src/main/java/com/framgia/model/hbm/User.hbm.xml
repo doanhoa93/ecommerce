@@ -17,17 +17,17 @@
 
     <one-to-one name="profile" class="Profile" cascade="save-update, delete" />
 
-    <list name="orders" batch-size="100" cascade="delete" inverse="true">
+    <list name="orders" fetch="select" cascade="delete" inverse="true">
       <key column="user_id" />
       <index column="id" />
       <one-to-many class="Order" />
     </list>
-    <list name="carts" batch-size="100" cascade="delete" inverse="true">
+    <list name="carts" fetch="select" cascade="delete" inverse="true">
       <key column="user_id" />
       <index column="id" />
       <one-to-many class="Cart" />
     </list>
-    <list name="notifications" batch-size="100" cascade="delete"
+    <list name="notifications" fetch="select" cascade="delete"
       inverse="true">
       <key column="user_id" />
       <index column="id" />

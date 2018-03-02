@@ -10,78 +10,14 @@
       </h3>
       <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 alert alert-warning"></div>
       <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 carts-left">
-        <c:forEach var="cart" items="${carts}">
-          <c:set var="product" value="${cart.getProduct()}" scope="page" />
-    
-          <div class="cart-product cart-product-${cart.getId()}"
-            data-id="${cart.getId()}">
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 cart-left">
-              <div class="cart-product-image-panel">
-                <img src="${product.getAvatar()}"
-                  class="img-responsive cart-product-image">
-              </div>
-    
-              <div class="cart-product-info">
-                <div class="cart-product-name">
-                  <a href="${contextPath}/products/${product.getId()}">
-                    <b>${product.getName()}</b>
-                  </a>
-                </div>
-                <div>${product.getInformation()}</div>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-    
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 cart-right">
-              <div class="cart-product-price cart-product-price-${cart.getId()}">
-                <fmt:setLocale value="en_US" />
-                <fmt:formatNumber value="${product.getPrice()}"
-                  type="currency" />
-              </div>
-    
-              <div class="cart-quantity-form" data-id="${cart.getId()}">
-                <span class="quantity-minus"> 
-                  <i>-</i>
-                </span>
-                 
-                <input class="cart-quantity" type="text"
-                  readonly="readonly" value="${cart.getQuantity()}"
-                  placeholder="0">
-                   
-                 <span class="quantity-plus">
-                    <i>+</i>
-                </span>
-              </div>
-              
-              <div class="cart-product-number">
-                Number of product: 
-                <b class="product-number">
-                  ${cart.getProduct().getNumber()}
-                </b>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-    
-            <div class="cart-close" data-id="${cart.getId()}">
-              <i class="fa fa-times" aria-hidden="true"></i>
-            </div>
-    
-            <div class="cart-select">
-              <label> 
-                <input type="checkbox" name="selectCart[]" value="${cart.getId()}" 
-                  class="cart-product-select cart-product-select-${cart.getId()}">
-                Select?
-              </label>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        </c:forEach>
-        
-        <div class="carts-paginate">
-          <c:set var="paginate" value="${paginate}" scope="session" />
-          <c:import url="/views/shared/paginate.jsp" />
-          <c:remove var="paginate" scope="session" />
-          <c:remove var="paginateJS" scope="session" />
+        <div class="carts-index">
+          <c:set var="carts" value="${carts}" scope="session" />
+          <c:import url="/views/carts/index_partial.jsp" />
+          <c:remove var="carts" scope="session" />
+        </div>
+        <div class="carts-load-more">
+          <input type="hidden" class="cart-page" value="2" />
+          <a class="load-more" data-href="${request.getRequestURI()}?page=">Load more</a>
         </div>        
       </div>
     

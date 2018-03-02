@@ -16,7 +16,9 @@ public class Product implements Serializable {
 	private String avatar;
 	private String information;
 	private int number;
+	private Recent recent;
 	private List<Image> images;
+	private List<OrderProduct> orderProducts;
 
 	public Product() {
 		super();
@@ -62,7 +64,7 @@ public class Product implements Serializable {
 		return isPromotion;
 	}
 
-	public void setIsPromotion(Boolean isPromotion) {
+	public void setIsPromotion(boolean isPromotion) {
 		this.isPromotion = isPromotion;
 	}
 
@@ -136,5 +138,21 @@ public class Product implements Serializable {
 
 	public void setImages(List<Image> images) {
 		this.images = images;
+	}
+
+	public Recent getRecent() {
+		return recent;
+	}
+
+	public void setRecent(Recent recent) {
+		this.recent = recent;
+	}
+
+	public List<OrderProduct> getOrderProducts() {
+		return orderProducts;
+	}
+
+	public void setOrderProducts(List<OrderProduct> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 }
