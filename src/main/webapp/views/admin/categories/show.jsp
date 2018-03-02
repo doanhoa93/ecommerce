@@ -1,9 +1,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header">${category.getName()}</h1>
+  <div class="col-lg-12 page-header">
+    <h1>${category.getName()}</h1>
+    <div class="category-parent">
+      Parent: 
+      <a href="${contextPath}/admin/categories/${category.getParentId()}">${category.getParentName()}</a>
+    </div>
+     
+    <a data-href="${contextPath}/admin/categories/${category.getId()}/edit" 
+      class="btn btn-primary edit-category">
+      Edit this category
+    </a>
+    
+    <form:form action="${contextPath}/admin/categories/${category.getId()}/delete" method="POST" 
+      class="delete-category">
+      <input type="submit" class="btn btn-danger" value="Delete this category">
+    </form:form>
   </div>
 </div>
 

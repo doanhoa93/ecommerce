@@ -2,8 +2,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header">Categories</h1>
+  <div class="col-lg-12 page-header">
+    <h1>Categories</h1>
+    <a data-href="${contextPath}/admin/categories/new" class="btn btn-primary new-category">New category</a>
   </div>
 </div>
 

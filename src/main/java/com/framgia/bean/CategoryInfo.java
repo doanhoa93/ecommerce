@@ -5,6 +5,7 @@ import java.util.List;
 public class CategoryInfo {
 	private Integer id;
 	private Integer parentId;
+	private String parentName;
 	private String name;
 	private List<ProductInfo> products;
 
@@ -31,6 +32,14 @@ public class CategoryInfo {
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public String getName() {

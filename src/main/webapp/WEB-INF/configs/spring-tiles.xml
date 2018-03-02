@@ -101,7 +101,7 @@
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
   </definition>
-  
+
   <definition name="orderEdit" extends="baselayout">
     <put-attribute name="title" value="Ecommerce" />
     <put-attribute name="body" value="/views/orders/edit.jsp" />
@@ -112,7 +112,7 @@
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
-  </definition>  
+  </definition>
 
   <definition name="products" extends="baselayout">
     <put-attribute name="title" value="Products | Ecommerce" />
@@ -195,6 +195,7 @@
       <add-attribute value="/assets/admin/lib-js/dataTables.bootstrap.min.js" />
       <add-attribute value="/assets/admin/lib-js/dataTables.responsive.js" />
       <add-attribute value="/assets/admin/js/datatable.js" />
+      <add-attribute value="/assets/admin/js/page.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -246,41 +247,51 @@
   </definition>
 
   <definition name="adminSuggest" template="/views/admin/suggests/show.jsp" />
-  
+
   <definition name="adminUsers" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/users/index.jsp" />
   </definition>
-  
+
   <definition name="adminCategories" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
-    <put-attribute name="body" value="/views/admin/categories/index.jsp" />
-  </definition>  
-  
+    <put-attribute name="body"
+      value="/views/admin/categories/index.jsp" />
+  </definition>
+
   <definition name="adminCategory" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/categories/show.jsp" />
-    
+
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
-    </put-list-attribute>    
-  </definition>   
+      <add-attribute value="/assets/admin/css/category.css" />
+    </put-list-attribute>
+ 
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/js/category.js" />
+    </put-list-attribute>     
+  </definition>
+
+  <definition name="adminNewCategory" template="/views/admin/categories/new.jsp" />
   
+  <definition name="adminEditCategory" template="/views/admin/categories/edit.jsp" />
+
   <definition name="adminProducts" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/products/index.jsp" />
-    
+
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
-    </put-list-attribute>    
-  </definition>    
-  
+    </put-list-attribute>
+  </definition>
+
   <definition name="adminProduct" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/products/show.jsp" />
-    
+
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
-    </put-list-attribute>    
-  </definition>      
+    </put-list-attribute>
+  </definition>
 </tiles-definitions>

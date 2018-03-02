@@ -44,7 +44,11 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
+			CategoryInfo categoryInfo = ModelToBean.toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
+			CategoryInfo parent = findById(categoryInfo.getParentId());
+			if (parent != null)
+				categoryInfo.setParentName(parent.getName());
+			return categoryInfo;
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -54,7 +58,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public CategoryInfo findById(Serializable key) {
 		try {
-			return ModelToBean.toCategoryInfo(getCategoryDAO().findById(key));
+			return findBy("id", key, true);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -115,6 +119,60 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		}
 	}
 
+	@Override
+	public boolean createCategory(CategoryInfo categoryInfo) {
+		try {
+			Category category = new Category();
+			category.setName(categoryInfo.getName());
+			if (isNewParentId(categoryInfo.getParentId())) {
+				Category parent = new Category();
+				parent.setName(categoryInfo.getParentName());
+				parent = getCategoryDAO().saveOrUpdate(parent);
+				categoryInfo.setParentId(parent.getId());
+			}
+			category.setParentId(categoryInfo.getParentId());
+			getCategoryDAO().saveOrUpdate(category);
+
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean updateCategory(CategoryInfo oldCategoryInfo, CategoryInfo newCategoryInfo) {
+		try {
+			Category category = getCategoryDAO().findById(oldCategoryInfo.getId());
+			category.setName(newCategoryInfo.getName());
+			if (isNewParentId(newCategoryInfo.getParentId())) {
+				Category parent = new Category();
+				parent.setName(newCategoryInfo.getParentName());
+				parent = getCategoryDAO().saveOrUpdate(parent);
+				newCategoryInfo.setParentId(parent.getId());
+			}
+			category.setParentId(newCategoryInfo.getParentId());
+			getCategoryDAO().saveOrUpdate(category);
+
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<CategoryInfo> getCategoriesWithForNew(Integer categoryId) {
+		try {
+			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId).collect(Collectors.toList());
+			categoryIds.remove(categoryId);
+			return getObjectsByIds(categoryIds);
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private Category toCategory(CategoryInfo categoryInfo) {
 		Category category = getCategoryDAO().getFromSession(categoryInfo.getId());
@@ -126,5 +184,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		category.setName(categoryInfo.getName());
 		category.setParentId(categoryInfo.getParentId());
 		return category;
+	}
+
+	private boolean isNewParentId(Integer parentId) {
+		return parentId != null && parentId == 0;
 	}
 }
