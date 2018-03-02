@@ -165,7 +165,7 @@
 }
 
 .notification-dropdown {
-	position: relative; 
+	position: relative;
 }
 
 .notifications-body {
@@ -178,20 +178,20 @@
 }
 
 .notifications-body {
-    -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-    display: none;
-    left: 0;
-    list-style: none;
-    margin: 0;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	display: none;
+	left: 0;
+	list-style: none;
+	margin: 0;
 	max-height: 500px;
 	overflow-x: auto;
-    padding: 0;
+	padding: 0;
 	position: absolute;
-    top: 30px;
-    width: 320px;
-    z-index: 99999;	
+	top: 30px;
+	width: 320px;
+	z-index: 99999;
 }
 
 .notifications-body .notification {
@@ -218,4 +218,76 @@
 
 .tr-href {
 	cursor: pointer;
+}
+
+.chat-panel {
+	display: none;
+	margin-bottom: 0;
+}
+
+.buttom-up, .buttom-down {
+	bottom: 5px;
+}
+
+.chat {
+	margin: 0;
+	padding: 0 !important;
+	list-style: none;
+}
+
+.chat li {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted #999999;
+}
+
+.chat li.left .chat-body {
+	margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+	margin-right: 60px;
+}
+
+.chat li .chat-body p {
+	margin: 0;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon {
+	margin-right: 5px;
+}
+
+.chat-panel .panel-body {
+	height: 350px;
+	overflow-y: scroll;
+}
+
+.chat-div {
+	position: fixed;
+	bottom: 0;
+	right: 45px;
+	z-index: 999999;
+}
+
+.panel-default {
+	cursor: pointer;
+}
+
+.img-circle {
+	height: 50px;
+	width: 50px;
+}
+
+.chat-content {
+	word-wrap: break-word;
+}
+
+.user-chat-new-message {
+	background: url(../images/red_circle.png) center right no-repeat;
+	border-radius: 100%;
+	float: right;
+	height: 10px;
+	margin-top: 7px;
+	margin-right: 15px;
+	width: 10px;
 }

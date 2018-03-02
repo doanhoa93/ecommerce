@@ -15,8 +15,9 @@ public class SendNotification {
 	public void send(NotificationInfo notificationInfo) {
 		notificationInfo.setUserId(notificationInfo.getUser().getId());
 		notificationInfo.setOrderId(notificationInfo.getOrder().getId());
+		String token = notificationInfo.getUser().getToken();
 		notificationInfo.setUser(null);
 		notificationInfo.setOrder(null);
-		simpMessagingTemplate.convertAndSend("/topic/notifications/" + notificationInfo.getUserId(), notificationInfo);
+		simpMessagingTemplate.convertAndSend("/topic/notifications/" + token, notificationInfo);
 	}
 }

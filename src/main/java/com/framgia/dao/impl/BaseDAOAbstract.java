@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.framgia.model.Category;
 import com.framgia.model.Product;
+import com.framgia.model.User;
 
 public abstract class BaseDAOAbstract<PK extends Serializable, T> extends HibernateDaoSupport {
 
@@ -134,5 +135,20 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 					break;
 				}
 		return categories;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<User> getUsersByIdsWithOrder(List<Integer> keys) {
+		List<User> users = getSession().createCriteria(User.class).add(Restrictions.in("id", keys)).list();
+		User temp = null;
+		for (int i = 0; i < keys.size(); i++)
+			for (int j = 0; j < users.size(); j++)
+				if (users.get(j).getId() == keys.get(i)) {
+					temp = users.get(i);
+					users.set(i, users.get(j));
+					users.set(j, temp);
+					break;
+				}
+		return users;
 	}
 }

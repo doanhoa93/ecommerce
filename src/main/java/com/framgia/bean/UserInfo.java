@@ -15,6 +15,9 @@ public class UserInfo {
 	private ProfileInfo profile;
 	private int unWatchedNotifications;
 	private Date createdAt;
+	private String token;
+	private boolean newMessage;
+	private boolean adminNewMessage;
 	private List<OrderInfo> orders;
 	private List<CartInfo> carts;
 	private List<NotificationInfo> notifications;
@@ -144,5 +147,29 @@ public class UserInfo {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public boolean isNewMessage() {
+		return newMessage;
+	}
+
+	public void setNewMessage(boolean newMessage) {
+		this.newMessage = newMessage;
+	}
+
+	public boolean isAdminNewMessage() {
+		return adminNewMessage;
+	}
+
+	public void setAdminNewMessage(boolean adminNewMessage) {
+		this.adminNewMessage = adminNewMessage;
 	}
 }

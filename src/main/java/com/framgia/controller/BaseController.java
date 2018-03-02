@@ -23,6 +23,7 @@ import com.framgia.bean.UserInfo;
 import com.framgia.constant.Role;
 import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
+import com.framgia.service.ChatService;
 import com.framgia.service.OrderService;
 import com.framgia.service.ProductService;
 import com.framgia.service.PromotionService;
@@ -36,6 +37,9 @@ public class BaseController {
 
 	@Autowired
 	public CategoryService categoryService;
+
+	@Autowired
+	public ChatService chatService;
 
 	@Autowired
 	public ProductService productService;

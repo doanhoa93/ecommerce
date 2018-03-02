@@ -64,4 +64,34 @@ $(document).ready(function() {
 	        processData: false
 	    });		
 	});		
+	
+	
+	$(document).on('click', '.chat-sidebar', function() {
+		$.ajax({
+			type: 'PATCH',
+		    url: getContextPath() + '/admin/chats',
+			dataType: 'json',
+		    contentType: 'application/json'
+		});	
+	});
+	
+	connect();
+	var stompClient;
+	function connect() {
+		var socket = new SockJS('/Ecommerce/admin/ws');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, onConnected, onError);
+	}
+	
+	function onConnected() {
+		stompClient.subscribe('/topic/newMessages', onChatReceived);
+	}
+	
+	function onError(error) {
+	}
+	
+	function onChatReceived(data) {
+		if(!$('.admin-chats').length)
+			$('.new-message').addClass('user-chat-new-message');			
+	}		
 });

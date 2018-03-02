@@ -11,4 +11,5 @@ public interface Paginate {
 	final int HOT_PRODUCT_LIMIT = 3;
 	final int HOT_CATEGORY_LIMIT = 7;
 	final int DATE_RECENT = 30;
+	final int CHAT_LIMIT = 10;
 }

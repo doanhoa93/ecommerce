@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.framgia.dao.CartDAO;
 import com.framgia.dao.CategoryDAO;
+import com.framgia.dao.ChatDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
 import com.framgia.dao.NotificationDAO;
@@ -22,6 +23,8 @@ public interface BaseService<PK, T> {
 	CartDAO getCartDAO();
 
 	CategoryDAO getCategoryDAO();
+
+	ChatDAO getChatDAO();
 
 	CommentDAO getCommentDAO();
 

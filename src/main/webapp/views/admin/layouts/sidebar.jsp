@@ -54,6 +54,13 @@
           <i class="fa fa-user fa-fw"></i> Users
         </a>
       </li>
+      
+      <li class="chat-sidebar">
+        <a href="${contextPath}/admin/chats">
+          <i class="fa fa-comments" aria-hidden="true"></i> Chats
+          <span class="new-message ${currentUser.isNewMessage() ? 'user-chat-new-message' : ''}"></span>
+        </a>
+      </li>      
     </ul>
   </div>
 </div>

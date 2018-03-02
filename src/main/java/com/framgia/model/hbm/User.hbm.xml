@@ -14,7 +14,8 @@
     <property name="name" column="name" type="string" not-null="true" />
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
-    <property name="createdAt" column="created_at" type="date" />    
+    <property name="createdAt" column="created_at" type="date" />
+    <property name="token" column="token" type="string" />
 
     <one-to-one name="profile" class="Profile" cascade="save-update, delete" />
 
@@ -34,5 +35,17 @@
       <index column="id" />
       <one-to-many class="Notification" />
     </list>
+    <list name="chats" fetch="select" cascade="delete"
+      inverse="true">
+      <key column="receiver_id" />
+      <index column="id" />
+      <one-to-many class="Chat" />
+    </list>  
+    <list name="sendedChats" fetch="select" cascade="delete"
+      inverse="true">
+      <key column="sender_id" />
+      <index column="id" />
+      <one-to-many class="Chat" />
+    </list>         
   </class>
 </hibernate-mapping>

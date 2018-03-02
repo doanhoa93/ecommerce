@@ -7,7 +7,7 @@
     application-destination-prefix="/app">
     <websocket:transport send-timeout="15000"
       send-buffer-size="524288" />
-    <websocket:stomp-endpoint path="/ws">
+    <websocket:stomp-endpoint path="/ws, /admin/ws">
       <websocket:sockjs />
     </websocket:stomp-endpoint>
     <websocket:simple-broker prefix="/topic" />

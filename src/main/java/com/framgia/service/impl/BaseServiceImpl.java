@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.dao.CartDAO;
 import com.framgia.dao.CategoryDAO;
+import com.framgia.dao.ChatDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
 import com.framgia.dao.NotificationDAO;
@@ -24,6 +25,7 @@ import com.framgia.dao.UserDAO;
 public class BaseServiceImpl {
 	protected CartDAO cartDAO;
 	protected CategoryDAO categoryDAO;
+	protected ChatDAO chatDAO;
 	protected CommentDAO commentDAO;
 	protected ImageDAO imageDAO;
 	protected NotificationDAO notificationDAO;
@@ -59,6 +61,14 @@ public class BaseServiceImpl {
 
 	public void setCategoryDAO(CategoryDAO categoryDAO) {
 		this.categoryDAO = categoryDAO;
+	}
+
+	public ChatDAO getChatDAO() {
+		return chatDAO;
+	}
+
+	public void setChatDAO(ChatDAO chatDAO) {
+		this.chatDAO = chatDAO;
 	}
 
 	public CommentDAO getCommentDAO() {

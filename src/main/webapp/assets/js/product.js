@@ -50,9 +50,9 @@ $(document).ready(function() {
 		});
 	});
 	
-	scolleNameCategory();
+	scrollNameCategory();
 	
-	function scolleNameCategory() {
+	function scrollNameCategory() {
 		var position = $('.category .active').parent().position().top - $('.categories').position().top;
 		$('.categories').scrollTop(position);
 	}

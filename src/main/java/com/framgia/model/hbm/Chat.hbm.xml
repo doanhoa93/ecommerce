@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.framgia.model">
+  <class name="Chat" table="chats">
+    <id name="id" column="id">
+      <generator class="increment" />
+    </id>
+
+    <property name="content" column="content" type="string" />
+    <property name="createdAt" column="created_at" type="timestamp" />
+    <property name="watched" type="boolean">
+      <column name="watched" default="false" />
+    </property>
+
+    <many-to-one name="sender" class="User"
+      cascade="save-update, persist, merge">
+      <column name="sender_id" not-null="true" />
+    </many-to-one>
+    <many-to-one name="receiver" class="User"
+      cascade="save-update, persist, merge">
+      <column name="receiver_id" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

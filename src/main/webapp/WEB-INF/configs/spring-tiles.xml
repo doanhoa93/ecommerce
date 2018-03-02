@@ -37,7 +37,7 @@
       <add-attribute value="/assets/lib-js/stomp.min.js" />
       <add-attribute value="/assets/lib-js/jquery.timeago.min.js" />
       <add-attribute value="/assets/js/page.js" />
-      <add-attribute value="/assets/js/notification.js" />
+      <add-attribute value="/assets/js/socket.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -81,7 +81,7 @@
       <add-attribute value="/assets/js/cart.js" />
     </put-list-attribute>
   </definition>
-  
+
   <definition name="cartsPartial" template="/views/carts/index_partial.jsp" />
 
   <definition name="orders" extends="baselayout">
@@ -89,7 +89,7 @@
     <put-attribute name="body" value="/views/orders/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/lib-css/dataTables.bootstrap.min.css" />
-      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />    
+      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />
       <add-attribute value="/assets/css/order.css" />
     </put-list-attribute>
 
@@ -97,7 +97,7 @@
       <add-attribute value="/assets/lib-js/jquery.dataTables.min.js" />
       <add-attribute value="/assets/lib-js/dataTables.bootstrap.min.js" />
       <add-attribute value="/assets/lib-js/dataTables.responsive.min.js" />
-      <add-attribute value="/assets/js/datatable.js" />    
+      <add-attribute value="/assets/js/datatable.js" />
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
   </definition>
@@ -161,15 +161,15 @@
     <put-attribute name="body" value="/views/suggests/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/lib-css/dataTables.bootstrap.min.css" />
-      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />       
+      <add-attribute value="/assets/lib-css/dataTables.responsive.min.css" />
       <add-attribute value="/assets/css/suggest.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/lib-js/jquery.dataTables.min.js" />
       <add-attribute value="/assets/lib-js/dataTables.bootstrap.min.js" />
       <add-attribute value="/assets/lib-js/dataTables.responsive.min.js" />
-      <add-attribute value="/assets/js/datatable.js" />       
+      <add-attribute value="/assets/js/datatable.js" />
     </put-list-attribute>
   </definition>
 
@@ -184,7 +184,7 @@
       <add-attribute value="/assets/js/suggest.js" />
     </put-list-attribute>
   </definition>
-  
+
   <definition name="editSuggest" extends="baselayout">
     <put-attribute name="title" value="Edit suggest | Ecommerce" />
     <put-attribute name="body" value="/views/suggests/edit.jsp" />
@@ -195,7 +195,7 @@
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/suggest.js" />
     </put-list-attribute>
-  </definition>  
+  </definition>
 
   <!-- ADMIN -->
   <definition name="adminBaseLayout" template="/views/admin/layouts/template.jsp">
@@ -211,8 +211,10 @@
       <add-attribute value="/assets/admin/lib-css/metisMenu.min.css" />
       <add-attribute value="/assets/admin/lib-css/sb-admin-2.min.css" />
       <add-attribute value="/assets/admin/lib-css/font-awesome.min.css" />
-      <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.min.css" />
-      <add-attribute value="/assets/admin/lib-css/dataTables.responsive.min.css" />
+      <add-attribute
+        value="/assets/admin/lib-css/dataTables.bootstrap.min.css" />
+      <add-attribute
+        value="/assets/admin/lib-css/dataTables.responsive.min.css" />
       <add-attribute value="/assets/admin/lib-css/main.min.css" />
       <add-attribute value="/assets/admin/css/page.css" />
     </put-list-attribute>
@@ -227,6 +229,9 @@
       <add-attribute value="/assets/admin/lib-js/jquery.dataTables.min.js" />
       <add-attribute value="/assets/admin/lib-js/dataTables.bootstrap.min.js" />
       <add-attribute value="/assets/admin/lib-js/dataTables.responsive.min.js" />
+      <add-attribute value="/assets/admin/lib-js/jquery.timeago.min.js" />
+      <add-attribute value="/assets/admin/lib-js/sockjs.min.js" />
+      <add-attribute value="/assets/admin/lib-js/stomp.min.js" />
       <add-attribute value="/assets/admin/js/datatable.js" />
       <add-attribute value="/assets/admin/js/page.js" />
     </put-list-attribute>
@@ -327,7 +332,7 @@
       <add-attribute value="/assets/admin/css/product.css" />
     </put-list-attribute>
   </definition>
-  
+
   <definition name="adminNewProduct" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/products/new.jsp" />
@@ -351,6 +356,19 @@
 
     <put-list-attribute name="js">
       <add-attribute value="/assets/admin/js/product.js" />
+    </put-list-attribute>
+  </definition>
+
+  <definition name="adminChats" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/chats/index.jsp" />
+
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/chat.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/js/socket.js" />
     </put-list-attribute>
   </definition>
 </tiles-definitions>

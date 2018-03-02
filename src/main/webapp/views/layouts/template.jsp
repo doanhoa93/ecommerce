@@ -56,7 +56,7 @@
     <tiles:insertAttribute name="footer" ignore="true" />
   </div>
   <div id="fb-root"></div>
-  <input type="hidden" value="${currentUser.getId()}" class="currentUser"/>  
+  <input type="hidden" value="${currentUser.getToken()}" class="token"/>  
   
   <!-- Default JS -->
   <tilesx:useAttribute id="javascripts" name="default-js"

@@ -55,6 +55,7 @@ public class FakeData {
 			addNotifications(session);
 			addSuggests(session);
 			addRates(session);
+			addChats(session);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -493,6 +494,18 @@ public class FakeData {
 				rate.setRating(3);
 				session.save(rate);
 			}
+			t.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+
+	public static void addChats(Session session) {
+		try {
+			Transaction t = null;
+			t = session.beginTransaction();
+			session.createQuery("delete from Chat").executeUpdate();
 			t.commit();
 		} catch (Exception e) {
 			System.out.println(e);

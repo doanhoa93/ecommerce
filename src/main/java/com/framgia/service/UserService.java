@@ -16,6 +16,8 @@ import com.framgia.bean.UserInfo;
 public interface UserService extends BaseService<Integer, UserInfo> {
 	UserInfo findByEmail(String email);
 
+	UserInfo findByToken(String token);
+	
 	ProfileInfo getProfile(Integer userId);
 
 	List<CommentInfo> getComments(Integer userId);
