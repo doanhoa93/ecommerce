@@ -12,9 +12,10 @@ public class UserInfo {
 	private String gender;
 	private boolean remember;
 	private ProfileInfo profile;
+	private int unWatchedNotifications;
 	private List<OrderInfo> orders;
 	private List<CartInfo> carts;
-	private List<CommentInfo> comments;
+	private List<NotificationInfo> notifications;
 
 	public UserInfo() {
 	}
@@ -119,11 +120,19 @@ public class UserInfo {
 		this.carts = carts;
 	}
 
-	public List<CommentInfo> getComments() {
-		return comments;
+	public List<NotificationInfo> getNotifications() {
+		return notifications;
 	}
 
-	public void setComments(List<CommentInfo> comments) {
-		this.comments = comments;
+	public void setNotifications(List<NotificationInfo> notifications) {
+		this.notifications = notifications;
+	}
+
+	public int getUnWatchedNotifications() {
+		return unWatchedNotifications;
+	}
+
+	public void setUnWatchedNotifications(int unWatchedNotifications) {
+		this.unWatchedNotifications = unWatchedNotifications;
 	}
 }

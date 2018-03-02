@@ -10,6 +10,7 @@ import com.framgia.dao.CartDAO;
 import com.framgia.dao.CategoryDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
+import com.framgia.dao.NotificationDAO;
 import com.framgia.dao.OrderDAO;
 import com.framgia.dao.OrderProductDAO;
 import com.framgia.dao.ProductDAO;
@@ -25,6 +26,7 @@ public class BaseServiceImpl {
 	protected CategoryDAO categoryDAO;
 	protected CommentDAO commentDAO;
 	protected ImageDAO imageDAO;
+	protected NotificationDAO notificationDAO;
 	protected OrderDAO orderDAO;
 	protected OrderProductDAO orderProductDAO;
 	protected ProductDAO productDAO;
@@ -40,9 +42,9 @@ public class BaseServiceImpl {
 
 	@Autowired
 	public HttpServletResponse response;
-	
-	public Logger logger = Logger.getLogger(this.getClass());	
-	
+
+	public Logger logger = Logger.getLogger(this.getClass());
+
 	public CartDAO getCartDAO() {
 		return cartDAO;
 	}
@@ -73,6 +75,14 @@ public class BaseServiceImpl {
 
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
+	}
+
+	public NotificationDAO getNotificationDAO() {
+		return notificationDAO;
+	}
+
+	public void setNotificationDAO(NotificationDAO notificationDAO) {
+		this.notificationDAO = notificationDAO;
 	}
 
 	public OrderDAO getOrderDAO() {

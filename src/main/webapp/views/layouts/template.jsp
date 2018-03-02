@@ -30,21 +30,6 @@
     media="screen" />
 </c:forEach>
 
-<!-- Default JS -->
-<tilesx:useAttribute id="javascripts" name="default-js"
-  classname="java.util.List" />
-<c:forEach var="js" items="${javascripts}">
-  <script src="<c:url value='${js}'/>" type="text/javascript"></script>
-</c:forEach>
-
-<!-- Addition JS -->
-<tilesx:useAttribute id="additionJavascripts" name="js"
-  classname="java.util.List" />
-<c:forEach var="js" items="${additionJavascripts}">
-  <script src="<c:url value='${js}'/>" type="text/javascript"></script>
-</c:forEach>
-</head>
-
 <c:set var="currentUser"
   value="${request.getSession().getAttribute('currentUser')}"
   scope="application" />
@@ -70,6 +55,22 @@
   <div class="footer">
     <tiles:insertAttribute name="footer" ignore="true" />
   </div>
-  <div id="fb-root"></div>  
+  <div id="fb-root"></div>
+  <input type="hidden" value="${currentUser.getId()}" class="currentUser"/>  
+  
+  <!-- Default JS -->
+  <tilesx:useAttribute id="javascripts" name="default-js"
+    classname="java.util.List" />
+  <c:forEach var="js" items="${javascripts}">
+    <script src="<c:url value='${js}'/>" type="text/javascript"></script>
+  </c:forEach>
+  
+  <!-- Addition JS -->
+  <tilesx:useAttribute id="additionJavascripts" name="js"
+    classname="java.util.List" />
+  <c:forEach var="js" items="${additionJavascripts}">
+    <script src="<c:url value='${js}'/>" type="text/javascript"></script>
+  </c:forEach>
+  </head>
 </body>
 </html>

@@ -6,6 +6,7 @@ import com.framgia.bean.CartInfo;
 import com.framgia.bean.CategoryInfo;
 import com.framgia.bean.CommentInfo;
 import com.framgia.bean.ImageInfo;
+import com.framgia.bean.NotificationInfo;
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
@@ -21,6 +22,7 @@ import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
 import com.framgia.model.Image;
+import com.framgia.model.Notification;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
@@ -58,6 +60,11 @@ public class ModelToBean {
 	// Image
 	public static ImageInfo toImageInfo(Image image) {
 		return toImageInfoWithPro(image);
+	}
+
+	// Notification
+	public static NotificationInfo toNotificationInfo(Notification notification) {
+		return toNotificationInfoWithPro(notification);
 	}
 
 	// Order
@@ -136,6 +143,17 @@ public class ModelToBean {
 		if (user.getOrders() != null)
 			userInfo.setOrders(user.getOrders().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toOrderInfoWithPro).collect(Collectors.toList()));
+
+		if (user.getNotifications() != null) {
+			userInfo.setNotifications(user.getNotifications().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toNotificationInfoWithPro).collect(Collectors.toList()));
+			int unwatched = userInfo.getNotifications().stream().map(notification -> {
+				if (!notification.isWatched())
+					return notification;
+				return null;
+			}).filter(object -> (object != null)).collect(Collectors.toList()).size();
+			userInfo.setUnWatchedNotifications(unwatched);
+		}
 		return userInfo;
 	}
 
@@ -191,6 +209,25 @@ public class ModelToBean {
 		if (image.getProduct() != null)
 			imageInfo.setProduct(toProductInfoWithPro(image.getProduct()));
 		return imageInfo;
+	}
+
+	private static NotificationInfo toNotificationInfoWithPro(Notification notification) {
+		if (notification == null)
+			return null;
+
+		NotificationInfo notificationInfo = new NotificationInfo();
+		notificationInfo.setId(notification.getId());
+		notificationInfo.setContent(notification.getContent());
+		notificationInfo.setWatched(notification.isWatched());
+		notificationInfo.setCreatedAt(notification.getCreatedAt());
+
+		if (notification.getOrder() != null)
+			notificationInfo.setOrder(toOrderInfoWithPro(notification.getOrder()));
+
+		if (notification.getUser() != null)
+			notificationInfo.setUser(toUserInfoWithPro(notification.getUser()));
+
+		return notificationInfo;
 	}
 
 	private static ProductInfo toProductInfoWithPro(Product product) {

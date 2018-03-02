@@ -31,6 +31,12 @@
     </property>
   </bean>
 
+  <bean id="NotificationDAO" class="com.framgia.dao.impl.NotificationDAOImpl">
+    <property name="sessionFactory">
+      <ref bean="sessionFactory" />
+    </property>
+  </bean>
+
   <bean id="OrderDAO" class="com.framgia.dao.impl.OrderDAOImpl">
     <property name="sessionFactory">
       <ref bean="sessionFactory" />

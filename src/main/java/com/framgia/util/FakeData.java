@@ -25,6 +25,7 @@ import com.framgia.model.Cart;
 import com.framgia.model.Category;
 import com.framgia.model.Comment;
 import com.framgia.model.Image;
+import com.framgia.model.Notification;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
@@ -50,6 +51,7 @@ public class FakeData {
 			addCarts(session);
 			addOrders(session);
 			addOrderProducts(session);
+			addNotifications(session);
 			addSuggests(session);
 			addRates(session);
 		} catch (Exception e) {
@@ -337,6 +339,42 @@ public class FakeData {
 				image.setImage((String) map.get("url"));
 
 				session.save(image);
+			}
+			t.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void addNotifications(Session session) {
+		try {
+			Transaction t = null;
+			t = session.beginTransaction();
+			session.createQuery("delete from Notification").executeUpdate();
+			t.commit();
+
+			t = session.beginTransaction();
+			session.clear();
+			List<User> users = (List<User>) session.createCriteria(User.class)
+			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+			        .list();
+
+			List<Order> orders = (List<Order>) session.createCriteria(Order.class)
+			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			        .list();
+
+			for (int i = 0; i < 9; i++) {
+				Notification notification = new Notification();
+				notification.setId(i + 1);
+				notification.setUser(users.get(i));
+				notification.setOrder(orders.get(i));
+				notification.setContent("The Order (created at: " + orders.get(i).getCreatedAt() + ") was setted with accepted!");
+				notification.setWatched(false);
+				notification.setCreatedAt(new Date());
+
+				session.save(notification);
 			}
 			t.commit();
 		} catch (Exception e) {

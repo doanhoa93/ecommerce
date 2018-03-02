@@ -14,19 +14,16 @@ public class User implements Serializable {
 	private Profile profile;
 	private List<Order> orders;
 	private List<Cart> carts;
-	private List<Comment> comments;
+	private List<Notification> notifications;
 
 	public User() {
-		super();
 	}
 
 	public User(Integer id) {
-		super();
 		this.id = id;
 	}
 
 	public User(Integer id, String email, String password, String name, String avatar, String role) {
-		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -99,12 +96,12 @@ public class User implements Serializable {
 		this.carts = carts;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+	public List<Notification> getNotifications() {
+		return notifications;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 
 	public Profile getProfile() {

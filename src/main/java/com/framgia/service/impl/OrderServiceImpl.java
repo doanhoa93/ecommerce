@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
@@ -14,7 +17,9 @@ import com.framgia.bean.ProductInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
+import com.framgia.helper.SendNotification;
 import com.framgia.model.Cart;
+import com.framgia.model.Notification;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
@@ -22,6 +27,12 @@ import com.framgia.model.User;
 import com.framgia.service.OrderService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Autowired
+	private SendNotification sendNotification;
 
 	@Override
 	public UserInfo getUser(Integer orderId) {
@@ -215,6 +226,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 			return ModelToBean.toOrderInfo(order);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e);
 			hashMap.put("order", "Error when try save order!");
 			request.setAttribute("error", hashMap);
@@ -250,9 +262,19 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 			order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 			getOrderDAO().saveOrUpdate(order);
+
+			Notification notification = new Notification();
+			notification.setUser(order.getUser());
+			notification.setOrder(order);
+			notification.setContent(messageSource.getMessage("order.update.status",
+			        new Object[] { order.getCreatedAt().toString(), Status.getStrStatus(order.getStatus()) },
+			        Locale.US));
+			notification.setCreatedAt(new Date());
+			getNotificationDAO().saveOrUpdate(notification);
+
+			sendNotification.send(ModelToBean.toNotificationInfo(notification));
 			return valid;
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error(e);
 			throw e;
 		}
@@ -271,6 +293,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
 				order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 				getOrderDAO().saveOrUpdate(order);
+
+				Notification notification = new Notification();
+				notification.setUser(order.getUser());
+				notification.setOrder(order);
+				notification.setContent(messageSource.getMessage("order.update.status",
+				        new Object[] { order.getCreatedAt().toString(), Status.getStrStatus(order.getStatus()) },
+				        Locale.US));
+				notification.setCreatedAt(new Date());
+				getNotificationDAO().saveOrUpdate(notification);
+
+				sendNotification.send(ModelToBean.toNotificationInfo(notification));
 			}
 
 			return true;

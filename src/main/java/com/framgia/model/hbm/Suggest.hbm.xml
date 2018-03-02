@@ -22,7 +22,7 @@
     <property name="price" type="float">
       <column name="price" default="0" />
     </property>
-    <property name="createdAt" type="date">
+    <property name="createdAt" type="timestamp">
       <column name="created_at" />
     </property>
     <property name="status" type="integer">
