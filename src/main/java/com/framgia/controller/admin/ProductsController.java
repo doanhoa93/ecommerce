@@ -3,6 +3,7 @@ package com.framgia.controller.admin;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,11 +32,14 @@ public class ProductsController extends AdminController {
 		ModelAndView model = new ModelAndView("adminProducts");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("products", productService.getObjects());
+				model.addObject("products", productService.getProducts(null, 0, 0, Order.desc("createdAt")));
 			else
-				model.addObject("products", productService.getObjects(0, Integer.parseInt(entries)));
+				model.addObject("products",
+				        productService.getProducts(null, 0, Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
-			model.addObject("products", productService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
+			model.addObject("products",
+			        productService.getProducts(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
+
 		return model;
 	}
 

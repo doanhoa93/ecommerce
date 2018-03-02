@@ -139,4 +139,21 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 		criteria.setMaxResults(limit);
 		return criteria.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getProducts(Integer categoryId, int off, int limit, Order order) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setFirstResult(off);
+
+		if (categoryId != null)
+			criteria.add(Restrictions.eq("category.id", categoryId));
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+		return criteria.list();
+	}
 }

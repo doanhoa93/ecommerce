@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -33,11 +34,13 @@ public class CategoriesController extends AdminController {
 		ModelAndView model = new ModelAndView("adminCategories");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("categories", categoryService.getObjects());
+				model.addObject("categories", categoryService.getCategories(0, 0, Order.desc("createdAt")));
 			else
-				model.addObject("categories", categoryService.getObjects(0, Integer.parseInt(entries)));
+				model.addObject("categories",
+				        categoryService.getCategories(0, Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
-			model.addObject("categories", categoryService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
+			model.addObject("categories",
+			        categoryService.getCategories(0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 		return model;
 	}
 

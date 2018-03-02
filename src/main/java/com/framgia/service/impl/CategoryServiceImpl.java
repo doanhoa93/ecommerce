@@ -2,8 +2,11 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.hibernate.criterion.Order;
 
 import com.framgia.bean.CategoryInfo;
 import com.framgia.helper.ModelToBean;
@@ -131,6 +134,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 				categoryInfo.setParentId(parent.getId());
 			}
 			category.setParentId(categoryInfo.getParentId());
+			category.setCreatedAt(new Date());
 			getCategoryDAO().saveOrUpdate(category);
 
 			categoryInfo.setId(category.getId());
@@ -180,6 +184,28 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public List<CategoryInfo> hotCategories(int limit) {
 		try {
 			return getCategoryDAO().hotCategories(limit).stream().map(ModelToBean::toCategoryInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<CategoryInfo> getNewCategories(Date date, int limit) {
+		try {
+			return getCategoryDAO().getNewObjects(date, limit).stream().map(ModelToBean::toCategoryInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<CategoryInfo> getCategories(int off, int limit, Order order) {
+		try {
+			return getCategoryDAO().getCategories(off, limit, order).stream().map(ModelToBean::toCategoryInfo)
 			        .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);

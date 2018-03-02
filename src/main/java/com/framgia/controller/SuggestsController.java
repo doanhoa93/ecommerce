@@ -33,13 +33,13 @@ public class SuggestsController extends BaseController {
 		ModelAndView model = new ModelAndView("suggests");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, Order.desc("id")));
+				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
 			else
-				model.addObject("suggests",
-				        suggestService.getSuggests(currentUser().getId(), Integer.parseInt(entries), Order.desc("id")));
+				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0,
+				        Integer.parseInt(entries), Order.desc("id")));
 		} else
-			model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, Order.desc("id")));
-		model.addObject("suggestsSize", suggestService.getSuggests(currentUser().getId(), 0, null).size());
+			model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
+		model.addObject("suggestsSize", suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
 		return model;
 	}
 

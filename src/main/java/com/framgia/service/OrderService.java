@@ -1,5 +1,6 @@
 package com.framgia.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +18,13 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	List<ProductInfo> getProducts(Integer orderId);
 
-	List<OrderInfo> getOrders(Integer userId, int limit, Order order);
+	List<OrderInfo> getOrders(Integer userId, int off, int limit, Order order);
+
+	List<OrderInfo> getNewOrders(Date date, int limit);
+	
+	int getOrdersSizeWithStatus(String status);
+	
+	double[] getSalesByDate(Date startDate, Date endDate);
 
 	int getProductQuantity(Integer orderId);
 
@@ -26,6 +33,6 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 	boolean acceptOrder(OrderInfo orderInfo);
 
 	boolean updateStatusOrder(OrderInfo orderInfo);
-	
+
 	boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProducts);
 }

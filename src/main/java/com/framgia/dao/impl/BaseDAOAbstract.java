@@ -2,12 +2,14 @@ package com.framgia.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -81,6 +83,17 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 		criteria.setFirstResult(off);
 		criteria.setMaxResults(limit);
 		return (List<T>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> getNewObjects(Date date, int limit) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.ge("createdAt", date));
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		criteria.addOrder(Order.desc("createdAt"));
+		return criteria.list();
 	}
 
 	@SuppressWarnings({ "unchecked" })

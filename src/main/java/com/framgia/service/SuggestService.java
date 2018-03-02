@@ -7,7 +7,7 @@ import org.hibernate.criterion.Order;
 import com.framgia.bean.SuggestInfo;
 
 public interface SuggestService extends BaseService<Integer, SuggestInfo> {
-	List<SuggestInfo> getSuggests(Integer userId, int limit, Order order);
+	List<SuggestInfo> getSuggests(Integer userId, int off, int limit, Order order);
 
 	boolean createSuggest(SuggestInfo suggestInfo);
 	

@@ -1,5 +1,6 @@
 package com.framgia.bean;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -19,11 +20,13 @@ public class ProductInfo {
 	private int number;
 	private CategoryInfo category;
 	private PromotionInfo promotion;
+	private Date createdAt;
 	private List<ImageInfo> images;
+	private List<OrderProductInfo> orderProducts;
 	private List<MultipartFile> imageFiles;
 	private List<Integer> imagesStatus;
 	private List<Integer> imageIds;
-	
+
 	public ProductInfo() {
 	}
 
@@ -184,5 +187,21 @@ public class ProductInfo {
 
 	public void setImageIds(List<Integer> imageIds) {
 		this.imageIds = imageIds;
+	}
+
+	public List<OrderProductInfo> getOrderProducts() {
+		return orderProducts;
+	}
+
+	public void setOrderProducts(List<OrderProductInfo> orderProducts) {
+		this.orderProducts = orderProducts;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

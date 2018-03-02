@@ -26,6 +26,7 @@
     <property name="number" type="integer">
       <column name="number" default="0" check="number >= 0" />
     </property>
+    <property name="createdAt" column="created_at" type="date" />    
 
     <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />

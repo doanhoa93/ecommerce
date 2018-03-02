@@ -3,6 +3,8 @@ package com.framgia.service;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.Order;
+
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.CategoryInfo;
 import com.framgia.bean.CommentInfo;
@@ -41,6 +43,8 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	List<UserInfo> getOrderedUser(Integer productId);
 
 	List<ProductInfo> getProducts(Integer categoryId, String page, int limit);
+	
+	List<ProductInfo> getProducts(Integer categoryId, int off, int limit, Order order);
 
 	List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter, String page, Integer limit);
 
@@ -49,4 +53,6 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	List<ProductInfo> recentProducts(Date date, int limit);
 
 	List<ProductInfo> randomProducts(int limit);
+	
+	List<ProductInfo> getNewProducts(Date date, int limit);
 }

@@ -36,13 +36,13 @@ public class OrdersController extends BaseController {
 		ModelAndView model = new ModelAndView("orders");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, Order.desc("id")));
+				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
 			else
 				model.addObject("orders",
-				        orderService.getOrders(currentUser().getId(), Integer.parseInt(entries), Order.desc("id")));
+				        orderService.getOrders(currentUser().getId(), 0, Integer.parseInt(entries), Order.desc("id")));
 		} else
-			model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, Order.desc("id")));
-		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), 0, null).size());
+			model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
+		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), 0, 0, null).size());
 		return model;
 	}
 

@@ -22,6 +22,8 @@
               <th>Category</th>
               <th>Price</th>
               <th>Number</th>
+              <th>Orders</th>
+              <th>Created at</th>              
             </tr>
           </thead>
           <tbody>
@@ -37,6 +39,8 @@
                   <fmt:formatNumber value="${product.getPrice()}" type="currency" />                
                 </td>
                 <td>${product.getNumber()}</td>
+                <td>${product.getOrderProducts().size()}</td>
+                <td>${product.getCreatedAt()}</td>
               </tr>
             </c:forEach>
           </tbody>

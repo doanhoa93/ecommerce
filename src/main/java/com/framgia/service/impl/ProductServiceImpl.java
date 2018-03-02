@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -287,6 +288,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				product.setPromotionId(productInfo.getPromotionId());
 				product.setSaleOff(productInfo.getSaleOff());
 			}
+			product.setCreatedAt(new Date());
 			product = getProductDAO().saveOrUpdate(product);
 
 			Recent recent = new Recent();
@@ -416,6 +418,28 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
+		}
+	}
+
+	@Override
+	public List<ProductInfo> getNewProducts(Date date, int limit) {
+		try {
+			return getProductDAO().getNewObjects(date, limit).stream().map(ModelToBean::toProductInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<ProductInfo> getProducts(Integer categoryId, int off, int limit, Order order) {
+		try {
+			return getProductDAO().getProducts(categoryId, off, limit, order).stream().map(ModelToBean::toProductInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
 		}
 	}
 

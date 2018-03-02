@@ -1,6 +1,7 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -8,6 +9,7 @@ public class Category implements Serializable {
 	private Integer id;
 	private Integer parentId;
 	private String name;
+	private Date createdAt;
 	private List<Product> products;
 
 	public Category() {
@@ -55,5 +57,13 @@ public class Category implements Serializable {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

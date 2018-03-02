@@ -19,6 +19,7 @@
               <th>#</th>
               <th>Name</th>
               <th>Products</th>
+              <th>Created at</th>
             </tr>
           </thead>
           <tbody>
@@ -28,6 +29,7 @@
                 <td>${loop.index + 1}</td>
                 <td>${category.getName()}</td>
                 <td>${category.getProducts().size()}</td>
+                <td>${category.getCreatedAt()}</td>
               </tr>
             </c:forEach>
           </tbody>
