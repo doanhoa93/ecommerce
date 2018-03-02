@@ -2,6 +2,9 @@ package com.framgia.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.validation.FieldError;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,6 +25,7 @@ import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
 import com.framgia.service.OrderService;
 import com.framgia.service.ProductService;
+import com.framgia.service.PromotionService;
 import com.framgia.service.SuggestService;
 import com.framgia.service.UserService;
 
@@ -42,6 +47,9 @@ public class BaseController {
 	public OrderService orderService;
 
 	@Autowired
+	public PromotionService promotionService;
+
+	@Autowired
 	public SuggestService suggestService;
 
 	@Autowired
@@ -59,7 +67,7 @@ public class BaseController {
 		UserInfo userInfo = (UserInfo) request.getSession().getAttribute("currentUser");
 		if (userInfo == null)
 			userInfo = userService.getFromCookie(request);
-		
+
 		if (userInfo != null)
 			userInfo = userService.findById(userInfo.getId());
 		return userInfo;
@@ -103,5 +111,12 @@ public class BaseController {
 
 	public boolean isAdmin(UserInfo userInfo) {
 		return userInfo.getRole().equals(Role.Admin);
+	}
+
+	public List<FieldError> convertErrorsToMap(List<FieldError> fieldErrors) {
+		return fieldErrors.stream().map(fieldError -> {
+			return new FieldError(fieldError.getObjectName(), fieldError.getField(),
+			        messageSource.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.US));
+		}).collect(Collectors.toList());
 	}
 }

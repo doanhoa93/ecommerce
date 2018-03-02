@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="order">
   <div class="order-detail-info">
@@ -26,9 +27,9 @@
       </div>   
       
      <div class="order-field">
-        <a href="${contextPath}/orders/${order.getId()}/delete" class="btn btn-danger btn-order-delete">
-          Delete this order
-        </a>
+       <form:form action="${contextPath}/orders/${order.getId()}" method="DELETE">
+        <input type="submit" class="btn btn-danger btn-order-delete" value="Delete this order" />
+       </form:form>
       </div>                   
     </c:if>
   </div>

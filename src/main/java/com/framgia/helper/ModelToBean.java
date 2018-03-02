@@ -207,7 +207,7 @@ public class ModelToBean {
 		productInfo.setPrice(product.getPrice());
 		productInfo.setPromotionId(product.getPromotionId());
 		productInfo.setRating(product.getRating());
-		productInfo.setSaleOf(product.getSaleOf());
+		productInfo.setSaleOff(product.getSaleOff());
 		if (product.getCategory() != null)
 			productInfo.setCategory(toCategoryInfoWithPro(product.getCategory()));
 		return productInfo;

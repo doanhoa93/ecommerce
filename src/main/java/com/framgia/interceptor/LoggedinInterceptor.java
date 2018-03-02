@@ -35,7 +35,7 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		if (currentUser != null && currentUser.getRole().equals(Role.Admin) && !uri.contains("admin")
-		        && !uri.equals("/Ecommerce/sessions/delete")) {
+		        && !uri.equals("/Ecommerce/sessions")) {
 			response.sendRedirect(request.getContextPath() + "/admin");
 			return false;
 		}

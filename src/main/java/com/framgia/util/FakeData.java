@@ -328,17 +328,16 @@ public class FakeData {
 			        .list();
 
 			Map<String, Object> map = null;
-			for (int j = 0; j < 5; j++)
-				for (int i = 1; i < 10; i++) {
-					Image image = new Image();
-					image.setId(i);
-					image.setProduct(products.get(i - 1));
-					map = upload(new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product"
-					        + i + ".jpg"));
-					image.setImage((String) map.get("url"));
+			for (int i = 1; i < 10; i++) {
+				Image image = new Image();
+				image.setId(i);
+				image.setProduct(products.get(i - 1));
+				map = upload(new File(
+				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				image.setImage((String) map.get("url"));
 
-					session.save(image);
-				}
+				session.save(image);
+			}
 			t.commit();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -387,8 +386,8 @@ public class FakeData {
 			for (int i = 1; i < 10; i++) {
 				Promotion promotion = new Promotion();
 				promotion.setId(i);
-				promotion.setStartDate(new Date(2018, 01, 01));
-				promotion.setEndDate(new Date(2018, 02, 01));
+				promotion.setStartDate(new Date(2018 - 1900, 01, 01));
+				promotion.setEndDate(new Date(2018 - 1900, 02, 01));
 
 				session.save(promotion);
 			}

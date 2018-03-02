@@ -11,8 +11,8 @@
       <column name="is_promotion" default="false" />
     </property>
     <property name="promotionId" column="promotion_id" type="integer" />
-    <property name="saleOf" type="float">
-      <column name="sale_of" default="0" />
+    <property name="saleOff" type="float">
+      <column name="sale_off" default="0" />
     </property>
     <property name="name" column="name" type="string" />
     <property name="avatar" column="avatar" type="string" />

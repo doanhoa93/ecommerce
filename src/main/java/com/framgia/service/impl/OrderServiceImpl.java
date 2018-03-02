@@ -7,33 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.framgia.bean.CartInfo;
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
 import com.framgia.helper.ModelToBean;
+import com.framgia.model.Cart;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
+import com.framgia.model.Product;
 import com.framgia.model.User;
-import com.framgia.service.CartService;
-import com.framgia.service.OrderProductService;
 import com.framgia.service.OrderService;
-import com.framgia.service.ProductService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
-
-	@Autowired
-	private CartService cartService;
-
-	@Autowired
-	private OrderProductService orderProductService;
-
-	@Autowired
-	private ProductService productService;
 
 	@Override
 	public UserInfo getUser(Integer orderId) {
@@ -176,15 +164,15 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public OrderInfo createOrder(Integer userId, List<Integer> cartIds) {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		List<CartInfo> cartInfos = cartService.getObjectsByIds(cartIds);
+		List<Cart> carts = getCartDAO().getObjectsByIds(cartIds);
 		boolean error = false;
 
 		// Kiem tra so luong san pham con du de dap ung k?
-		for (CartInfo cartInfo : cartInfos) {
-			if (!checkQuantityProduct(cartInfo)) {
+		for (Cart cart : carts) {
+			if (!checkQuantityProduct(cart)) {
 				error = true;
-				hashMap.put(cartInfo.getProduct().getId().toString(), cartInfo.getProduct().getName()
-				        + "'s quantiy is not enough! (" + cartInfo.getProduct().getNumber() + ")");
+				hashMap.put(cart.getProduct().getId().toString(), cart.getProduct().getName()
+				        + "'s quantiy is not enough! (" + cart.getProduct().getNumber() + ")");
 			}
 		}
 
@@ -196,36 +184,36 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		}
 
 		try {
-			OrderInfo orderInfo = new OrderInfo();
-			orderInfo.setStatus(Status.WAITING);
-			orderInfo.setUserId(userId);
-			orderInfo.setCreatedAt(new Date());
+			Order order = new Order();
+			order.setStatus(Status.getIntStatus(Status.WAITING));
+			order.setUser(getUserDAO().findById(userId));
+			order.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang
 			float totalPrice = 0;
-			for (CartInfo cartInfo : cartInfos) {
-				totalPrice += cartInfo.getQuantity() * cartInfo.getProduct().getPrice();
+			for (Cart cart : carts) {
+				totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
 			}
 
-			orderInfo.setTotalPrice(totalPrice);
-			orderInfo = saveOrUpdate(orderInfo);
+			order.setTotalPrice(totalPrice);
+			order = getOrderDAO().saveOrUpdate(order);
 
 			// Voi moi cart, tao mot order_product. Dong thoi xoa bo cart di
-			for (CartInfo cartInfo : cartInfos) {
+			for (Cart cart : carts) {
 				// Tao orderProduct
-				OrderProductInfo orderProduct = new OrderProductInfo();
-				orderProduct.setOrderId(orderInfo.getId());
-				orderProduct.setProductId(cartInfo.getProduct().getId());
-				orderProduct.setPrice(cartInfo.getProduct().getPrice());
-				orderProduct.setQuantity(cartInfo.getQuantity());
-				orderProduct.setStatus(Status.WAITING);
-				orderProductService.saveOrUpdate(orderProduct);
+				OrderProduct orderProduct = new OrderProduct();
+				orderProduct.setOrder(order);
+				orderProduct.setProduct(cart.getProduct());
+				orderProduct.setPrice(cart.getProduct().getPrice());
+				orderProduct.setQuantity(cart.getQuantity());
+				orderProduct.setStatus(Status.getIntStatus(Status.WAITING));
+				getOrderProductDAO().saveOrUpdate(orderProduct);
 
 				// Xoa cart
-				cartService.delete(cartInfo);
+				getCartDAO().delete(cart);
 			}
 
-			return orderInfo;
+			return ModelToBean.toOrderInfo(order);
 		} catch (Exception e) {
 			logger.error(e);
 			hashMap.put("order", "Error when try save order!");
@@ -238,31 +226,33 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public boolean acceptOrder(OrderInfo orderInfo) {
 		try {
 			boolean valid = true;
-			List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
-			for (OrderProductInfo orderProductInfo : orderProductInfos) {
-				if (orderProductInfo.getProduct().getNumber() < orderProductInfo.getQuantity()) {
-					orderProductInfo.setStatus(Status.REJECT);
-					orderProductService.saveOrUpdate(orderProductInfo);
+			Order order = getOrderDAO().findById(orderInfo.getId());
+			List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+			for (OrderProduct orderProduct : orderProducts) {
+				if (orderProduct.getProduct().getNumber() < orderProduct.getQuantity()) {
+					orderProduct.setStatus(Status.getIntStatus(Status.REJECT));
 					valid = false;
 				} else {
-					orderProductInfo.setStatus(Status.ACCEPT);
-					orderProductService.saveOrUpdate(orderProductInfo);
+					orderProduct.setStatus(Status.getIntStatus(Status.ACCEPT));
 				}
+				getOrderProductDAO().saveOrUpdate(orderProduct);
 			}
 
 			if (!valid) {
-				orderInfo.setStatus(Status.REJECT);
+				order.setStatus(Status.getIntStatus(Status.REJECT));
 			} else {
-				for (OrderProductInfo orderProductInfo : orderProductInfos) {
-					ProductInfo productInfo = orderProductInfo.getProduct();
-					productInfo.setNumber(productInfo.getNumber() - orderProductInfo.getQuantity());
-					productService.saveOrUpdate(productInfo);
+				for (OrderProduct orderProduct : orderProducts) {
+					Product product = orderProduct.getProduct();
+					product.setNumber(product.getNumber() - orderProduct.getQuantity());
+					getProductDAO().saveOrUpdate(product);
 				}
 			}
 
-			saveOrUpdate(orderInfo);
+			order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
+			getOrderDAO().saveOrUpdate(order);
 			return valid;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e);
 			throw e;
 		}
@@ -271,13 +261,16 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public boolean updateStatusOrder(OrderInfo orderInfo) {
 		try {
+			Order order = getOrderDAO().findById(orderInfo.getId());
 			if (!orderInfo.getStatus().equals(Status.ACCEPT)) {
-				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
-				for (OrderProductInfo orderProductInfo : orderProductInfos) {
-					orderProductInfo.setStatus(orderInfo.getStatus());
-					orderProductService.saveOrUpdate(orderProductInfo);
+				List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+				for (OrderProduct orderProduct : orderProducts) {
+					orderProduct.setStatus(order.getStatus());
+					getOrderProductDAO().saveOrUpdate(orderProduct);
 				}
-				saveOrUpdate(orderInfo);
+
+				order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
+				getOrderDAO().saveOrUpdate(order);
 			}
 
 			return true;
@@ -288,23 +281,23 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProducts) {
+	public boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProductMaps) {
 		try {
 			if (orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)) {
-				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
-				for (HashMap<String, Object> orderProduct : orderProducts) {
-					Integer id = (Integer) orderProduct.get("id");
-					int quantity = Integer.parseInt((String) orderProduct.get("quantity"));
+				List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+				for (HashMap<String, Object> orderProductMap : orderProductMaps) {
+					Integer id = (Integer) orderProductMap.get("id");
+					int quantity = Integer.parseInt((String) orderProductMap.get("quantity"));
 
-					OrderProductInfo orderProductInfo = orderProductService.findById(id);
-					orderProductInfo.setQuantity(quantity);
-					orderProductService.saveOrUpdate(orderProductInfo);
+					OrderProduct orderProduct = getOrderProductDAO().findById(id);
+					orderProduct.setQuantity(quantity);
+					getOrderProductDAO().saveOrUpdate(orderProduct);
 
-					orderProductInfos.remove(findOrderProduct(id, orderProductInfos));
+					orderProducts.remove(findOrderProduct(id, orderProducts));
 				}
 
-				for (OrderProductInfo orderProductInfo : orderProductInfos)
-					orderProductService.delete(orderProductInfo);
+				for (OrderProduct orderProduct : orderProducts)
+					getOrderProductDAO().delete(orderProduct);
 
 				return true;
 			}
@@ -316,7 +309,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	// ----------------- PRIVATE -------------------------------------
-	private boolean checkQuantityProduct(CartInfo cart) {
+	private boolean checkQuantityProduct(Cart cart) {
 		if (cart.getQuantity() <= cart.getProduct().getNumber())
 			return true;
 		return false;
@@ -336,9 +329,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		return order;
 	}
 
-	private int findOrderProduct(Integer id, List<OrderProductInfo> orderProductInfos) {
-		for (int i = 0; i < orderProductInfos.size(); i++)
-			if (orderProductInfos.get(i).getId() == id)
+	private int findOrderProduct(Integer id, List<OrderProduct> orderProducts) {
+		for (int i = 0; i < orderProducts.size(); i++)
+			if (orderProducts.get(i).getId() == id)
 				return i;
 
 		return -1;

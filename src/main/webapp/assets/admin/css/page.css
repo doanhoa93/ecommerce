@@ -1,3 +1,7 @@
+.admin-body {
+	padding-bottom: 40px !important;	
+}
+
 .admin-body .row-panel {
 	padding-top: 20px;
 }
@@ -25,13 +29,13 @@
 }
 
 .dropdown-max-entries {
-    border: 1px solid #ccc;
-    border-radius: 5px;	
+	border: 1px solid #ccc;
+	border-radius: 5px;
 	display: inline-block;
 	line-height: 25px;
 	list-style: none;
 	margin-right: 10px;
-    padding: 2px;
+	padding: 2px;
 }
 
 .max-entries {
@@ -41,26 +45,45 @@
 .toggle-max-entries {
 	cursor: pointer;
 	padding: 15px;
-    min-height: 50px;
+	min-height: 50px;
 }
 
 .toggle-max-entries:hover {
 	text-decoration: inherit;
 }
 
-.tr-href, 
-.tr-href-js {
-	cursor: pointer;	
+.tr-href, .tr-href-js {
+	cursor: pointer;
 }
 
-.admin-new-category .field {
+.admin-new-category .field,
+.admin-edit-category .field {
 	margin-bottom: 10px;
 }
 
-.admin-new-category .btn-create-category {
+.admin-new-category .btn-create-category,
+.admin-edit-category .btn-update-category {
 	float: right;
+	margin-right: 10px;
 }
 
-.new-category {
+.new-category, .new-product {
 	cursor: pointer;
+}
+
+.form-logout {
+	padding: 3px 20px;
+}
+
+.logout {
+	background-color: white;
+	border: none;
+	color: #333;
+	font-weight: 400;
+	line-height: 1.42857143;
+	padding-left: 0;
+}
+
+.error {
+	color: red;
 }

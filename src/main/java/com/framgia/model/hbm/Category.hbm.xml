@@ -10,7 +10,8 @@
     <property name="parentId" column="parent_id" type="integer" />
     <property name="name" column="name" type="string" unique="true" />
 
-    <list name="products" batch-size="100" cascade="delete">
+    <list name="products" batch-size="100" cascade="delete"
+      inverse="true">
       <key column="category_id" />
       <index column="id" />
       <one-to-many class="Product" />

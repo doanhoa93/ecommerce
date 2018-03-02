@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
   style="margin-bottom: 0">
@@ -35,9 +36,10 @@
         <li class="divider"></li>
         
         <li>
-          <a href="${contextPath}/sessions/delete">
-            <i class="fa fa-sign-out fa-fw"></i> Logout
-          </a>
+          <form:form action="${contextPath}/sessions" method="DELETE" class="form-logout">
+            <i class="fa fa-sign-out fa-fw"></i>
+            <input type="submit" class="logout" value="Logout" />
+          </form:form>        
         </li>
       </ul>
     </li>

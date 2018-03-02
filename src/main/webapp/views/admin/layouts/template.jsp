@@ -51,7 +51,8 @@
 
     <div id="page-wrapper" class="admin-body">
       <tiles:insertAttribute name="body" ignore="true" />
-      <div id="form-category" class="modal fade" role="dialog"></div>                
+      <div id="form-category" class="modal fade" role="dialog"></div>     
+      <div class="clearfix"></div>           
     </div>
   </div>
 

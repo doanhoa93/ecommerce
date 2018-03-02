@@ -2,8 +2,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header">Products</h1>
+  <div class="col-lg-12 page-header">
+    <h1>Products</h1>
+    <a href="${contextPath}/admin/products/new" class="btn btn-primary new-product">New product</a>
   </div>
 </div>
 
