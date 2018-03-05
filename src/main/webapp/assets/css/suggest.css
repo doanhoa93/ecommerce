@@ -51,3 +51,9 @@
 	border-radius: 2px;	
 	padding: 5px;
 }
+
+.btn-suggest {
+	margin-bottom: 10px;
+	margin-top: 0 !important;
+	width: 100%;
+}

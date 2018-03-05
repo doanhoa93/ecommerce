@@ -8,4 +8,8 @@ import com.framgia.bean.SuggestInfo;
 
 public interface SuggestService extends BaseService<Integer, SuggestInfo> {
 	List<SuggestInfo> getSuggests(Integer userId, String page, int limit, Order order);
+
+	boolean createSuggest(SuggestInfo suggestInfo);
+	
+	boolean updateSuggest(SuggestInfo oldSuggest, SuggestInfo newSuggest);
 }

@@ -1,12 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<div class="suggest-header">
+  <a href="${contextPath}/suggests/new" class="btn btn-primary btn-create-suggest">
+    <i class="fa fa-plus"></i>Create suggest
+  </a>
+</div>
+
 <c:choose>
   <c:when test="${suggests.size() > 0}">
     <div class="suggest-header">
-      <a href="${contextPath}/suggests/new" class="btn btn-primary btn-create-suggest">
-        <i class="fa fa-plus"></i>Create suggest
-      </a>
       <h2 class="center">This is your suggests (${suggestsSize} suggests)</h2>
     </div>
     <table class="table table-bordered suggests-table">
@@ -20,6 +23,7 @@
           <th>Product price</th>
           <th>Created at</th>
           <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
     
@@ -40,6 +44,11 @@
               <strong class="suggest-status status-${orderProduct.getStatus()}">
                 ${suggest.getStatus()}
               </strong>
+            </td>
+            <td>
+              <c:set var="suggest" value="${suggest}" scope="session" />
+              <c:import url="/views/suggests/form.jsp" />
+              <c:remove var="suggest" scope="session" />
             </td>
           </tr>
         </c:forEach>

@@ -108,6 +108,7 @@
     <property name="target">
       <bean class="com.framgia.service.impl.SuggestServiceImpl">
         <property name="suggestDAO" ref="SuggestDAO"></property>
+        <property name="userDAO" ref="UserDAO"></property>
       </bean>
     </property>
   </bean>
