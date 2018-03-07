@@ -91,7 +91,7 @@
   </definition>
 
   <definition name="order" extends="baselayout">
-    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="title" value="Order | Ecommerce" />
     <put-attribute name="body" value="/views/orders/show.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/order.css" />
@@ -102,8 +102,8 @@
     </put-list-attribute>
   </definition>
 
-  <definition name="orderEdit" extends="baselayout">
-    <put-attribute name="title" value="Ecommerce" />
+  <definition name="editOrder" extends="baselayout">
+    <put-attribute name="title" value="Edit order | Ecommerce" />
     <put-attribute name="body" value="/views/orders/edit.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/order.css" />
@@ -133,7 +133,7 @@
   <definition name="productsPartial" template="/views/products/index.jsp" />
 
   <definition name="product" extends="baselayout">
-    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="title" value="Product | Ecommerce" />
     <put-attribute name="body" value="/views/products/show.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/product.css" />
@@ -145,15 +145,15 @@
   </definition>
 
   <definition name="suggests" extends="baselayout">
-    <put-attribute name="title" value="Ecommerce" />
+    <put-attribute name="title" value="Your suggests | Ecommerce" />
     <put-attribute name="body" value="/views/suggests/index.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/suggest.css" />
     </put-list-attribute>
   </definition>
 
-  <definition name="suggestNew" extends="baselayout">
-    <put-attribute name="title" value="Ecommerce" />
+  <definition name="newSuggest" extends="baselayout">
+    <put-attribute name="title" value="New suggest | Ecommerce" />
     <put-attribute name="body" value="/views/suggests/new.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/suggest.css" />
@@ -163,6 +163,18 @@
       <add-attribute value="/assets/js/suggest.js" />
     </put-list-attribute>
   </definition>
+  
+  <definition name="editSuggest" extends="baselayout">
+    <put-attribute name="title" value="Edit suggest | Ecommerce" />
+    <put-attribute name="body" value="/views/suggests/edit.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/suggest.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/suggest.js" />
+    </put-list-attribute>
+  </definition>  
 
   <!-- ADMIN -->
   <definition name="adminBaseLayout" template="/views/admin/layouts/template.jsp">

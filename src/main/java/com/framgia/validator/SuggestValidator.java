@@ -3,8 +3,10 @@ package com.framgia.validator;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +16,7 @@ import com.framgia.constant.Status;
 @Component
 public class SuggestValidator implements Validator {
 	private static final List<String> IMAGE_TYPES = Arrays.asList("image/png", "image/jpeg", "image/gif");
-	private static final long MAX_SIZE = 1048576;
+	private static final long MAX_SIZE = 10485760;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -24,13 +26,25 @@ public class SuggestValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		SuggestInfo suggestInfo = (SuggestInfo) target;
-		MultipartFile avatar = suggestInfo.getAvatarFile();
-		if (avatar.isEmpty()) {
-			errors.rejectValue("avatar", "suggest.avatar.required");
-		} else if (!IMAGE_TYPES.contains(avatar.getContentType())) {
-			errors.rejectValue("avatar", "suggest.avatar.invalid_type");
-		} else if (avatar.getSize() > MAX_SIZE) {
-			errors.rejectValue("avatar", "upload.exceeded.file.size");
+		if (suggestInfo.getAvatarFile() == null)
+			errors.rejectValue("avatarFile", "suggest.avatar.required");
+		validateAvatar(suggestInfo.getAvatarFile(), errors);
+		ValidationUtils.rejectIfEmpty(errors, "name", "suggest.name.empty");
+		ValidationUtils.rejectIfEmpty(errors, "information", "suggest.information.empty");
+		if (suggestInfo.getPrice() <= 0)
+			errors.rejectValue("price", "suggest.price.invalid");
+	}
+
+	private void validateAvatar(MultipartFile avatar, Errors errors) {
+		if (avatar != null) {
+			if (avatar.isEmpty())
+				errors.rejectValue("avatarFile", "suggest.avatar.required");
+
+			if (!IMAGE_TYPES.contains(avatar.getContentType()))
+				errors.rejectValue("avatarFile", "suggest.avatar.invalid_type");
+
+			if (avatar.getSize() > MAX_SIZE)
+				errors.rejectValue("avatarFile", "upload.exceeded.file.size");
 		}
 	}
 
@@ -40,5 +54,31 @@ public class SuggestValidator implements Validator {
 		int end = Status.getIntStatus(Status.CANCEL);
 		if (status < begin || status > end)
 			errors.rejectValue("status", "suggest.status.inlavid");
+	}
+
+	public void validUpdate(Object oldObject, Object newObject, Errors errors) {
+		SuggestInfo oldSuggest = (SuggestInfo) oldObject;
+		SuggestInfo newSuggest = (SuggestInfo) newObject;
+
+		if (StringUtils.isEmpty(newSuggest.getName()))
+			errors.rejectValue("name", "suggest.name.empty");
+
+		if (StringUtils.isEmpty(newSuggest.getInformation()))
+			errors.rejectValue("information", "suggest.information.empty");
+
+		if (newSuggest.getPrice() <= 0)
+			errors.rejectValue("price", "suggest.price.invalid");
+
+		if (oldSuggest.getUser().getId() != newSuggest.getUserId())
+			errors.rejectValue("user", "suggest.user.invalid");
+
+		MultipartFile avatar = newSuggest.getAvatarFile();
+		if (avatar != null && !avatar.isEmpty()) {
+			if (!IMAGE_TYPES.contains(avatar.getContentType()))
+				errors.rejectValue("avatarFile", "suggest.avatar.invalid_type");
+
+			if (avatar.getSize() > MAX_SIZE)
+				errors.rejectValue("avatarFile", "upload.exceeded.file.size");
+		}
 	}
 }

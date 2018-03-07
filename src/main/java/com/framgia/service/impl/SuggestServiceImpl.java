@@ -124,6 +124,67 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		}
 	}
 
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public boolean createSuggest(SuggestInfo suggestInfo) {
+		try {
+			Map<String, String> map = uploadFile.upload(suggestInfo.getAvatarFile());
+			suggestInfo.setAvatar(map.get("url"));
+		} catch (Exception e) {
+			logger.error(e);
+			return false;
+		}
+
+		try {
+			Suggest suggest = new Suggest();
+			suggest.setUser(getUserDAO().findById(suggestInfo.getUserId()));
+			suggest.setStatus(Status.getIntStatus(Status.WAITING));
+			suggest.setAvatar(suggestInfo.getAvatar());
+			suggest.setCategory(suggestInfo.getCategory());
+			suggest.setCreatedAt(new Date());
+			suggest.setInformation(suggestInfo.getInformation());
+			suggest.setName(suggestInfo.getName());
+			suggest.setPrice(suggestInfo.getPrice());
+			getSuggestDAO().saveOrUpdate(suggest);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean updateSuggest(SuggestInfo oldSuggest, SuggestInfo newSuggest) {
+		try {
+			if (newSuggest.getAvatarFile() != null && !newSuggest.getAvatarFile().isEmpty()) {
+				Map<String, String> map = uploadFile.upload(newSuggest.getAvatarFile());
+				newSuggest.setAvatar(map.get("url"));
+			}
+		} catch (Exception e) {
+			logger.error(e);
+			return false;
+		}
+
+		try {
+			Suggest suggest = getSuggestDAO().findById(oldSuggest.getId());
+			suggest.setStatus(Status.getIntStatus(Status.WAITING));
+			if (StringUtils.isNotEmpty(newSuggest.getAvatar()))
+				suggest.setAvatar(newSuggest.getAvatar());
+			suggest.setCategory(newSuggest.getCategory());
+			suggest.setCreatedAt(new Date());
+			suggest.setInformation(newSuggest.getInformation());
+			suggest.setName(newSuggest.getName());
+			suggest.setPrice(newSuggest.getPrice());
+			getSuggestDAO().saveOrUpdate(suggest);
+
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private Suggest toSuggest(SuggestInfo suggestInfo) {
 		Suggest suggest = getSuggestDAO().getFromSession(suggestInfo.getId());

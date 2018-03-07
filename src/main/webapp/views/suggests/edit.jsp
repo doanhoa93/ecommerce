@@ -6,41 +6,42 @@
   <div class="col-sm-6">
     <div class="suggest-form">
 
-      <h2>Create new suggest</h2>
+      <h2>Edit suggest</h2>
       <c:if test="${message != null}">
         <div class="alert alert-warning">${message}</div>
       </c:if>
 
-      <form:form id="create-suggest" action="${contextPath}/suggests" method="POST" 
+      <form:form id="update-suggest" action="${contextPath}/suggests/${suggest.getId()}" method="PATCH" 
         enctype="multipart/form-data" modelAttribute="suggest" class="form-suggest">
         <div class="field">
-          <label>Avatar</label>
+          <label>Avatar: </label>
           <form:input type="file" path="avatarFile" class="avatar" />
           <div class="suggest-avatar">
-            <img src="" class="img-responsive suggest-avatar-panel" />
+            <img src="${suggest.getAvatar()}" class="img-responsive suggest-avatar-panel" />
           </div>
+          <form:errors path="avatar" style="color:red;"/>          
         </div>
         
         <div class="field">
-          <label>Name (*)</label>
+          <label>Name: </label>
           <form:input path="name" placeholder="Name of product" class="form-control" />
         </div>
         
         <div class="field">    
-          <label>Information (*)</label>
+          <label>Information: </label>
           <form:textarea path="information" placeholder="Information of product" class="form-control" />
         </div>
           
         <div class="field">
-          <label>Category </label>
+          <label>Category: </label>
           <form:input path="category" placeholder="Category of product" class="form-control" />
         </div>
         
         <div class="field">
-          <label>Price($) (*)</label>
-          <form:input path="price" type="number" step="any" min="0" class="form-control" />
+          <label>Price($): </label>
+          <form:input path="price" type="number" step="any" class="form-control" />
         </div>
-        <input type="submit" class="btn btn-primary" value="Create" />
+        <input type="submit" class="btn btn-primary" value="Save" />
       </form:form>
     </div>
   </div>

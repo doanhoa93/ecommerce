@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Paginate;
+import com.framgia.constant.Status;
 import com.framgia.mailer.ApplicationMailer;
 
 @Controller
@@ -97,9 +98,9 @@ public class OrdersController extends BaseController {
 
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable Integer id) {
-		ModelAndView model = new ModelAndView("orderEdit");
+		ModelAndView model = new ModelAndView("editOrder");
 		OrderInfo order = orderService.findById(id);
-		if (order != null && (order.getStatus().equals("WAITING") || order.getStatus().equals("REJECT"))) {
+		if (order != null && (order.getStatus().equals(Status.WAITING) || order.getStatus().equals(Status.REJECT))) {
 			model.addObject("order", order);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
 		} else {
