@@ -1,5 +1,6 @@
 package com.framgia.controller.admin;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.CategoryInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
@@ -43,19 +46,21 @@ public class CategoriesController extends AdminController {
 		ModelAndView model = new ModelAndView("adminNewCategory");
 		List<CategoryInfo> categories = categoryService.getObjects();
 		model.addObject("categories", categories);
-		model.addObject("categoryInfo", new CategoryInfo());
+		model.addObject("category", new CategoryInfo());
 		return model;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("categoryInfo") CategoryInfo categoryInfo, BindingResult errors) {
-		ModelAndView model = new ModelAndView("redirect:/admin/categories");
-		categoryValidator.validate(categoryInfo, errors);
-		if (errors.hasErrors()) {
-			model.setViewName("adminNewCategory");
+	public @ResponseBody String create(@ModelAttribute("category") CategoryInfo categoryInfo, BindingResult result)
+	        throws JsonProcessingException {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		categoryValidator.validate(categoryInfo, result);
+		if (!result.hasErrors() && categoryService.createCategory(categoryInfo)) {
+			hashMap.put("url", request.getContextPath() + "/admin/categories/" + categoryInfo.getId());
 		} else
-			categoryService.createCategory(categoryInfo);
-		return model;
+			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+
+		return toJson(hashMap);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -87,29 +92,29 @@ public class CategoriesController extends AdminController {
 		CategoryInfo categoryInfo = categoryService.findById(id);
 		if (categoryInfo != null) {
 			model.addObject("categories", categoryService.getCategoriesWithForNew(categoryInfo.getId()));
-			model.addObject("categoryInfo", categoryInfo);
+			model.addObject("category", categoryInfo);
 		} else
 			model.setViewName("admin404");
 		return model;
 	}
 
-	@RequestMapping(value = "{id}/update", method = RequestMethod.POST)
-	public ModelAndView update(@PathVariable("id") Integer id,
-	        @ModelAttribute("categoryInfo") CategoryInfo categoryInfo, BindingResult errors) {
-		ModelAndView model = new ModelAndView();
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
+	public @ResponseBody String update(@PathVariable("id") Integer id,
+	        @ModelAttribute("category") CategoryInfo categoryInfo, BindingResult result)
+	        throws JsonProcessingException {
 		CategoryInfo oldCategory = categoryService.findById(id);
+		HashMap<String, Object> hashMap = new HashMap<>();
 		if (oldCategory != null) {
-			categoryValidator.validateUpdate(oldCategory, categoryInfo, errors);
-			if (errors.hasErrors()) {
-				model.setViewName("adminEditCategory");
-			} else if (categoryService.updateCategory(oldCategory, categoryInfo))
-				model.setViewName("redirect:/admin/categories/" + oldCategory.getId());
-		} else
-			model.setViewName("admin404");
-		return model;
+			categoryValidator.validateUpdate(oldCategory, categoryInfo, result);
+			if (!result.hasErrors() && categoryService.updateCategory(oldCategory, categoryInfo)) {
+				hashMap.put("url", request.getContextPath() + "/admin/categories/" + categoryInfo.getId());
+			} else
+				hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+		}
+		return toJson(hashMap);
 	}
 
-	@RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ModelAndView delete(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView();
 		CategoryInfo categoryInfo = categoryService.findById(id);

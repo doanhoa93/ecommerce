@@ -27,7 +27,7 @@
         
         <ul class="nav nav-second-level">
           <li><a href="${contextPath}/admin/products">All products</a></li>
-          <li><a href="#">New product</a></li>
+          <li><a href="${contextPath}/admin/products/new" class="new-product">New product</a></li>
         </ul>
       </li>
       

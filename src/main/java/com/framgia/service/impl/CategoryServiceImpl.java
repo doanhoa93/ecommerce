@@ -45,7 +45,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			CategoryInfo categoryInfo = ModelToBean.toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
-			CategoryInfo parent = findById(categoryInfo.getParentId());
+			Category parent = getCategoryDAO().findById(categoryInfo.getParentId());
 			if (parent != null)
 				categoryInfo.setParentName(parent.getName());
 			return categoryInfo;
@@ -133,6 +133,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			category.setParentId(categoryInfo.getParentId());
 			getCategoryDAO().saveOrUpdate(category);
 
+			categoryInfo.setId(category.getId());
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -150,8 +151,10 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 				parent.setName(newCategoryInfo.getParentName());
 				parent = getCategoryDAO().saveOrUpdate(parent);
 				newCategoryInfo.setParentId(parent.getId());
-			}
-			category.setParentId(newCategoryInfo.getParentId());
+			} else if (isDeleteParentId(newCategoryInfo.getParentId())) {
+				category.setParentId(null);
+			} else
+				category.setParentId(newCategoryInfo.getParentId());
 			getCategoryDAO().saveOrUpdate(category);
 
 			return true;
@@ -188,5 +191,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 
 	private boolean isNewParentId(Integer parentId) {
 		return parentId != null && parentId == 0;
+	}
+
+	private boolean isDeleteParentId(Integer parentId) {
+		return parentId != null && parentId == -1;
 	}
 }

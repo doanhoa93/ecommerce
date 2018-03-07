@@ -52,6 +52,9 @@
     <property name="target">
       <bean class="com.framgia.service.impl.OrderServiceImpl">
         <property name="orderDAO" ref="OrderDAO"></property>
+        <property name="cartDAO" ref="CartDAO"></property>
+        <property name="productDAO" ref="ProductDAO"></property>
+        <property name="orderProductDAO" ref="OrderProductDAO"></property>
       </bean>
     </property>
   </bean>
@@ -60,6 +63,11 @@
     <property name="target">
       <bean class="com.framgia.service.impl.ProductServiceImpl">
         <property name="productDAO" ref="ProductDAO"></property>
+        <property name="categoryDAO" ref="CategoryDAO"></property>
+        <property name="imageDAO" ref="ImageDAO"></property>
+        <property name="orderProductDAO" ref="OrderProductDAO"></property>
+        <property name="promotionDAO" ref="PromotionDAO"></property>
+        <property name="recentDAO" ref="RecentDAO"></property>
       </bean>
     </property>
   </bean>

@@ -11,8 +11,8 @@
         <h4 class="modal-title">New category</h4>
       </div>
       <div class="modal-body">
-        <form:form action="${contextPath}/admin/categories" method="POST" 
-          modelAttribute="categoryInfo" enctype="multipart/form-data">
+        <form:form id="create-category" action="${contextPath}/admin/categories" method="POST" 
+          modelAttribute="category" enctype="multipart/form-data">
           <div class="field">
             <label>Name of new category</label>
             <form:input path="name" placeholder="Name of category" class="form-control" />
@@ -33,6 +33,7 @@
           
           <div class="actions">
             <input type="submit" class="btn btn-primary btn-create-category" value="Create" />
+            <button class="btn btn-default btn-create-category" data-dismiss="modal">Cancel</button>
             <div class="clearfix"></div>
           </div>
         </form:form>        

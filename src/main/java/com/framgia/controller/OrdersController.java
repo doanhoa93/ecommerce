@@ -133,7 +133,7 @@ public class OrdersController extends BaseController {
 		}
 	}
 
-	@RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable("id") Integer id) {
 		try {
 			OrderInfo orderInfo = orderService.findById(id);

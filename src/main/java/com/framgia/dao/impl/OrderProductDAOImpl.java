@@ -1,5 +1,7 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -30,5 +32,13 @@ public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct> 
 		criteria.createAlias("order_products", "order_products", Criteria.LEFT_JOIN,
 		        Restrictions.eq("order_products.id", orderProductId));
 		return (Product) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderProduct> getOrderProducts(Integer productId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("product.id", productId));
+		return criteria.list();
 	}
 }

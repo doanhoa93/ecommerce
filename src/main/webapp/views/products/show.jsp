@@ -53,9 +53,13 @@
       
       <c:if test="${product.getIsPromotion()}">
         <div class="product-promotion">
-          <span class="promotion-title">Promotion:</span>
-          <span class="promotion">${product.getSaleOf()}%</span>
+          <span class="promotion-title">Sale Off:</span>
+          <span class="promotion">${product.getSaleOff()}%</span>
         </div>
+        
+        <div>
+          From ${product.getPromotion().getStartDate()} To ${product.getPromotion().getEndDate()}
+        </div>        
       </c:if>
       
       <div class="product-information">
@@ -79,7 +83,7 @@
                   <c:forEach var="image" items="${product.getImages()}" begin="${loop.index * 3}"
                     end="${loop.index * 3 + 2}">
                     <div class="col-sm-4">
-                      <img class="product-image" src="${image.getImage()}" alt="" />
+                      <img class="img-responsive product-image" src="${image.getImage()}" alt="" />
                     </div>
                   </c:forEach>
                 </div>

@@ -15,7 +15,7 @@
       Edit this category
     </a>
     
-    <form:form action="${contextPath}/admin/categories/${category.getId()}/delete" method="POST" 
+    <form:form action="${contextPath}/admin/categories/${category.getId()}" method="DELETE" 
       class="delete-category">
       <input type="submit" class="btn btn-danger" value="Delete this category">
     </form:form>

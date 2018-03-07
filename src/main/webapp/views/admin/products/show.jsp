@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="admin-product">
   <div class="product-header">
@@ -9,15 +10,27 @@
       </div>
 
       <div class="product-rate">
-        <c:forEach begin="1" end="${product.getRating()}">
-          <span class="rate"><i class="fa fa-star active"></i></span>
-        </c:forEach>
-
-        <c:forEach begin="${product.getRating() + 1}" end="5">
-          <span class="rate"><i class="fa fa-star"></i></span>
-        </c:forEach>
-        <span>(${product.getRating()})</span>
+        <c:if test="${product.getRating() > 0}">
+          <c:forEach begin="1" end="${product.getRating()}">
+            <span class="rate"><i class="fa fa-star active"></i></span>
+          </c:forEach>
+  
+          <c:forEach begin="${product.getRating() + 1}" end="5">
+            <span class="rate"><i class="fa fa-star"></i></span>
+          </c:forEach>
+          <span>(${product.getRating()})</span>
+        </c:if>
       </div>
+      
+      <a href="${contextPath}/admin/products/${product.getId()}/edit" 
+        class="btn btn-primary edit-product">
+        Edit this product
+      </a>
+    
+      <form:form action="${contextPath}/admin/products/${product.getId()}" method="DELETE" 
+        class="delete-product">
+        <input type="submit" class="btn btn-danger" value="Delete this product">
+      </form:form>      
     </div>
     <div class="clearfix"></div>
   </div>
@@ -45,8 +58,12 @@
       
       <c:if test="${product.getIsPromotion()}">
         <div class="product-promotion">
-          <span class="promotion-title">Promotion:</span>
-          <span class="promotion">${product.getSaleOf()}%</span>
+          <span class="promotion-title">Sale Off:</span>
+          <span class="promotion">${product.getSaleOff()}%</span>
+        </div>
+        
+        <div>
+          From ${product.getPromotion().getStartDate()} To ${product.getPromotion().getEndDate()}
         </div>
       </c:if>
       
@@ -70,7 +87,7 @@
                   <c:forEach var="image" items="${product.getImages()}" begin="${loop.index * 3}"
                     end="${loop.index * 3 + 2}">
                     <div class="col-sm-4">
-                      <img class="product-image" src="${image.getImage()}" alt="" />
+                      <img class="img-responsive product-image" src="${image.getImage()}" alt="" />
                     </div>
                   </c:forEach>
                 </div>

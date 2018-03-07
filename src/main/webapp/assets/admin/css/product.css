@@ -20,6 +20,10 @@
 	color: #3d3d3d;
 }
 
+.admin-product .product-header .product-rate {
+	margin-bottom: 10px;
+}
+
 .admin-product .product-header .product-rate .active {
 	color: #f5b70ce6
 }
@@ -65,4 +69,41 @@
 
 .admin-product .product-body-right .product-information {
 	padding: 10px;
+}
+
+.admin-product .delete-product {
+	display: inline-block;
+}
+
+.admin-edit-product,
+.admin-new-product {
+	padding: 20px;
+}
+
+.admin-edit-product .header,
+.admin-new-product .header {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.admin-edit-product .field,
+.admin-new-product .field {
+	margin-bottom: 10px;
+}
+
+.promotion-product {
+	display: none;
+}
+
+.product-image-panel {
+	margin-bottom: 20px;
+}
+
+.add-image, .remove-image {
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.product-image-form {
+	margin-bottom: 10px;
 }

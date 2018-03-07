@@ -9,7 +9,7 @@ public class Product implements Serializable {
 	private Category category;
 	private boolean isPromotion;
 	private Integer promotionId;
-	private float saleOf;
+	private float saleOff;
 	private String name;
 	private float price;
 	private float rating;
@@ -26,14 +26,14 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId, float saleOf, String name,
+	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId, float saleOff, String name,
 	        float price, float rating, String avatar, String information, int number) {
 		super();
 		this.id = id;
 		this.category = category;
 		this.isPromotion = isPromotion;
 		this.promotionId = promotionId;
-		this.saleOf = saleOf;
+		this.saleOff = saleOff;
 		this.name = name;
 		this.price = price;
 		this.rating = rating;
@@ -74,12 +74,12 @@ public class Product implements Serializable {
 		this.promotionId = promotionId;
 	}
 
-	public float getSaleOf() {
-		return saleOf;
+	public float getSaleOff() {
+		return saleOff;
 	}
 
-	public void setSaleOf(float saleOf) {
-		this.saleOf = saleOf;
+	public void setSaleOff(float saleOff) {
+		this.saleOff = saleOff;
 	}
 
 	public String getName() {

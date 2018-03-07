@@ -20,7 +20,11 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	PromotionInfo getPromotion(Integer productId);
 
 	CategoryInfo getCategory(Integer productId);
-
+	
+	boolean createProduct(ProductInfo productInfo);
+	
+	boolean updateProduct(ProductInfo oldProduct, ProductInfo newProduct);
+	
 	List<OrderProductInfo> getOrderProducts(Integer productId);
 
 	List<CommentInfo> getComments(Integer productId);
