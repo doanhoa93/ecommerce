@@ -114,11 +114,11 @@
 	max-height: 300px;
 }
 
-.header-middle .item-cart {
+.header-middle .item-cart, .header-middle .item-notification {
 	position: relative;
 }
 
-.item-cart .cart-size {
+.item-cart .cart-size, .item-notification .notification-size {
 	position: absolute;
 	top: -10px;
 	right: -5px;
@@ -162,4 +162,32 @@
 
 .error {
 	color: red;
+}
+
+.notifications-body {
+	border: 1px solid rgba(100, 100, 100, .4);
+	border-radius: 0 0 2px 2px;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+	color: #1d2129;
+	min-width: 200px;
+	width: auto;
+}
+
+.notifications-body {
+	max-height: 500px;
+	overflow-x: auto;
+}
+
+.notifications-body .notification {
+	border-bottom: 1px solid #dddfe2;
+	padding-bottom: 10px !important;
+}
+
+.notification .notification-time {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+}
+
+.unwatched {
+	background-color: #f9f9f9;
 }

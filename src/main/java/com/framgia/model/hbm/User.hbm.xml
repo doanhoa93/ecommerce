@@ -27,11 +27,11 @@
       <index column="id" />
       <one-to-many class="Cart" />
     </list>
-    <list name="comments" batch-size="100" cascade="delete"
+    <list name="notifications" batch-size="100" cascade="delete"
       inverse="true">
       <key column="user_id" />
       <index column="id" />
-      <one-to-many class="Comment" />
+      <one-to-many class="Notification" />
     </list>
   </class>
 </hibernate-mapping>

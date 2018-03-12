@@ -38,7 +38,7 @@ public class OrdersController extends AdminController {
 				model.addObject("orders", orderService.getObjects(0, Integer.parseInt(entries)));
 		} else
 			model.addObject("orders", orderService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
-		return model;		
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -56,7 +56,7 @@ public class OrdersController extends AdminController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
-	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id, BindingResult result)
+	public @ResponseBody String update(@PathVariable("id") Integer id, @RequestBody String data, BindingResult result)
 	        throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {

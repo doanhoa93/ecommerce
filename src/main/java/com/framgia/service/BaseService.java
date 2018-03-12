@@ -7,6 +7,7 @@ import com.framgia.dao.CartDAO;
 import com.framgia.dao.CategoryDAO;
 import com.framgia.dao.CommentDAO;
 import com.framgia.dao.ImageDAO;
+import com.framgia.dao.NotificationDAO;
 import com.framgia.dao.OrderDAO;
 import com.framgia.dao.OrderProductDAO;
 import com.framgia.dao.ProductDAO;
@@ -25,6 +26,8 @@ public interface BaseService<PK, T> {
 	CommentDAO getCommentDAO();
 
 	ImageDAO getImageDAO();
+
+	NotificationDAO getNotificationDAO();
 
 	OrderDAO getOrderDAO();
 

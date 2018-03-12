@@ -33,7 +33,11 @@
       <add-attribute value="/assets/lib-js/price-range.js" />
       <add-attribute value="/assets/lib-js/jquery.prettyPhoto.js" />
       <add-attribute value="/assets/lib-js/main.js" />
+      <add-attribute value="/assets/lib-js/sockjs.min.js" />
+      <add-attribute value="/assets/lib-js/stomp.js" />
+      <add-attribute value="/assets/lib-js/jquery.timeago.js" />
       <add-attribute value="/assets/js/page.js" />
+      <add-attribute value="/assets/js/notification.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -279,14 +283,14 @@
       <add-attribute value="/assets/admin/css/product.css" />
       <add-attribute value="/assets/admin/css/category.css" />
     </put-list-attribute>
- 
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/admin/js/category.js" />
-    </put-list-attribute>     
+    </put-list-attribute>
   </definition>
 
   <definition name="adminNewCategory" template="/views/admin/categories/new.jsp" />
-  
+
   <definition name="adminEditCategory" template="/views/admin/categories/edit.jsp" />
 
   <definition name="adminProducts" extends="adminBaseLayout">
@@ -314,12 +318,12 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/admin/js/product.js" />
-    </put-list-attribute>        
-  </definition>    
-  
+    </put-list-attribute>
+  </definition>
+
   <definition name="adminEditProduct" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
     <put-attribute name="body" value="/views/admin/products/edit.jsp" />
@@ -327,9 +331,9 @@
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
     </put-list-attribute>
-    
+
     <put-list-attribute name="js">
       <add-attribute value="/assets/admin/js/product.js" />
-    </put-list-attribute>    
-  </definition>  
+    </put-list-attribute>
+  </definition>
 </tiles-definitions>

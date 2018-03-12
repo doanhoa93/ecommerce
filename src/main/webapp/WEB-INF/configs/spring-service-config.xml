@@ -39,6 +39,14 @@
     </property>
   </bean>
 
+  <bean id="NotificationService" parent="transactionProxyTemplate">
+    <property name="target">
+      <bean class="com.framgia.service.impl.NotificationServiceImpl">
+        <property name="notificationDAO" ref="NotificationDAO"></property>
+      </bean>
+    </property>
+  </bean>
+
   <bean id="OrderProductService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.OrderProductServiceImpl">
@@ -55,6 +63,8 @@
         <property name="cartDAO" ref="CartDAO"></property>
         <property name="productDAO" ref="ProductDAO"></property>
         <property name="orderProductDAO" ref="OrderProductDAO"></property>
+        <property name="notificationDAO" ref="NotificationDAO"></property>
+        <property name="userDAO" ref="UserDAO"></property>
       </bean>
     </property>
   </bean>
