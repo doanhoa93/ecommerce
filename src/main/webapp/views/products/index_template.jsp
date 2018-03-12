@@ -7,14 +7,15 @@
   <div class="products-left col-md-3 col-lg-3 col-sm-12 col-xs-12">
     <div class="brands_products">
       <h2>Categories</h2>
+      <input type="text" name="name" placeholder="Name of categories" class="name-category">      
       <div class="brands-name categories">
         <ul class="nav nav-pills nav-stacked">
           <c:forEach var="category" items="${categories}">
-            <li>
+            <li class="category" data-id="${category.getId()}">
               <a href="${contextPath}/categories/${category.getId()}" 
                 class="${categoryId == category.getId() ? 'active' : ''}">
-                <span class="pull-right">(${category.getProducts().size()})</span>
-                ${category.getName()}
+                <span class="category-name">${category.getName()}</span>
+                <span class="pull-right category-size">(${category.getProducts().size()})</span>
               </a>
             </li>
           </c:forEach>

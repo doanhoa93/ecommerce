@@ -38,5 +38,22 @@ $(document).ready(function() {
 		}).done(function(data) {
 	        $('.products-right').html(data);
         })	    
-    });    
+    });   
+	
+	$(document).on('input', '.name-category', function() {
+		var name = $(this).val().toUpperCase();
+		$('.category').each(function() {
+			if($(this).find('.category-name').text().toUpperCase().includes(name))
+				$(this).show();
+			else
+				$(this).hide();
+		});
+	});
+	
+	scolleNameCategory();
+	
+	function scolleNameCategory() {
+		var position = $('.category .active').parent().position().top - $('.categories').position().top;
+		$('.categories').scrollTop(position);
+	}
 });

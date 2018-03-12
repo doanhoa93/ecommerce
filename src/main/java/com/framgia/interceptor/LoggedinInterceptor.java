@@ -13,7 +13,7 @@ import com.framgia.service.UserService;
 
 public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

@@ -1,18 +1,19 @@
 package com.framgia.bean;
 
+import java.util.Date;
+
 public class RecentInfo {
 	private Integer id;
 	private Integer productId;
-	private int viewed;
+	private Date createdAt;
 	private ProductInfo product;
 
 	public RecentInfo() {
 	}
 
-	public RecentInfo(Integer id, Integer productId, int viewed) {
+	public RecentInfo(Integer id, Integer productId) {
 		this.id = id;
 		this.productId = productId;
-		this.viewed = viewed;
 	}
 
 	public Integer getId() {
@@ -31,12 +32,12 @@ public class RecentInfo {
 		this.productId = productId;
 	}
 
-	public int getViewed() {
-		return viewed;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setViewed(int viewed) {
-		this.viewed = viewed;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public ProductInfo getProduct() {

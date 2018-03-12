@@ -325,7 +325,7 @@ public class ModelToBean {
 
 		RecentInfo recentInfo = new RecentInfo();
 		recentInfo.setId(recent.getId());
-		recentInfo.setViewed(recent.getViewed());
+		recentInfo.setCreatedAt(recent.getCreatedAt());
 		if (recent.getProduct() != null)
 			recentInfo.setProduct(toProductInfoWithPro(recent.getProduct()));
 		return recentInfo;

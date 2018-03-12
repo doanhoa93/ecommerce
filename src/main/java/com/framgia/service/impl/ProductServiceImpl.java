@@ -3,6 +3,7 @@ package com.framgia.service.impl;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -290,7 +291,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 			Recent recent = new Recent();
 			recent.setProduct(product);
-			recent.setViewed(0);
+			recent.setCreatedAt(new Date());
 			getRecentDAO().saveOrUpdate(recent);
 
 			for (String imageURL : imageURLs) {
@@ -363,6 +364,54 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				}
 			}
 
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<ProductInfo> hotProducts(int limit) {
+		try {
+			return getProductDAO().hotProducts(limit).stream().map(ModelToBean::toProductInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<ProductInfo> recentProducts(Date date, int limit) {
+		try {
+			return getProductDAO().recentProducts(date, limit).stream().map(ModelToBean::toProductInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<ProductInfo> randomProducts(int limit) {
+		try {
+			return getProductDAO().randomProducts(limit).stream().map(ModelToBean::toProductInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public boolean updateRecent(ProductInfo productInfo) {
+		try {
+			Product product = getProductDAO().findById(productInfo.getId());
+			Recent recent = new Recent();
+			recent.setCreatedAt(new Date());
+			recent.setProduct(product);
+			getRecentDAO().saveOrUpdate(recent);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

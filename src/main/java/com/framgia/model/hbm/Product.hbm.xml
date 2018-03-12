@@ -30,11 +30,17 @@
     <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />
     </many-to-one>
-
-    <list name="images" batch-size="100" cascade="delete" inverse="true">
+    <one-to-one name="recent" class="Recent" cascade="save-update, delete" />
+  
+    <list name="images" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
       <index column="id" />
       <one-to-many class="Image" />
     </list>
+    <list name="orderProducts" fetch="select" cascade="delete" inverse="true">
+      <key column="product_id" />
+      <index column="id" />
+      <one-to-many class="OrderProduct" />
+    </list>          
   </class>
 </hibernate-mapping>
