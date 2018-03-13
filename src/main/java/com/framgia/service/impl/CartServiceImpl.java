@@ -85,7 +85,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			return getCartDAO().getObjects().stream().map(ModelToBean::toCartInfo).collect(Collectors.toList());
 		} catch (Exception e) {
-			logger.error(e);			
+			logger.error(e);
 			return null;
 		}
 	}
@@ -138,6 +138,29 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		}
 	}
 
+	@Override
+	public boolean createCart(CartInfo cartInfo) {
+		try {
+			Cart cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
+			if (cart == null) {
+				cart = new Cart();
+				cart.setUser(new User(cartInfo.getUserId()));
+				cart.setProduct(new Product(cartInfo.getProductId()));
+			}
+
+			if (cartInfo.getQuantity() == 0)
+				cartInfo.setQuantity(1);
+
+			cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
+
+			getCartDAO().saveOrUpdate(cart);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private Cart toCart(CartInfo cartInfo) {
 		Cart cart = getCartDAO().getFromSession(cartInfo.getId());
@@ -146,8 +169,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			cart.setId(cartInfo.getId());
 			cart.setProduct(new Product(cartInfo.getProductId()));
 			cart.setUser(new User(cartInfo.getUserId()));
-		} 
-		
+		}
+
 		cart.setQuantity(cartInfo.getQuantity());
 		return cart;
 	}
