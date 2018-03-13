@@ -47,7 +47,7 @@ public class SessionsController extends BaseController {
 	@RequestMapping(method = RequestMethod.DELETE)
 	public String destroy(HttpServletRequest request) {
 		userService.unremember();
-		request.getSession().invalidate();
+		request.getSession().removeAttribute("currentUser");
 		return "redirect:/";
 	}
 }

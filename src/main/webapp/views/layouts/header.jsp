@@ -53,14 +53,14 @@
             <ul class="nav navbar-nav">
               <c:choose>
                 <c:when test="${currentUser != null}">
-                  <li class="dropdown">
+                  <li class="dropdown notification-dropdown">
                     <a href="#" class="item-notification">
                       <i class="fa fa-bell" aria-hidden="true"></i>
                       Notifications
                       <i class="notification-size">${currentUser.getUnWatchedNotifications()}</i>                      
                     </a>
-                                          
-                    <ul role="menu" class="sub-menu notifications-body">
+                    
+                    <ul role="menu" class="notifications-body">
                       <c:if test="${currentUser.getNotifications().size() > 0}">
                         <c:forEach var="i" begin="0" end="${currentUser.getNotifications().size() - 1}">
                           <c:set var="index" value="${currentUser.getNotifications().size() - 1 - i}" />                      

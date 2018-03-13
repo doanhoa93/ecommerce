@@ -6,7 +6,8 @@
     Edit suggest
   </a>
   
-  <form:form action="${contextPath}/suggests/${suggest.getId()}" method="DELETE">
+  <form:form action="${contextPath}/suggests/${suggest.getId()}" method="DELETE" 
+    data-confirm="Delete this suggest, are you sure?">
     <input type="submit" class="btn btn-danger btn-suggest" value="Delete" />
   </form:form>
 </c:if>

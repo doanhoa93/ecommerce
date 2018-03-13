@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -147,14 +146,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderInfo> getOrders(Integer userId, String page, int limit, org.hibernate.criterion.Order order) {
+	public List<OrderInfo> getOrders(Integer userId, int limit, org.hibernate.criterion.Order order) {
 		try {
-			int off;
-			if (StringUtils.isEmpty(page)) {
-				off = 0;
-			} else
-				off = (Integer.parseInt(page) - 1) * limit;
-			return getOrderDAO().getOrders(userId, off, limit, order).stream().map(object -> {
+			return getOrderDAO().getOrders(userId, 0, limit, order).stream().map(object -> {
 				OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
 				orderInfo.setProductQuantity(getProductQuantity(object.getId()));
 				return orderInfo;

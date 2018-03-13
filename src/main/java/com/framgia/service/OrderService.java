@@ -17,7 +17,7 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	List<ProductInfo> getProducts(Integer orderId);
 
-	List<OrderInfo> getOrders(Integer userId, String page, int limit, Order order);
+	List<OrderInfo> getOrders(Integer userId, int limit, Order order);
 
 	int getProductQuantity(Integer orderId);
 

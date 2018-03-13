@@ -1,9 +1,4 @@
 $(document).ready(function() {
-	$(document).on('click', '.order-tr', function() {
-		var href = $(this).data('href');
-		window.location.replace(getContextPath() + href);
-	});
-	
 	initTotalPrice();
 
 	$(document).on('click', '.order-product-close', function(event) {
