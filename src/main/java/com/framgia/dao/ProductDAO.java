@@ -3,6 +3,8 @@ package com.framgia.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.Order;
+
 import com.framgia.helper.ProductFilter;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -35,4 +37,6 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 	List<Product> recentProducts(Date date, int limit);
 
 	List<Product> randomProducts(int limit);
+
+	List<Product> getProducts(Integer categoryId, int off, int limit, Order order);
 }

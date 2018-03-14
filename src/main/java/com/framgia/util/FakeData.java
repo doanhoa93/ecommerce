@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,6 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void addUsers(Session session) {
 		try {
 			Transaction t = null;
@@ -78,13 +78,16 @@ public class FakeData {
 			admin.setPassword(Encode.encode("123456"));
 			admin.setRole(Role.Admin);
 			admin.setName("Admin");
+			admin.setCreatedAt(new Date());
 			session.save(admin);
 			Profile profileA = new Profile();
 			profileA.setId(2);
 			profileA.setUser(admin);
 			profileA.setAddress("Ha Noi");
 			profileA.setGender(Gender.getInt(Gender.MALE));
-			profileA.setBirthday(new Date(1995 - 1900, 11, 05));
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(1995, 11, 05);
+			profileA.setBirthday(calendar.getTime());
 			session.save(profileA);
 
 			User user = new User();
@@ -93,13 +96,14 @@ public class FakeData {
 			user.setPassword(Encode.encode("123456"));
 			user.setRole(Role.User);
 			user.setName("Nguyen Huu Tien");
+			user.setCreatedAt(new Date());
 			session.save(user);
 			Profile profile = new Profile();
 			profile.setId(1);
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
 			profile.setGender(Gender.getInt(Gender.MALE));
-			profile.setBirthday(new Date(1995 - 1900, 11, 05));
+			profile.setBirthday(calendar.getTime());
 			session.save(profile);
 
 			for (int i = 3; i < 11; i++) {
@@ -109,13 +113,14 @@ public class FakeData {
 				user.setPassword(Encode.encode("123456"));
 				user.setRole(Role.User);
 				user.setName("Example-" + i);
+				user.setCreatedAt(new Date());
 				session.save(user);
 				profile = new Profile();
 				profile.setId(i);
 				profile.setUser(user);
 				profile.setAddress("Ha Noi");
 				profile.setGender(Gender.getInt(Gender.MALE));
-				profile.setBirthday(new Date(1995 - 1900, 11, 05));
+				profile.setBirthday(calendar.getTime());
 
 				session.save(profile);
 			}
@@ -138,7 +143,7 @@ public class FakeData {
 				Category category = new Category();
 				category.setId(i);
 				category.setName("Category-" + i);
-
+				category.setCreatedAt(new Date());
 				session.save(category);
 			}
 			t.commit();
@@ -175,7 +180,7 @@ public class FakeData {
 				map = upload(new File(
 				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
 				product.setAvatar((String) map.get("url"));
-
+				product.setCreatedAt(new Date());
 				session.save(product);
 			}
 			t.commit();
@@ -413,7 +418,6 @@ public class FakeData {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void addPromotions(Session session) {
 		try {
 			Transaction t = null;
@@ -425,8 +429,11 @@ public class FakeData {
 			for (int i = 1; i < 10; i++) {
 				Promotion promotion = new Promotion();
 				promotion.setId(i);
-				promotion.setStartDate(new Date(2018 - 1900, 01, 01));
-				promotion.setEndDate(new Date(2018 - 1900, 02, 01));
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(2018, 01, 01);
+				promotion.setStartDate(calendar.getTime());
+				calendar.set(Calendar.MONDAY, Calendar.FEBRUARY);
+				promotion.setEndDate(calendar.getTime());
 
 				session.save(promotion);
 			}

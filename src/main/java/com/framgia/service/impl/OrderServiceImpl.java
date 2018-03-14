@@ -146,9 +146,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderInfo> getOrders(Integer userId, int limit, org.hibernate.criterion.Order order) {
+	public List<OrderInfo> getOrders(Integer userId, int off, int limit, org.hibernate.criterion.Order order) {
 		try {
-			return getOrderDAO().getOrders(userId, 0, limit, order).stream().map(object -> {
+			return getOrderDAO().getOrders(userId, off, limit, order).stream().map(object -> {
 				OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
 				orderInfo.setProductQuantity(getProductQuantity(object.getId()));
 				return orderInfo;
@@ -338,6 +338,37 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getNewOrders(Date date, int limit) {
+		try {
+			return getOrderDAO().getNewObjects(date, limit).stream().map(ModelToBean::toOrderInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public int getOrdersSizeWithStatus(String status) {
+		try {
+			return getOrderDAO().getOrdersSizeWithStatus(Status.getIntStatus(status));
+		} catch (Exception e) {
+			logger.error(e);
+			return 0;
+		}
+	}
+
+	@Override
+	public double[] getSalesByDate(Date startDate, Date endDate) {
+		try {
+			return getOrderDAO().getSalesByDate(startDate, endDate);
+		} catch (Exception e) {
+			logger.error(e);
+			return new double[2];
 		}
 	}
 

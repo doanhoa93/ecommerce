@@ -21,6 +21,7 @@
               <th>Gender</th>
               <th>Carts</th>
               <th>Orders</th>
+              <th>Created at</th>
             </tr>
           </thead>
           <tbody>
@@ -32,6 +33,7 @@
                 <td>${user.getProfile().getGender()}</td>
                 <td>${user.getCarts().size()}</td>
                 <td>${user.getOrders().size()}</td>
+                <td>${user.getCreatedAt()}</td>
               </tr>
             </c:forEach>
           </tbody>

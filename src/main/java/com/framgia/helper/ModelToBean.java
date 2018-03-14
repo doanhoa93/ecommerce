@@ -93,6 +93,10 @@ public class ModelToBean {
 		if (product.getImages() != null)
 			productInfo.setImages(product.getImages().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
+
+		if (product.getOrderProducts() != null)
+			productInfo.setOrderProducts(product.getOrderProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
 		return productInfo;
 	}
 
@@ -181,6 +185,7 @@ public class ModelToBean {
 		categoryInfo.setId(category.getId());
 		categoryInfo.setName(category.getName());
 		categoryInfo.setParentId(category.getParentId());
+		categoryInfo.setCreatedAt(category.getCreatedAt());
 		return categoryInfo;
 	}
 
@@ -245,6 +250,7 @@ public class ModelToBean {
 		productInfo.setPromotionId(product.getPromotionId());
 		productInfo.setRating(product.getRating());
 		productInfo.setSaleOff(product.getSaleOff());
+		productInfo.setCreatedAt(product.getCreatedAt());
 		if (product.getCategory() != null)
 			productInfo.setCategory(toCategoryInfoWithPro(product.getCategory()));
 		return productInfo;
@@ -360,6 +366,7 @@ public class ModelToBean {
 		userInfo.setPassword(user.getPassword());
 		userInfo.setRole(user.getRole());
 		userInfo.setAvatar(user.getAvatar());
+		userInfo.setCreatedAt(user.getCreatedAt());
 		return userInfo;
 	}
 }

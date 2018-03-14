@@ -3,8 +3,10 @@ package com.framgia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.framgia.constant.Role;
 import com.framgia.dao.UserDAO;
 import com.framgia.model.Comment;
 import com.framgia.model.Profile;
@@ -42,5 +44,20 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("role", role));
 		return (List<User>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsers(int off, int limit, Order order) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("role", Role.User));
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+		
+		return criteria.list();
 	}
 }

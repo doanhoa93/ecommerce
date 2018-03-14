@@ -1,6 +1,7 @@
 package com.framgia.service.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -224,6 +225,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<UserInfo> getNewUsers(Date date, int limit) {
+		try {
+			return getUserDAO().getNewObjects(date, limit).stream().map(ModelToBean::toUserInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<UserInfo> getUsers(int off, int limit, org.hibernate.criterion.Order order) {
+		try {
+			return getUserDAO().getUsers(off, limit, order).stream().map(ModelToBean::toUserInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private User toUser(UserInfo userInfo) {
 		User user = getUserDAO().getFromSession(userInfo.getId());
@@ -237,6 +260,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		user.setPassword(Encode.encode(userInfo.getPassword()));
 		user.setRole(userInfo.getRole());
 		user.setAvatar(userInfo.getAvatar());
+		user.setCreatedAt(new Date());
 		return user;
 	}
 }

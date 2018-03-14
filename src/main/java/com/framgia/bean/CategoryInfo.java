@@ -1,5 +1,6 @@
 package com.framgia.bean;
 
+import java.util.Date;
 import java.util.List;
 
 public class CategoryInfo {
@@ -7,6 +8,7 @@ public class CategoryInfo {
 	private Integer parentId;
 	private String parentName;
 	private String name;
+	private Date createdAt;
 	private List<ProductInfo> products;
 
 	public CategoryInfo() {
@@ -56,5 +58,13 @@ public class CategoryInfo {
 
 	public void setProducts(List<ProductInfo> products) {
 		this.products = products;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

@@ -35,6 +35,7 @@
               <th>Name</th>
               <th>Price</th>
               <th>Number</th>
+              <th>Orders</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +50,7 @@
                   <fmt:formatNumber value="${product.getPrice()}" type="currency" />                
                 </td>
                 <td>${product.getNumber()}</td>
+                <td>${product.getOrderProducts().size()}</td>
               </tr>
             </c:forEach>
           </tbody>

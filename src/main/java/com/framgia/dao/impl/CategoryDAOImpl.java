@@ -48,4 +48,19 @@ public class CategoryDAOImpl extends BaseDAOAbstract<Integer, Category> implemen
 
 		return getCategoriesByIdsWithOrder(categoryIds);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> getCategories(int off, int limit, Order order) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setFirstResult(off);
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+
+		return criteria.list();
+	}
 }

@@ -1,6 +1,7 @@
 package com.framgia.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -11,6 +12,7 @@ public class User implements Serializable {
 	private String name;
 	private String avatar;
 	private String role;
+	private Date createdAt;
 	private Profile profile;
 	private List<Order> orders;
 	private List<Cart> carts;
@@ -110,5 +112,13 @@ public class User implements Serializable {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

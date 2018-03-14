@@ -1,6 +1,9 @@
 package com.framgia.service;
 
+import java.util.Date;
 import java.util.List;
+
+import org.hibernate.criterion.Order;
 
 import com.framgia.bean.CategoryInfo;
 
@@ -16,4 +19,8 @@ public interface CategoryService extends BaseService<Integer, CategoryInfo> {
 	List<CategoryInfo> getCategoriesWithForNew(Integer categoryId);
 
 	List<CategoryInfo> hotCategories(int limit);
+
+	List<CategoryInfo> getNewCategories(Date date, int limit);
+
+	List<CategoryInfo> getCategories(int off, int limit, Order order);
 }

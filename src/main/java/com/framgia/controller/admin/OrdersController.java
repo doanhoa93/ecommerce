@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -33,11 +34,13 @@ public class OrdersController extends AdminController {
 		ModelAndView model = new ModelAndView("adminOrders");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("orders", orderService.getObjects());
+				model.addObject("orders", orderService.getOrders(null, 0, 0, Order.desc("createdAt")));
 			else
-				model.addObject("orders", orderService.getObjects(0, Integer.parseInt(entries)));
+				model.addObject("orders",
+				        orderService.getOrders(null, 0, Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
-			model.addObject("orders", orderService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
+			model.addObject("orders",
+			        orderService.getOrders(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 		return model;
 	}
 

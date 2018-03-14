@@ -1,5 +1,6 @@
 package com.framgia.bean;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserInfo {
@@ -13,6 +14,7 @@ public class UserInfo {
 	private boolean remember;
 	private ProfileInfo profile;
 	private int unWatchedNotifications;
+	private Date createdAt;
 	private List<OrderInfo> orders;
 	private List<CartInfo> carts;
 	private List<NotificationInfo> notifications;
@@ -134,5 +136,13 @@ public class UserInfo {
 
 	public void setUnWatchedNotifications(int unWatchedNotifications) {
 		this.unWatchedNotifications = unWatchedNotifications;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

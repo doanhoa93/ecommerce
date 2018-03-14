@@ -20,7 +20,6 @@
 
 <div class="row">
   <div class="col-lg-8">
-    <c:import url="/views/admin/charts/area_chart.jsp" />
     <c:import url="/views/admin/charts/bar_chart.jsp" />
   </div>
 
