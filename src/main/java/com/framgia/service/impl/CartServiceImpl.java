@@ -144,13 +144,14 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			Cart cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
 			if (cart == null) {
 				cart = new Cart();
+				cart.setQuantity(0);
 				cart.setUser(new User(cartInfo.getUserId()));
 				cart.setProduct(new Product(cartInfo.getProductId()));
 			}
 
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
-
+			
 			cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
 
 			getCartDAO().saveOrUpdate(cart);

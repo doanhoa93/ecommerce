@@ -18,9 +18,7 @@ import com.framgia.bean.RateInfo;
 import com.framgia.bean.RecentInfo;
 import com.framgia.bean.SuggestInfo;
 import com.framgia.bean.UserInfo;
-import com.framgia.constant.Avatar;
 import com.framgia.constant.Gender;
-import com.framgia.constant.Role;
 import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
@@ -37,7 +35,6 @@ import com.framgia.model.Rate;
 import com.framgia.model.Recent;
 import com.framgia.model.Suggest;
 import com.framgia.model.User;
-import com.framgia.util.Encode;
 
 public class ModelToBean {
 	// Cart
@@ -393,16 +390,10 @@ public class ModelToBean {
 		userInfo.setId(user.getId());
 		userInfo.setName(user.getName());
 		userInfo.setEmail(user.getEmail());
-		userInfo.setPassword(Encode.encode(user.getPassword()));
+		userInfo.setPassword(user.getPassword());
 		userInfo.setRole(user.getRole());
 		userInfo.setToken(user.getToken());
-		if (user.getAvatar() == null) {
-			if (userInfo.getRole().equals(Role.User))
-				userInfo.setAvatar(Avatar.USER);
-			else
-				userInfo.setAvatar(Avatar.ADMIN);
-		} else
-			userInfo.setAvatar(user.getAvatar());
+		userInfo.setAvatar(user.getAvatar());
 		userInfo.setCreatedAt(user.getCreatedAt());
 		List<Chat> chats = user.getChats();
 		if (chats != null) {
@@ -411,9 +402,9 @@ public class ModelToBean {
 				if (!chat.isWatched()) {
 					userInfo.setNewMessage(true);
 					break;
-				}		
+				}
 		}
-		
+
 		List<Chat> sendedChats = user.getSendedChats();
 		if (sendedChats != null) {
 			sendedChats = sendedChats.stream().filter(object -> (object != null)).collect(Collectors.toList());
@@ -421,8 +412,8 @@ public class ModelToBean {
 				if (!chat.isWatched()) {
 					userInfo.setAdminNewMessage(true);
 					break;
-				}		
-		}		
+				}
+		}
 		return userInfo;
 	}
 }

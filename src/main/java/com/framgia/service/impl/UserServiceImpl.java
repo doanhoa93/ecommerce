@@ -1,17 +1,18 @@
 package com.framgia.service.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.util.WebUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.framgia.bean.CommentInfo;
 import com.framgia.bean.OrderProductInfo;
@@ -21,8 +22,8 @@ import com.framgia.bean.UserInfo;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
 import com.framgia.model.User;
+import com.framgia.security.CustomUserDetails;
 import com.framgia.service.UserService;
-import com.framgia.util.Encode;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
@@ -106,6 +107,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
+	public CustomUserDetails findByEmailWithSecurity(String email) {
+		try {
+			User user = getUserDAO().findByEmail(email);
+			CustomUserDetails userDetail = new CustomUserDetails();
+			userDetail.setId(user.getId());
+			userDetail.setEmail(user.getEmail());
+			userDetail.setPassword(user.getPassword());
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority(user.getRole()));
+			userDetail.setAuthorities(authorities);
+			return userDetail;
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public UserInfo findById(Serializable key) {
 		try {
 			return findBy("id", key, true);
@@ -169,73 +188,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean validate(UserInfo userInfo) {
+	public void logout(String email) {
 		try {
-			UserInfo userCookie = getFromCookie(request);
-			if (userCookie == null) {
-				User user = getUserDAO().findByEmail(userInfo.getEmail());
-				if (user != null && user.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
-					if (userInfo.isRemember()) {
-						Cookie cookie = new Cookie("email", userInfo.getEmail());
-						cookie.setPath("/");
-						cookie.setMaxAge(2592000);
-						response.addCookie(cookie);
-					}
-
-					user.setToken(Encode.generateToken());
-					getUserDAO().saveOrUpdate(user);
-					HashMap<String, Object> hashMap = new HashMap<>();
-					hashMap.put("id", user.getId());
-					hashMap.put("token", user.getToken());
-					simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);					
-					request.getSession().setAttribute("currentUser", ModelToBean.toUserInfo(user));
-					return true;
-				}
-			} else {
-				User user = getUserDAO().findById(userCookie.getId());
-				user.setToken(userCookie.getToken());
-				getUserDAO().saveOrUpdate(user);
-				HashMap<String, Object> hashMap = new HashMap<>();
-				hashMap.put("id", user.getId());
-				hashMap.put("token", user.getToken());
-				simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
-				request.getSession().setAttribute("currentUser", userCookie);
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			logger.error(e);
-			return false;
-		}
-	}
-
-	public UserInfo getFromCookie(HttpServletRequest request) {
-		try {
-			Cookie cookie = WebUtils.getCookie(request, "email");
-			if (cookie == null)
-				return null;
-			return findByEmail(cookie.getValue());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public void unremember() {
-		try {
-			Cookie cookie = new Cookie("email", "");
-			cookie.setPath("/");
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
-			User user = getUserDAO().findById(((UserInfo) request.getSession().getAttribute("currentUser")).getId());
+			User user = getUserDAO().findByEmail(email);
+			user.setToken(null);
+			getUserDAO().saveOrUpdate(user);
 			HashMap<String, Object> hashMap = new HashMap<>();
 			hashMap.put("id", user.getId());
 			hashMap.put("token", user.getToken());
-			simpMessagingTemplate.convertAndSend("/topic/unregisters", hashMap);			
-			user.setToken(null);
-			getUserDAO().saveOrUpdate(user);
-			request.getSession().removeAttribute("currentUser");
+			simpMessagingTemplate.convertAndSend("/topic/unregisters", hashMap);
 		} catch (Exception e) {
 			logger.error(e);
 			return;
@@ -284,17 +245,52 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public UserInfo updateToken(UserInfo userInfo, String token) {
+		try {
+			User user = getUserDAO().findById(userInfo.getId());
+			user.setToken(token);
+			getUserDAO().saveOrUpdate(user);
+			userInfo.setToken(token);
+			HashMap<String, Object> hashMap = new HashMap<>();
+			hashMap.put("id", user.getId());
+			hashMap.put("token", user.getToken());
+			simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
+			return userInfo;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean createUser(UserInfo userInfo) {
+		try {
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			User user = toUser(userInfo);
+			user.setPassword(bcrypt.encode(userInfo.getPassword()));
+			user.setAvatar(request.getContextPath() + "/assets/images/user.png");
+			getUserDAO().saveOrUpdate(user);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private User toUser(UserInfo userInfo) {
 		User user = getUserDAO().getFromSession(userInfo.getId());
 		if (user == null) {
 			user = new User();
 			user.setId(userInfo.getId());
+			if (StringUtils.isEmpty(userInfo.getName()))
+				return null;
 		}
 
 		user.setName(userInfo.getName());
 		user.setEmail(userInfo.getEmail());
-		user.setPassword(Encode.decode(userInfo.getPassword()));
+		user.setPassword(userInfo.getPassword());
 		user.setRole(userInfo.getRole());
 		user.setAvatar(userInfo.getAvatar());
 		user.setCreatedAt(new Date());

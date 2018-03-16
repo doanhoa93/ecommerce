@@ -66,33 +66,10 @@
     <property name="fallbackToSystemLocale" value="false" />
   </bean>
 
-  <!-- Interceptor: Kiem soat cac request den, vd: check viec da dang nhap hay chua -->
   <mvc:interceptors>
     <mvc:interceptor>
-      <mvc:mapping path="/carts" />
-      <mvc:mapping path="/*/*/carts" />
-      <mvc:mapping path="/carts/*" />
-      <mvc:mapping path="/orders" />
-      <mvc:mapping path="/orders/*" />
-      <mvc:mapping path="/orders/*/*" />
-      <mvc:mapping path="/suggests" />
-      
-      <mvc:mapping path="/admin" />
-      <mvc:mapping path="/admin/*" />
+      <mvc:mapping path="/**" />
       <mvc:mapping path="/admin/**" />
-      <mvc:mapping path="/admin/***" />
-      <mvc:mapping path="/admin/****" />
-      <bean class="com.framgia.interceptor.LoginInterceptor" />
-    </mvc:interceptor>
-
-    <mvc:interceptor>
-      <mvc:mapping path="/sessions/*"/>
-      <mvc:mapping path="/registrations/*"/>
-      <mvc:mapping path="/*"/>
-      <mvc:mapping path="/**"/>
-      <mvc:mapping path="/***"/>
-      <mvc:mapping path="/****"/>
-      <mvc:mapping path="/*****"/>
       <bean class="com.framgia.interceptor.LoggedinInterceptor" />
     </mvc:interceptor>
   </mvc:interceptors>

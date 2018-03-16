@@ -107,7 +107,7 @@
                       </li>
                       
                       <li class="sub-menu-item">
-                        <form:form action="${contextPath}/sessions" method="DELETE">
+                        <form:form action="${contextPath}/logout" method="POST">
                           <i class="fa fa-lock"></i>
                           <input type="submit" class="logout" value="Logout" />
                         </form:form>
@@ -117,7 +117,7 @@
                 </c:when>
                 <c:otherwise>
                   <li>
-                    <a href="${contextPath}/sessions/new"><i
+                    <a href="${contextPath}/login"><i
                       class="fa fa-lock"></i> Login
                     </a>
                   </li>
