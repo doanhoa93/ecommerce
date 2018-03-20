@@ -15,7 +15,7 @@
 	content: "";
 }
 
-.admin-body .input-sm {
+.admin-body .input-sm[type=search] {
 	width: auto !important;
 }
 
@@ -92,4 +92,13 @@
 
 .error {
 	color: red;
+}
+
+.user-chat-new-message {
+	background: url(../images/red_circle.png) center right no-repeat;
+	border-radius: 100%;
+	float: right;
+	height: 10px;
+	margin-top: 7px;
+	width: 10px;
 }

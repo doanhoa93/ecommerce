@@ -13,10 +13,13 @@ public class User implements Serializable {
 	private String avatar;
 	private String role;
 	private Date createdAt;
+	private String token;
 	private Profile profile;
 	private List<Order> orders;
 	private List<Cart> carts;
 	private List<Notification> notifications;
+	private List<Chat> chats;
+	private List<Chat> sendedChats;
 
 	public User() {
 	}
@@ -120,5 +123,29 @@ public class User implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public List<Chat> getChats() {
+		return chats;
+	}
+
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+
+	public List<Chat> getSendedChats() {
+		return sendedChats;
+	}
+
+	public void setSendedChats(List<Chat> sendedChats) {
+		this.sendedChats = sendedChats;
 	}
 }

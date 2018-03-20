@@ -23,6 +23,15 @@
     </property>
   </bean>
 
+  <bean id="ChatService" parent="transactionProxyTemplate">
+    <property name="target">
+      <bean class="com.framgia.service.impl.ChatServiceImpl">
+        <property name="userDAO" ref="UserDAO"></property>
+        <property name="chatDAO" ref="ChatDAO"></property>
+      </bean>
+    </property>
+  </bean>
+
   <bean id="CommentService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.CommentServiceImpl">

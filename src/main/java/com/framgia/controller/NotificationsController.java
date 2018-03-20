@@ -1,4 +1,4 @@
-package com.framgia.websocket;
+package com.framgia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

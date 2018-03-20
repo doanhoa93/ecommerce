@@ -1,9 +1,11 @@
 package com.framgia.helper;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.CategoryInfo;
+import com.framgia.bean.ChatInfo;
 import com.framgia.bean.CommentInfo;
 import com.framgia.bean.ImageInfo;
 import com.framgia.bean.NotificationInfo;
@@ -16,10 +18,13 @@ import com.framgia.bean.RateInfo;
 import com.framgia.bean.RecentInfo;
 import com.framgia.bean.SuggestInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Avatar;
 import com.framgia.constant.Gender;
+import com.framgia.constant.Role;
 import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
+import com.framgia.model.Chat;
 import com.framgia.model.Comment;
 import com.framgia.model.Image;
 import com.framgia.model.Notification;
@@ -32,6 +37,7 @@ import com.framgia.model.Rate;
 import com.framgia.model.Recent;
 import com.framgia.model.Suggest;
 import com.framgia.model.User;
+import com.framgia.util.Encode;
 
 public class ModelToBean {
 	// Cart
@@ -50,6 +56,11 @@ public class ModelToBean {
 			        .map(ModelToBean::toProductInfoWithPro).collect(Collectors.toList()));
 		return categoryInfo;
 
+	}
+
+	// Chat
+	public static ChatInfo toChatInfo(Chat chat) {
+		return toChatInfoWithPro(chat);
 	}
 
 	// Comment
@@ -187,6 +198,25 @@ public class ModelToBean {
 		categoryInfo.setParentId(category.getParentId());
 		categoryInfo.setCreatedAt(category.getCreatedAt());
 		return categoryInfo;
+	}
+
+	private static ChatInfo toChatInfoWithPro(Chat chat) {
+		if (chat == null)
+			return null;
+
+		ChatInfo chatInfo = new ChatInfo();
+		chatInfo.setId(chat.getId());
+		chatInfo.setCreatedAt(chat.getCreatedAt());
+		chatInfo.setContent(chat.getContent());
+		chatInfo.setWatched(chat.isWatched());
+
+		if (chat.getReceiver() != null)
+			chatInfo.setReceiver(toUserInfoWithPro(chat.getReceiver()));
+
+		if (chat.getSender() != null)
+			chatInfo.setSender(toUserInfoWithPro(chat.getSender()));
+
+		return chatInfo;
 	}
 
 	private static CommentInfo toCommentInfoWithPro(Comment comment) {
@@ -363,10 +393,36 @@ public class ModelToBean {
 		userInfo.setId(user.getId());
 		userInfo.setName(user.getName());
 		userInfo.setEmail(user.getEmail());
-		userInfo.setPassword(user.getPassword());
+		userInfo.setPassword(Encode.encode(user.getPassword()));
 		userInfo.setRole(user.getRole());
-		userInfo.setAvatar(user.getAvatar());
+		userInfo.setToken(user.getToken());
+		if (user.getAvatar() == null) {
+			if (userInfo.getRole().equals(Role.User))
+				userInfo.setAvatar(Avatar.USER);
+			else
+				userInfo.setAvatar(Avatar.ADMIN);
+		} else
+			userInfo.setAvatar(user.getAvatar());
 		userInfo.setCreatedAt(user.getCreatedAt());
+		List<Chat> chats = user.getChats();
+		if (chats != null) {
+			chats = chats.stream().filter(object -> (object != null)).collect(Collectors.toList());
+			for (Chat chat : chats)
+				if (!chat.isWatched()) {
+					userInfo.setNewMessage(true);
+					break;
+				}		
+		}
+		
+		List<Chat> sendedChats = user.getSendedChats();
+		if (sendedChats != null) {
+			sendedChats = sendedChats.stream().filter(object -> (object != null)).collect(Collectors.toList());
+			for (Chat chat : sendedChats)
+				if (!chat.isWatched()) {
+					userInfo.setAdminNewMessage(true);
+					break;
+				}		
+		}		
 		return userInfo;
 	}
 }

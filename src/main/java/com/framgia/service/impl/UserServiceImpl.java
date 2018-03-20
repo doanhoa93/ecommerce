@@ -2,12 +2,15 @@ package com.framgia.service.impl;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.util.WebUtils;
 
 import com.framgia.bean.CommentInfo;
@@ -22,6 +25,9 @@ import com.framgia.service.UserService;
 import com.framgia.util.Encode;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
+
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@Override
 	public ProfileInfo getProfile(Integer userId) {
@@ -165,10 +171,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public boolean validate(UserInfo userInfo) {
 		try {
-			UserInfo userInf = getFromCookie(request);
-			if (userInf == null) {
-				userInf = findByEmail(userInfo.getEmail());
-				if (userInf != null && userInf.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
+			UserInfo userCookie = getFromCookie(request);
+			if (userCookie == null) {
+				User user = getUserDAO().findByEmail(userInfo.getEmail());
+				if (user != null && user.getPassword().equals(Encode.encode(userInfo.getPassword()))) {
 					if (userInfo.isRemember()) {
 						Cookie cookie = new Cookie("email", userInfo.getEmail());
 						cookie.setPath("/");
@@ -176,11 +182,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 						response.addCookie(cookie);
 					}
 
-					request.getSession().setAttribute("currentUser", userInf);
+					user.setToken(Encode.generateToken());
+					getUserDAO().saveOrUpdate(user);
+					HashMap<String, Object> hashMap = new HashMap<>();
+					hashMap.put("id", user.getId());
+					hashMap.put("token", user.getToken());
+					simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);					
+					request.getSession().setAttribute("currentUser", ModelToBean.toUserInfo(user));
 					return true;
 				}
 			} else {
-				request.getSession().setAttribute("currentUser", userInf);
+				User user = getUserDAO().findById(userCookie.getId());
+				user.setToken(userCookie.getToken());
+				getUserDAO().saveOrUpdate(user);
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("id", user.getId());
+				hashMap.put("token", user.getToken());
+				simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
+				request.getSession().setAttribute("currentUser", userCookie);
 				return true;
 			}
 			return false;
@@ -209,6 +228,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			cookie.setPath("/");
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
+			User user = getUserDAO().findById(((UserInfo) request.getSession().getAttribute("currentUser")).getId());
+			HashMap<String, Object> hashMap = new HashMap<>();
+			hashMap.put("id", user.getId());
+			hashMap.put("token", user.getToken());
+			simpMessagingTemplate.convertAndSend("/topic/unregisters", hashMap);			
+			user.setToken(null);
+			getUserDAO().saveOrUpdate(user);
+			request.getSession().removeAttribute("currentUser");
 		} catch (Exception e) {
 			logger.error(e);
 			return;
@@ -247,6 +274,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public UserInfo findByToken(String token) {
+		try {
+			return findBy("token", token, true);
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private User toUser(UserInfo userInfo) {
 		User user = getUserDAO().getFromSession(userInfo.getId());
@@ -257,10 +294,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 		user.setName(userInfo.getName());
 		user.setEmail(userInfo.getEmail());
-		user.setPassword(Encode.encode(userInfo.getPassword()));
+		user.setPassword(Encode.decode(userInfo.getPassword()));
 		user.setRole(userInfo.getRole());
 		user.setAvatar(userInfo.getAvatar());
 		user.setCreatedAt(new Date());
+		user.setToken(userInfo.getToken());
 		return user;
 	}
 }
