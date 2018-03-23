@@ -7,6 +7,7 @@
   <div class="admin-edit-product-body">
     <form:form id="update-product" action="${contextPath}/admin/products/${product.getId()}" 
       method="POST"  modelAttribute="product" enctype="multipart/form-data" class="edit-form product-form">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="field">
           <label>Avatar of product</label>
@@ -107,3 +108,4 @@
     </form:form>
   </div>
 </div>
+     

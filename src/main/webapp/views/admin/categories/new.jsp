@@ -13,6 +13,7 @@
       <div class="modal-body">
         <form:form id="create-category" action="${contextPath}/admin/categories" method="POST" 
           modelAttribute="category" enctype="multipart/form-data">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
           <div class="field">
             <label>Name of new category</label>
             <form:input path="name" placeholder="Name of category" class="form-control" />

@@ -15,6 +15,7 @@
 
           <form:form action="${contextPath}/registrations" method="POST"
             modelAttribute="userInfo" class="form-signup">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <form:input path="name" placeholder="Name" />
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />

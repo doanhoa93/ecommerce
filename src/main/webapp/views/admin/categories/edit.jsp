@@ -13,6 +13,7 @@
       <div class="modal-body">
         <form:form id="update-category" action="${contextPath}/admin/categories/${category.getId()}" method="PATCH"
           enctype="multipart/form-data" modelAttribute="category" class="category-form">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
           <div class="field">
             <label>Name of category</label>
             <form:input path="name" placeholder="Name of category" class="form-control" />

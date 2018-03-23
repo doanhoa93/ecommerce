@@ -29,6 +29,7 @@
     
       <form:form action="${contextPath}/admin/products/${product.getId()}" method="DELETE" 
         class="delete-product">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" class="btn btn-danger" value="Delete this product">
       </form:form>      
     </div>

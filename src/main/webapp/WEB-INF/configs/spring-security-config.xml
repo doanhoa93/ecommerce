@@ -30,7 +30,7 @@
       success-handler-ref="customLogoutSuccessHandler" />
 
     <!-- CSRF -->
-    <csrf disabled="true" />
+    <csrf disabled="false" />
   </http>
 
   <beans:bean id="customizeRedirectSuccessHandler"
