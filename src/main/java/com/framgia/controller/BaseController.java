@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -68,13 +69,11 @@ public class BaseController {
 	public Logger logger = Logger.getLogger(this.getClass());
 
 	public UserInfo currentUser() {
-		UserInfo userInfo = (UserInfo) request.getSession().getAttribute("currentUser");
-		if (userInfo == null)
-			userInfo = userService.getFromCookie(request);
-
-		if (userInfo != null)
-			userInfo = userService.findById(userInfo.getId());
-		return userInfo;
+		try {
+			return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public String toJson(HashMap<String, Object> hashMap) throws JsonProcessingException {

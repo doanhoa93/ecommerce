@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.constant.Status;
-import com.framgia.util.DateUtil;
+import com.framgia.helper.DateUtil;
 
 @Controller("admin/page")
 @RequestMapping(value = "admin")

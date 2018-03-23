@@ -38,11 +38,9 @@
           ${product.getName()}
         </a>
       </p>
-      <form:form
-        action="${contextPath}/products/${product.getId()}/carts"
-        method="POST" modelAttribute="cartInfo">
-        <button class="btn btn-default add-to-cart"
-          type="submit">
+      <form:form action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
+        <input type="hidden" name="productId" value="${product.getId()}" />
+        <button class="btn btn-default add-to-cart" type="submit">
           <i class="fa fa-shopping-cart"></i>Add to cart
         </button>
       </form:form>

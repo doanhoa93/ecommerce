@@ -24,8 +24,13 @@ public class RegistrationsController extends BaseController {
 	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
 		try {
 			userInfo.setRole(Role.User);
-			userService.saveOrUpdate(userInfo);
-			return new ModelAndView("redirect:/");
+			ModelAndView model = new ModelAndView("redirect:/");
+			if (!userService.createUser(userInfo)) {
+				model.addObject("userInfo", userInfo);
+				model.setViewName("signup");
+			}
+
+			return model;
 		} catch (Exception e) {
 			logger.error(e);
 			return new ModelAndView("signup", "message",

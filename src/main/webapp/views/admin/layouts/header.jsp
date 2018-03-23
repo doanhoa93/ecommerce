@@ -36,7 +36,7 @@
         <li class="divider"></li>
         
         <li>
-          <form:form action="${contextPath}/sessions" method="DELETE" class="form-logout">
+          <form:form action="${contextPath}/logout" method="DELETE" class="form-logout">
             <i class="fa fa-sign-out fa-fw"></i>
             <input type="submit" class="logout" value="Logout" />
           </form:form>        

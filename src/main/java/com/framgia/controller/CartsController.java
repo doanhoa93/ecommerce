@@ -42,12 +42,12 @@ public class CartsController extends BaseController {
 	}
 
 	@SuppressWarnings("finally")
-	@RequestMapping(value = "/products/{productId}/carts", method = RequestMethod.POST)
-	public String create(RedirectAttributes redirect, @PathVariable Integer productId,
-	        @ModelAttribute("cartInfo") CartInfo cartInfo, BindingResult result) {
+	@RequestMapping(value = "/carts", method = RequestMethod.POST)
+	public String create(RedirectAttributes redirect, @ModelAttribute("cartInfo") CartInfo cartInfo,
+	        BindingResult result) {
 		HashMap<String, Object> flash = new HashMap<>();
 		try {
-			cartValidator.validateCreate(cartInfo, currentUser().getId(), productId, result);
+			cartValidator.validateCreate(cartInfo, currentUser().getId(), result);
 			if (!result.hasErrors() && cartService.createCart(cartInfo))
 				flash.put("type", "success");
 			else

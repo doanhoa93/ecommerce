@@ -10,10 +10,10 @@ import org.hibernate.criterion.Restrictions;
 
 import com.framgia.constant.Status;
 import com.framgia.dao.OrderDAO;
+import com.framgia.helper.DateUtil;
 import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.User;
-import com.framgia.util.DateUtil;
 
 public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements OrderDAO {
 

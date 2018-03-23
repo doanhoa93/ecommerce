@@ -3,14 +3,17 @@ package com.framgia.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.framgia.bean.UserInfo;
 import com.framgia.constant.Role;
 import com.framgia.service.UserService;
-import com.framgia.util.Encode;
 
 public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 
@@ -20,36 +23,20 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	        throws Exception {
-		UserInfo currentUser = (UserInfo) request.getSession().getAttribute("currentUser");
-		if (currentUser == null) {
-			currentUser = userService.getFromCookie(request);
-			if (currentUser != null) {
-				currentUser.setToken(Encode.generateToken());
-				UserInfo user = userService.findById(currentUser.getId());
-				user.setToken(currentUser.getToken());
-				userService.saveOrUpdate(user);
-				userService.validate(null);
-				request.getSession().setAttribute("currentUser", currentUser);
-			}
+		UserInfo currentUser = currentUser();
+		if (currentUser != null) {
+			String token = RequestContextHolder.currentRequestAttributes().getSessionId();
+			String currentToken = currentUser.getToken();
+			if (StringUtils.isEmpty(currentToken) || !currentToken.equals(token))
+				currentUser = userService.updateToken(currentUser, token);
+			request.getSession().setAttribute("currentUser", currentUser);
 		}
 
-		String uri = request.getRequestURI();
-		if (currentUser != null
-		        && (uri.equals("/Ecommerce/sessions/new") || uri.equals("/Ecommerce/registrations/new"))) {
-			response.sendRedirect(request.getContextPath());
-			return false;
-		}
-
-		if (currentUser != null && currentUser.getRole().equals(Role.Admin) && !uri.contains("admin")
-		        && !uri.contains("images") && !uri.equals("/Ecommerce/sessions")) {
+		if (isAdmin(currentUser) && !validAdminRequest(request)) {
 			response.sendRedirect(request.getContextPath() + "/admin");
 			return false;
 		}
 
-		if (currentUser != null && currentUser.getRole().equals(Role.User) && uri.contains("admin")) {
-			response.sendRedirect(request.getContextPath());
-			return false;
-		}
 		return true;
 	}
 
@@ -61,5 +48,23 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 	        throws Exception {
+	}
+
+	private UserInfo currentUser() {
+		try {
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			return userService.findByEmail(user.getUsername());
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
+	private boolean validAdminRequest(HttpServletRequest request) {
+		return request.getRequestURI().contains("admin") || request.getRequestURI().contains("assets");
+	}
+
+	private boolean isAdmin(UserInfo userInfo) {
+		return userInfo != null && userInfo.getRole().equals(Role.Admin);
 	}
 }

@@ -29,8 +29,9 @@ public class CartValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 	}
 
-	public void validateCreate(Object target, Integer userId, Integer productId, Errors errors) {
+	public void validateCreate(Object target, Integer userId, Errors errors) {
 		CartInfo cartInfo = (CartInfo) target;
+		Integer productId = cartInfo.getProductId();
 		CartInfo oldCart = cartService.getCart(userId, productId);
 
 		cartInfo.setProductId(productId);

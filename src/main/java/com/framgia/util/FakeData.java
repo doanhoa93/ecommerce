@@ -16,6 +16,7 @@ import java.util.Properties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -63,6 +64,7 @@ public class FakeData {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void addUsers(Session session) {
 		try {
 			Transaction t = null;
@@ -72,14 +74,18 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			Map<String, Object> map = upload(
+			        new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/supervisor.png"));
+			String avatar = (String) map.get("url");
 			User admin = new User();
 			admin.setId(1);
 			admin.setEmail("admin@gmail.com");
-			admin.setPassword(Encode.encode("123456"));
+			admin.setPassword(bcrypt.encode("123456"));
 			admin.setRole(Role.Admin);
 			admin.setName("Admin");
 			admin.setCreatedAt(new Date());
+			admin.setAvatar(avatar);
 			session.save(admin);
 			Profile profileA = new Profile();
 			profileA.setId(2);
@@ -91,13 +97,16 @@ public class FakeData {
 			profileA.setBirthday(calendar.getTime());
 			session.save(profileA);
 
+			map = upload(new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/user.png"));
+			avatar = (String) map.get("url");
 			User user = new User();
 			user.setId(2);
 			user.setEmail("tiennh1995@gmail.com");
-			user.setPassword(Encode.encode("123456"));
+			user.setPassword(bcrypt.encode("123456"));
 			user.setRole(Role.User);
 			user.setName("Nguyen Huu Tien");
 			user.setCreatedAt(new Date());
+			user.setAvatar(avatar);
 			session.save(user);
 			Profile profile = new Profile();
 			profile.setId(1);
@@ -111,10 +120,11 @@ public class FakeData {
 				user = new User();
 				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");
-				user.setPassword(Encode.encode("123456"));
+				user.setPassword(bcrypt.encode("123456"));
 				user.setRole(Role.User);
 				user.setName("Example-" + i);
 				user.setCreatedAt(new Date());
+				user.setAvatar(avatar);
 				session.save(user);
 				profile = new Profile();
 				profile.setId(i);
