@@ -16,13 +16,20 @@ $(document).ready(function() {
 	}
 	
 	function onConnected() {
-		$('.user-chat').each(function(index, userChat) {
-			var token = $(userChat).data('token');
-			if(token != undefined && token != '') {
-				var subscribe = stompClient.subscribe('/topic/chats/' + token, onChatReceived);
-				subscribers[token] = {subscribe: subscribe, token: token};
-			}
-		});
+		$.ajax({
+			type: 'GET',
+		    url: getContextPath() + '/admin/tokens',
+			dataType: 'json',
+		    contentType: 'application/json',
+		    success: function (data) {
+		    	if(data.tokens != undefined) {
+		    		$.each(data.tokens, function(index, token) {
+		    			var subscribe = stompClient.subscribe('/topic/chats/' + token, onChatReceived);
+		    			subscribers[token] = {subscribe: subscribe, token: token};
+		    		});
+		    	}        	
+		    }
+		});		
 		
 		stompClient.subscribe('/topic/registers', onRegisterReceived);	
 		stompClient.subscribe('/topic/unregisters', onUnRegisterReceived);		
@@ -87,7 +94,9 @@ $(document).ready(function() {
 		$('.user-chat').removeClass('user-chat-active');
 		$(this).addClass('user-chat-active');
 		$('.new-message-' + userId).removeClass('user-chat-new-message');
-		
+		if($('.user-chat-new-message').length == 1)
+			$('.new-message').removeClass('user-chat-new-message');
+			
 		$.ajax({
 			type: 'GET',
 		    url: getContextPath() + '/admin/chats/' + userId,

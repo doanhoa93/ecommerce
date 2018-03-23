@@ -18,4 +18,6 @@ public interface UserDAO extends BaseDAO<Integer, User> {
 	List<User> getUsers(String role);
 
 	List<User> getUsers(int off, int limit, Order order);
+
+	List<String> getTokens();
 }

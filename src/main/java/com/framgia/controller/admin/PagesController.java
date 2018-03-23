@@ -33,7 +33,7 @@ public class PagesController extends AdminController {
 	@RequestMapping(value = "statistic", method = RequestMethod.GET)
 	public @ResponseBody String getStatistic() throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		
+
 		HashMap<String, Integer> ordersMap = new HashMap<>();
 		for (String status : Status.statuses)
 			ordersMap.put(status, orderService.getOrdersSizeWithStatus(status));
@@ -48,6 +48,13 @@ public class PagesController extends AdminController {
 
 		hashMap.put("ordersStatistic", ordersMap);
 		hashMap.put("salesStatistic", sales);
+		return toJson(hashMap);
+	}
+
+	@RequestMapping(value = "tokens", method = RequestMethod.GET)
+	public @ResponseBody String getTokens() throws JsonProcessingException {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		hashMap.put("tokens", userService.getTokens());
 		return toJson(hashMap);
 	}
 }
