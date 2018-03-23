@@ -278,6 +278,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<String> getTokens() {
+		try {
+			return getUserDAO().getTokens();
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
 	// ----------------- PRIVATE -------------------------------------
 	private User toUser(UserInfo userInfo) {
 		User user = getUserDAO().getFromSession(userInfo.getId());

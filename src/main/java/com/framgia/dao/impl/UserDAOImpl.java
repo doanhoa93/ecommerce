@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.constant.Role;
@@ -57,7 +58,17 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 
 		if (order != null)
 			criteria.addOrder(order);
-		
+
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getTokens() {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("role", Role.User));
+		criteria.add(Restrictions.neOrIsNotNull("token", ""));
+		criteria.setProjection(Projections.property("token"));
 		return criteria.list();
 	}
 }

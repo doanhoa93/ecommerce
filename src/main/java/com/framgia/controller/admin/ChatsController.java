@@ -66,15 +66,7 @@ public class ChatsController extends AdminController {
 	@RequestMapping(value = "admin/chats/{userId}", method = RequestMethod.PATCH)
 	public @ResponseBody void update(@PathVariable("userId") Integer userId) throws IOException {
 		UserInfo userInfo = userService.findById(userId);
-		if (userInfo != null) {
+		if (userInfo != null)
 			chatService.updateReadAll(userId, currentUser().getId());
-			currentUser().setNewMessage(false);
-		}
-	}
-
-	@RequestMapping(value = "admin/chats", method = RequestMethod.PATCH)
-	public @ResponseBody void update() throws IOException {
-		chatService.updateReadAll(currentUser().getId());
-		currentUser().setNewMessage(false);
 	}
 }

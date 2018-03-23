@@ -65,16 +65,6 @@ $(document).ready(function() {
 	    });		
 	});		
 	
-	
-	$(document).on('click', '.chat-sidebar', function() {
-		$.ajax({
-			type: 'PATCH',
-		    url: getContextPath() + '/admin/chats',
-			dataType: 'json',
-		    contentType: 'application/json'
-		});	
-	});
-	
 	connect();
 	var stompClient;
 	function connect() {
