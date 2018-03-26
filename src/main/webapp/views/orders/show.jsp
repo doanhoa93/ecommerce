@@ -28,6 +28,7 @@
       
      <div class="order-field">
        <form:form action="${contextPath}/orders/${order.getId()}" method="DELETE">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>       
         <input type="submit" class="btn btn-danger btn-order-delete" data-confirm="Delete this order, are you sure?" 
           value="Delete this order" />
        </form:form>

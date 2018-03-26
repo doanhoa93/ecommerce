@@ -15,6 +15,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <!-- Default CSS -->
@@ -52,6 +55,7 @@
     <div id="page-wrapper" class="admin-body">
       <tiles:insertAttribute name="body" ignore="true" />
       <div id="form-category" class="modal fade" role="dialog"></div>     
+      <div class="clearfix"></div>
     </div>
   </div>
   <input type="hidden" value="${currentUser.getToken()}" class="token" />  

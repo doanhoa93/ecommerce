@@ -15,6 +15,7 @@
 
           <form:form  action="/Ecommerce/login" method="POST" modelAttribute="userInfo" 
             class="form-login">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />
             <label> 

@@ -1,4 +1,12 @@
 $(document).ready(function() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+        beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+        }
+    });	
+	
 	$(document).on('shown.bs.modal', function() {
 		$('input[list]').on('input', function(e) {
 		    var $input = $(e.target),

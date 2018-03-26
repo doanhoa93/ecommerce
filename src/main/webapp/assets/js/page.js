@@ -3,6 +3,14 @@ $(document).ready(function() {
 	    $('.flash').slideUp(1000);
 	  }, 1500);
 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+        beforeSend : function(xhr) {
+	        xhr.setRequestHeader(header, token);
+        }
+    });	
+	
 	$(document).on('click', '.notification-dropdown', function() {
 		$('.notifications-body').toggle();
 	});

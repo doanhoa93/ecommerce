@@ -38,6 +38,7 @@
         <li>
           <form:form action="${contextPath}/logout" method="DELETE" class="form-logout">
             <i class="fa fa-sign-out fa-fw"></i>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="submit" class="logout" value="Logout" />
           </form:form>        
         </li>

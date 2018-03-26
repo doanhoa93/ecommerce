@@ -24,7 +24,6 @@
   </div>
 
   <div class="col-lg-4">
-     <c:import url="/views/admin/charts/donut_chart.jsp" />
-      <c:import url="/views/admin/pages/admin_chat.jsp" />
+    <c:import url="/views/admin/charts/donut_chart.jsp" />
   </div>
 </div>

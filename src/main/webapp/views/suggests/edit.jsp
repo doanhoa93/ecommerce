@@ -13,6 +13,7 @@
 
       <form:form id="update-suggest" action="${contextPath}/suggests/${suggest.getId()}" method="PATCH" 
         enctype="multipart/form-data" modelAttribute="suggest" class="form-suggest">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="field">
           <label>Avatar: </label>
           <form:input type="file" path="avatarFile" class="avatar" />

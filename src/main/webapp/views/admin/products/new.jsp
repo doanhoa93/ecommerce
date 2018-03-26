@@ -7,6 +7,7 @@
   <div class="admin-new-product-body">
     <form:form id="create-product" action="${contextPath}/admin/products" method="POST" 
       modelAttribute="product" enctype="multipart/form-data" class="product-form">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="field">
           <label>Avatar of product</label>
