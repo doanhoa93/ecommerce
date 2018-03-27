@@ -1,8 +1,10 @@
 package com.framgia.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Chat {
+@SuppressWarnings("serial")
+public class Chat implements Serializable {
 	private Integer id;
 	private User sender;
 	private User receiver;

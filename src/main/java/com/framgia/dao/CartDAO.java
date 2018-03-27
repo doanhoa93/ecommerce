@@ -12,8 +12,10 @@ public interface CartDAO extends BaseDAO<Integer, Cart> {
 	User getUser(Integer cartId);
 
 	Product getProduct(Integer cartId);
-	
+
 	List<Cart> getCarts(Integer userId, int off, int limit, Order order);
-	
-	Cart getCart(Integer userId, Integer productId);	
+
+	List<Cart> getCartsWithGuest(String sessionId, int off, int limit, Order order);
+
+	Cart getCart(Integer userId, Integer productId);
 }

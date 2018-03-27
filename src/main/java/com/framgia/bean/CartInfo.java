@@ -6,6 +6,7 @@ public class CartInfo {
 	private Integer productId;
 	private int quantity;
 	private UserInfo user;
+	private String sessionId;
 	private ProductInfo product;
 
 	public CartInfo() {
@@ -63,5 +64,13 @@ public class CartInfo {
 
 	public void setProduct(ProductInfo product) {
 		this.product = product;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

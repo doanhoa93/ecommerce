@@ -12,12 +12,10 @@ public class OrderProduct implements Serializable {
 	private int status;
 
 	public OrderProduct() {
-		super();
 		this.quantity = 1;
 	}
 
 	public OrderProduct(Integer id, Order order, Product product, float price, int quantity, int status) {
-		super();
 		this.id = id;
 		this.order = order;
 		this.product = product;

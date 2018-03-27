@@ -20,7 +20,7 @@
               <th>Product number</th>
               <th>Total price</th>
               <th>Created at</th>
-              <th>Status</th>            
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -36,8 +36,7 @@
                 </td>
                 <td>${order.getCreatedAt()}</td>
                 <td class="center order-status status-${order.getStatus()}">
-                  ${order.getStatus()}
-                </td>
+                  ${order.getStatus()}</td>
               </tr>
             </c:forEach>
           </tbody>

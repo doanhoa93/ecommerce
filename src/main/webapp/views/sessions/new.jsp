@@ -13,13 +13,13 @@
             <div class="alert alert-warning">${message}</div>
           </c:if>
 
-          <form:form  action="/Ecommerce/login" method="POST" modelAttribute="userInfo" 
+          <form:form action="/Ecommerce/login" method="POST" modelAttribute="userInfo"
             class="form-login">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />
-            <label> 
-              <form:checkbox path="remember" value="true" class="checkbox-remember" /> 
+            <label>
+              <form:checkbox path="remember" value="true" class="checkbox-remember" />
               <span class="remember-text">Keep me signed in</span>
             </label>
             <input type="submit" class="btn btn-primary" value="Login" />

@@ -9,40 +9,40 @@
         <a href="${contextPath}/products/${product.getId()}">
           <img class="product-image" src="${product.getAvatar()}" alt="" />
         </a>
-        
+
         <c:if test="${product.getIsPromotion()}">
           <div class="product-sale">
             <img alt="" src="${contextPath}/assets/images/home/sale.png" class="img-responsive">
           </div>
         </c:if>
-        
+
         <div class="product-stock">
           <span>Status: </span>
           <c:choose>
             <c:when test="${product.getNumber() > 0}">
               <span class="stock">Stock</span>
             </c:when>
-            
+
             <c:otherwise>
               <span class="out-stock">Out of stock</span>
             </c:otherwise>
           </c:choose>
-        </div>        
+        </div>
       </div>
-      <h2>            
+      <h2>
         <fmt:setLocale value="en_US" />
         <fmt:formatNumber value="${product.getPrice()}" type="currency" />
       </h2>
       <p>
         <a href="${contextPath}/products/${product.getId()}" class="product-name">
-          ${product.getName()}
-        </a>
+          ${product.getName()} </a>
       </p>
       <form:form action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" name="productId" value="${product.getId()}" />
         <button class="btn btn-default add-to-cart" type="submit">
-          <i class="fa fa-shopping-cart"></i>Add to cart
+          <i class="fa fa-shopping-cart"></i>
+          Add to cart
         </button>
       </form:form>
     </div>

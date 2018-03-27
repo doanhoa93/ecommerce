@@ -21,10 +21,12 @@ public class UsersController extends AdminController {
 			if (entries.equals("all"))
 				model.addObject("users", userService.getUsers(0, 0, Order.desc("createdAt")));
 			else
-				model.addObject("users", userService.getUsers(0, Integer.parseInt(entries), Order.desc("createdAt")));
+				model.addObject("users", userService.getUsers(0, Integer.parseInt(entries),
+						Order.desc("createdAt")));
 
 		} else
-			model.addObject("users", userService.getUsers(0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
+			model.addObject("users",
+					userService.getUsers(0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 
 		return model;
 	}

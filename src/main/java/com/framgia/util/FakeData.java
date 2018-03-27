@@ -256,6 +256,7 @@ public class FakeData {
 
 				session.save(cart);
 			}
+
 			t.commit();
 		} catch (Exception e) {
 			System.out.println(e);

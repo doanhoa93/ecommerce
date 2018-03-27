@@ -20,10 +20,10 @@
               <th>Status</th>
             </tr>
           </thead>
-          
+
           <tbody>
             <c:forEach items="${orders}" var="order" varStatus="loop">
-              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href" 
+              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href"
                 data-href="${contextPath}/orders/${order.getId()}">
                 <td>${loop.index + 1}</td>
                 <td>${order.getProductQuantity()}</td>
@@ -35,7 +35,7 @@
                 <td class="status status-${order.getStatus()}">${order.getStatus()}</td>
               </tr>
             </c:forEach>
-          </tbody>          
+          </tbody>
         </table>
       </div>
     </div>

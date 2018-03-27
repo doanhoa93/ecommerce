@@ -1,5 +1,5 @@
 .admin-body {
-	padding-bottom: 40px !important;	
+	padding-bottom: 40px !important;
 }
 
 .admin-body .row-panel {
@@ -37,7 +37,7 @@
 	margin-right: 10px;
 	margin-bottom: 10px;
 	padding: 2px;
-    padding-left: 10px;		
+	padding-left: 10px;
 }
 
 .dropdown-max-entries ul {
@@ -62,13 +62,12 @@
 	cursor: pointer;
 }
 
-.admin-new-category .field,
-.admin-edit-category .field {
+.admin-new-category .field, .admin-edit-category .field {
 	margin-bottom: 10px;
 }
 
-.admin-new-category .btn-create-category,
-.admin-edit-category .btn-update-category {
+.admin-new-category .btn-create-category, .admin-edit-category .btn-update-category
+	{
 	float: right;
 	margin-right: 10px;
 }

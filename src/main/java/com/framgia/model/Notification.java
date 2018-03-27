@@ -1,8 +1,10 @@
 package com.framgia.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Notification {
+@SuppressWarnings("serial")
+public class Notification implements Serializable {
 	private Integer id;
 	private User user;
 	private Order order;

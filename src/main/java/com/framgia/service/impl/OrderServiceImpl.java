@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
@@ -50,8 +52,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public List<OrderProductInfo> getOrderProducts(Integer orderId) {
 		try {
-			return getOrderDAO().getOrderProducts(orderId).stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			return getOrderDAO().getOrderProducts(orderId).stream()
+					.map(ModelToBean::toOrderProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -116,7 +118,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public List<OrderInfo> getObjects() {
 		try {
-			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo).collect(Collectors.toList());
+			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo)
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -127,7 +130,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public List<OrderInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getOrderDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderInfo)
-			        .collect(Collectors.toList());
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -138,7 +141,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public List<OrderInfo> getObjects(int off, int limit) {
 		try {
 			return getOrderDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderInfo)
-			        .collect(Collectors.toList());
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -146,7 +149,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderInfo> getOrders(Integer userId, int off, int limit, org.hibernate.criterion.Order order) {
+	public List<OrderInfo> getOrders(Integer userId, int off, int limit,
+			org.hibernate.criterion.Order order) {
 		try {
 			return getOrderDAO().getOrders(userId, off, limit, order).stream().map(object -> {
 				OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
@@ -163,7 +167,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public int getProductQuantity(Integer orderId) {
 		try {
 			List<OrderProductInfo> orderProducts = getOrderProducts(orderId);
-			return orderProducts.stream().map(OrderProductInfo::getQuantity).mapToInt(Integer::intValue).sum();
+			return orderProducts.stream().map(OrderProductInfo::getQuantity)
+					.mapToInt(Integer::intValue).sum();
 		} catch (Exception e) {
 			logger.error(e);
 			return 0;
@@ -171,31 +176,30 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean createOrder(Integer userId, List<Integer> cartIds) {
-		HashMap<String, Object> hashMap = new HashMap<>();
-		List<Cart> carts = getCartDAO().getObjectsByIds(cartIds);
-		boolean error = false;
+	public boolean createOrder(OrderInfo orderInfo, BindingResult result) {
+		List<Cart> carts = getCartDAO().getObjectsByIds(orderInfo.getCartIds());
+		UserInfo userInfo = orderInfo.getUser();
 
 		// Kiem tra so luong san pham con du de dap ung k?
 		for (Cart cart : carts) {
 			if (!checkQuantityProduct(cart)) {
-				error = true;
-				hashMap.put(cart.getProduct().getId().toString(), cart.getProduct().getName()
-				        + "'s quantiy is not enough! (" + cart.getProduct().getNumber() + ")");
+				result.rejectValue("cartIds", "order.cartIds.invalid");
+				return false;
 			}
-		}
-
-		// Neu khong du thi return false, va tao message error de thong bao cho
-		// client biet
-		if (error) {
-			request.setAttribute("error", hashMap);
-			return false;
 		}
 
 		try {
 			Order order = new Order();
 			order.setStatus(Status.getIntStatus(Status.WAITING));
-			order.setUser(getUserDAO().findById(userId));
+			if (userInfo != null)
+				order.setUser(getUserDAO().findById(userInfo.getId()));
+			else {
+				order.setPhoneNumber(orderInfo.getPhoneNumber());
+				order.setName(orderInfo.getName());
+				order.setEmail(orderInfo.getEmail());
+				order.setAddress(orderInfo.getAddress());
+				order.setSessionId(RequestContextHolder.currentRequestAttributes().getSessionId());
+			}
 			order.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang
@@ -222,14 +226,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				getCartDAO().delete(cart);
 			}
 
-			mailer.sendMail(order.getUser().getEmail(), messageSource.getMessage("mail.title", null, Locale.US),
-			        messageSource.getMessage("mail.content", null, Locale.US));
+			String email;
+			if (order.getUser() != null)
+				email = order.getUser().getEmail();
+			else
+				email = order.getEmail();
+			mailer.sendMail(email, messageSource.getMessage("mail.title", null, Locale.US),
+					messageSource.getMessage("mail.content", null, Locale.US));
+			orderInfo.setId(order.getId());
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error(e);
-			hashMap.put("order", "Error when try save order!");
-			request.setAttribute("error", hashMap);
 			throw e;
 		}
 	}
@@ -263,16 +270,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 			getOrderDAO().saveOrUpdate(order);
 
-			Notification notification = new Notification();
-			notification.setUser(order.getUser());
-			notification.setOrder(order);
-			notification.setContent(messageSource.getMessage("order.update.status",
-			        new Object[] { order.getCreatedAt().toString(), Status.getStrStatus(order.getStatus()) },
-			        Locale.US));
-			notification.setCreatedAt(new Date());
-			getNotificationDAO().saveOrUpdate(notification);
+			if (order.getUser() != null) {
+				Notification notification = new Notification();
+				notification.setUser(order.getUser());
+				notification.setOrder(order);
+				notification
+						.setContent(
+								messageSource.getMessage("order.update.status",
+										new Object[] { order.getCreatedAt().toString(),
+												Status.getStrStatus(order.getStatus()) },
+										Locale.US));
+				notification.setCreatedAt(new Date());
+				getNotificationDAO().saveOrUpdate(notification);
 
-			sendNotification.send(ModelToBean.toNotificationInfo(notification));
+				sendNotification.send(ModelToBean.toNotificationInfo(notification));
+			}
 			return valid;
 		} catch (Exception e) {
 			logger.error(e);
@@ -285,7 +297,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			Order order = getOrderDAO().findById(orderInfo.getId());
 			if (!orderInfo.getStatus().equals(Status.ACCEPT)) {
-				List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+				List<OrderProduct> orderProducts = getOrderDAO()
+						.getOrderProducts(orderInfo.getId());
 				for (OrderProduct orderProduct : orderProducts) {
 					orderProduct.setStatus(order.getStatus());
 					getOrderProductDAO().saveOrUpdate(orderProduct);
@@ -294,16 +307,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 				getOrderDAO().saveOrUpdate(order);
 
-				Notification notification = new Notification();
-				notification.setUser(order.getUser());
-				notification.setOrder(order);
-				notification.setContent(messageSource.getMessage("order.update.status",
-				        new Object[] { order.getCreatedAt().toString(), Status.getStrStatus(order.getStatus()) },
-				        Locale.US));
-				notification.setCreatedAt(new Date());
-				getNotificationDAO().saveOrUpdate(notification);
+				if (order.getUser() != null) {
+					Notification notification = new Notification();
+					notification.setUser(order.getUser());
+					notification.setOrder(order);
+					notification
+							.setContent(
+									messageSource.getMessage("order.update.status",
+											new Object[] { order.getCreatedAt().toString(),
+													Status.getStrStatus(order.getStatus()) },
+											Locale.US));
+					notification.setCreatedAt(new Date());
+					getNotificationDAO().saveOrUpdate(notification);
 
-				sendNotification.send(ModelToBean.toNotificationInfo(notification));
+					sendNotification.send(ModelToBean.toNotificationInfo(notification));
+				}
 			}
 
 			return true;
@@ -314,10 +332,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProductMaps) {
+	public boolean updateOrderProduct(OrderInfo orderInfo,
+			List<HashMap<String, Object>> orderProductMaps) {
 		try {
-			if (orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)) {
-				List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+			if (orderInfo.getStatus().equals(Status.WAITING)
+					|| orderInfo.getStatus().equals(Status.REJECT)) {
+				List<OrderProduct> orderProducts = getOrderDAO()
+						.getOrderProducts(orderInfo.getId());
 				for (HashMap<String, Object> orderProductMap : orderProductMaps) {
 					Integer id = (Integer) orderProductMap.get("id");
 					int quantity = Integer.parseInt((String) orderProductMap.get("quantity"));
@@ -345,7 +366,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public List<OrderInfo> getNewOrders(Date date, int limit) {
 		try {
 			return getOrderDAO().getNewObjects(date, limit).stream().map(ModelToBean::toOrderInfo)
-			        .collect(Collectors.toList());
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -390,6 +411,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		order.setStatus(Status.getIntStatus(orderInfo.getStatus()));
 		order.setCreatedAt(orderInfo.getCreatedAt());
 		order.setTotalPrice(orderInfo.getTotalPrice());
+		order.setPhoneNumber(orderInfo.getPhoneNumber());
+		order.setName(orderInfo.getName());
+		order.setEmail(orderInfo.getEmail());
+		order.setAddress(orderInfo.getAddress());
 		return order;
 	}
 

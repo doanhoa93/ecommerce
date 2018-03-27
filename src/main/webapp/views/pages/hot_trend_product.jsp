@@ -5,19 +5,16 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <div id="slider-carousel" class="carousel slide"
-          data-ride="carousel">
+        <div id="slider-carousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <c:forEach items="${hotProducts}" varStatus="loop">
-              <li data-target="#slider-carousel"
-                data-slide-to="${loop.index - 1}"
+              <li data-target="#slider-carousel" data-slide-to="${loop.index - 1}"
                 class="${(loop.index - 1) == 0 ? 'active' : '' }"></li>
             </c:forEach>
           </ol>
 
           <div class="carousel-inner">
-            <c:forEach var="product" items="${hotProducts}"
-              varStatus="loop">
+            <c:forEach var="product" items="${hotProducts}" varStatus="loop">
               <c:set var="product" value="${product}" scope="session" />
               <c:set var="index" value="${loop.index}" scope="session" />
               <c:import url="/views/products/medium_product.jsp" />
@@ -26,11 +23,10 @@
             </c:forEach>
           </div>
 
-          <a href="#slider-carousel"
-            class="left control-carousel hidden-xs" data-slide="prev">
+          <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
             <i class="fa fa-angle-left"></i>
-          </a> <a href="#slider-carousel"
-            class="right control-carousel hidden-xs" data-slide="next">
+          </a>
+          <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
             <i class="fa fa-angle-right"></i>
           </a>
         </div>

@@ -10,8 +10,14 @@ public class OrderInfo {
 	private String status;
 	private Date createdAt;
 	private int productQuantity;
+	private String phoneNumber;
+	private String name;
+	private String address;
+	private String email;
+	private String sessionId;
 	private UserInfo user;
 	private List<OrderProductInfo> orderProducts;
+	private List<Integer> cartIds;
 
 	public OrderInfo() {
 	}
@@ -90,5 +96,53 @@ public class OrderInfo {
 
 	public void setOrderProducts(List<OrderProductInfo> orderProducts) {
 		this.orderProducts = orderProducts;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Integer> getCartIds() {
+		return cartIds;
+	}
+
+	public void setCartIds(List<Integer> cartIds) {
+		this.cartIds = cartIds;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

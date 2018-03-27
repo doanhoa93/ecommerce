@@ -3,7 +3,8 @@
 
 <div class="suggest-header">
   <a href="${contextPath}/suggests/new" class="btn btn-primary btn-create-suggest">
-    <i class="fa fa-plus"></i>Create suggest
+    <i class="fa fa-plus"></i>
+    Create suggest
   </a>
 </div>
 
@@ -30,24 +31,25 @@
               <th data-orderable="false">Action</th>
             </tr>
           </thead>
-          
+
           <tbody>
             <c:forEach items="${suggests}" var="suggest" varStatus="loop">
               <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'}">
                 <td>${loop.index + 1}</td>
-                <td><img src="${suggest.getAvatar()}" class="img-responsive suggest-avatar" /></td>
+                <td>
+                  <img src="${suggest.getAvatar()}" class="img-responsive suggest-avatar" />
+                </td>
                 <td>${suggest.getName()}</td>
                 <td>${suggest.getInformation()}</td>
                 <td>${suggest.getCategory()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />        
+                  <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />
                 </td>
                 <td>${suggest.getCreatedAt()}</td>
                 <td>
                   <strong class="suggest-status status-${orderProduct.getStatus()}">
-                    ${suggest.getStatus()}
-                  </strong>
+                    ${suggest.getStatus()} </strong>
                 </td>
                 <td>
                   <c:set var="suggest" value="${suggest}" scope="session" />
@@ -56,7 +58,7 @@
                 </td>
               </tr>
             </c:forEach>
-          </tbody>                  
+          </tbody>
         </table>
       </div>
     </div>

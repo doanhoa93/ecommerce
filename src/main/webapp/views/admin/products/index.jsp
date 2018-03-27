@@ -23,7 +23,7 @@
               <th>Price</th>
               <th>Number</th>
               <th>Orders</th>
-              <th>Created at</th>              
+              <th>Created at</th>
             </tr>
           </thead>
           <tbody>
@@ -31,12 +31,14 @@
               <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href product-${product.getId()}"
                 data-href="${contextPath}/admin/products/${product.getId()}">
                 <td>${loop.index + 1}</td>
-                <td><img src="${product.getAvatar()}" class="img-responsive admin-product-avatar"></td>
+                <td>
+                  <img src="${product.getAvatar()}" class="img-responsive admin-product-avatar">
+                </td>
                 <td>${product.getName()}</td>
                 <td>${product.getCategory().getName()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />                
+                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />
                 </td>
                 <td>${product.getNumber()}</td>
                 <td>${product.getOrderProducts().size()}</td>
@@ -45,7 +47,7 @@
             </c:forEach>
           </tbody>
         </table>
-        <div id="form-product" class="modal fade" role="dialog"></div>        
+        <div id="form-product" class="modal fade" role="dialog"></div>
       </div>
     </div>
   </div>

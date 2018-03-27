@@ -6,16 +6,15 @@ import java.io.Serializable;
 public class Cart implements Serializable {
 	private Integer id;
 	private User user;
+	private String sessionId;
 	private Product product;
 	private int quantity;
 
 	public Cart() {
-		super();
 		this.quantity = 1;
 	}
 
 	public Cart(Integer id, User user, Product product, int quantity) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.product = product;
@@ -52,5 +51,13 @@ public class Cart implements Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

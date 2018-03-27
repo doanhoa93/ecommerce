@@ -43,7 +43,21 @@ public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartD
 
 		if (order != null)
 			criteria.addOrder(order);
-		return (List<Cart>) criteria.list();
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cart> getCartsWithGuest(String sessionId, int off, int limit, Order order) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("sessionId", sessionId));
+		criteria.setFirstResult(off);
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+		return criteria.list();
 	}
 
 	@Override

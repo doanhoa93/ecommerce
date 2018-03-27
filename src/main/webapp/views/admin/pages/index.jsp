@@ -4,11 +4,11 @@
   <div class="col-lg-3 col-md-6">
     <c:import url="/views/admin/pages/order_panel.jsp" />
   </div>
-  
+
   <div class="col-lg-3 col-md-6">
     <c:import url="/views/admin/pages/category_panel.jsp" />
   </div>
-  
+
   <div class="col-lg-3 col-md-6">
     <c:import url="/views/admin/pages/product_panel.jsp" />
   </div>

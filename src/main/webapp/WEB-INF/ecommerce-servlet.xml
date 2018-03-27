@@ -1,12 +1,10 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <!-- Config spring work with tiles -->
-  <bean id="viewResolver"
-    class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
     <property name="viewClass">
       <value>
         org.springframework.web.servlet.view.tiles3.TilesView
@@ -14,8 +12,7 @@
     </property>
   </bean>
 
-  <bean id="tilesConfigurer"
-    class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+  <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
     <property name="definitions">
       <list>
         <value>/WEB-INF/configs/spring-tiles.xml</value>
@@ -23,6 +20,5 @@
     </property>
   </bean>
 
-  <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>

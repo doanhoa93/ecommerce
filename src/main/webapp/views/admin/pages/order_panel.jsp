@@ -11,9 +11,11 @@
     </div>
   </div>
   <div class="panel-footer">
-    <a href="${contextPath}/admin/orders"> 
-      <span class="pull-left">View Details</span> 
-      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+    <a href="${contextPath}/admin/orders">
+      <span class="pull-left">View Details</span>
+      <span class="pull-right">
+        <i class="fa fa-arrow-circle-right"></i>
+      </span>
       <span class="clearfix"></span>
     </a>
   </div>

@@ -13,7 +13,6 @@ public class Category implements Serializable {
 	private List<Product> products;
 
 	public Category() {
-		super();
 	}
 
 	public Category(Integer id) {
@@ -21,7 +20,6 @@ public class Category implements Serializable {
 	}
 
 	public Category(Integer id, Integer parentId, String name) {
-		super();
 		this.id = id;
 		this.parentId = parentId;
 		this.name = name;

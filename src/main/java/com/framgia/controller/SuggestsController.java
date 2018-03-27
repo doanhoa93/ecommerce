@@ -33,13 +33,16 @@ public class SuggestsController extends BaseController {
 		ModelAndView model = new ModelAndView("suggests");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
+				model.addObject("suggests",
+						suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
 			else
 				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0,
-				        Integer.parseInt(entries), Order.desc("id")));
+						Integer.parseInt(entries), Order.desc("id")));
 		} else
-			model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
-		model.addObject("suggestsSize", suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
+			model.addObject("suggests",
+					suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
+		model.addObject("suggestsSize",
+				suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
 		return model;
 	}
 
@@ -50,8 +53,8 @@ public class SuggestsController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result)
-	        throws JsonProcessingException {
+	public @ResponseBody String create(@ModelAttribute("suggest") SuggestInfo suggestInfo,
+			BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		suggestInfo.setUserId(currentUser().getId());
 		suggestValidator.validate(suggestInfo, result);
@@ -76,7 +79,8 @@ public class SuggestsController extends BaseController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	public @ResponseBody String update(@PathVariable("id") Integer id,
-	        @ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result) throws JsonProcessingException {
+			@ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result)
+			throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		SuggestInfo oldSuggest = suggestService.findById(id);
 		if (oldSuggest != null && oldSuggest.getStatus().equals(Status.WAITING)) {

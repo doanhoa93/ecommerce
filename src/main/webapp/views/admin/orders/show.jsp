@@ -5,9 +5,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Order detail</h4>
       </div>
       <div class="modal-body">
@@ -16,21 +14,19 @@
             <span>Customer: </span>
             <span class="order-detail-customer">${order.getUser().getName()}</span>
           </div>
-          
+
           <div class="order-field">
             <span>Total Price: </span>
             <span class="order-detail-price">
               <fmt:setLocale value="en_US" />
               <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
-            </span>              
+            </span>
           </div>
-          
+
           <div class="order-field">
             <span>Status: </span>
-            <span class="order-status status-${order.getStatus()}">
-              ${order.getStatus()}
-            </span>              
-          </div>          
+            <span class="order-status status-${order.getStatus()}"> ${order.getStatus()} </span>
+          </div>
         </div>
         <table class="table table-bordered order-table" style="width: 100%">
           <thead class="">
@@ -42,10 +38,10 @@
               <th>Quantity</th>
               <th>Product's price</th>
               <th>Sum price</th>
-              <th>Status</th>            
+              <th>Status</th>
             </tr>
           </thead>
-        
+
           <tbody>
             <c:forEach items="${orderProducts}" var="orderProduct" varStatus="loop">
               <c:set var="product" value="${orderProduct.getProduct()}" scope="page" />
@@ -59,26 +55,25 @@
                 <td>${orderProduct.getQuantity()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />        
+                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />
                 </td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}" 
-                    type="currency" />              
+                  <fmt:formatNumber value="${product.getPrice() * orderProduct.getQuantity()}"
+                    type="currency" />
                 </td>
                 <td class="center">
                   <strong class="order-product-status status-${orderProduct.getStatus()}">
-                    ${orderProduct.getStatus()}
-                  </strong>
+                    ${orderProduct.getStatus()} </strong>
                 </td>
               </tr>
             </c:forEach>
           </tbody>
-        </table>      
+        </table>
         <div>
           <c:set var="order" value="${order}" scope="session" />
           <c:import url="/views/admin/orders/form.jsp" />
-          <c:remove var="order" scope="session"/>
+          <c:remove var="order" scope="session" />
         </div>
       </div>
     </div>
