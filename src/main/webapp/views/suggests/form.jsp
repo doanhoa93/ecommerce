@@ -3,12 +3,11 @@
 
 <c:if test="${suggest.getStatus() == 'WAITING'}">
   <a href="${contextPath}/suggests/${suggest.getId()}/edit" class="btn btn-primary btn-suggest">
-    Edit suggest
-  </a>
-  
-  <form:form action="${contextPath}/suggests/${suggest.getId()}" method="DELETE" 
+    Edit suggest </a>
+
+  <form:form action="${contextPath}/suggests/${suggest.getId()}" method="DELETE"
     data-confirm="Delete this suggest, are you sure?">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="submit" class="btn btn-danger btn-suggest" value="Delete" />
   </form:form>
 </c:if>

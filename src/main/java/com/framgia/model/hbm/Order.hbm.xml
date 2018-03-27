@@ -12,9 +12,14 @@
     <property name="totalPrice" type="float">
       <column name="total_price" default="0" />
     </property>
+    <property name="phoneNumber" column="phone_number" type="string" />
+    <property name="email" column="email" type="string" />
+    <property name="name" column="name" type="string" />
+    <property name="address" column="address" type="string" />
+    <property name="sessionId" column="session_id" type="string" />
 
     <many-to-one name="user" class="User">
-      <column name="user_id" not-null="true" />
+      <column name="user_id" />
     </many-to-one>
 
     <list name="orderProducts" fetch="select" cascade="delete"
@@ -28,6 +33,6 @@
       <key column="order_id" />
       <index column="id" />
       <one-to-many class="Notification" />
-    </list>    
+    </list>
   </class>
 </hibernate-mapping>

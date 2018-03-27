@@ -21,12 +21,13 @@
               <th>Product category</th>
               <th>Product price</th>
               <th>Created at</th>
-              <th>Status</th>       
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <c:forEach items="${suggests}" var="suggest" varStatus="loop">
-              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href-js suggest-${suggest.getId()}"
+              <tr
+                class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href-js suggest-${suggest.getId()}"
                 data-href="${contextPath}/admin/suggests/${suggest.getId()}">
                 <td>${loop.index + 1}</td>
                 <td>${suggest.getUser().getName()}</td>
@@ -38,8 +39,7 @@
                 </td>
                 <td>${suggest.getCreatedAt()}</td>
                 <td class="center suggest-status status-${suggest.getStatus()}">
-                  ${suggest.getStatus()}
-                </td>
+                  ${suggest.getStatus()}</td>
               </tr>
             </c:forEach>
           </tbody>

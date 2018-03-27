@@ -35,17 +35,16 @@
       <index column="id" />
       <one-to-many class="Notification" />
     </list>
-    <list name="chats" fetch="select" cascade="delete"
-      inverse="true">
+    <list name="chats" fetch="select" cascade="delete" inverse="true">
       <key column="receiver_id" />
       <index column="id" />
       <one-to-many class="Chat" />
-    </list>  
+    </list>
     <list name="sendedChats" fetch="select" cascade="delete"
       inverse="true">
       <key column="sender_id" />
       <index column="id" />
       <one-to-many class="Chat" />
-    </list>         
+    </list>
   </class>
 </hibernate-mapping>

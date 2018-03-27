@@ -11,38 +11,39 @@
         <div class="alert alert-warning">${message}</div>
       </c:if>
 
-      <form:form id="update-suggest" action="${contextPath}/suggests/${suggest.getId()}" method="PATCH" 
-        enctype="multipart/form-data" modelAttribute="suggest" class="form-suggest">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+      <form:form id="update-suggest" action="${contextPath}/suggests/${suggest.getId()}"
+        method="PATCH" enctype="multipart/form-data" modelAttribute="suggest" class="form-suggest">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div class="field">
           <label>Avatar: </label>
           <form:input type="file" path="avatarFile" class="avatar" />
           <div class="suggest-avatar">
             <img src="${suggest.getAvatar()}" class="img-responsive suggest-avatar-panel" />
           </div>
-          <form:errors path="avatar" style="color:red;"/>          
+          <form:errors path="avatar" style="color:red;" />
         </div>
-        
+
         <div class="field">
           <label>Name: </label>
           <form:input path="name" placeholder="Name of product" class="form-control" />
         </div>
-        
-        <div class="field">    
+
+        <div class="field">
           <label>Information: </label>
-          <form:textarea path="information" placeholder="Information of product" class="form-control" />
+          <form:textarea path="information" placeholder="Information of product"
+            class="form-control" />
         </div>
-          
+
         <div class="field">
           <label>Category: </label>
           <form:input path="category" placeholder="Category of product" class="form-control" />
         </div>
-        
+
         <div class="field">
           <label>Price($): </label>
           <form:input path="price" type="number" step="any" class="form-control" />
         </div>
-        
+
         <div class="actions">
           <a href="${contextPath}/suggests" class="btn btn-default btn-suggest">Cancel</a>
           <input type="submit" class="btn btn-primary btn-suggest" value="Save" />

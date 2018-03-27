@@ -13,7 +13,7 @@
 
     <mapping resource="com/framgia/model/hbm/Cart.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Category.hbm.xml" />
-    <mapping resource="com/framgia/model/hbm/Chat.hbm.xml" />    
+    <mapping resource="com/framgia/model/hbm/Chat.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Comment.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Image.hbm.xml" />
     <mapping resource="com/framgia/model/hbm/Notification.hbm.xml" />

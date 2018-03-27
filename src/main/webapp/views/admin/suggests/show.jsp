@@ -5,9 +5,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Suggest detail</h4>
       </div>
       <div class="modal-body">
@@ -17,25 +15,24 @@
               <span>Customer: </span>
               <span class="suggest-detail-customer">${suggest.getUser().getName()}</span>
             </div>
-            
+
             <div class="suggest-field">
               <span>Status: </span>
               <span class="suggest-status status-${suggest.getStatus()}">
-                ${suggest.getStatus()}              
-              </span>              
-            </div>          
-            
+                ${suggest.getStatus()} </span>
+            </div>
+
             <div class="suggest-field">
               <span>Information: </span>
               <span>${suggest.getInformation()}</span>
             </div>
           </div>
-          
+
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="suggest-field">
               <span class="suggest-detail-avatar">
                 <img src="${suggest.getAvatar()}" class="img-responsive" />
-              </span>              
+              </span>
             </div>
           </div>
         </div>
@@ -48,23 +45,23 @@
               <th>Created at</th>
             </tr>
           </thead>
-        
+
           <tbody>
-              <tr>
-                <td>${suggest.getName()}</td>
-                <td>${suggest.getCategory()}</td>
-                <td>
-                  <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />        
-                </td>
-                <td>${suggest.getCreatedAt()}</td>
-              </tr>
+            <tr>
+              <td>${suggest.getName()}</td>
+              <td>${suggest.getCategory()}</td>
+              <td>
+                <fmt:setLocale value="en_US" />
+                <fmt:formatNumber value="${suggest.getPrice()}" type="currency" />
+              </td>
+              <td>${suggest.getCreatedAt()}</td>
+            </tr>
           </tbody>
-        </table>      
+        </table>
         <div>
           <c:set var="suggest" value="${suggest}" scope="session" />
           <c:import url="/views/admin/suggests/form.jsp" />
-          <c:remove var="suggest" scope="session"/>
+          <c:remove var="suggest" scope="session" />
         </div>
       </div>
     </div>

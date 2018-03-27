@@ -10,11 +10,9 @@ public class Recent implements Serializable {
 	private Product product;
 
 	public Recent() {
-		super();
 	}
 
 	public Recent(Integer id, Product product) {
-		super();
 		this.id = id;
 		this.product = product;
 	}

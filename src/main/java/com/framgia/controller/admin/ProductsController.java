@@ -32,13 +32,14 @@ public class ProductsController extends AdminController {
 		ModelAndView model = new ModelAndView("adminProducts");
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
-				model.addObject("products", productService.getProducts(null, 0, 0, Order.desc("createdAt")));
-			else
 				model.addObject("products",
-				        productService.getProducts(null, 0, Integer.parseInt(entries), Order.desc("createdAt")));
+						productService.getProducts(null, 0, 0, Order.desc("createdAt")));
+			else
+				model.addObject("products", productService.getProducts(null, 0,
+						Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
-			model.addObject("products",
-			        productService.getProducts(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
+			model.addObject("products", productService.getProducts(null, 0,
+					Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 
 		return model;
 	}
@@ -53,8 +54,8 @@ public class ProductsController extends AdminController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("product") ProductInfo productInfo, BindingResult result)
-	        throws JsonProcessingException {
+	public @ResponseBody String create(@ModelAttribute("product") ProductInfo productInfo,
+			BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		productValidator.validate(productInfo, result);
 		if (!result.hasErrors() && productService.createProduct(productInfo)) {
@@ -96,13 +97,15 @@ public class ProductsController extends AdminController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	public @ResponseBody String update(@PathVariable("id") Integer id,
-	        @ModelAttribute("product") ProductInfo productInfo, BindingResult result) throws JsonProcessingException {
+			@ModelAttribute("product") ProductInfo productInfo, BindingResult result)
+			throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		ProductInfo oldProduct = productService.findById(id);
 		if (oldProduct != null) {
 			productValidator.validate(productInfo, result);
 			if (!result.hasErrors() && productService.updateProduct(oldProduct, productInfo)) {
-				hashMap.put("url", request.getContextPath() + "/admin/products/" + productInfo.getId());
+				hashMap.put("url",
+						request.getContextPath() + "/admin/products/" + productInfo.getId());
 			} else
 				hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
 		}

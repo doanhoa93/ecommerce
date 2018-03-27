@@ -10,21 +10,23 @@ public class Order implements Serializable {
 	private User user;
 	private float totalPrice;
 	private int status;
+	private String phoneNumber;
+	private String name;
+	private String address;
+	private String email;
+	private String sessionId;
 	private List<OrderProduct> orderProducts;
 	private List<Notification> notifications;
 	private Date createdAt;
 
 	public Order() {
-		super();
 	}
 
 	public Order(Integer id) {
-		super();
 		this.id = id;
 	}
 
 	public Order(Integer id, User user, float totalPrice, int status, Date createdAt) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.totalPrice = totalPrice;
@@ -86,5 +88,45 @@ public class Order implements Serializable {
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

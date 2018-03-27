@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -70,10 +71,15 @@ public class BaseController {
 
 	public UserInfo currentUser() {
 		try {
-			return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+			return userService
+					.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public String currentSession() {
+		return RequestContextHolder.currentRequestAttributes().getSessionId();
 	}
 
 	public String toJson(HashMap<String, Object> hashMap) throws JsonProcessingException {
@@ -81,7 +87,8 @@ public class BaseController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public HashMap toHashMap(String data) throws JsonParseException, JsonMappingException, IOException {
+	public HashMap toHashMap(String data)
+			throws JsonParseException, JsonMappingException, IOException {
 		return new ObjectMapper().readValue(data, HashMap.class);
 	}
 
@@ -118,8 +125,8 @@ public class BaseController {
 
 	public List<FieldError> convertErrorsToMap(List<FieldError> fieldErrors) {
 		return fieldErrors.stream().map(fieldError -> {
-			return new FieldError(fieldError.getObjectName(), fieldError.getField(),
-			        messageSource.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.US));
+			return new FieldError(fieldError.getObjectName(), fieldError.getField(), messageSource
+					.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.US));
 		}).collect(Collectors.toList());
 	}
 }

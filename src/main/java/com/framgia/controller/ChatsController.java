@@ -35,7 +35,7 @@ public class ChatsController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@MessageMapping(value = "chats/{token}")
 	public void chat(@DestinationVariable("token") String token, String chat)
-	        throws JsonParseException, JsonMappingException, IOException {
+			throws JsonParseException, JsonMappingException, IOException {
 		HashMap<String, String> hashMap = toHashMap(chat);
 		ChatInfo chatInfo = new ChatInfo();
 		chatInfo.setSender(userService.findByToken(token));
@@ -48,12 +48,12 @@ public class ChatsController extends BaseController {
 
 	@RequestMapping(value = "chats/{token}")
 	public @ResponseBody String index(@PathVariable("token") String token,
-	        @RequestParam(value = "off", required = false) int off) throws IOException {
+			@RequestParam(value = "off", required = false) int off) throws IOException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		UserInfo userInfo = userService.findByToken(token);
 		if (off >= 0 && userInfo != null) {
-			hashMap.put("chats",
-			        chatService.getChats(userInfo.getId(), off, Paginate.CHAT_LIMIT, Order.desc("createdAt")));
+			hashMap.put("chats", chatService.getChats(userInfo.getId(), off, Paginate.CHAT_LIMIT,
+					Order.desc("createdAt")));
 		}
 		return toJson(hashMap);
 	}

@@ -75,19 +75,16 @@
 	display: inline-block;
 }
 
-.admin-edit-product,
-.admin-new-product {
+.admin-edit-product, .admin-new-product {
 	padding: 20px;
 }
 
-.admin-edit-product .header,
-.admin-new-product .header {
+.admin-edit-product .header, .admin-new-product .header {
 	margin-bottom: 20px;
 	text-align: center;
 }
 
-.admin-edit-product .field,
-.admin-new-product .field {
+.admin-edit-product .field, .admin-new-product .field {
 	margin-bottom: 10px;
 }
 

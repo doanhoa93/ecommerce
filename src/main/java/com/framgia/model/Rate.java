@@ -10,11 +10,9 @@ public class Rate implements Serializable {
 	private int rating;
 
 	public Rate() {
-		super();
 	}
 
 	public Rate(Integer id, User user, Product product, int rating) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.product = product;

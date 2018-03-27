@@ -4,7 +4,8 @@
 <div class="row">
   <div class="col-lg-12 page-header">
     <h1>Categories</h1>
-    <a data-href="${contextPath}/admin/categories/new" class="btn btn-primary new-category">New category</a>
+    <a data-href="${contextPath}/admin/categories/new" class="btn btn-primary new-category">New
+      category</a>
   </div>
 </div>
 

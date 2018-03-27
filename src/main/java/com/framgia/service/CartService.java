@@ -15,7 +15,9 @@ public interface CartService extends BaseService<Integer, CartInfo> {
 
 	List<CartInfo> getCarts(Integer userId, String page, int limit, Order order);
 
+	List<CartInfo> getCartsWithGuest(String sessionId, String page, int limit, Order order);
+
 	CartInfo getCart(Integer userId, Integer productId);
-	
+
 	boolean createCart(CartInfo cartInfo);
 }

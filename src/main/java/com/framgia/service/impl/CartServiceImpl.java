@@ -139,21 +139,42 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
+	public List<CartInfo> getCartsWithGuest(String sessionId, String page, int limit, Order order) {
+		try {
+			int off;
+			if (StringUtils.isEmpty(page)) {
+				off = 0;
+			} else
+				off = (Integer.parseInt(page) - 1) * limit;
+			return getCartDAO().getCartsWithGuest(sessionId, off, limit, order).stream().map(ModelToBean::toCartInfo)
+			        .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public boolean createCart(CartInfo cartInfo) {
 		try {
-			Cart cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
-			if (cart == null) {
-				cart = new Cart();
-				cart.setQuantity(0);
-				cart.setUser(new User(cartInfo.getUserId()));
-				cart.setProduct(new Product(cartInfo.getProductId()));
-			}
-
+			Cart cart = new Cart();
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
-			
-			cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
+			if (StringUtils.isEmpty(cartInfo.getSessionId())) {
+				cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
+				if (cart == null) {
+					cart = new Cart();
+					cart.setQuantity(0);
+					cart.setUser(new User(cartInfo.getUserId()));
+					cart.setProduct(new Product(cartInfo.getProductId()));
+				}
 
+				cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
+			} else {
+				cart.setProduct(new Product(cartInfo.getProductId()));
+				cart.setQuantity(cartInfo.getQuantity());
+				cart.setSessionId(cartInfo.getSessionId());
+			}
 			getCartDAO().saveOrUpdate(cart);
 			return true;
 		} catch (Exception e) {

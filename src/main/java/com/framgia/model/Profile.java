@@ -12,17 +12,14 @@ public class Profile implements Serializable {
 	private String address;
 
 	public Profile() {
-		super();
 	}
 
 	public Profile(Integer id, User user) {
-		super();
 		this.id = id;
 		this.user = user;
 	}
 
 	public Profile(Integer id, User user, int gender, Date birthday, String address) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.gender = gender;

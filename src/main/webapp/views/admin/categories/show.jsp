@@ -6,18 +6,16 @@
   <div class="col-lg-12 page-header">
     <h1>${category.getName()}</h1>
     <div class="category-parent">
-      Parent: 
+      Parent:
       <a href="${contextPath}/admin/categories/${category.getParentId()}">${category.getParentName()}</a>
     </div>
-     
-    <a data-href="${contextPath}/admin/categories/${category.getId()}/edit" 
-      class="btn btn-primary edit-category">
-      Edit this category
-    </a>
-    
-    <form:form action="${contextPath}/admin/categories/${category.getId()}" method="DELETE" 
+
+    <a data-href="${contextPath}/admin/categories/${category.getId()}/edit"
+      class="btn btn-primary edit-category"> Edit this category </a>
+
+    <form:form action="${contextPath}/admin/categories/${category.getId()}" method="DELETE"
       class="delete-category">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <input type="submit" class="btn btn-danger" value="Delete this category">
     </form:form>
   </div>
@@ -44,11 +42,13 @@
               <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href product-${product.getId()}"
                 data-href="${contextPath}/admin/products/${product.getId()}">
                 <td>${loop.index + 1}</td>
-                <td><img src="${product.getAvatar()}" class="img-responsive admin-product-avatar"></td>
+                <td>
+                  <img src="${product.getAvatar()}" class="img-responsive admin-product-avatar">
+                </td>
                 <td>${product.getName()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />                
+                  <fmt:formatNumber value="${product.getPrice()}" type="currency" />
                 </td>
                 <td>${product.getNumber()}</td>
                 <td>${product.getOrderProducts().size()}</td>
@@ -56,7 +56,7 @@
             </c:forEach>
           </tbody>
         </table>
-        <div id="form-product" class="modal fade" role="dialog"></div>        
+        <div id="form-product" class="modal fade" role="dialog"></div>
       </div>
     </div>
   </div>

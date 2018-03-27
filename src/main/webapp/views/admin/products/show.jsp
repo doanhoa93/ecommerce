@@ -5,37 +5,37 @@
 <div class="admin-product">
   <div class="product-header">
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 product-header-left">
-      <div class="product-name">
-        ${product.getName()}
-      </div>
+      <div class="product-name">${product.getName()}</div>
 
       <div class="product-rate">
         <c:if test="${product.getRating() > 0}">
           <c:forEach begin="1" end="${product.getRating()}">
-            <span class="rate"><i class="fa fa-star active"></i></span>
+            <span class="rate">
+              <i class="fa fa-star active"></i>
+            </span>
           </c:forEach>
-  
+
           <c:forEach begin="${product.getRating() + 1}" end="5">
-            <span class="rate"><i class="fa fa-star"></i></span>
+            <span class="rate">
+              <i class="fa fa-star"></i>
+            </span>
           </c:forEach>
           <span>(${product.getRating()})</span>
         </c:if>
       </div>
-      
-      <a href="${contextPath}/admin/products/${product.getId()}/edit" 
-        class="btn btn-primary edit-product">
-        Edit this product
-      </a>
-    
-      <form:form action="${contextPath}/admin/products/${product.getId()}" method="DELETE" 
+
+      <a href="${contextPath}/admin/products/${product.getId()}/edit"
+        class="btn btn-primary edit-product"> Edit this product </a>
+
+      <form:form action="${contextPath}/admin/products/${product.getId()}" method="DELETE"
         class="delete-product">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="submit" class="btn btn-danger" value="Delete this product">
-      </form:form>      
+      </form:form>
     </div>
     <div class="clearfix"></div>
   </div>
-      
+
   <div class="product-body">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-left">
       <img src="${product.getAvatar()}" class="img-responsive" />
@@ -56,18 +56,17 @@
         <span class="number-title">Number: </span>
         <span class="number">${product.getNumber()}</span>
       </div>
-      
+
       <c:if test="${product.getIsPromotion()}">
         <div class="product-promotion">
           <span class="promotion-title">Sale Off:</span>
           <span class="promotion">${product.getSaleOff()}%</span>
         </div>
-        
-        <div>
-          From ${product.getPromotion().getStartDate()} To ${product.getPromotion().getEndDate()}
-        </div>
+
+        <div>From ${product.getPromotion().getStartDate()} To
+          ${product.getPromotion().getEndDate()}</div>
       </c:if>
-      
+
       <div class="product-information">
         <span class="information">${product.getInformation()}</span>
       </div>
@@ -78,8 +77,7 @@
   <div class="product-footer">
     <div class="product-images">
       <hr>
-      <div id="recommended-item-carousel" class="carousel slide"
-        data-ride="carousel">
+      <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <c:choose>
           <c:when test="${slideSize > 0}">
             <div class="carousel-inner">
@@ -95,12 +93,12 @@
               </c:forEach>
             </div>
 
-            <a class="left recommended-item-control"
-              href="#recommended-item-carousel" data-slide="prev">
+            <a class="left recommended-item-control" href="#recommended-item-carousel"
+              data-slide="prev">
               <i class="fa fa-angle-left"></i>
             </a>
-            <a class="right recommended-item-control"
-              href="#recommended-item-carousel" data-slide="next">
+            <a class="right recommended-item-control" href="#recommended-item-carousel"
+              data-slide="next">
               <i class="fa fa-angle-right"></i>
             </a>
           </c:when>

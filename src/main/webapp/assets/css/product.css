@@ -73,8 +73,7 @@
 	width: 100%;
 }
 
-.products-left .name-range-input,
-.products-left .name-category {
+.products-left .name-range-input, .products-left .name-category {
 	border: 1px solid #ccc;
 	color: #696763;
 	display: block;

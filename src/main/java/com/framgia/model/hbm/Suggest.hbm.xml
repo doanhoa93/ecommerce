@@ -27,7 +27,7 @@
     </property>
     <property name="status" type="integer">
       <column name="status" default="0" />
-    </property>    
+    </property>
 
     <many-to-one name="user" class="User">
       <column name="user_id" not-null="true" />

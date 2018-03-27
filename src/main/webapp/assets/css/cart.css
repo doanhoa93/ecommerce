@@ -117,9 +117,19 @@
 .carts-load-more {
 	cursor: pointer;
 	margin-top: 20px;
-    text-align: center;
+	text-align: center;
 }
 
 .carts-load-more .load-more {
-    color: #FE980F;	
+	color: #FE980F;
+}
+
+.field {
+	margin-bottom: 20px;
+}
+
+.btn-order, .btn-cancel-order {
+	float: right;
+	margin-right: 10px;
+	margin-top: 0 !important;
 }

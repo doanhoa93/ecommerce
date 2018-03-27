@@ -10,9 +10,10 @@
     <property name="quantity" type="integer">
       <column name="quantity" default="1" />
     </property>
+    <property name="sessionId" column="session_id" type="string" />
 
     <many-to-one name="user" class="User">
-      <column name="user_id" not-null="true" />
+      <column name="user_id" />
     </many-to-one>
 
     <many-to-one name="product" class="Product">

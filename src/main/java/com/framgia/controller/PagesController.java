@@ -24,12 +24,13 @@ public class PagesController extends BaseController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - Paginate.DATE_RECENT);
 		model.addObject("recentProducts",
-		        productService.recentProducts(calendar.getTime(), Paginate.RECENT_PRODUCT_LIMIT));
-		model.addObject("recommendProducts", productService.randomProducts(Paginate.RECOMMEND_PRODUCT_LIMIT));
+				productService.recentProducts(calendar.getTime(), Paginate.RECENT_PRODUCT_LIMIT));
+		model.addObject("recommendProducts",
+				productService.randomProducts(Paginate.RECOMMEND_PRODUCT_LIMIT));
 
 		if (currentUser() != null) {
-			model.addObject("chats",
-			        chatService.getChats(currentUser().getId(), 0, Paginate.CHAT_LIMIT, Order.desc("createdAt")));
+			model.addObject("chats", chatService.getChats(currentUser().getId(), 0,
+					Paginate.CHAT_LIMIT, Order.desc("createdAt")));
 		}
 		return model;
 	}

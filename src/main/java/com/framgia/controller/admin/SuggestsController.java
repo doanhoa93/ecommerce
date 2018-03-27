@@ -34,10 +34,11 @@ public class SuggestsController extends AdminController {
 			if (entries.equals("all"))
 				model.addObject("suggests", suggestService.getObjects());
 			else
-				model.addObject("suggests", suggestService.getObjects(0, Integer.parseInt(entries)));
+				model.addObject("suggests",
+						suggestService.getObjects(0, Integer.parseInt(entries)));
 		} else
 			model.addObject("suggests", suggestService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
-		return model;			
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -53,8 +54,8 @@ public class SuggestsController extends AdminController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
-	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id, BindingResult result)
-	        throws JsonProcessingException {
+	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id,
+			BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);

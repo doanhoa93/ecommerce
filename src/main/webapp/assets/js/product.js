@@ -53,7 +53,9 @@ $(document).ready(function() {
 	scrollNameCategory();
 	
 	function scrollNameCategory() {
-		var position = $('.category .active').parent().position().top - $('.categories').position().top;
-		$('.categories').scrollTop(position);
+		if($('.category .active').length) {
+			var position = $('.category .active').parent().position().top - $('.categories').position().top;
+			$('.categories').scrollTop(position);
+		}
 	}
 });

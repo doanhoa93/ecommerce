@@ -24,7 +24,6 @@ public class Product implements Serializable {
 	private List<OrderProduct> orderProducts;
 
 	public Product() {
-		super();
 	}
 
 	public Product(Integer id) {
@@ -33,7 +32,6 @@ public class Product implements Serializable {
 
 	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId, float saleOff, String name,
 	        float price, float rating, String avatar, String information, int number) {
-		super();
 		this.id = id;
 		this.category = category;
 		this.isPromotion = isPromotion;

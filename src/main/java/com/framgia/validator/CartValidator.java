@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.ProductInfo;
@@ -29,39 +30,57 @@ public class CartValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 	}
 
-	public void validateCreate(Object target, Integer userId, Errors errors) {
+	public void validateCreate(Object target, UserInfo userInfo, Errors errors) {
 		CartInfo cartInfo = (CartInfo) target;
 		Integer productId = cartInfo.getProductId();
-		CartInfo oldCart = cartService.getCart(userId, productId);
-
-		cartInfo.setProductId(productId);
-		cartInfo.setUserId(userId);
-
-		if (oldCart != null && cartInfo.getQuantity() + oldCart.getQuantity() > oldCart.getProduct().getNumber())
-			errors.rejectValue("quantity", "cart.quantity.invalid");
-		else {
-			ProductInfo productInfo = productService.findById(productId);
-			if (productInfo != null && cartInfo.getQuantity() > productInfo.getNumber())
-				errors.rejectValue("quantity", "cart.quantity.invalid");
+		ProductInfo productInfo = productService.findById(productId);
+		if (productInfo == null) {
+			errors.rejectValue("product", "cart.product.invalid");
+			return;
 		}
+
+		if (userInfo != null) {
+			CartInfo oldCart = cartService.getCart(userInfo.getId(), productId);
+
+			cartInfo.setProductId(productId);
+			cartInfo.setUserId(userInfo.getId());
+
+			if (oldCart != null && cartInfo.getQuantity() + oldCart.getQuantity() > oldCart.getProduct().getNumber())
+				errors.rejectValue("quantity", "cart.quantity.invalid");
+
+			if (cartInfo.getQuantity() > productInfo.getNumber())
+				errors.rejectValue("quantity", "cart.quantity.invalid");
+		} else if (cartInfo.getQuantity() > productInfo.getNumber()) {
+			errors.rejectValue("quantity", "cart.quantity.invalid");
+		}
+
+		cartInfo.setSessionId(currentSession());
 	}
 
 	public void validateUpdate(Object target, UserInfo currentUser, Errors errors) {
 		CartInfo cartInfo = (CartInfo) target;
 
-		if (cartInfo.getUser().getId() != currentUser.getId())
+		if (currentUser != null && cartInfo.getUser().getId() != currentUser.getId())
 			errors.rejectValue("user", "system.permission.denied");
 
 		if (cartInfo.getQuantity() <= 0)
 			errors.rejectValue("quantity", "cart.quantity.invalid");
+
+		if (cartInfo.getSessionId() != null && !currentSession().equals(cartInfo.getSessionId()))
+			errors.reject("sessionId", "cart.session_id.invalid");
+
 	}
 
 	public boolean validateDelete(Object target, UserInfo currentUser) {
 		CartInfo cartInfo = (CartInfo) target;
 
-		if (cartInfo.getUser().getId() != currentUser.getId())
+		if (currentUser != null && cartInfo.getUser().getId() != currentUser.getId())
 			return false;
 
-		return true;
+		return currentSession().equals(cartInfo.getSessionId());
+	}
+
+	private String currentSession() {
+		return RequestContextHolder.currentRequestAttributes().getSessionId();
 	}
 }

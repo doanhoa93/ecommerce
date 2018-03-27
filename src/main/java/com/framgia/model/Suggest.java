@@ -15,9 +15,11 @@ public class Suggest implements Serializable {
 	private Date createdAt;
 	private int status;
 
+	public Suggest() {
+	}
+
 	public Suggest(Integer id, User user, String name, String information, String category, String avatar, float price,
 	        Date createdAt) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.name = name;
@@ -26,10 +28,6 @@ public class Suggest implements Serializable {
 		this.avatar = avatar;
 		this.price = price;
 		this.createdAt = createdAt;
-	}
-
-	public Suggest() {
-		super();
 	}
 
 	public Integer getId() {

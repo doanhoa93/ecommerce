@@ -4,7 +4,7 @@
 
 <div class="category-tab">
   <div class="col-sm-12">
-    <h2 class="title text-center">Hot categories</h2>    
+    <h2 class="title text-center">Hot categories</h2>
     <ul class="nav nav-tabs">
       <c:forEach var="category" items="${categories}" varStatus="loop">
         <li class="${loop.index == 0 ? 'active' : '' }">

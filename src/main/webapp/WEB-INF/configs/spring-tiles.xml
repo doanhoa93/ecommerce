@@ -114,6 +114,18 @@
     </put-list-attribute>
   </definition>
 
+  <definition name="orderGuest" extends="baselayout">
+    <put-attribute name="title" value="Order | Ecommerce" />
+    <put-attribute name="body" value="/views/orders/show_with_guest.jsp" />
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/order.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/order.js" />
+    </put-list-attribute>
+  </definition>
+
   <definition name="editOrder" extends="baselayout">
     <put-attribute name="title" value="Edit order | Ecommerce" />
     <put-attribute name="body" value="/views/orders/edit.jsp" />
@@ -211,10 +223,8 @@
       <add-attribute value="/assets/admin/lib-css/metisMenu.min.css" />
       <add-attribute value="/assets/admin/lib-css/sb-admin-2.min.css" />
       <add-attribute value="/assets/admin/lib-css/font-awesome.min.css" />
-      <add-attribute
-        value="/assets/admin/lib-css/dataTables.bootstrap.min.css" />
-      <add-attribute
-        value="/assets/admin/lib-css/dataTables.responsive.min.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.bootstrap.min.css" />
+      <add-attribute value="/assets/admin/lib-css/dataTables.responsive.min.css" />
       <add-attribute value="/assets/admin/lib-css/main.min.css" />
       <add-attribute value="/assets/admin/css/page.css" />
     </put-list-attribute>
@@ -293,8 +303,7 @@
 
   <definition name="adminCategories" extends="adminBaseLayout">
     <put-attribute name="title" value="Admin | Ecommerce" />
-    <put-attribute name="body"
-      value="/views/admin/categories/index.jsp" />
+    <put-attribute name="body" value="/views/admin/categories/index.jsp" />
   </definition>
 
   <definition name="adminCategory" extends="adminBaseLayout">

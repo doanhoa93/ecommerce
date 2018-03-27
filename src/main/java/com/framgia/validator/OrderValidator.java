@@ -2,8 +2,8 @@ package com.framgia.validator;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -49,13 +49,18 @@ public class OrderValidator implements Validator {
 			errors.rejectValue("status", "order.status.inlavid");
 	}
 
-	public List<Integer> validateCreate(List<String> strCartIds, Errors errors) {
-		List<Integer> cartIds = null;
-		if (strCartIds == null || strCartIds.isEmpty())
-			errors.rejectValue("carts", "order.carts.invalid");
-		else
-			cartIds = strCartIds.stream().map(Integer::parseInt).collect(Collectors.toList());
-		return cartIds;
+	public void validateCreate(OrderInfo orderInfo, Errors errors) {
+		if (orderInfo.getCartIds() == null || orderInfo.getCartIds().isEmpty())
+			errors.rejectValue("cartIds", "order.carts.invalid");
+
+		if (StringUtils.isEmpty(orderInfo.getPhoneNumber()))
+			errors.rejectValue("phoneNumber", "order.phone_number.empty");
+
+		if (StringUtils.isEmpty(orderInfo.getName()))
+			errors.rejectValue("name", "order.name.empty");
+
+		if (StringUtils.isEmpty(orderInfo.getEmail()))
+			errors.rejectValue("email", "order.email.empty");
 	}
 
 	public boolean validateEdit(Object target, UserInfo userInfo) {

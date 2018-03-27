@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,55 +35,54 @@ public class OrdersController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
 		ModelAndView model = new ModelAndView("orders");
-		if (StringUtils.isNotEmpty(entries)) {
-			if (entries.equals("all"))
-				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
-			else
+		if (currentUser() != null) {
+			if (StringUtils.isNotEmpty(entries) && !entries.equals("all")) {
+				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0,
+						Integer.parseInt(entries), Order.desc("id")));
+			} else {
 				model.addObject("orders",
-				        orderService.getOrders(currentUser().getId(), 0, Integer.parseInt(entries), Order.desc("id")));
+						orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
+			}
+			model.addObject("ordersSize",
+					orderService.getOrders(currentUser().getId(), 0, 0, null).size());
 		} else
-			model.addObject("orders", orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
-		model.addObject("ordersSize", orderService.getOrders(currentUser().getId(), 0, 0, null).size());
+			model.setViewName("redirect:/");
 		return model;
+
 	}
 
-	@SuppressWarnings({ "unchecked", "finally" })
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@RequestBody String data, BindingResult result)
-	        throws JsonParseException, JsonMappingException, IOException {
-		HashMap<String, Object> hashMap = toHashMap(data);
-		List<String> strCartIds = (List<String>) hashMap.get("cartIds");
-		hashMap.clear();
-		try {
-			List<Integer> cartIds = orderValidator.validateCreate(strCartIds, result);
-			if (!result.hasErrors() && orderService.createOrder(currentUser().getId(), cartIds)) {
-				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-				hashMap.put("url", "/orders");
-			} else
-				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-		} catch (Exception e) {
-			logger.error(e);
+	public @ResponseBody String create(@ModelAttribute("orderInfo") OrderInfo orderInfo,
+			BindingResult result) throws JsonParseException, JsonMappingException, IOException {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		orderValidator.validateCreate(orderInfo, result);
+		orderInfo.setUser(currentUser());
+		if (!result.hasErrors() && orderService.createOrder(orderInfo, result)) {
+			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
+			if (currentUser() != null)
+				hashMap.put("url", request.getContextPath() + "/orders");
+			else
+				hashMap.put("url", request.getContextPath() + "/orders/" + orderInfo.getId());
+		} else {
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-		} finally {
-			if (hashMap.get("msg").equals(messageSource.getMessage("error", null, Locale.US))) {
-				HashMap<String, Object> error = new HashMap<>();
-				error.put("error", messageSource.getMessage("system.error", null, Locale.US));
-				hashMap.put("error", error);
-			}
-			return toJson(hashMap);
+			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
 		}
+		return toJson(hashMap);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		ModelAndView model = new ModelAndView("order");
-		OrderInfo order = orderService.findById(id);
-		if (order != null) {
-			model.addObject("order", order);
+		OrderInfo orderInfo = orderService.findById(id);
+		ModelAndView model = new ModelAndView();
+		if (isOwner(orderInfo)) {
+			model.setViewName("order");
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
-		} else {
+		} else if (isGuest(orderInfo))
+			model.setViewName("orderGuest");
+		else
 			model.setViewName("404");
-		}
+
+		model.addObject("order", orderInfo);
 		return model;
 	}
 
@@ -102,19 +102,24 @@ public class OrdersController extends BaseController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
-	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id, BindingResult result)
-	        throws JsonProcessingException {
+	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id,
+			BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			List<HashMap<String, Object>> orderProducts = (List<HashMap<String, Object>>) hashMap.get("orderProducts");
+			List<HashMap<String, Object>> orderProducts = (List<HashMap<String, Object>>) hashMap
+					.get("orderProducts");
 			hashMap.clear();
 			OrderInfo orderInfo = orderService.findById(id);
-			orderValidator.validateUpdate(orderInfo, currentUser(), orderProducts, result);
-			if (!result.hasErrors() && orderService.updateOrderProduct(orderInfo, orderProducts))
-				hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-			else
-				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
+			if (isOwner(orderInfo)) {
+				orderValidator.validateUpdate(orderInfo, currentUser(), orderProducts, result);
+				if (!result.hasErrors()
+						&& orderService.updateOrderProduct(orderInfo, orderProducts))
+					hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
+				else
+					hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
+			} else
+				return "404";
 			return toJson(hashMap);
 		} catch (Exception e) {
 			logger.error(e);
@@ -126,7 +131,8 @@ public class OrdersController extends BaseController {
 	public String delete(@PathVariable("id") Integer id) {
 		try {
 			OrderInfo orderInfo = orderService.findById(id);
-			if (orderValidator.validateDelete(orderInfo, currentUser()) && orderService.delete(orderInfo))
+			if (isOwner(orderInfo) && orderValidator.validateDelete(orderInfo, currentUser())
+					&& orderService.delete(orderInfo))
 				return "redirect:/orders";
 			else
 				return "404";
@@ -134,5 +140,15 @@ public class OrdersController extends BaseController {
 			logger.error(e);
 			return "404";
 		}
+	}
+
+	private boolean isOwner(OrderInfo orderInfo) {
+		return currentUser() != null && orderInfo != null && orderInfo.getUser() != null
+				&& orderInfo.getUser().getId() == currentUser().getId();
+	}
+
+	private boolean isGuest(OrderInfo orderInfo) {
+		return currentUser() == null && orderInfo != null && orderInfo.getSessionId() != null
+				&& currentSession().equals(orderInfo.getSessionId());
 	}
 }
