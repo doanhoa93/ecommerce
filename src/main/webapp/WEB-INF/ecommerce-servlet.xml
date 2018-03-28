@@ -20,5 +20,11 @@
     </property>
   </bean>
 
+  <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+    <property name="location">
+      <value>/WEB-INF/configs/spring-excel.xml</value>
+    </property>
+  </bean>
+
   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>

@@ -1,6 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<div class="row row-panel report-btn">
+  <a href="${contextPath}/admin/reports" class="btn btn-primary">Export Report</a>
+</div>
+
 <div class="row row-panel">
+
   <div class="col-lg-3 col-md-6">
     <c:import url="/views/admin/pages/order_panel.jsp" />
   </div>
