@@ -21,10 +21,10 @@ public class CategoriesController extends BaseController {
 
 	@RequestMapping(value = "{categoryId}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer categoryId,
-			@RequestParam(value = "priceLow", required = false) String priceLow,
-			@RequestParam(value = "priceHigh", required = false) String priceHigh,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "page", required = false) String page) {
+	    @RequestParam(value = "priceLow", required = false) String priceLow,
+	    @RequestParam(value = "priceHigh", required = false) String priceHigh,
+	    @RequestParam(value = "name", required = false) String name,
+	    @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
 		CategoryInfo categoryInfo = categoryService.findById(categoryId);
 		if (categoryInfo != null) {
@@ -32,7 +32,7 @@ public class CategoriesController extends BaseController {
 			ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
 			if (productFilter.isFilterProduct()) {
 				products = productService.filterProducts(categoryId, productFilter, page,
-						Paginate.PRODUCT_LIMIT);
+				    Paginate.PRODUCT_LIMIT);
 				model.setViewName("productsPartial");
 			} else {
 				model.addObject("categories", categoryService.getObjects());

@@ -23,18 +23,22 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="orders-body">
             <c:forEach items="${orders}" var="order" varStatus="loop">
-              <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href-js order-${order.getId()}"
+              <tr
+                class="${loop.index % 2 == 0 ? 'odd' : 'even'} order-item tr-href-js order-${order.getId()}"
                 data-href="${contextPath}/admin/orders/${order.getId()}">
-                <td>${loop.index + 1}</td>
-                <td>${order.getUser() != null ? order.getUser().getName() : 'Guest'}</td>
-                <td>${order.getOrderProducts().size()}</td>
-                <td>
+                <td class="index">${loop.index + 1}</td>
+                <td class="user-name">${order.getUser() != null ? order.getUser().getName() : 'Guest'}</td>
+                <td class="order-product">${order.getOrderProducts().size()}</td>
+                <td class="total-price">
                   <fmt:setLocale value="en_US" />
-                  <fmt:formatNumber value="${order.getTotalPrice() + loop.index}" type="currency" />
+                  <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
                 </td>
-                <td>${order.getCreatedAt()}</td>
+                <td class="created-at">
+                  <fmt:formatDate type="both" dateStyle="long" timeStyle="long"
+                    value="${order.getCreatedAt()}" />
+                </td>
                 <td class="center order-status status-${order.getStatus()}">
                   ${order.getStatus()}</td>
               </tr>

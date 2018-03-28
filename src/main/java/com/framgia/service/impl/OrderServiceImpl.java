@@ -192,12 +192,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order.setStatus(Status.getIntStatus(Status.WAITING));
 			if (userInfo != null)
 				order.setUser(getUserDAO().findById(userInfo.getId()));
+			else
+				order.setSessionId(CustomSession.current());
 
 			order.setPhoneNumber(orderInfo.getPhoneNumber());
 			order.setName(orderInfo.getName());
 			order.setEmail(orderInfo.getEmail());
 			order.setAddress(orderInfo.getAddress());
-			order.setSessionId(CustomSession.current());
 			order.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang

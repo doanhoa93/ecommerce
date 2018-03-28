@@ -31,15 +31,14 @@
     <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />
     </many-to-one>
-    <one-to-one name="recent" class="Recent" cascade="save-update, delete" />
+    <one-to-one name="recent" class="Recent" cascade="delete" />
 
     <list name="images" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
       <index column="id" />
       <one-to-many class="Image" />
     </list>
-    <list name="orderProducts" fetch="select" cascade="delete"
-      inverse="true">
+    <list name="orderProducts" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
       <index column="id" />
       <one-to-many class="OrderProduct" />

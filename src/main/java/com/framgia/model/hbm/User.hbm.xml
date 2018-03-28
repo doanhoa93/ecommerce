@@ -7,17 +7,15 @@
       <generator class="increment" />
     </id>
 
-    <property name="email" column="email" type="string"
-      not-null="true" unique="true" />
-    <property name="password" column="password" type="string"
-      not-null="true" />
+    <property name="email" column="email" type="string" not-null="true" unique="true" />
+    <property name="password" column="password" type="string" not-null="true" />
     <property name="name" column="name" type="string" not-null="true" />
     <property name="avatar" column="avatar" type="string" />
     <property name="role" column="role" type="string" not-null="true" />
     <property name="createdAt" column="created_at" type="date" />
     <property name="token" column="token" type="string" />
 
-    <one-to-one name="profile" class="Profile" cascade="save-update, delete" />
+    <one-to-one name="profile" class="Profile" cascade="delete" />
 
     <list name="orders" fetch="select" cascade="delete" inverse="true">
       <key column="user_id" />
@@ -29,8 +27,7 @@
       <index column="id" />
       <one-to-many class="Cart" />
     </list>
-    <list name="notifications" fetch="select" cascade="delete"
-      inverse="true">
+    <list name="notifications" fetch="select" cascade="delete" inverse="true">
       <key column="user_id" />
       <index column="id" />
       <one-to-many class="Notification" />
@@ -40,8 +37,7 @@
       <index column="id" />
       <one-to-many class="Chat" />
     </list>
-    <list name="sendedChats" fetch="select" cascade="delete"
-      inverse="true">
+    <list name="sendedChats" fetch="select" cascade="delete" inverse="true">
       <key column="sender_id" />
       <index column="id" />
       <one-to-many class="Chat" />

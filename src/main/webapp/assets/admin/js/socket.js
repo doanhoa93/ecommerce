@@ -30,11 +30,18 @@ $(document).ready(function() {
 		});		
 		
 		stompClient.subscribe('/topic/registers', onRegisterReceived);	
-		stompClient.subscribe('/topic/unregisters', onUnRegisterReceived);		
+		stompClient.subscribe('/topic/unregisters', onUnRegisterReceived);
+        stompClient.subscribe('/topic/newMessages', onNewChatReceived);
+        stompClient.subscribe('/topic/orders', onOrderReceived);		
 	}
 	
 	function onError(error) {
 	}
+	
+    function onNewChatReceived(data) {
+        if(!$('.admin-chats').length)
+            $('.new-message').addClass('user-chat-new-message');            
+    }   	
 	
 	function onChatReceived(data) {
 		var chat = JSON.parse(data.body);
@@ -47,6 +54,12 @@ $(document).ready(function() {
 		}
 		scrollChat();
 	}	
+    
+    function onOrderReceived(data) {
+        var order = JSON.parse(data.body);
+        $('.orders-body').prepend(setOrderPanel(order));
+        $('.new-order-item-icon').show();
+    }   	
 	
 	function onRegisterReceived(data) {
 		var user = JSON.parse(data.body);
@@ -105,6 +118,24 @@ $(document).ready(function() {
 	        userPanel.find('.user-new-message').addClass('user-chat-new-message');
 	    
 	    return userPanel.prop('outerHTML'); 
+	}
+	
+	function setOrderPanel(order) {
+	    var orderPanel = $('.order-item').first().clone();
+	    orderPanel.removeClass();
+	    orderPanel.addClass('order-item new-order-item tr-href-js order-' + order.id);
+	    orderPanel.attr('data-href', getContextPath() + '/admin/orders/' + order.id);
+	    orderPanel.find('.index').html('New');
+	    orderPanel.find('.user-name').html(order.user == null ? 'Guets' : order.user.name);
+	    orderPanel.find('.order-product').html(order.orderProducts.length);
+        var totalPrice = order.totalPrice.toLocaleString('en-US', {currency: 'USD', style: 'currency'});
+	    orderPanel.find('.total-price').html(totalPrice);
+	    orderPanel.find('.created-at').html(new Date(order.createdAt).toUTCString());
+	    var status = orderPanel.find('.order-status');
+	    status.removeClass();
+	    status.addClass('center order-status status-' + order.status);
+	    status.html(order.status);
+	    return orderPanel.prop('outerHTML');
 	}
 	
 	$(document).on('click', '.user-chat', function() {

@@ -50,7 +50,7 @@
   </definition>
 
   <definition name="inputError" template="/views/shared/input_error.jsp" />
-  
+
   <definition name="redirect" template="/views/shared/redirect.jsp" />
 
   <definition name="homePage" extends="baselayout">
@@ -236,6 +236,7 @@
       <add-attribute value="/assets/admin/lib-js/stomp.min.js" />
       <add-attribute value="/assets/admin/js/datatable.js" />
       <add-attribute value="/assets/admin/js/page.js" />
+      <add-attribute value="/assets/admin/js/socket.js" />
     </put-list-attribute>
 
     <put-list-attribute name="css" />
@@ -366,10 +367,6 @@
 
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/chat.css" />
-    </put-list-attribute>
-
-    <put-list-attribute name="js">
-      <add-attribute value="/assets/admin/js/socket.js" />
     </put-list-attribute>
   </definition>
 </tiles-definitions>

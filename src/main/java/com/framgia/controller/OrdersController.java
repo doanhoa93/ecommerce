@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
 import com.framgia.helper.CustomSession;
+import com.framgia.helper.SendOrder;
 import com.framgia.validator.OrderValidator;
 
 @Controller
@@ -27,6 +28,9 @@ public class OrdersController extends BaseController {
 
 	@Autowired
 	private OrderValidator orderValidator;
+
+	@Autowired
+	private SendOrder sendOrder;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
@@ -65,6 +69,8 @@ public class OrdersController extends BaseController {
 		if (!result.hasErrors() && orderService.createOrder(orderInfo, result)) {
 			model.setViewName("redirect");
 			model.addObject("url", request.getContextPath() + "/orders/" + orderInfo.getId());
+			orderInfo = orderService.findById(orderInfo.getId());
+			sendOrder.send("/topic/orders", orderInfo);
 		} else {
 			model.setViewName("inputError");
 			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));

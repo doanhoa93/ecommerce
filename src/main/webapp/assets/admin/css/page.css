@@ -101,3 +101,13 @@
 	margin-top: 7px;
 	width: 10px;
 }
+
+.new-order-item-icon {
+	background: url(../images/red_circle.png) center right no-repeat;
+	border-radius: 100%;
+	display: none;
+	float: right;
+	height: 10px;
+	margin-top: 7px;
+	width: 10px;
+}
