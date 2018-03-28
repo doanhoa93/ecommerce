@@ -11,7 +11,7 @@ public interface ChatService extends BaseService<Integer, ChatInfo> {
 	List<ChatInfo> getChats(Integer userId, int off, int limit, Order order);
 
 	List<UserInfo> getRecentUsers(Integer receiverId);
-	
+
 	ChatInfo createChat(ChatInfo chatInfo);
 
 	void updateReadAll(Integer receiverId);

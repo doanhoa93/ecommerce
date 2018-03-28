@@ -65,7 +65,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 			throw e;
 		}
 	}
-	
+
 	@Override
 	public CommentInfo saveOrUpdate(CommentInfo entity) {
 		try {
@@ -79,7 +79,8 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	@Override
 	public List<CommentInfo> getObjects() {
 		try {
-			return getCommentDAO().getObjects().stream().map(ModelToBean::toCommentInfo).collect(Collectors.toList());
+			return getCommentDAO().getObjects().stream().map(ModelToBean::toCommentInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -90,7 +91,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	public List<CommentInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getCommentDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCommentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -101,7 +102,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	public List<CommentInfo> getObjects(int off, int limit) {
 		try {
 			return getCommentDAO().getObjects(off, limit).stream().map(ModelToBean::toCommentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

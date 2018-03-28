@@ -10,6 +10,6 @@ public interface OrderProductDAO extends BaseDAO<Integer, OrderProduct> {
 	Order getOrder(Integer orderProductId);
 
 	Product getProduct(Integer orderProductId);
-	
+
 	List<OrderProduct> getOrderProducts(Integer productId);
 }

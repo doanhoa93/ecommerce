@@ -8,7 +8,8 @@ import com.framgia.model.Notification;
 import com.framgia.model.Order;
 import com.framgia.model.User;
 
-public class NotificationDAOImpl extends BaseDAOAbstract<Integer, Notification> implements NotificationDAO {
+public class NotificationDAOImpl extends BaseDAOAbstract<Integer, Notification>
+    implements NotificationDAO {
 
 	public NotificationDAOImpl() {
 		super(Notification.class);
@@ -19,7 +20,7 @@ public class NotificationDAOImpl extends BaseDAOAbstract<Integer, Notification> 
 	public User getUser(Integer notificationId) {
 		Criteria criteria = getSession().createCriteria(User.class);
 		criteria.createAlias("notifications", "notifications", Criteria.LEFT_JOIN,
-		        Restrictions.eq("notifications.id", notificationId));
+		    Restrictions.eq("notifications.id", notificationId));
 		return (User) criteria.uniqueResult();
 	}
 
@@ -28,7 +29,7 @@ public class NotificationDAOImpl extends BaseDAOAbstract<Integer, Notification> 
 	public Order getOrder(Integer notificationId) {
 		Criteria criteria = getSession().createCriteria(Order.class);
 		criteria.createAlias("notifications", "notifications", Criteria.LEFT_JOIN,
-		        Restrictions.eq("notifications.id", notificationId));
+		    Restrictions.eq("notifications.id", notificationId));
 		return (Order) criteria.uniqueResult();
 	}
 }

@@ -51,7 +51,8 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	@Override
 	public OrderProductInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findBy(attribute, key, lock));
+			return ModelToBean
+			    .toOrderProductInfo(getOrderProductDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -94,7 +95,7 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	public List<OrderProductInfo> getObjects() {
 		try {
 			return getOrderProductDAO().getObjects().stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -104,8 +105,8 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	@Override
 	public List<OrderProductInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getOrderProductDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			return getOrderProductDAO().getObjectsByIds(keys).stream()
+			    .map(ModelToBean::toOrderProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -115,8 +116,8 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	@Override
 	public List<OrderProductInfo> getObjects(int off, int limit) {
 		try {
-			return getOrderProductDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			return getOrderProductDAO().getObjects(off, limit).stream()
+			    .map(ModelToBean::toOrderProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

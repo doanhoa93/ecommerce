@@ -56,7 +56,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<CartInfo> getCarts(Integer productId) {
 		try {
 			return getProductDAO().getCarts(productId).stream().map(ModelToBean::toCartInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -66,7 +66,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<UserInfo> getOrderedUser(Integer productId) {
 		try {
-			return getOrders(productId).stream().map(OrderInfo::getUser).collect(Collectors.toList());
+			return getOrders(productId).stream().map(OrderInfo::getUser)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -76,8 +77,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<OrderProductInfo> getOrderProducts(Integer productId) {
 		try {
-			return getProductDAO().getOrderProducts(productId).stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			return getProductDAO().getOrderProducts(productId).stream()
+			    .map(ModelToBean::toOrderProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -88,7 +89,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<CommentInfo> getComments(Integer productId) {
 		try {
 			return getProductDAO().getComments(productId).stream().map(ModelToBean::toCommentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -99,7 +100,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ImageInfo> getImages(Integer productId) {
 		try {
 			return getProductDAO().getImages(productId).stream().map(ModelToBean::toImageInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -139,7 +140,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public ProductInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			ProductInfo productInfo = ModelToBean.toProductInfo(getProductDAO().findBy(attribute, key, lock));
+			ProductInfo productInfo = ModelToBean
+			    .toProductInfo(getProductDAO().findBy(attribute, key, lock));
 			Promotion promotion = getPromotionDAO().findById(productInfo.getPromotionId());
 			if (promotion != null)
 				productInfo.setPromotion(ModelToBean.toPromotionInfo(promotion));
@@ -163,7 +165,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public boolean delete(ProductInfo entity) {
 		try {
-			List<OrderProduct> orderProducts = getOrderProductDAO().getOrderProducts(entity.getId());
+			List<
+			    OrderProduct> orderProducts = getOrderProductDAO().getOrderProducts(entity.getId());
 			for (OrderProduct orderProduct : orderProducts)
 				getOrderProductDAO().delete(orderProduct);
 
@@ -189,7 +192,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<ProductInfo> getObjects() {
 		try {
-			return getProductDAO().getObjects().stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
+			return getProductDAO().getObjects().stream().map(ModelToBean::toProductInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -200,7 +204,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ProductInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getProductDAO().getObjectsByIds(keys).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -211,7 +215,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ProductInfo> getObjects(int off, int limit) {
 		try {
 			return getProductDAO().getObjects(off, limit).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -227,8 +231,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			else
 				off = (Integer.parseInt(page) - 1) * limit;
 
-			return getProductDAO().filterProducts(categoryId, new ProductFilter(null, null, null), off, limit).stream()
-			        .map(ModelToBean::toProductInfo).collect(Collectors.toList());
+			return getProductDAO()
+			    .filterProducts(categoryId, new ProductFilter(null, null, null), off, limit)
+			    .stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -236,8 +241,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter, String page,
-	        Integer limit) {
+	public List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter,
+	    String page, Integer limit) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
@@ -246,7 +251,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				off = (Integer.parseInt(page) - 1) * limit;
 
 			return getProductDAO().filterProducts(categoryId, productFilter, off, limit).stream()
-			        .map(ModelToBean::toProductInfo).collect(Collectors.toList());
+			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -377,7 +382,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ProductInfo> hotProducts(int limit) {
 		try {
 			return getProductDAO().hotProducts(limit).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -387,8 +392,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<ProductInfo> recentProducts(Date date, int limit) {
 		try {
-			return getProductDAO().recentProducts(date, limit).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			return getProductDAO().recentProducts(date, limit).stream()
+			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -399,7 +404,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ProductInfo> randomProducts(int limit) {
 		try {
 			return getProductDAO().randomProducts(limit).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -424,8 +429,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<ProductInfo> getNewProducts(Date date, int limit) {
 		try {
-			return getProductDAO().getNewObjects(date, limit).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			return getProductDAO().getNewObjects(date, limit).stream()
+			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -435,8 +440,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<ProductInfo> getProducts(Integer categoryId, int off, int limit, Order order) {
 		try {
-			return getProductDAO().getProducts(categoryId, off, limit, order).stream().map(ModelToBean::toProductInfo)
-			        .collect(Collectors.toList());
+			return getProductDAO().getProducts(categoryId, off, limit, order).stream()
+			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

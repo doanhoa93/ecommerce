@@ -31,7 +31,8 @@ public class UploadFile {
 	}
 
 	public Cloudinary getCloudinary() {
-		return new Cloudinary(ObjectUtils.asMap("cloud_name", cloudName, "api_key", apiKey, "api_secret", apiSecret));
+		return new Cloudinary(
+		    ObjectUtils.asMap("cloud_name", cloudName, "api_key", apiKey, "api_secret", apiSecret));
 	}
 
 	public String getCloudName() {
@@ -58,7 +59,8 @@ public class UploadFile {
 		this.apiSecret = apiSecret;
 	}
 
-	private File multipartFileToFile(MultipartFile image) throws IllegalStateException, IOException {
+	private File multipartFileToFile(MultipartFile image)
+	    throws IllegalStateException, IOException {
 		File file = new File(image.getOriginalFilename());
 		image.transferTo(file);
 		return file;

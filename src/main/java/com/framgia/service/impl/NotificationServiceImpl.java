@@ -18,7 +18,8 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	@Override
 	public NotificationInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toNotificationInfo(getNotificationDAO().findBy(attribute, key, lock));
+			return ModelToBean
+			    .toNotificationInfo(getNotificationDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -61,7 +62,7 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	public List<NotificationInfo> getObjects() {
 		try {
 			return getNotificationDAO().getObjects().stream().map(ModelToBean::toNotificationInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -71,8 +72,8 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	@Override
 	public List<NotificationInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getNotificationDAO().getObjectsByIds(keys).stream().map(ModelToBean::toNotificationInfo)
-			        .collect(Collectors.toList());
+			return getNotificationDAO().getObjectsByIds(keys).stream()
+			    .map(ModelToBean::toNotificationInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -82,8 +83,8 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	@Override
 	public List<NotificationInfo> getObjects(int off, int limit) {
 		try {
-			return getNotificationDAO().getObjects(off, limit).stream().map(ModelToBean::toNotificationInfo)
-			        .collect(Collectors.toList());
+			return getNotificationDAO().getObjects(off, limit).stream()
+			    .map(ModelToBean::toNotificationInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

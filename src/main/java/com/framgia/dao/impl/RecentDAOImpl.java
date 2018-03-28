@@ -17,7 +17,8 @@ public class RecentDAOImpl extends BaseDAOAbstract<Integer, Recent> implements R
 	@Override
 	public Product getProduct(Integer recentId) {
 		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.createAlias("recents", "recents", Criteria.LEFT_JOIN, Restrictions.eq("recents.id", recentId));
+		criteria.createAlias("recents", "recents", Criteria.LEFT_JOIN,
+		    Restrictions.eq("recents.id", recentId));
 		return (Product) criteria.uniqueResult();
 	}
 }

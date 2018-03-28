@@ -15,8 +15,9 @@ public class HibernateUtil {
 		if (sessionFactory == null) {
 			try {
 				StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-				        .configure("/com/framgia/util/hibernate.cfg.xml").build();
-				Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+				    .configure("/com/framgia/util/hibernate.cfg.xml").build();
+				Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder()
+				    .build();
 				return metadata.getSessionFactoryBuilder().build();
 
 			} catch (HibernateException he) {

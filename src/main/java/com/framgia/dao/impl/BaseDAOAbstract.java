@@ -33,7 +33,7 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 	@SuppressWarnings("unchecked")
 	public BaseDAOAbstract() {
 		this.typeClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-		        .getActualTypeArguments()[1];
+		    .getActualTypeArguments()[1];
 	}
 
 	@Autowired
@@ -139,7 +139,8 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 
 	@SuppressWarnings("unchecked")
 	public List<User> getUsersByIdsWithOrder(List<Integer> keys) {
-		List<User> users = getSession().createCriteria(User.class).add(Restrictions.in("id", keys)).list();
+		List<User> users = getSession().createCriteria(User.class).add(Restrictions.in("id", keys))
+		    .list();
 		User temp = null;
 		for (int i = 0; i < keys.size(); i++)
 			for (int j = 0; j < users.size(); j++)

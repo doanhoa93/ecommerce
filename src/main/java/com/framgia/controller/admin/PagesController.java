@@ -21,12 +21,11 @@ public class PagesController extends AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("adminHomePage");
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 7);
-		model.addObject("orders", orderService.getNewOrders(calendar.getTime(), 0));
-		model.addObject("products", productService.getNewProducts(calendar.getTime(), 0));
-		model.addObject("categories", categoryService.getNewCategories(calendar.getTime(), 0));
-		model.addObject("users", userService.getNewUsers(calendar.getTime(), 0));
+		DateUtil dateUtil = new DateUtil();
+		model.addObject("orders", orderService.getNewOrders(dateUtil.getPrevWeek(), 0));
+		model.addObject("products", productService.getNewProducts(dateUtil.getPrevWeek(), 0));
+		model.addObject("categories", categoryService.getNewCategories(dateUtil.getPrevWeek(), 0));
+		model.addObject("users", userService.getNewUsers(dateUtil.getPrevWeek(), 0));
 		return model;
 	}
 

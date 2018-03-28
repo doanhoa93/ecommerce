@@ -67,7 +67,8 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	@Override
 	public List<ImageInfo> getObjects() {
 		try {
-			return getImageDAO().getObjects().stream().map(ModelToBean::toImageInfo).collect(Collectors.toList());
+			return getImageDAO().getObjects().stream().map(ModelToBean::toImageInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -78,7 +79,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	public List<ImageInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getImageDAO().getObjectsByIds(keys).stream().map(ModelToBean::toImageInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -89,7 +90,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	public List<ImageInfo> getObjects(int off, int limit) {
 		try {
 			return getImageDAO().getObjects(off, limit).stream().map(ModelToBean::toImageInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

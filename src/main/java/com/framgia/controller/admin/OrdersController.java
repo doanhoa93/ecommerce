@@ -35,13 +35,13 @@ public class OrdersController extends AdminController {
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
 				model.addObject("orders",
-						orderService.getOrders(null, 0, 0, Order.desc("createdAt")));
+				    orderService.getOrders(null, 0, 0, Order.desc("createdAt")));
 			else
 				model.addObject("orders", orderService.getOrders(null, 0, Integer.parseInt(entries),
-						Order.desc("createdAt")));
+				    Order.desc("createdAt")));
 		} else
 			model.addObject("orders", orderService.getOrders(null, 0, Paginate.ADMIN_OBJECT_LIMIT,
-					Order.desc("createdAt")));
+			    Order.desc("createdAt")));
 		return model;
 	}
 
@@ -61,7 +61,7 @@ public class OrdersController extends AdminController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
 	public @ResponseBody String update(@PathVariable("id") Integer id, @RequestBody String data,
-			BindingResult result) throws JsonProcessingException {
+	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
