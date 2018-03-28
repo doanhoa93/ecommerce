@@ -47,6 +47,8 @@
     </property>
   </bean>
 
+  <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
+
   <!-- Config upload with cloudinary -->
   <bean id="uploadFile" class="com.framgia.helper.UploadFile">
     <property name="cloudName" value="${cloudinary.cloud_name}" />

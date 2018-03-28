@@ -36,7 +36,6 @@ $(document).ready(function() {
 	    var imageForm = $('.product-image-form').first().clone();
 	    imageForm.show();
 	    imageForm.find('.image-info').html('');
-	    debugger;
 	    imageForm.find('.product-image-panel').attr('src', '');
 	    imageForm.find('.avatar').val();
 		$('.product-image-forms').append(imageForm.prop('outerHTML'));
