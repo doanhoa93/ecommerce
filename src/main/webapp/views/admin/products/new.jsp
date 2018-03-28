@@ -11,6 +11,7 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="field">
           <label>Avatar of product</label>
+          <div class="avatar-info"></div>
           <form:input type="file" path="avatarFile" class="avatar" />
           <div class="product-avatar">
             <img class="img-responsive product-avatar-panel" src="${product.getAvatar()}" />
@@ -20,16 +21,19 @@
         <div class="field">
           <label class="product-image-label">Images of product</label>
           <div class="product-image-forms">
-            <i class="fa fa-minus remove-image" aria-hidden="true"> Remove image</i>
             <div class="product-image-form">
+              <i class="fa fa-minus remove-image" aria-hidden="true">Remove image</i>
               <form:input type="hidden" path="imagesStatus" value="0" />
               <form:input type="hidden" path="imageIds" value="0" />
+              <div class="image-info"></div>
               <form:input type="file" path="imageFiles" class="image" />
-              <div class="product-image"></div>
+              <div class="product-image">
+                <img class="img-responsive product-image-panel" />
+              </div>
               <hr>
             </div>
           </div>
-          <i class="fa fa-plus add-image" aria-hidden="true"> Add image</i>
+          <i class="fa fa-plus add-image" aria-hidden="true">Add image</i>
         </div>
       </div>
 

@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -16,23 +15,19 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.framgia.constant.Role;
-import com.framgia.service.UserService;
 
-public class CustomUrlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class CustomUrlAuthenticationSuccessHandler
+    extends SavedRequestAwareAuthenticationSuccessHandler {
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-	@Autowired
-	private UserService userService;
-
 	@Override
-	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-	        throws IOException {
+	protected void handle(HttpServletRequest request, HttpServletResponse response,
+	    Authentication authentication) throws IOException {
 		if (response.isCommitted())
 			return;
 
 		String targetUrl = redirectUrl(authentication);
-		request.getSession().setAttribute("currentUser", userService.findByEmail(authentication.getName()));
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 

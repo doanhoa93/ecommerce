@@ -1,7 +1,5 @@
 package com.framgia.controller.admin;
 
-import java.util.HashMap;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,13 +30,13 @@ public class ProductsController extends AdminController {
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
 				model.addObject("products",
-						productService.getProducts(null, 0, 0, Order.desc("createdAt")));
+				    productService.getProducts(null, 0, 0, Order.desc("createdAt")));
 			else
 				model.addObject("products", productService.getProducts(null, 0,
-						Integer.parseInt(entries), Order.desc("createdAt")));
+				    Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
 			model.addObject("products", productService.getProducts(null, 0,
-					Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
+			    Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 
 		return model;
 	}
@@ -54,17 +51,20 @@ public class ProductsController extends AdminController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("product") ProductInfo productInfo,
-			BindingResult result) throws JsonProcessingException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+	public ModelAndView create(@ModelAttribute("product") ProductInfo productInfo,
+	    BindingResult result) throws JsonProcessingException {
+		ModelAndView model = new ModelAndView("product");
 		productValidator.validate(productInfo, result);
 		if (!result.hasErrors() && productService.createProduct(productInfo)) {
-			hashMap.put("url", request.getContextPath() + "/admin/products/" + productInfo.getId());
+			model.setViewName("redirect");
+			model.addObject("url",
+			    request.getContextPath() + "/admin/products/" + productInfo.getId());
 		} else {
-			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+			model.setViewName("inputError");
+			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
 		}
 
-		return toJson(hashMap);
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -96,21 +96,22 @@ public class ProductsController extends AdminController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public @ResponseBody String update(@PathVariable("id") Integer id,
-			@ModelAttribute("product") ProductInfo productInfo, BindingResult result)
-			throws JsonProcessingException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+	public ModelAndView update(@PathVariable("id") Integer id,
+	    @ModelAttribute("product") ProductInfo productInfo, BindingResult result)
+	    throws JsonProcessingException {
+		ModelAndView model = new ModelAndView();
 		ProductInfo oldProduct = productService.findById(id);
-		if (oldProduct != null) {
-			productValidator.validate(productInfo, result);
-			if (!result.hasErrors() && productService.updateProduct(oldProduct, productInfo)) {
-				hashMap.put("url",
-						request.getContextPath() + "/admin/products/" + productInfo.getId());
-			} else
-				hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+		productValidator.validateUpdate(oldProduct, productInfo, result);
+		if (!result.hasErrors() && productService.updateProduct(oldProduct, productInfo)) {
+			model.setViewName("redirect");
+			model.addObject("url",
+			    request.getContextPath() + "/admin/products/" + productInfo.getId());
+		} else {
+			model.setViewName("inputError");
+			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
 		}
 
-		return toJson(hashMap);
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)

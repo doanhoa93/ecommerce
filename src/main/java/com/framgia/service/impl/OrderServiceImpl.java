@@ -192,13 +192,12 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			order.setStatus(Status.getIntStatus(Status.WAITING));
 			if (userInfo != null)
 				order.setUser(getUserDAO().findById(userInfo.getId()));
-			else {
-				order.setPhoneNumber(orderInfo.getPhoneNumber());
-				order.setName(orderInfo.getName());
-				order.setEmail(orderInfo.getEmail());
-				order.setAddress(orderInfo.getAddress());
-				order.setSessionId(CustomSession.current());
-			}
+
+			order.setPhoneNumber(orderInfo.getPhoneNumber());
+			order.setName(orderInfo.getName());
+			order.setEmail(orderInfo.getEmail());
+			order.setAddress(orderInfo.getAddress());
+			order.setSessionId(CustomSession.current());
 			order.setCreatedAt(new Date());
 
 			// Tinh tong tien cua don hang
@@ -343,22 +342,22 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		try {
 			if (orderInfo.getStatus().equals(Status.WAITING)
 			    || orderInfo.getStatus().equals(Status.REJECT)) {
-				List<
-				    OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+				List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId())
+				    .stream().filter(object -> (object != null)).collect(Collectors.toList());
 				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
 				for (OrderProductInfo orderProductInfo : orderProductInfos) {
 					OrderProduct orderProduct = getOrderProductDAO()
 					    .findById(orderProductInfo.getId());
 					orderProduct.setQuantity(orderProductInfo.getQuantity());
 					getOrderProductDAO().saveOrUpdate(orderProduct);
-
 					orderProducts.remove(findOrderProduct(orderProductInfo.getId(), orderProducts));
 				}
 
 				for (OrderProduct orderProduct : orderProducts)
 					getOrderProductDAO().delete(orderProduct);
 
-				orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
+				orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId()).stream()
+				    .filter(object -> (object != null)).collect(Collectors.toList());
 				float totalPrice = 0;
 				for (OrderProduct orderProduct : orderProducts) {
 					totalPrice += orderProduct.getQuantity() * orderProduct.getProduct().getPrice();
@@ -370,6 +369,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			}
 			return false;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e);
 			throw e;
 		}

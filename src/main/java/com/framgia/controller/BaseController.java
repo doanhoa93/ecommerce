@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -117,13 +116,6 @@ public class BaseController {
 
 	public boolean isAdmin(UserInfo userInfo) {
 		return userInfo.getRole().equals(Role.Admin);
-	}
-
-	public List<FieldError> convertErrorsToMap(List<FieldError> fieldErrors) {
-		return fieldErrors.stream().map(fieldError -> {
-			return new FieldError(fieldError.getObjectName(), fieldError.getField(), messageSource
-			    .getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.US));
-		}).collect(Collectors.toList());
 	}
 
 	public HashMap<String, Object> convertErrorsToHashMap(List<FieldError> fieldErrors) {

@@ -1,8 +1,6 @@
 package com.framgia.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -60,19 +57,20 @@ public class OrdersController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("orderInfo") OrderInfo orderInfo,
+	public ModelAndView create(@ModelAttribute("orderInfo") OrderInfo orderInfo,
 	    BindingResult result) throws JsonParseException, JsonMappingException, IOException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+		ModelAndView model = new ModelAndView();
 		orderInfo.setUser(currentUser());
 		orderValidator.validateCreate(orderInfo, result);
 		if (!result.hasErrors() && orderService.createOrder(orderInfo, result)) {
-			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-			hashMap.put("url", request.getContextPath() + "/orders");
+			model.setViewName("redirect");
+			model.addObject("url", request.getContextPath() + "/orders/" + orderInfo.getId());
 		} else {
-			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+			model.setViewName("inputError");
+			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
 		}
-		return toJson(hashMap);
+
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -111,15 +109,13 @@ public class OrdersController extends BaseController {
 			OrderInfo oldOrder = orderService.findById(id);
 			orderValidator.validateUpdate(oldOrder, orderInfo, currentUser(), result);
 			if (!result.hasErrors() && orderService.updateOrderProduct(orderInfo)) {
-				model.addObject("order", orderService.findById(id));
-				model.addObject("orderProducts", orderService.getOrderProducts(id));
-				model.setViewName("orderTemplate");
+				model.setViewName("redirect");
+				model.addObject("url", request.getContextPath() + "/orders/" + orderInfo.getId());
 			} else {
-				model.addObject("orderInfo", orderInfo);
-				model.addObject("orderProducts", orderService.getOrderProducts(id));
-				model.setViewName("editOrderTemplate");
+				model.setViewName("inputError");
 				model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
 			}
+
 			return model;
 		} catch (Exception e) {
 			logger.error(e);

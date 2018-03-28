@@ -37,10 +37,11 @@ $(document).ready(function() {
 	$(document).on('click', '.btn-update-order', function(e) {
 		e.preventDefault();
 		var formData = new FormData(document.getElementById('edit-order'));
+		var id = $(this).data('id');
 		$('.order-product').each(function(index, element) {
-			var id = $(this).data('id');
+		    var orderProductId = $(this).data('id'); 
 			var quantity = $(this).find('.order-product-quantity').val();
-			formData.append('orderProducts[' + index + '].id', id);
+			formData.append('orderProducts[' + index + '].id', orderProductId);
 			formData.append('orderProducts[' + index + '].quantity', quantity);
 			formData.append('orderProducts[' + index + '].productId', $(this).data('product-id'));
 		});
@@ -49,7 +50,20 @@ $(document).ready(function() {
             type: 'POST',
             data: formData,
             success: function (data) {
-                $('.container-body').html(data);
+                if(isError(data)) {
+                    $('.error').remove();                    
+                    var errorMsgs = [];                 
+                    $(data).filter('.error').each(function(index, error)  {
+                        if($(error).filter('.order').length || $(error).filter('.orderProducts').length) {
+                            $('.alert-warning').show();
+                            $('.alert-warning').append(error);
+                        }
+                        $('input[name=' + $(error).attr('data-name') + ']').after(error);
+                    });
+                } else {
+                    var url = $(data).filter('.redirect').attr('href');
+                    window.location.replace(url);
+                }                   
             },
             cache: false,
             contentType: false,
@@ -81,4 +95,8 @@ $(document).ready(function() {
 	function getContextPath() {
 		return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 	}
+    
+    function isError(data) {
+        return $(data).filter('.error').length;
+    }       
 });

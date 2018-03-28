@@ -88,6 +88,20 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(document).on('click', '.order-button', function() {
+	    var cartSize = $('.cart-product-select:checked').length;
+	    if(!cartSize) {
+	        $('.alert-warning').show();
+	        $('.alert-warning').html('Products cannot empty!');
+	    } else {
+	        $('.cart-products').hide();
+	        $('.order-form-create').show();
+	        $('.carts-size').html(cartSize);
+	        $('.order-button').hide();
+	        $('.alert-warning').hide();
+	    }
+	});
+	
 	$(document).on('submit', 'form#new-order', function(e) {
 		var cartIds = [];
 		$('.cart-product-select:checked').each(function(index, cart) {
@@ -102,23 +116,23 @@ $(document).ready(function() {
 	        type: 'POST',
 	        data: formData,
 	        success: function (data) {
-	        	data = JSON.parse(data);
-	        	if(data.errors != undefined) {
-	        		if(data.errors.length == 1 && data.errors[0].field == 'cartIds') {
-	        			$('#form-order').modal('hide');
-	        			$('.alert-warning').show();
-	        			$('.alert-warning').html(data.errors[0].defaultMessage);
-	        			return;
-	        		}
-	        		
-	        		$('.error').remove();
-	        		var errorMsgs = [];
-	        		$.each(data.errors, function(index, error) {
-	        			$('input[name=' + error.field + ']').after('<div class="error">' + error.defaultMessage + '</div>');
-	        		});	        	
-	        	} else {
-	        		window.location.replace(data.url);
-	        	} 
+                if(isError(data)) {
+                    $('.error').remove();                    
+                    var errorMsgs = [];                 
+                    $(data).filter('.error').each(function(index, error)  {
+                        if($(error).filter('.cartIds').length) {
+                            $('.alert-warning').show();
+                            $('.alert-warning').append(error);
+                            $('.order-form-create').hide();
+                            $('.cart-products').show();   
+                            $('.order-button').show();
+                        }
+                        $('input[name=' + $(error).attr('data-name') + ']').after(error);
+                    });
+                } else {
+                    var url = $(data).filter('.redirect').attr('href');
+                    window.location.replace(url);
+                }     	            
 	        },
 	        cache: false,
 	        contentType: false,
@@ -178,4 +192,8 @@ $(document).ready(function() {
 		if($('.cart-product').length <= Number($('.cart-size').text()))
 			$('.carts-load-more').remove();		
 	}
+	
+    function isError(data) {
+        return $(data).filter('.error').length;
+    }    	
 });

@@ -8,10 +8,7 @@
     <span class="order-size">${orderProducts.size()}</span>
     products)
   </h3>
-  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 alert error">
-    <div>${errors.order}</div>
-    <div>${errors.orderProducts}</div>
-  </div>
+  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 alert alert-warning"></div>
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
     <form:form id="edit-order" action="${contextPath}/orders/${orderInfo.getId()}" method="PATCH"
       enctype="multipart/form-data" modelAttribute="orderInfo" class="order-form">
@@ -19,30 +16,22 @@
       <form:hidden path="status" />
       <div class="field">
         <label>Phone Number(*):</label>
-        <form:input path="phoneNumber" placeholder="Your phone number" class="form-control"
-          value="${orderInfo.getPhoneNumber()}" />
-        <span class="error">${errors.phoneNumber}</span>
+        <form:input path="phoneNumber" placeholder="Your phone number" class="form-control" />
       </div>
 
       <div class="field">
         <label>Name(*):</label>
-        <form:input path="name" placeholder="Your name" class="form-control"
-          value="${orderInfo.getName()}" />
-        <span class="error">${errors.name}</span>          
+        <form:input path="name" placeholder="Your name" class="form-control" />
       </div>
 
       <div class="field">
         <label>Email(*):</label>
-        <form:input path="email" placeholder="Your email" class="form-control"
-          value="${orderInfo.getEmail()}" />
-        <span class="error">${errors.email}</span>          
+        <form:input path="email" placeholder="Your email" class="form-control" />
       </div>
 
       <div class="field">
         <label>Address:</label>
-        <form:input path="address" placeholder="Your address" class="form-control"
-          value="${orderInfo.getAddress()}" />
-        <span class="error">${errors.address}</span>          
+        <form:input path="address" placeholder="Your address" class="form-control" />
       </div>
     </form:form>
 
@@ -112,6 +101,8 @@
 
     <div class="order-form">
       <button class="btn btn-primary btn-update-order" data-id="${orderInfo.getId()}">Save</button>
+      <a href="${contextPath}/orders/${orderInfo.getId()}" class="btn btn-default btn-cancel-order">Cancel
+      </a>
     </div>
   </div>
   <div class="clearfix"></div>

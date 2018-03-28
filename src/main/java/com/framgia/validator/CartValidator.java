@@ -77,8 +77,8 @@ public class CartValidator implements Validator {
 	public boolean validateDelete(Object target, UserInfo currentUser) {
 		CartInfo cartInfo = (CartInfo) target;
 
-		if (currentUser != null && cartInfo.getUser().getId() != currentUser.getId())
-			return false;
+		if (currentUser != null && cartInfo.getUser().getId() == currentUser.getId())
+			return true;
 
 		return CustomSession.current().equals(cartInfo.getSessionId());
 	}

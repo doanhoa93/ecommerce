@@ -37,7 +37,14 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 			String currentToken = currentUser.getToken();
 			if (StringUtils.isEmpty(currentToken) || !currentToken.equals(token))
 				currentUser = userService.updateToken(currentUser, token);
-			request.getSession().setAttribute("currentUser", currentUser);
+			request.setAttribute("currentUser", currentUser);
+		}
+
+		if (currentUser == null) {
+			request.setAttribute("cartSize",
+			    cartService.getCartsWithGuest(CustomSession.current(), null, 0, null).size());
+			request.setAttribute("orderSize",
+			    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
 		}
 
 		if (currentUser == null) {

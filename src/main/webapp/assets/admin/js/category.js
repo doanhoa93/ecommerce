@@ -37,19 +37,24 @@ $(document).ready(function() {
 	        type: 'POST',
 	        data: formData,
 	        success: function (data) {
-	        	data = JSON.parse(data);
-	        	if(data.errors != undefined) {
-	        		$('.error').remove();
-	        		$.each(data.errors, function(index, error) {
-	        			$('input[name=' + error.field + ']').after('<div class="error">' + error.defaultMessage + '</div>');
-	        		});	        	
-	        	} else {
-	        		window.location.replace(data.url);
-	        	} 
+                if(isError(data)) {
+                    $('.error').remove();                    
+                    var errorMsgs = [];                 
+                    $(data).filter('.error').each(function(index, error)  {
+                        $('input[name=' + $(error).attr('data-name') + ']').after(error);
+                    });
+                } else {
+                    var url = $(data).filter('.redirect').attr('href');
+                    window.location.replace(url);
+                }       
 	        },
 	        cache: false,
 	        contentType: false,
 	        processData: false
 	    });		
 	});	
+	
+    function isError(data) {
+        return $(data).filter('.error').length;
+    }     	
 });
