@@ -14,7 +14,10 @@ public interface OrderDAO extends BaseDAO<Integer, Order> {
 
 	List<Order> getOrders(Integer userId, int off, int limit, org.hibernate.criterion.Order order);
 
+	List<Order> getOrdersWithGuest(String sessionId, int off, int limit,
+	    org.hibernate.criterion.Order order);
+
 	int getOrdersSizeWithStatus(int status);
-	
+
 	double[] getSalesByDate(Date startDate, Date endDate);
 }

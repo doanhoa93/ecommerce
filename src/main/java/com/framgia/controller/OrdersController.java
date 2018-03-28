@@ -2,7 +2,6 @@ package com.framgia.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +21,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
+import com.framgia.helper.CustomSession;
 import com.framgia.validator.OrderValidator;
 
 @Controller
@@ -38,31 +37,37 @@ public class OrdersController extends BaseController {
 		if (currentUser() != null) {
 			if (StringUtils.isNotEmpty(entries) && !entries.equals("all")) {
 				model.addObject("orders", orderService.getOrders(currentUser().getId(), 0,
-						Integer.parseInt(entries), Order.desc("id")));
+				    Integer.parseInt(entries), Order.desc("id")));
 			} else {
 				model.addObject("orders",
-						orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
+				    orderService.getOrders(currentUser().getId(), 0, 0, Order.desc("id")));
 			}
 			model.addObject("ordersSize",
-					orderService.getOrders(currentUser().getId(), 0, 0, null).size());
-		} else
-			model.setViewName("redirect:/");
-		return model;
+			    orderService.getOrders(currentUser().getId(), 0, 0, null).size());
+		} else {
+			if (StringUtils.isNotEmpty(entries) && !entries.equals("all")) {
+				model.addObject("orders", orderService.getOrdersWithGuest(CustomSession.current(),
+				    0, Integer.parseInt(entries), Order.desc("id")));
+			} else {
+				model.addObject("orders", orderService.getOrdersWithGuest(CustomSession.current(),
+				    0, 0, Order.desc("id")));
+			}
+			model.addObject("ordersSize",
+			    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
+		}
 
+		return model;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody String create(@ModelAttribute("orderInfo") OrderInfo orderInfo,
-			BindingResult result) throws JsonParseException, JsonMappingException, IOException {
+	    BindingResult result) throws JsonParseException, JsonMappingException, IOException {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		orderValidator.validateCreate(orderInfo, result);
 		orderInfo.setUser(currentUser());
+		orderValidator.validateCreate(orderInfo, result);
 		if (!result.hasErrors() && orderService.createOrder(orderInfo, result)) {
 			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-			if (currentUser() != null)
-				hashMap.put("url", request.getContextPath() + "/orders");
-			else
-				hashMap.put("url", request.getContextPath() + "/orders/" + orderInfo.getId());
+			hashMap.put("url", request.getContextPath() + "/orders");
 		} else {
 			hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
 			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
@@ -73,16 +78,13 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
 		OrderInfo orderInfo = orderService.findById(id);
-		ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView("order");
 		if (isOwner(orderInfo)) {
-			model.setViewName("order");
+			model.addObject("order", orderInfo);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
-		} else if (isGuest(orderInfo))
-			model.setViewName("orderGuest");
-		else
+		} else
 			model.setViewName("404");
 
-		model.addObject("order", orderInfo);
 		return model;
 	}
 
@@ -91,7 +93,7 @@ public class OrdersController extends BaseController {
 		ModelAndView model = new ModelAndView("editOrder");
 		OrderInfo orderInfo = orderService.findById(id);
 		if (orderValidator.validateEdit(orderInfo, currentUser())) {
-			model.addObject("order", orderInfo);
+			model.addObject("orderInfo", orderInfo);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
 		} else {
 			model.setViewName("404");
@@ -100,30 +102,29 @@ public class OrdersController extends BaseController {
 		return model;
 	}
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
-	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id,
-			BindingResult result) throws JsonProcessingException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
+	public ModelAndView update(@PathVariable("id") Integer id,
+	    @ModelAttribute("orderInfo") OrderInfo orderInfo, BindingResult result)
+	    throws JsonProcessingException {
+		ModelAndView model = new ModelAndView();
 		try {
-			hashMap = toHashMap(data);
-			List<HashMap<String, Object>> orderProducts = (List<HashMap<String, Object>>) hashMap
-					.get("orderProducts");
-			hashMap.clear();
-			OrderInfo orderInfo = orderService.findById(id);
-			if (isOwner(orderInfo)) {
-				orderValidator.validateUpdate(orderInfo, currentUser(), orderProducts, result);
-				if (!result.hasErrors()
-						&& orderService.updateOrderProduct(orderInfo, orderProducts))
-					hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
-				else
-					hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));
-			} else
-				return "404";
-			return toJson(hashMap);
+			OrderInfo oldOrder = orderService.findById(id);
+			orderValidator.validateUpdate(oldOrder, orderInfo, currentUser(), result);
+			if (!result.hasErrors() && orderService.updateOrderProduct(orderInfo)) {
+				model.addObject("order", orderService.findById(id));
+				model.addObject("orderProducts", orderService.getOrderProducts(id));
+				model.setViewName("orderTemplate");
+			} else {
+				model.addObject("orderInfo", orderInfo);
+				model.addObject("orderProducts", orderService.getOrderProducts(id));
+				model.setViewName("editOrderTemplate");
+				model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
+			}
+			return model;
 		} catch (Exception e) {
 			logger.error(e);
-			return "404";
+			model.setViewName("404");
+			return model;
 		}
 	}
 
@@ -131,8 +132,8 @@ public class OrdersController extends BaseController {
 	public String delete(@PathVariable("id") Integer id) {
 		try {
 			OrderInfo orderInfo = orderService.findById(id);
-			if (isOwner(orderInfo) && orderValidator.validateDelete(orderInfo, currentUser())
-					&& orderService.delete(orderInfo))
+			if (orderValidator.validateDelete(orderInfo, currentUser())
+			    && orderService.delete(orderInfo))
 				return "redirect:/orders";
 			else
 				return "404";
@@ -143,12 +144,17 @@ public class OrdersController extends BaseController {
 	}
 
 	private boolean isOwner(OrderInfo orderInfo) {
-		return currentUser() != null && orderInfo != null && orderInfo.getUser() != null
-				&& orderInfo.getUser().getId() == currentUser().getId();
-	}
+		if (orderInfo == null)
+			return false;
 
-	private boolean isGuest(OrderInfo orderInfo) {
-		return currentUser() == null && orderInfo != null && orderInfo.getSessionId() != null
-				&& currentSession().equals(orderInfo.getSessionId());
+		if (currentUser() != null && orderInfo.getUser() != null
+		    && currentUser().getId() == orderInfo.getUser().getId())
+			return true;
+
+		if (currentUser() == null && orderInfo.getUser() == null
+		    && orderInfo.getSessionId().equals(CustomSession.current()))
+			return true;
+
+		return false;
 	}
 }

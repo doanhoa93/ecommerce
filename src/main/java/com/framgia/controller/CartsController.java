@@ -23,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.OrderInfo;
 import com.framgia.constant.Paginate;
+import com.framgia.helper.CustomSession;
 import com.framgia.validator.CartValidator;
 
 @Controller
@@ -37,14 +38,14 @@ public class CartsController extends BaseController {
 		List<CartInfo> carts = null;
 		if (currentUser() != null) {
 			carts = cartService.getCarts(currentUser().getId(), page, Paginate.CART_LIMIT,
-					Order.desc("id"));
+			    Order.desc("id"));
 			model.addObject("cartsSize",
-					cartService.getCarts(currentUser().getId(), null, 0, null).size());
+			    cartService.getCarts(currentUser().getId(), null, 0, null).size());
 		} else {
-			carts = cartService.getCartsWithGuest(currentSession(), page, Paginate.CART_LIMIT,
-					Order.desc("id"));
+			carts = cartService.getCartsWithGuest(CustomSession.current(), page,
+			    Paginate.CART_LIMIT, Order.desc("id"));
 			model.addObject("cartsSize",
-					cartService.getCartsWithGuest(currentSession(), null, 0, null).size());
+			    cartService.getCartsWithGuest(CustomSession.current(), null, 0, null).size());
 		}
 
 		model.addObject("carts", carts);
@@ -57,10 +58,11 @@ public class CartsController extends BaseController {
 	@SuppressWarnings("finally")
 	@RequestMapping(value = "/carts", method = RequestMethod.POST)
 	public String create(RedirectAttributes redirect, @ModelAttribute("cartInfo") CartInfo cartInfo,
-			BindingResult result) {
+	    BindingResult result) {
 		HashMap<String, Object> flash = new HashMap<>();
 		try {
-			cartValidator.validateCreate(cartInfo, currentUser(), result);
+			cartInfo.setUser(currentUser());
+			cartValidator.validateCreate(cartInfo, result);
 			if (!result.hasErrors() && cartService.createCart(cartInfo))
 				flash.put("type", "success");
 			else
@@ -84,7 +86,7 @@ public class CartsController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/carts/{id}", method = RequestMethod.PATCH)
 	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id,
-			BindingResult result) throws JsonProcessingException {
+	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			CartInfo cartInfo = cartService.findById(id);
@@ -106,7 +108,7 @@ public class CartsController extends BaseController {
 
 	@RequestMapping(value = "/carts/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable("id") Integer id)
-			throws JsonProcessingException {
+	    throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		CartInfo cartInfo = cartService.findById(id);
 		if (cartValidator.validateDelete(cartInfo, currentUser()) && cartService.delete(cartInfo))

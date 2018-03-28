@@ -1,7 +1,6 @@
 package com.framgia.service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.criterion.Order;
@@ -21,6 +20,8 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	List<OrderInfo> getOrders(Integer userId, int off, int limit, Order order);
 
+	List<OrderInfo> getOrdersWithGuest(String sessionId, int off, int limit, Order order);
+
 	List<OrderInfo> getNewOrders(Date date, int limit);
 
 	int getOrdersSizeWithStatus(String status);
@@ -35,5 +36,5 @@ public interface OrderService extends BaseService<Integer, OrderInfo> {
 
 	boolean updateStatusOrder(OrderInfo orderInfo);
 
-	boolean updateOrderProduct(OrderInfo orderInfo, List<HashMap<String, Object>> orderProducts);
+	boolean updateOrderProduct(OrderInfo orderInfo);
 }

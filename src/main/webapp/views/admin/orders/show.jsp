@@ -10,22 +10,50 @@
       </div>
       <div class="modal-body">
         <div class="order-detail-info">
-          <div class="order-field">
-            <span>Customer: </span>
-            <span class="order-detail-customer">${order.getUser().getName()}</span>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="order-field">
+              <div>
+                <span>Customer : </span>
+                <span class="order-detail-customer">${order.getUser() != null ? order.getUser().getName() : 'Guest'}</span>
+              </div>
+              <span> Information of order </span>
+              <ul class="order-detail-info">
+                <li>
+                  PhoneNumber :
+                  <b>${order.getPhoneNumber()}</b>
+                </li>
+
+                <li>
+                  Email :
+                  <b>${order.getEmail()}</b>
+                </li>
+
+                <li>
+                  Name :
+                  <b>${order.getName()}</b>
+                </li>
+
+                <li>
+                  Address :
+                  <b>${order.getAddress()}</b>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div class="order-field">
-            <span>Total Price: </span>
-            <span class="order-detail-price">
-              <fmt:setLocale value="en_US" />
-              <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
-            </span>
-          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="order-field">
+              <span>Total Price: </span>
+              <span class="order-detail-price">
+                <fmt:setLocale value="en_US" />
+                <fmt:formatNumber value="${order.getTotalPrice()}" type="currency" />
+              </span>
+            </div>
 
-          <div class="order-field">
-            <span>Status: </span>
-            <span class="order-status status-${order.getStatus()}"> ${order.getStatus()} </span>
+            <div class="order-field">
+              <span>Status: </span>
+              <span class="order-status status-${order.getStatus()}"> ${order.getStatus()} </span>
+            </div>
           </div>
         </div>
         <table class="table table-bordered order-table" style="width: 100%">

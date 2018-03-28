@@ -104,14 +104,14 @@
                     <a href="${contextPath}/carts" class="item-cart">
                       <i class="fa fa-shopping-cart"></i>
                       Carts
-                      <i class="cart-size">${currentUser.getCarts().size()}</i>
+                      <i class="cart-size">${cartSize}</i>
                     </a>
                   </li>
                   <li>
                     <a href="${contextPath}/orders" class="item-order">
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                       Orders
-                      <i class="order-size">${currentUser.getOrders().size()}</i>
+                      <i class="order-size">${orderSize}</i>
                     </a>
                   </li>
                   <li class="dropdown">
@@ -148,6 +148,14 @@
                     <a href="${contextPath}/carts" class="item-cart">
                       <i class="fa fa-shopping-cart"></i>
                       Carts
+                      <i class="cart-size">${cartSize}</i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="${contextPath}/orders" class="item-order">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                      Orders
+                      <i class="order-size">${orderSize}</i>
                     </a>
                   </li>
                   <li>

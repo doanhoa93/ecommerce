@@ -1,19 +1,26 @@
 package com.framgia.validator;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.framgia.bean.OrderInfo;
+import com.framgia.bean.OrderProductInfo;
+import com.framgia.bean.ProductInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.constant.Status;
+import com.framgia.helper.CustomSession;
+import com.framgia.service.ProductService;
 
 @Component
 public class OrderValidator implements Validator {
+
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -44,8 +51,8 @@ public class OrderValidator implements Validator {
 		// Da cancel thi chi duoc phep ve WAITING
 		// Da reject, thi chi duoc phep ve WAITING
 		if ((status.equals(Status.ACCEPT) && !newStatus.equals(Status.CANCEL))
-		        || (status.equals(Status.CANCEL) && !newStatus.equals(Status.WAITING))
-		        || (status.equals(Status.REJECT) && !newStatus.equals(Status.WAITING)))
+		    || (status.equals(Status.CANCEL) && !newStatus.equals(Status.WAITING))
+		    || (status.equals(Status.REJECT) && !newStatus.equals(Status.WAITING)))
 			errors.rejectValue("status", "order.status.inlavid");
 	}
 
@@ -66,40 +73,77 @@ public class OrderValidator implements Validator {
 	public boolean validateEdit(Object target, UserInfo userInfo) {
 		OrderInfo orderInfo = (OrderInfo) target;
 
-		if (orderInfo == null)
-			return false;
-		else if (orderInfo.getUser().getId() != userInfo.getId())
+		if (!isOwner(orderInfo, userInfo))
 			return false;
 
-		if (!(orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)))
+		if (!(orderInfo.getStatus().equals(Status.WAITING)
+		    || orderInfo.getStatus().equals(Status.REJECT)))
 			return false;
 
 		return true;
 	}
 
-	public void validateUpdate(Object target, UserInfo userInfo, List<HashMap<String, Object>> orderProducts,
-	        Errors errors) {
-		OrderInfo orderInfo = (OrderInfo) target;
-
-		if (orderInfo == null)
+	public void validateUpdate(OrderInfo oldOrder, OrderInfo newOrder, UserInfo userInfo,
+	    Errors errors) {
+		if (oldOrder == null) {
 			errors.rejectValue("order", "order.null");
-		else if (orderInfo.getUser().getId() != userInfo.getId())
+			return;
+		}
+
+		List<OrderProductInfo> orderProductInfos = newOrder.getOrderProducts();
+		if (orderProductInfos == null) {
+			errors.rejectValue("orderProducts", "order.order_product.invalid");
+			return;
+		}
+
+		for (OrderProductInfo orderProductInfo : orderProductInfos) {
+			ProductInfo productInfo = productService.findById(orderProductInfo.getProductId());
+			if (productInfo != null && orderProductInfo.getQuantity() > productInfo.getNumber()) {
+				errors.rejectValue("orderProducts", "order.order_product.quantity.invalid");
+				return;
+			}
+		}
+
+		if (StringUtils.isEmpty(newOrder.getPhoneNumber()))
+			errors.rejectValue("phoneNumber", "order.phone_number.empty");
+
+		if (StringUtils.isEmpty(newOrder.getName()))
+			errors.rejectValue("name", "order.name.empty");
+
+		if (StringUtils.isEmpty(newOrder.getEmail()))
+			errors.rejectValue("email", "order.email.empty");
+
+		if (!isOwner(oldOrder, userInfo))
 			errors.rejectValue("user", "system.permission.denied");
 
-		if (!(orderInfo.getStatus().equals(Status.WAITING) || orderInfo.getStatus().equals(Status.REJECT)))
+		if (!(oldOrder.getStatus().equals(Status.WAITING)
+		    || oldOrder.getStatus().equals(Status.REJECT)))
 			errors.rejectValue("status", "order.status.invalid");
 	}
 
 	public boolean validateDelete(Object target, UserInfo userInfo) {
 		OrderInfo orderInfo = (OrderInfo) target;
 
-		if (orderInfo == null)
-			return false;
-		else if (!orderInfo.getStatus().equals(Status.WAITING))
-			return false;
-		else if (userInfo.getId() != orderInfo.getUser().getId())
+		if (!isOwner(orderInfo, userInfo))
 			return false;
 
+		if (!orderInfo.getStatus().equals(Status.WAITING))
+			return false;
 		return true;
+	}
+
+	private boolean isOwner(OrderInfo orderInfo, UserInfo userInfo) {
+		if (orderInfo == null)
+			return false;
+
+		if (userInfo != null && orderInfo.getUser() != null
+		    && userInfo.getId() == orderInfo.getUser().getId())
+			return true;
+
+		if (userInfo == null && orderInfo.getUser() == null
+		    && orderInfo.getSessionId().equals(CustomSession.current()))
+			return true;
+
+		return false;
 	}
 }
