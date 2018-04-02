@@ -10,7 +10,6 @@
     <intercept-url pattern="/logout" access="isAuthenticated()" />
     <intercept-url pattern="/registrations" access="isAnonymous()" />
     <intercept-url pattern="/registrations/**" access="isAnonymous()" />
-    <intercept-url pattern="/orders/*/*" access="hasRole('ROLE_USER')" />
     <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
     <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 

@@ -124,7 +124,6 @@ $(document).ready(function() {
 	        contentType: false,
 	        processData: false
 	    });			
-		
 	});
 	
 	$(document).on('click', '.cart-product-select', function() {

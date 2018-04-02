@@ -25,7 +25,8 @@ public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements Ord
 	@Override
 	public User getUser(Integer orderId) {
 		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.createAlias("orders", "orders", Criteria.LEFT_JOIN, Restrictions.eq("orders.id", orderId));
+		criteria.createAlias("orders", "orders", Criteria.LEFT_JOIN,
+		    Restrictions.eq("orders.id", orderId));
 		return (User) criteria.uniqueResult();
 	}
 
@@ -39,7 +40,8 @@ public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements Ord
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Order> getOrders(Integer userId, int off, int limit, org.hibernate.criterion.Order order) {
+	public List<Order> getOrders(Integer userId, int off, int limit,
+	    org.hibernate.criterion.Order order) {
 		Criteria criteria = createEntityCriteria();
 		criteria.setFirstResult(off);
 
@@ -66,7 +68,8 @@ public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements Ord
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("status", Status.getIntStatus(Status.ACCEPT)));
 		criteria.add(Restrictions.between("createdAt", startDate, endDate));
-		ProjectionList projectionList = Projections.projectionList().add(Projections.sum("totalPrice"), "total");
+		ProjectionList projectionList = Projections.projectionList()
+		    .add(Projections.sum("totalPrice"), "total");
 		criteria.setProjection(projectionList);
 		Object sale = criteria.uniqueResult();
 		double results[] = new double[2];
@@ -78,12 +81,30 @@ public class OrderDAOImpl extends BaseDAOAbstract<Integer, Order> implements Ord
 
 		DateUtil dateUtil = new DateUtil();
 		criteria.add(Restrictions.between("createdAt", dateUtil.getPrevStartDate(startDate),
-		        dateUtil.getPrevEndDate(endDate)));
+		    dateUtil.getPrevEndDate(endDate)));
 		sale = criteria.uniqueResult();
 		if (sale != null)
 			results[1] = (double) sale;
 		else
 			results[1] = 0;
 		return results;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getOrdersWithGuest(String sessionId, int off, int limit,
+	    org.hibernate.criterion.Order order) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setFirstResult(off);
+
+		if (sessionId != null)
+			criteria.add(Restrictions.eq("sessionId", sessionId));
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+		return criteria.list();
 	}
 }

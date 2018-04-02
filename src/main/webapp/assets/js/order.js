@@ -34,31 +34,27 @@ $(document).ready(function() {
 		}
 	});
 
-	$(document).on('click', '.btn-order', function() {
-		var orderProducts = [];
-		$('.order-product').each(function() {
+	$(document).on('click', '.btn-update-order', function(e) {
+		e.preventDefault();
+		var formData = new FormData(document.getElementById('edit-order'));
+		$('.order-product').each(function(index, element) {
 			var id = $(this).data('id');
 			var quantity = $(this).find('.order-product-quantity').val();
-			orderProducts.push({id: id, quantity: quantity});
+			formData.append('orderProducts[' + index + '].id', id);
+			formData.append('orderProducts[' + index + '].quantity', quantity);
+			formData.append('orderProducts[' + index + '].productId', $(this).data('product-id'));
 		});
-		
-		if(orderProducts.length > 0) {
-			var id = $(this).data('id');
-			$.ajax({
-				method: 'PATCH',
-				url: getContextPath() + '/orders/' + id,
-				data: JSON.stringify({orderProducts: orderProducts}),
-				dataType: 'json',
-			    contentType: 'application/json',
-			    success: function(data) {
-			    	if(data.msg == 'success')
-			    		window.location.replace(getContextPath() + '/orders/' + id);
-			    }
-			});
-		} else {
-			$('.alert-warning').show();
-			$('.alert-warning').html('Cannot order with empty!');
-		}
+        $.ajax({
+            url: $('form#edit-order').attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                $('.container-body').html(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        }); 		
 	});
 	
 	function setTotalMoney(price) {

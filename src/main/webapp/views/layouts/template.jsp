@@ -30,6 +30,16 @@
 <c:set var="currentUser" value="${request.getSession().getAttribute('currentUser')}"
   scope="application" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="application" />
+<c:set var="cartSizeSession"
+  value="${request.getSession().getAttribute('cartSize') ? request.getSession().getAttribute('cartSize') : 0}" />
+<c:set var="orderSizeSession"
+  value="${request.getSession().getAttribute('corderSize') ? request.getSession().getAttribute('orderSize') : 0}" />
+<c:set var="cartSize"
+  value="${currentUser != null ? currentUser.getCarts().size() : cartSizeSession}"
+  scope="application" />
+<c:set var="orderSize"
+  value="${currentUser != null ? currentUser.getOrders().size() : orderSizeSession}"
+  scope="application" />
 <body>
   <div class="header">
     <c:if test="${flash != null}">
@@ -41,7 +51,7 @@
   </div>
 
   <div class="body">
-    <div class="container">
+    <div class="container container-body">
       <tiles:insertAttribute name="body" ignore="true" />
     </div>
   </div>

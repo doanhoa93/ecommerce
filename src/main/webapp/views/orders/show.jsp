@@ -13,6 +13,31 @@
     </div>
 
     <div class="order-field">
+      <span> Information of order </span>
+      <ul class="order-detail-info">
+        <li>
+          PhoneNumber :
+          <b>${order.getPhoneNumber()}</b>
+        </li>
+
+        <li>
+          Email :
+          <b>${order.getEmail()}</b>
+        </li>
+
+        <li>
+          Name :
+          <b>${order.getName()}</b>
+        </li>
+
+        <li>
+          Address :
+          <b>${order.getAddress()}</b>
+        </li>
+      </ul>
+    </div>
+
+    <div class="order-field">
       <span>Status: </span>
       <span class="order-status status-${order.getStatus()}"> ${order.getStatus()} </span>
     </div>

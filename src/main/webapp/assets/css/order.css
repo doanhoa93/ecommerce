@@ -31,6 +31,10 @@
 	width: 100%;
 }
 
+.orders-right .btn-update-order {
+	width: 100%;
+}
+
 .orders-left .order-left {
 	padding-left: 0px;
 }
@@ -224,6 +228,14 @@
 	margin-bottom: 10px;
 }
 
+.order-detail-info li {
+	list-style: inherit;
+}
+
+.order .field {
+	margin-bottom: 20px;
+}
+
 .order .order-product-status {
 	border: 1px solid #F7F7F0;
 	border-radius: 2px;
@@ -269,10 +281,4 @@
 
 .input-sm {
 	width: auto !important;
-}
-
-.order-guest {
-	border: 1px solid #d8d8d4;
-	margin: 0 10%;
-	padding: 10px;
 }

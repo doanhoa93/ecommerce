@@ -28,7 +28,7 @@
               <tr class="${loop.index % 2 == 0 ? 'odd' : 'even'} tr-href-js order-${order.getId()}"
                 data-href="${contextPath}/admin/orders/${order.getId()}">
                 <td>${loop.index + 1}</td>
-                <td>${order.getUser().getName()}</td>
+                <td>${order.getUser() != null ? order.getUser().getName() : 'Guest'}</td>
                 <td>${order.getOrderProducts().size()}</td>
                 <td>
                   <fmt:setLocale value="en_US" />
