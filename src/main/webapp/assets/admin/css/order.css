@@ -78,3 +78,7 @@
 .order-detail-info .order-field {
 	margin-bottom: 20px;
 }
+
+.new-order-item {
+	background-color: #b7b7b7 !important;
+}

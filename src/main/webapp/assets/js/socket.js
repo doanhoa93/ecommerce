@@ -36,24 +36,7 @@ $(document).ready(function() {
 		$('.notification-size').html(Number($('.notification-size').html()) + 1);
 		$('.notifications-body').prepend(notificationPanel(notification));
 	}	
-	
-	function updateNotification(notificationId) {
-		stompClient.send("/app/update/" + notificationId, {}, JSON.stringify({
-		    token : token,
-		    read: true
-		}))
-	}
-	
-	function initTime() {
-		$('.notification-time').each(function() {
-			$(this).html(jQuery.timeago($(this).html()));
-		});
-		
-		$('.chat-time').each(function() {
-			$(this).html(jQuery.timeago($(this).html()));
-		});
-	}
-	
+
 	function notificationPanel(notification) {
 	    var notificationPanel = $('.notification').first().clone();
 	    notificationPanel.attr('data-id', notification.id);
@@ -99,6 +82,13 @@ $(document).ready(function() {
 	$(document).on('click', '.notification', function() {
 		updateNotification($(this).data('id'));
 	});
+    
+    function updateNotification(notificationId) {
+        stompClient.send("/app/update/" + notificationId, {}, JSON.stringify({
+            token : token,
+            read: true
+        }));
+    }
 	
 	$(document).on('click', '.btn-chat', function() {
 		var content = $('.input-chat').val();
@@ -141,6 +131,16 @@ $(document).ready(function() {
 		    contentType: 'application/json'
 		});	
 	});			
+	
+    function initTime() {
+        $('.notification-time').each(function() {
+            $(this).html(jQuery.timeago($(this).html()));
+        });
+        
+        $('.chat-time').each(function() {
+            $(this).html(jQuery.timeago($(this).html()));
+        });
+    }	
 	
 	function scrollChat() {
 		$('.panel-body').scrollTop($('.panel-body').prop('scrollHeight'));

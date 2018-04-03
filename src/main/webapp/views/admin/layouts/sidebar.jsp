@@ -16,6 +16,7 @@
         <a href="${contextPath}/admin/orders">
           <i class="fa fa-shopping-cart fa-fw"></i>
           Orders
+          <span class="new-order-item-icon"></span>          
         </a>
       </li>
 

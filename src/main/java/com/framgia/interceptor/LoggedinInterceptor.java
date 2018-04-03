@@ -47,13 +47,6 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 			    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
 		}
 
-		if (currentUser == null) {
-			request.getSession().setAttribute("cartSize",
-			    cartService.getCartsWithGuest(CustomSession.current(), null, 0, null).size());
-			request.getSession().setAttribute("orderSize",
-			    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
-		}
-
 		if (isAdmin(currentUser) && !validAdminRequest(request)) {
 			response.sendRedirect(request.getContextPath() + "/admin");
 			return false;

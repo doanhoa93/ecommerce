@@ -73,28 +73,8 @@ $(document).ready(function() {
 	        processData: false
 	    });		
 	});		
-	
-	connect();
-	var stompClient;
-	function connect() {
-		var socket = new SockJS('/Ecommerce/admin/ws');
-		stompClient = Stomp.over(socket);
-		stompClient.connect({}, onConnected, onError);
-	}
-	
-	function onConnected() {
-		stompClient.subscribe('/topic/newMessages', onChatReceived);
-	}
-	
-	function onError(error) {
-	}
-	
-	function onChatReceived(data) {
-		if(!$('.admin-chats').length)
-			$('.new-message').addClass('user-chat-new-message');			
-	}		
-	
-    function isError(data) {
+
+	function isError(data) {
         return $(data).filter('.error').length;
     }       	
 });

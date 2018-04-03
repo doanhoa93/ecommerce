@@ -20,15 +20,15 @@ public class ProductsController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "priceLow", required = false) String priceLow,
-			@RequestParam(value = "priceHigh", required = false) String priceHigh,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "page", required = false) String page) {
+	    @RequestParam(value = "priceHigh", required = false) String priceHigh,
+	    @RequestParam(value = "name", required = false) String name,
+	    @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
 		List<ProductInfo> products = null;
 		ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);
 		if (productFilter.isFilterProduct()) {
 			products = productService.filterProducts(null, productFilter, page,
-					Paginate.PRODUCT_LIMIT);
+			    Paginate.PRODUCT_LIMIT);
 			model.setViewName("productsPartial");
 		} else {
 			model.addObject("categories", categoryService.getObjects());

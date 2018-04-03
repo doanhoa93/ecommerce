@@ -31,7 +31,8 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	@Override
 	public Recent getRecent(Integer productId) {
 		Criteria criteria = getSession().createCriteria(Recent.class);
-		criteria.createAlias("products", "products", Criteria.LEFT_JOIN, Restrictions.eq("products.id", productId));
+		criteria.createAlias("products", "products", Criteria.LEFT_JOIN,
+		    Restrictions.eq("products.id", productId));
 		return (Recent) criteria.uniqueResult();
 	}
 
@@ -39,7 +40,8 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	@Override
 	public Promotion getPromotion(Integer productId) {
 		Criteria criteria = getSession().createCriteria(Promotion.class);
-		criteria.createAlias("products", "products", Criteria.LEFT_JOIN, Restrictions.eq("products.id", productId));
+		criteria.createAlias("products", "products", Criteria.LEFT_JOIN,
+		    Restrictions.eq("products.id", productId));
 		return (Promotion) criteria.uniqueResult();
 	}
 
@@ -47,7 +49,8 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	@Override
 	public Category getCategory(Integer productId) {
 		Criteria criteria = getSession().createCriteria(Category.class);
-		criteria.createAlias("products", "products", Criteria.LEFT_JOIN, Restrictions.eq("products.id", productId));
+		criteria.createAlias("products", "products", Criteria.LEFT_JOIN,
+		    Restrictions.eq("products.id", productId));
 		return (Category) criteria.uniqueResult();
 	}
 
@@ -85,12 +88,14 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit) {
+	public List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off,
+	    int limit) {
 		Criteria criteria = getSession().createCriteria(Product.class);
 		if (categoryId != null)
 			criteria.add(Restrictions.eq("category.id", categoryId));
 		criteria.add(Restrictions.like("name", "%" + productFilter.getName() + "%"));
-		criteria.add(Restrictions.between("price", productFilter.getPriceLow(), productFilter.getPriceHigh()));
+		criteria.add(Restrictions.between("price", productFilter.getPriceLow(),
+		    productFilter.getPriceHigh()));
 		criteria.setFirstResult(off);
 		if (limit != 0)
 			criteria.setMaxResults(limit);
@@ -101,8 +106,9 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	@Override
 	public List<Product> hotProducts(int limit) {
 		Criteria criteria = getSession().createCriteria(OrderProduct.class);
-		ProjectionList projectionList = Projections.projectionList().add(Projections.groupProperty("product.id"))
-		        .add(Projections.count("product.id"), "countProduct");
+		ProjectionList projectionList = Projections.projectionList()
+		    .add(Projections.groupProperty("product.id"))
+		    .add(Projections.count("product.id"), "countProduct");
 		criteria.setProjection(projectionList);
 		criteria.addOrder(Order.desc("countProduct")).setMaxResults(limit);
 
@@ -118,10 +124,12 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	@Override
 	public List<Product> recentProducts(Date date, int limit) {
 		Criteria criteria = getSession().createCriteria(Recent.class);
-		ProjectionList projectionList = Projections.projectionList().add(Projections.groupProperty("product.id"))
-		        .add(Projections.count("product.id"), "countProduct");
+		ProjectionList projectionList = Projections.projectionList()
+		    .add(Projections.groupProperty("product.id"))
+		    .add(Projections.count("product.id"), "countProduct");
 		criteria.setProjection(projectionList);
-		criteria.add(Restrictions.gt("createdAt", date)).addOrder(Order.desc("countProduct")).setMaxResults(limit);
+		criteria.add(Restrictions.gt("createdAt", date)).addOrder(Order.desc("countProduct"))
+		    .setMaxResults(limit);
 
 		List<Object[]> results = criteria.list();
 		List<Integer> productIds = new ArrayList<>();

@@ -34,7 +34,7 @@ public class RegistrationsController extends BaseController {
 		} catch (Exception e) {
 			logger.error(e);
 			return new ModelAndView("signup", "message",
-					messageSource.getMessage("registration.error", null, Locale.US));
+			    messageSource.getMessage("registration.error", null, Locale.US));
 		}
 	}
 }

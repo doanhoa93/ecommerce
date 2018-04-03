@@ -22,13 +22,13 @@
           <label class="product-image-label">Images of product</label>
           <div class="product-image-forms">
             <c:forEach var="image" items="${product.getImages()}">
-              <i class="fa fa-minus remove-image" aria-hidden="true"> Remove image</i>
               <div class="product-image-form">
+                <i class="fa fa-minus remove-image" aria-hidden="true"> Remove image</i>
                 <form:input type="hidden" path="imagesStatus" value="1" />
                 <form:input type="hidden" path="imageIds" value="${image.getId()}" />
                 <form:input type="file" path="imageFiles" class="image" />
                 <div class="product-image">
-                  <img class="img-responsive" src="${image.getImage()}" />
+                  <img class="img-responsive product-image-panel" src="${image.getImage()}" />
                 </div>
                 <hr>
               </div>
