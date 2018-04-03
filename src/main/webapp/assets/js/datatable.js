@@ -16,6 +16,7 @@ $(document).ready(function() {
     	'<li><a href="' + pathName + '?entries=all' + '">All</a></li></ul></li>';    
     
 	$('.dataTables_wrapper .dataTables_length').prepend(maxEntries);
+	$('input[name=search].input-sm').css('width', 'auto');
 	
 	var url = new URL(window.location.href);
 	if(url.searchParams.get("entries") == '' || url.searchParams.get("entries") == null)

@@ -4,15 +4,23 @@
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	padding-left: 0px;
+	padding: 10px;
 }
 
 .carts .carts-right .total-money {
 	font-size: 30px;
 }
 
+.carts-left .order-form-create {
+	display: none;
+}
+
 .carts-right .btn-order {
 	width: 100%;
+}
+
+.cart-error {
+	margin-bottom: 20px;
 }
 
 .carts-left .cart-left {

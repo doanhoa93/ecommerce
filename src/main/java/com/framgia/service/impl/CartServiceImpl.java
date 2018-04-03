@@ -83,7 +83,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public List<CartInfo> getObjects() {
 		try {
-			return getCartDAO().getObjects().stream().map(ModelToBean::toCartInfo).collect(Collectors.toList());
+			return getCartDAO().getObjects().stream().map(ModelToBean::toCartInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -94,7 +95,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	public List<CartInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getCartDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCartInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -105,7 +106,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	public List<CartInfo> getObjects(int off, int limit) {
 		try {
 			return getCartDAO().getObjects(off, limit).stream().map(ModelToBean::toCartInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -130,8 +131,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getCartDAO().getCarts(userId, off, limit, order).stream().map(ModelToBean::toCartInfo)
-			        .collect(Collectors.toList());
+			return getCartDAO().getCarts(userId, off, limit, order).stream()
+			    .map(ModelToBean::toCartInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -146,8 +147,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 				off = 0;
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
-			return getCartDAO().getCartsWithGuest(sessionId, off, limit, order).stream().map(ModelToBean::toCartInfo)
-			        .collect(Collectors.toList());
+			return getCartDAO().getCartsWithGuest(sessionId, off, limit, order).stream()
+			    .map(ModelToBean::toCartInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -160,7 +161,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			Cart cart = new Cart();
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
-			if (StringUtils.isEmpty(cartInfo.getSessionId())) {
+			if (cartInfo.getUserId() != null) {
 				cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
 				if (cart == null) {
 					cart = new Cart();

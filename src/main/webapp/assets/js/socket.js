@@ -55,11 +55,17 @@ $(document).ready(function() {
 	}
 	
 	function notificationPanel(notification) {
-		return '<li class="sub-menu-item notification ' + (notification.isWatched ? '' : 'unwatched') + 
-		       '" data-id="'+ notification.id + '">' +
-	           '<a href="' + getContextPath() + '/orders/' + notification.orderId + '">' +
-	           '<span class="notification-content">' + notification.content + '</span></a>' +
-	           '<div class="small notification-time">' + jQuery.timeago(notification.createdAt) + '</div></li>';
+	    var notificationPanel = $('.notification').first().clone();
+	    notificationPanel.attr('data-id', notification.id);
+	    notificationPanel.removeClass('unwatched');
+	    if(!notification.isWatched)
+	        notificationPanel.addClass('unwatched');
+	    
+	    notificationPanel.find('.notification-href').attr('href', getContextPath() + '/orders/' + notification.orderId);
+	    notificationPanel.find('.notification-content').text(notification.content);
+        notificationPanel.find('.notification-time').text(jQuery.timeago(notification.createdAt));
+        
+        return notificationPanel.prop('outerHTML'); 
 	}
 	
 	function getContextPath() {
@@ -67,17 +73,27 @@ $(document).ready(function() {
 	}
 	
 	function setChatPanel(chat) {
-		var direction = chat.sender.token == token ? 'left' : 'right';
-		var pullDirection = chat.sender.token == token ? 'pull-right' : '';
-		var pullDirectionReverse = chat.sender.token == token ? '' : 'pull-right';
-		return '<li class="' + direction + ' clearfix chat-item chat-item-' + chat.id + '" data-id="' + chat.id + '">' +
-		   '<span class="chat-img pull-' + direction + '">' + 
-		   '<img src="' + chat.sender.avatar + '" alt="User Avatar" class="img-responsive img-circle" />' +
-		   '</span><div class="chat-body clearfix">' +
-		   '<div class="header"><strong class="' + pullDirectionReverse + ' primary-font">' + chat.sender.name + '</strong>' + 
-		   '<small class="' + pullDirection + ' text-muted">' +
-		   '<i class="fa fa-clock-o fa-fw"></i><span class="chat-time">' + jQuery.timeago(chat.createdAt) + '</span></small></div>' +
-		   '<p class="chat-content">' + chat.content + '</p></div></li>';
+	    var chatPanel = $('.chat-item').first().clone();
+	    chatPanel.removeClass();
+	    chatPanel.addClass('clearfix chat-item chat-item-' + chat.id);
+	    chatPanel.attr('data-id', chat.id);
+	    chatPanel.find('.text-muted').removeClass('pull-right');
+	    chatPanel.find('.primary-font').removeClass('pull-right');
+	    if(chat.sender.token == token) {
+	        chatPanel.addClass('left');
+	        chatPanel.find('.chat-img').removeClass().addClass('chat-img pull-left');
+	        chatPanel.find('.text-muted').addClass('pull-right');
+	    } else {
+	        chatPanel.addClass('right');
+	        chatPanel.find('.chat-img').removeClass().addClass('chat-img pull-right');
+	        chatPanel.find('.primary-font').addClass('pull-right');
+	    }
+	    
+	    chatPanel.find('.img-circle').attr('src', chat.sender.avatar);
+	    chatPanel.find('.primary-font').text(chat.sender.name);
+	    chatPanel.find('.chat-time').text(jQuery.timeago(chat.createdAt));
+        chatPanel.find('.chat-content').text(chat.content);
+        return chatPanel.prop('outerHTML'); 
 	}
 	
 	$(document).on('click', '.notification', function() {

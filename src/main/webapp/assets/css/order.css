@@ -31,8 +31,9 @@
 	width: 100%;
 }
 
-.orders-right .btn-update-order {
-	width: 100%;
+.btn-update-order, .btn-cancel-order {
+	display: inline-block;
+	margin-top: 0 !important;
 }
 
 .orders-left .order-left {
@@ -277,8 +278,4 @@
 	position: absolute;
 	text-align: center;
 	top: 30px;
-}
-
-.input-sm {
-	width: auto !important;
 }

@@ -27,13 +27,14 @@
   <link rel="stylesheet" href="<c:url value='${css}'/>" type="text/css" media="screen" />
 </c:forEach>
 
-<c:set var="currentUser" value="${request.getSession().getAttribute('currentUser')}"
-  scope="application" />
+<c:set var="currentUser" value="${request.getAttribute('currentUser')}" scope="application" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="application" />
+
 <c:set var="cartSizeSession"
-  value="${request.getSession().getAttribute('cartSize') ? request.getSession().getAttribute('cartSize') : 0}" />
+  value="${request.getAttribute('cartSize') ? request.getAttribute('cartSize') : 0}" />
 <c:set var="orderSizeSession"
-  value="${request.getSession().getAttribute('corderSize') ? request.getSession().getAttribute('orderSize') : 0}" />
+  value="${request.getAttribute('orderSize') ? request.getAttribute('orderSize') : 0}" />
+
 <c:set var="cartSize"
   value="${currentUser != null ? currentUser.getCarts().size() : cartSizeSession}"
   scope="application" />
@@ -53,6 +54,13 @@
   <div class="body">
     <div class="container container-body">
       <tiles:insertAttribute name="body" ignore="true" />
+
+      <c:if test="${currentUser != null}">
+        <div class="col-lg-4 chat-div">
+          <c:import url="/views/chats/index.jsp" />
+          <c:import url="/views/chats/chat_title.jsp" />
+        </div>
+      </c:if>
     </div>
   </div>
 

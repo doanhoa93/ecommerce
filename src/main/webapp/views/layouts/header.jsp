@@ -91,7 +91,8 @@
                           <li
                             class="sub-menu-item notification ${notification.isWatched() ? '' : 'unwatched'}"
                             data-id="${notification.getId()}">
-                            <a href="${contextPath}/orders/${notification.getOrder().getId()}">
+                            <a class="notification-href"
+                              href="${contextPath}/orders/${notification.getOrder().getId()}">
                               <span class="notification-content">${notification.getContent()}</span>
                             </a>
                             <div class="small notification-time">${notification.getCreatedAt()}</div>

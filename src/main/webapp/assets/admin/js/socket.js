@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	initTime();
-	
 	var token, userId;
 	var subscribers = {};
 	if($('.token').val() != null && $('.token').val() != '') {
@@ -68,24 +66,45 @@ $(document).ready(function() {
 	}	
 	
 	function setChatPanel(chat) {
-		var direction = chat.sender.id != userId ? 'left' : 'right';
-		var pullDirection = chat.sender.id != userId ? 'pull-right' : '';
-		var pullDirectionReverse = chat.sender.id != userId ? '' : 'pull-right';
-		return '<li class="' + direction + ' clearfix chat-item chat-item-' + chat.id + '" data-id="' + chat.id + '">' +
-		   '<span class="chat-img pull-' + direction + '">' + 
-		   '<img src="' + chat.sender.avatar + '" alt="User Avatar" class="img-responsive img-circle" />' +
-		   '</span><div class="chat-body clearfix">' +
-		   '<div class="header"><strong class="' + pullDirectionReverse + ' primary-font">' + chat.sender.name + '</strong>' + 
-		   '<small class="' + pullDirection + ' text-muted">' +
-		   '<i class="fa fa-clock-o fa-fw"></i><span class="chat-time">' + jQuery.timeago(chat.createdAt) + '</span></small></div>' +
-		   '<p class="chat-content">' + chat.content + '</p></div></li>';
+	    var chatPanel = $('.chat-item').first().clone();
+	    chatPanel.removeClass();
+	    chatPanel.addClass('clearfix chat-item chat-item-' + chat.id);
+	    chatPanel.attr('data-id', chat.id);
+	    var font = chatPanel.find('.primary-font');
+	    font.removeClass();
+	    var textMuted = chatPanel.find('.text-muted');
+	    textMuted.removeClass();
+	    
+	    if(chat.sender.id == userId) {
+	        chatPanel.addClass('right');
+	        chatPanel.find('.chat-img').removeClass('pull-left');
+	        chatPanel.find('.chat-img').addClass('pull-right');
+	        font.addClass('.pull-right');
+	    } else {
+            chatPanel.addClass('left');
+            chatPanel.find('.chat-img').addClass('pull-left');
+            chatPanel.find('.chat-img').removeClass('pull-right');
+            textMuted.addClass('.pull-right');
+	    }
+	    chatPanel.find('.img-circle').attr('src', chat.sender.avatar);
+	    chatPanel.find('.chat-time').text(jQuery.timeago(chat.createdAt));
+        chatPanel.find('.chat-content').text(chat.content);
+        return chatPanel.prop('outerHTML');
 	}
 	
 	function setUserPanel(user) {
-        return '<li class="user user-chat user-chat-' + user.id + '" data-id="' + user.id + '" data-token="' + user.token + '">' +
-        	'<img alt="" src="' + user.avatar + '" class="img-responsive user-chat-avatar">' +
-        	'<span>' + user.name + '</span>' +
-        	'<span class="new-message-' + user.id + (user.adminNewMessage ? ' user-chat-new-message' : '') + '"></span></li>';		
+	    var userPanel = $('.user-chat').first().clone();
+	    userPanel.removeClass();
+	    userPanel.addClass('user user-chat user-chat-' + user.id);
+	    userPanel.attr('data-id', user.id);
+	    userPanel.attr('data-token', user.token);
+	    userPanel.find('.user-chat-avatar').attr('src', user.avatar);
+	    userPanel.find('.user-name').text(user.name);
+	    userPanel.find('.user-new-message').addClass('new-message-' + user.id);
+	    if(user.adminNewMessage)
+	        userPanel.find('.user-new-message').addClass('user-chat-new-message');
+	    
+	    return userPanel.prop('outerHTML'); 
 	}
 	
 	$(document).on('click', '.user-chat', function() {
@@ -104,10 +123,10 @@ $(document).ready(function() {
 		    contentType: 'application/json',
 		    data: {off: 0},
 		    success: function (data) {
-		    	$('.chat-item').remove();
 		    	if(data.chats != undefined && data.chats.length > 0) {
 		    		for(var index = 0; index < data.chats.length; index++)
 		    			$('.chat').prepend(setChatPanel(data.chats[index]));
+		    		$('.chat-item-0').remove();
 		    		$('.panel-body').scrollTop($('.chat-item-' + data.chats[0].id).position().top);
 		    	}        	
 		    }
@@ -133,8 +152,8 @@ $(document).ready(function() {
         if (event.keyCode == 13 && content != '' && userId != undefined) {
 			stompClient.send("/app/admin/chats/" + userId, {}, JSON.stringify({'content': content, 'token': token}));
 			$('.input-chat').val('');
-        }else if(event.keyCode == 13)
-        	$('.input-chat').val('');		
+        } else if (event.keyCode == 13)
+            $('.input-chat').val('');		
 	});
 	
 	$('.panel-body').scroll(function() {
@@ -173,9 +192,9 @@ $(document).ready(function() {
 	}
 	
 	function initTime() {
-		$('.chat-time').each(function() {
-			$(this).text((jQuery.timeago($(this).html())));
-		});
+        $('.chat-time').each(function() {
+            $(this).html(jQuery.timeago($(this).html()));
+        });
 	}	
 	
 	function scrollChat() {

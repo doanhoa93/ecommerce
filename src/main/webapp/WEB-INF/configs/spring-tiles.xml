@@ -49,6 +49,10 @@
     <put-attribute name="body" value="/views/shared/404.jsp" />
   </definition>
 
+  <definition name="inputError" template="/views/shared/input_error.jsp" />
+  
+  <definition name="redirect" template="/views/shared/redirect.jsp" />
+
   <definition name="homePage" extends="baselayout">
     <put-attribute name="title" value="HomePage | Ecommerce" />
     <put-attribute name="body" value="/views/pages/index.jsp" />
@@ -113,10 +117,6 @@
       <add-attribute value="/assets/js/order.js" />
     </put-list-attribute>
   </definition>
-
-  <definition name="orderTemplate" template="/views/orders/show.jsp" />
-
-  <definition name="editOrderTemplate" template="/views/orders/edit.jsp" />
 
   <definition name="editOrder" extends="baselayout">
     <put-attribute name="title" value="Edit order | Ecommerce" />

@@ -104,3 +104,7 @@
 .product-image-form {
 	margin-bottom: 10px;
 }
+
+.add-image:before, .remove-image:before {
+	margin-right: 5px;
+}

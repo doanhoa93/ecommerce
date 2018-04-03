@@ -19,6 +19,7 @@ import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.helper.CustomSession;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
 import com.framgia.model.User;
@@ -44,7 +45,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<CommentInfo> getComments(Integer userId) {
 		try {
 			return getUserDAO().getComments(userId).stream().map(ModelToBean::toCommentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -55,9 +56,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<OrderProductInfo> getOrderProducts(Integer userId) {
 		try {
 			List<Order> orders = getOrderDAO().getOrders(userId, 0, 0, null);
-			List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId).collect(Collectors.toList());
-			return getOrderProductDAO().getObjectsByIds(orderIds).stream().map(ModelToBean::toOrderProductInfo)
-			        .collect(Collectors.toList());
+			List<Integer> orderIds = (List<Integer>) orders.stream().map(Order::getId)
+			    .collect(Collectors.toList());
+			return getOrderProductDAO().getObjectsByIds(orderIds).stream()
+			    .map(ModelToBean::toOrderProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -67,7 +69,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<ProductInfo> getOrderedProducts(Integer userId) {
 		try {
-			return getOrderProducts(userId).stream().map(OrderProductInfo::getProduct).collect(Collectors.toList());
+			return getOrderProducts(userId).stream().map(OrderProductInfo::getProduct)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -158,7 +161,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<UserInfo> getObjects() {
 		try {
-			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo).collect(Collectors.toList());
+			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -169,7 +173,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getUserDAO().getObjectsByIds(keys).stream().map(ModelToBean::toUserInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -180,7 +184,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserInfo> getObjects(int off, int limit) {
 		try {
 			return getUserDAO().getObjects(off, limit).stream().map(ModelToBean::toUserInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -190,13 +194,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public void logout(String email) {
 		try {
-			User user = getUserDAO().findByEmail(email);
-			user.setToken(null);
-			getUserDAO().saveOrUpdate(user);
 			HashMap<String, Object> hashMap = new HashMap<>();
-			hashMap.put("id", user.getId());
-			hashMap.put("token", user.getToken());
+			UserInfo userInfo = findByEmail(email);
+			hashMap.put("id", userInfo.getId());
+			hashMap.put("token", userInfo.getToken());
 			simpMessagingTemplate.convertAndSend("/topic/unregisters", hashMap);
+			updateToken(userInfo, CustomSession.randomToken());
 		} catch (Exception e) {
 			logger.error(e);
 			return;
@@ -206,7 +209,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public List<UserInfo> getUsers(String role) {
 		try {
-			return getUserDAO().getUsers(role).stream().map(ModelToBean::toUserInfo).collect(Collectors.toList());
+			return getUserDAO().getUsers(role).stream().map(ModelToBean::toUserInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -217,7 +221,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserInfo> getNewUsers(Date date, int limit) {
 		try {
 			return getUserDAO().getNewObjects(date, limit).stream().map(ModelToBean::toUserInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -228,7 +232,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserInfo> getUsers(int off, int limit, org.hibernate.criterion.Order order) {
 		try {
 			return getUserDAO().getUsers(off, limit, order).stream().map(ModelToBean::toUserInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

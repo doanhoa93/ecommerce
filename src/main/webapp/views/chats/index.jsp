@@ -1,4 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+
 <div class="chat-panel panel panel-default">
   <div class="panel-heading chat-title">
     <i class="fa fa-comments fa-fw"></i>
@@ -11,7 +14,27 @@
     </div>
   </div>
   <div class="panel-body">
-    <ul class="chat" data-id="">
+    <ul class="chat">
+      <li class="right clearfix chat-item">
+        <span class="chat-img pull-right">
+          <img src="${contextPath}/assets/images/supervisor.png" alt="User Avatar"
+            class="img-responsive img-circle" />
+        </span>
+        
+        <div class="chat-body clearfix">
+          <div class="header">
+            <strong class="pull-right primary-font">Admin</strong>
+            <small class="text-muted">
+              <i class="fa fa-clock-o fa-fw"></i>
+              <span class="chat-time">
+                <fmt:formatDate type="both" value="${now}" />
+              </span>
+            </small>
+          </div>
+          <p class="chat-content">Can I help you?</p>
+        </div>
+      </li>
+
       <c:forEach var="chat" items="${chats}" varStatus="loop">
         <c:set var="chat" value="${chats.get(chats.size() - loop.index - 1)}" scope="session" />
         <c:import url="/views/chats/chat.jsp" />

@@ -229,6 +229,10 @@
 	bottom: 5px;
 }
 
+.input-chat {
+	width: 100% !important;
+}
+
 .chat {
 	margin: 0;
 	padding: 0 !important;
@@ -266,7 +270,7 @@
 	position: fixed;
 	bottom: 0;
 	right: 45px;
-	z-index: 999999;
+	z-index: 100;
 }
 
 .panel-default {

@@ -1,7 +1,5 @@
 package com.framgia.controller;
 
-import java.util.HashMap;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,15 +31,15 @@ public class SuggestsController extends BaseController {
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
 				model.addObject("suggests",
-						suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
+				    suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
 			else
 				model.addObject("suggests", suggestService.getSuggests(currentUser().getId(), 0,
-						Integer.parseInt(entries), Order.desc("id")));
+				    Integer.parseInt(entries), Order.desc("id")));
 		} else
 			model.addObject("suggests",
-					suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
+			    suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
 		model.addObject("suggestsSize",
-				suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
+		    suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
 		return model;
 	}
 
@@ -53,17 +50,20 @@ public class SuggestsController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("suggest") SuggestInfo suggestInfo,
-			BindingResult result) throws JsonProcessingException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+	public ModelAndView create(@ModelAttribute("suggest") SuggestInfo suggestInfo,
+	    BindingResult result) throws JsonProcessingException {
+		ModelAndView model = new ModelAndView();
 		suggestInfo.setUserId(currentUser().getId());
 		suggestValidator.validate(suggestInfo, result);
-		if (!result.hasErrors() && suggestService.createSuggest(suggestInfo))
-			hashMap.put("url", request.getContextPath() + "/suggests");
-		else
-			hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+		if (!result.hasErrors() && suggestService.createSuggest(suggestInfo)) {
+			model.setViewName("redirect");
+			model.addObject("url", request.getContextPath() + "/suggests");
+		} else {
+			model.setViewName("inputError");
+			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
+		}
 
-		return toJson(hashMap);
+		return model;
 	}
 
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
@@ -78,20 +78,24 @@ public class SuggestsController extends BaseController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public @ResponseBody String update(@PathVariable("id") Integer id,
-			@ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result)
-			throws JsonProcessingException {
-		HashMap<String, Object> hashMap = new HashMap<>();
+	public ModelAndView update(@PathVariable("id") Integer id,
+	    @ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result)
+	    throws JsonProcessingException {
+		ModelAndView model = new ModelAndView();
 		SuggestInfo oldSuggest = suggestService.findById(id);
 		if (oldSuggest != null && oldSuggest.getStatus().equals(Status.WAITING)) {
 			suggestInfo.setUserId(currentUser().getId());
 			suggestValidator.validUpdate(oldSuggest, suggestInfo, result);
-			if (!result.hasErrors() && suggestService.updateSuggest(oldSuggest, suggestInfo))
-				hashMap.put("url", request.getContextPath() + "/suggests");
-			else
-				hashMap.put("errors", convertErrorsToMap(result.getFieldErrors()));
+			if (!result.hasErrors() && suggestService.updateSuggest(oldSuggest, suggestInfo)) {
+				model.setViewName("redirect");
+				model.addObject("url", request.getContextPath() + "/suggests");
+			} else {
+				model.setViewName("inputError");
+				model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
+			}
 		}
-		return toJson(hashMap);
+
+		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
