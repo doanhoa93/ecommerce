@@ -17,7 +17,8 @@ public class ImageDAOImpl extends BaseDAOAbstract<Integer, Image> implements Ima
 	@Override
 	public Product getProduct(Integer imageId) {
 		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.createAlias("images", "images", Criteria.LEFT_JOIN, Restrictions.eq("images.id", imageId));
+		criteria.createAlias("images", "images", Criteria.LEFT_JOIN,
+		    Restrictions.eq("images.id", imageId));
 		return (Product) criteria.uniqueResult();
 	}
 }

@@ -42,12 +42,12 @@ public class CategoryValidator implements Validator {
 	public void validateUpdate(Object oldObject, Object newObject, Errors errors) {
 		CategoryInfo oldCategoryInfo = (CategoryInfo) oldObject;
 		CategoryInfo newCategoryInfo = (CategoryInfo) newObject;
-		
+
 		if (StringUtils.isEmpty(newCategoryInfo.getName()))
 			errors.rejectValue("name", "category.name.cant_empty");
 
 		if (!oldCategoryInfo.getName().equals(newCategoryInfo.getName())
-		        && (categoryService.findBy("name", newCategoryInfo.getName(), true) != null))
+		    && (categoryService.findBy("name", newCategoryInfo.getName(), true) != null))
 			errors.rejectValue("name", "category.name.duplicate");
 
 		if (oldCategoryInfo.getId() == newCategoryInfo.getParentId())

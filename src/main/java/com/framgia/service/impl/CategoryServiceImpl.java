@@ -47,7 +47,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
-			CategoryInfo categoryInfo = ModelToBean.toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
+			CategoryInfo categoryInfo = ModelToBean
+			    .toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
 			Category parent = getCategoryDAO().findById(categoryInfo.getParentId());
 			if (parent != null)
 				categoryInfo.setParentName(parent.getName());
@@ -93,7 +94,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public List<CategoryInfo> getObjects() {
 		try {
-			return getCategoryDAO().getObjects().stream().map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
+			return getCategoryDAO().getObjects().stream().map(ModelToBean::toCategoryInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -104,7 +106,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public List<CategoryInfo> getObjects(int off, int limit) {
 		try {
 			return getCategoryDAO().getObjects(off, limit).stream().map(ModelToBean::toCategoryInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -115,7 +117,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public List<CategoryInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getCategoryDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCategoryInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -171,7 +173,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public List<CategoryInfo> getCategoriesWithForNew(Integer categoryId) {
 		try {
-			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId).collect(Collectors.toList());
+			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId)
+			    .collect(Collectors.toList());
 			categoryIds.remove(categoryId);
 			return getObjectsByIds(categoryIds);
 		} catch (Exception e) {
@@ -184,7 +187,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public List<CategoryInfo> hotCategories(int limit) {
 		try {
 			return getCategoryDAO().hotCategories(limit).stream().map(ModelToBean::toCategoryInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -194,8 +197,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public List<CategoryInfo> getNewCategories(Date date, int limit) {
 		try {
-			return getCategoryDAO().getNewObjects(date, limit).stream().map(ModelToBean::toCategoryInfo)
-			        .collect(Collectors.toList());
+			return getCategoryDAO().getNewObjects(date, limit).stream()
+			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -205,8 +208,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public List<CategoryInfo> getCategories(int off, int limit, Order order) {
 		try {
-			return getCategoryDAO().getCategories(off, limit, order).stream().map(ModelToBean::toCategoryInfo)
-			        .collect(Collectors.toList());
+			return getCategoryDAO().getCategories(off, limit, order).stream()
+			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

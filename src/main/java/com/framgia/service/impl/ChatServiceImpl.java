@@ -59,7 +59,8 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	@Override
 	public List<ChatInfo> getObjects() {
 		try {
-			return getChatDAO().getObjects().stream().map(ModelToBean::toChatInfo).collect(Collectors.toList());
+			return getChatDAO().getObjects().stream().map(ModelToBean::toChatInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -70,7 +71,7 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	public List<ChatInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getChatDAO().getObjectsByIds(keys).stream().map(ModelToBean::toChatInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -81,7 +82,7 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	public List<ChatInfo> getObjects(int off, int limit) {
 		try {
 			return getChatDAO().getObjects(off, limit).stream().map(ModelToBean::toChatInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -91,8 +92,8 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	@Override
 	public List<ChatInfo> getChats(Integer userId, int off, int limit, Order order) {
 		try {
-			return getChatDAO().getChats(userId, off, limit, order).stream().map(ModelToBean::toChatInfo)
-			        .collect(Collectors.toList());
+			return getChatDAO().getChats(userId, off, limit, order).stream()
+			    .map(ModelToBean::toChatInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -123,7 +124,7 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	public List<UserInfo> getRecentUsers(Integer receiverId) {
 		try {
 			return getChatDAO().getRecentUsers(receiverId).stream().map(ModelToBean::toUserInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

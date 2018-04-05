@@ -10,7 +10,8 @@ import com.framgia.model.Order;
 import com.framgia.model.OrderProduct;
 import com.framgia.model.Product;
 
-public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct> implements OrderProductDAO {
+public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct>
+    implements OrderProductDAO {
 
 	public OrderProductDAOImpl() {
 		super(OrderProduct.class);
@@ -21,7 +22,7 @@ public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct> 
 	public Order getOrder(Integer orderProductId) {
 		Criteria criteria = getSession().createCriteria(Order.class);
 		criteria.createAlias("order_products", "order_products", Criteria.LEFT_JOIN,
-		        Restrictions.eq("order_products.id", orderProductId));
+		    Restrictions.eq("order_products.id", orderProductId));
 		return (Order) criteria.uniqueResult();
 	}
 
@@ -30,7 +31,7 @@ public class OrderProductDAOImpl extends BaseDAOAbstract<Integer, OrderProduct> 
 	public Product getProduct(Integer orderProductId) {
 		Criteria criteria = getSession().createCriteria(Product.class);
 		criteria.createAlias("order_products", "order_products", Criteria.LEFT_JOIN,
-		        Restrictions.eq("order_products.id", orderProductId));
+		    Restrictions.eq("order_products.id", orderProductId));
 		return (Product) criteria.uniqueResult();
 	}
 

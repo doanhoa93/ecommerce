@@ -50,4 +50,10 @@ public class DateUtil {
 		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 		return calendar.getTime();
 	}
+
+	public Date getPrevWeek() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 7);
+		return calendar.getTime();
+	}
 }

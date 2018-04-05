@@ -36,8 +36,9 @@ public class CategoryDAOImpl extends BaseDAOAbstract<Integer, Category> implemen
 		Criteria criteria = createEntityCriteria();
 		criteria.createAlias("products", "products", Criteria.LEFT_JOIN);
 		criteria.createAlias("products.orderProducts", "orderProducrs", Criteria.LEFT_JOIN);
-		ProjectionList projectionList = Projections.projectionList().add(Projections.groupProperty("id"))
-		        .add(Projections.count("products.id"), "countProduct");
+		ProjectionList projectionList = Projections.projectionList()
+		    .add(Projections.groupProperty("id"))
+		    .add(Projections.count("products.id"), "countProduct");
 		criteria.setProjection(projectionList);
 		criteria.addOrder(Order.desc("countProduct")).setMaxResults(limit);
 

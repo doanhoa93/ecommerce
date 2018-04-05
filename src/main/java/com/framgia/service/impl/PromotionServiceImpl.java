@@ -67,7 +67,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	public List<PromotionInfo> getObjects() {
 		try {
 			return getPromotionDAO().getObjects().stream().map(ModelToBean::toPromotionInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -77,8 +77,8 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	@Override
 	public List<PromotionInfo> getObjectsByIds(List<Integer> keys) {
 		try {
-			return getPromotionDAO().getObjectsByIds(keys).stream().map(ModelToBean::toPromotionInfo)
-			        .collect(Collectors.toList());
+			return getPromotionDAO().getObjectsByIds(keys).stream()
+			    .map(ModelToBean::toPromotionInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -88,8 +88,8 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	@Override
 	public List<PromotionInfo> getObjects(int off, int limit) {
 		try {
-			return getPromotionDAO().getObjects(off, limit).stream().map(ModelToBean::toPromotionInfo)
-			        .collect(Collectors.toList());
+			return getPromotionDAO().getObjects(off, limit).stream()
+			    .map(ModelToBean::toPromotionInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

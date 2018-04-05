@@ -68,7 +68,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	@Override
 	public List<ProfileInfo> getObjects() {
 		try {
-			return getProfileDAO().getObjects().stream().map(ModelToBean::toProfileInfo).collect(Collectors.toList());
+			return getProfileDAO().getObjects().stream().map(ModelToBean::toProfileInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -79,7 +80,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	public List<ProfileInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getProfileDAO().getObjectsByIds(keys).stream().map(ModelToBean::toProfileInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -90,7 +91,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	public List<ProfileInfo> getObjects(int off, int limit) {
 		try {
 			return getProfileDAO().getObjects(off, limit).stream().map(ModelToBean::toProfileInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

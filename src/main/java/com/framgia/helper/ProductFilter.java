@@ -13,7 +13,7 @@ public class ProductFilter {
 	public ProductFilter(String name, String priceLow, String priceHigh) {
 		if (StringUtils.isEmpty(name))
 			this.name = "";
-		else 
+		else
 			this.name = name;
 
 		if (StringUtils.isEmpty(priceLow))
@@ -27,7 +27,7 @@ public class ProductFilter {
 			this.priceHigh = Float.parseFloat(priceHigh);
 
 		isFilterProduct = StringUtils.isNotEmpty(name) || StringUtils.isNotEmpty(priceLow)
-		        || StringUtils.isNotEmpty(priceHigh);
+		    || StringUtils.isNotEmpty(priceHigh);
 	}
 
 	public String getName() {

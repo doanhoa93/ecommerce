@@ -17,7 +17,8 @@ public class ProfileDAOImpl extends BaseDAOAbstract<Integer, Profile> implements
 	@Override
 	public User getUser(Integer profileId) {
 		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.createAlias("profiles", "profiles", Criteria.LEFT_JOIN, Restrictions.eq("profiles.id", profileId));
+		criteria.createAlias("profiles", "profiles", Criteria.LEFT_JOIN,
+		    Restrictions.eq("profiles.id", profileId));
 		return (User) criteria.uniqueResult();
 	}
 }

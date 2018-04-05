@@ -30,7 +30,8 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 
 	List<Image> getImages(Integer productId);
 
-	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off, int limit);
+	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off,
+	    int limit);
 
 	List<Product> hotProducts(int limit);
 

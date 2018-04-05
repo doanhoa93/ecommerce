@@ -57,7 +57,8 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	@Override
 	public List<RateInfo> getObjects() {
 		try {
-			return getRateDAO().getObjects().stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
+			return getRateDAO().getObjects().stream().map(ModelToBean::toRateInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -68,7 +69,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	public List<RateInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getRateDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRateInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -79,7 +80,7 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	public List<RateInfo> getObjects(int off, int limit) {
 		try {
 			return getRateDAO().getObjects(off, limit).stream().map(ModelToBean::toRateInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -89,7 +90,8 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	@Override
 	public List<RateInfo> getRates(Integer productId) {
 		try {
-			return getRateDAO().getRates(productId).stream().map(ModelToBean::toRateInfo).collect(Collectors.toList());
+			return getRateDAO().getRates(productId).stream().map(ModelToBean::toRateInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

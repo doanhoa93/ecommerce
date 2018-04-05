@@ -21,7 +21,8 @@ public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartD
 	@Override
 	public User getUser(Integer cartId) {
 		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.createAlias("carts", "carts", Criteria.LEFT_JOIN, Restrictions.eq("carts.id", cartId));
+		criteria.createAlias("carts", "carts", Criteria.LEFT_JOIN,
+		    Restrictions.eq("carts.id", cartId));
 		return (User) criteria.uniqueResult();
 	}
 

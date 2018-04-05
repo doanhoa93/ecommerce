@@ -17,7 +17,7 @@ public class CustomUrlAuthenticationFailedHandler implements AuthenticationFailu
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-	        AuthenticationException exception) throws IOException, ServletException {
+	    AuthenticationException exception) throws IOException, ServletException {
 		redirectStrategy.sendRedirect(request, response, "/login");
 	}
 

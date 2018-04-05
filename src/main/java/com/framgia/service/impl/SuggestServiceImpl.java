@@ -57,7 +57,8 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	@Override
 	public List<SuggestInfo> getObjects() {
 		try {
-			return getSuggestDAO().getObjects().stream().map(ModelToBean::toSuggestInfo).collect(Collectors.toList());
+			return getSuggestDAO().getObjects().stream().map(ModelToBean::toSuggestInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -68,7 +69,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	public List<SuggestInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getSuggestDAO().getObjectsByIds(keys).stream().map(ModelToBean::toSuggestInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -79,7 +80,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	public List<SuggestInfo> getObjects(int off, int limit) {
 		try {
 			return getSuggestDAO().getObjects(off, limit).stream().map(ModelToBean::toSuggestInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -89,8 +90,8 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	@Override
 	public List<SuggestInfo> getSuggests(Integer userId, int off, int limit, Order order) {
 		try {
-			return getSuggestDAO().getSuggests(userId, off, limit, order).stream().map(ModelToBean::toSuggestInfo)
-			        .collect(Collectors.toList());
+			return getSuggestDAO().getSuggests(userId, off, limit, order).stream()
+			    .map(ModelToBean::toSuggestInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

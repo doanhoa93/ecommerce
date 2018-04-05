@@ -18,7 +18,8 @@ public class CommentDAOImpl extends BaseDAOAbstract<Integer, Comment> implements
 	@Override
 	public User getUser(Integer commentId) {
 		Criteria criteria = getSession().createCriteria(User.class);
-		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN, Restrictions.eq("comments.id", commentId));
+		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN,
+		    Restrictions.eq("comments.id", commentId));
 		return (User) criteria.uniqueResult();
 	}
 
@@ -26,7 +27,8 @@ public class CommentDAOImpl extends BaseDAOAbstract<Integer, Comment> implements
 	@Override
 	public Product getProduct(Integer commentId) {
 		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN, Restrictions.eq("comments.id", commentId));
+		criteria.createAlias("comments", "comments", Criteria.LEFT_JOIN,
+		    Restrictions.eq("comments.id", commentId));
 		return (Product) criteria.uniqueResult();
 	}
 }

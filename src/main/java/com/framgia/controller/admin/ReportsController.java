@@ -29,13 +29,13 @@ public class ReportsController extends AdminController {
 		ArrayList<ArrayList<String>> newRecords = new ArrayList<ArrayList<String>>();
 		newRecords
 		    .add(new ArrayList<String>(Arrays.asList("orders", "products", "categories", "users")));
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 7);
+		DateUtil dateUtil = new DateUtil();
 		ArrayList<String> values = new ArrayList<>();
-		values.add(String.valueOf(orderService.getNewOrders(calendar.getTime(), 0).size()));
-		values.add(String.valueOf(productService.getNewProducts(calendar.getTime(), 0).size()));
-		values.add(String.valueOf(categoryService.getNewCategories(calendar.getTime(), 0).size()));
-		values.add(String.valueOf(userService.getNewUsers(calendar.getTime(), 0).size()));
+		values.add(String.valueOf(orderService.getNewOrders(dateUtil.getPrevWeek(), 0).size()));
+		values.add(String.valueOf(productService.getNewProducts(dateUtil.getPrevWeek(), 0).size()));
+		values.add(
+		    String.valueOf(categoryService.getNewCategories(dateUtil.getPrevWeek(), 0).size()));
+		values.add(String.valueOf(userService.getNewUsers(dateUtil.getPrevWeek(), 0).size()));
 		newRecords.add(values);
 		return newRecords;
 	}

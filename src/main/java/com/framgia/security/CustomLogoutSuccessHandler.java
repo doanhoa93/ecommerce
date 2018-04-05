@@ -13,14 +13,15 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import com.framgia.service.UserService;
 
-public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
+public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler
+    implements LogoutSuccessHandler {
 
 	@Autowired
 	private UserService userService;
 
 	@Override
-	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-	        throws IOException, ServletException {
+	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+	    Authentication authentication) throws IOException, ServletException {
 		userService.logout(authentication.getName());
 		super.onLogoutSuccess(request, response, authentication);
 	}

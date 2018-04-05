@@ -67,7 +67,8 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	@Override
 	public List<RecentInfo> getObjects() {
 		try {
-			return getRecentDAO().getObjects().stream().map(ModelToBean::toRecentInfo).collect(Collectors.toList());
+			return getRecentDAO().getObjects().stream().map(ModelToBean::toRecentInfo)
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -78,7 +79,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	public List<RecentInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getRecentDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRecentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -89,7 +90,7 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	public List<RecentInfo> getObjects(int off, int limit) {
 		try {
 			return getRecentDAO().getObjects(off, limit).stream().map(ModelToBean::toRecentInfo)
-			        .collect(Collectors.toList());
+			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

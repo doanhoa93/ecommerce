@@ -49,8 +49,9 @@ public class ModelToBean {
 			return null;
 
 		if (category.getProducts() != null)
-			categoryInfo.setProducts(category.getProducts().stream().filter(object -> (object != null))
-					.map(ModelToBean::toProductInfoWithPro).collect(Collectors.toList()));
+			categoryInfo
+			    .setProducts(category.getProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toProductInfoWithPro).collect(Collectors.toList()));
 		return categoryInfo;
 
 	}
@@ -82,8 +83,9 @@ public class ModelToBean {
 			return null;
 
 		if (order.getOrderProducts() != null)
-			orderInfo.setOrderProducts(order.getOrderProducts().stream().filter(object -> (object != null))
-					.map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
+			orderInfo.setOrderProducts(
+			    order.getOrderProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
 		return orderInfo;
 	}
 
@@ -100,11 +102,12 @@ public class ModelToBean {
 
 		if (product.getImages() != null)
 			productInfo.setImages(product.getImages().stream().filter(object -> (object != null))
-					.map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
+			    .map(ModelToBean::toImageInfoWithPro).collect(Collectors.toList()));
 
 		if (product.getOrderProducts() != null)
-			productInfo.setOrderProducts(product.getOrderProducts().stream().filter(object -> (object != null))
-					.map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
+			productInfo.setOrderProducts(
+			    product.getOrderProducts().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
 		return productInfo;
 	}
 
@@ -150,15 +153,16 @@ public class ModelToBean {
 
 		if (user.getCarts() != null)
 			userInfo.setCarts(user.getCarts().stream().filter(object -> (object != null))
-					.map(ModelToBean::toCartInfoWithPro).collect(Collectors.toList()));
+			    .map(ModelToBean::toCartInfoWithPro).collect(Collectors.toList()));
 
 		if (user.getOrders() != null)
 			userInfo.setOrders(user.getOrders().stream().filter(object -> (object != null))
-					.map(ModelToBean::toOrderInfoWithPro).collect(Collectors.toList()));
+			    .map(ModelToBean::toOrderInfoWithPro).collect(Collectors.toList()));
 
 		if (user.getNotifications() != null) {
-			userInfo.setNotifications(user.getNotifications().stream().filter(object -> (object != null))
-					.map(ModelToBean::toNotificationInfoWithPro).collect(Collectors.toList()));
+			userInfo.setNotifications(
+			    user.getNotifications().stream().filter(object -> (object != null))
+			        .map(ModelToBean::toNotificationInfoWithPro).collect(Collectors.toList()));
 			int unwatched = userInfo.getNotifications().stream().map(notification -> {
 				if (!notification.isWatched())
 					return notification;
@@ -413,7 +417,8 @@ public class ModelToBean {
 
 		List<Chat> sendedChats = user.getSendedChats();
 		if (sendedChats != null) {
-			sendedChats = sendedChats.stream().filter(object -> (object != null)).collect(Collectors.toList());
+			sendedChats = sendedChats.stream().filter(object -> (object != null))
+			    .collect(Collectors.toList());
 			for (Chat chat : sendedChats)
 				if (!chat.isWatched()) {
 					userInfo.setAdminNewMessage(true);

@@ -19,13 +19,13 @@ public class SuggestDAOImpl extends BaseDAOAbstract<Integer, Suggest> implements
 
 		if (userId != null)
 			criteria.add(Restrictions.eq("user.id", userId));
-		
+
 		if (limit != 0)
 			criteria.setMaxResults(limit);
-		
+
 		if (order != null)
 			criteria.addOrder(order);
-		
+
 		return criteria.list();
 	}
 }

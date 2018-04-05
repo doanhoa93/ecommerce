@@ -75,8 +75,8 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-			Map<String, Object> map = upload(
-			        new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/supervisor.png"));
+			Map<String, Object> map = upload(new File(
+			    System.getProperty("user.dir") + "/src/main/webapp/assets/images/supervisor.png"));
 			String avatar = (String) map.get("url");
 			User admin = new User();
 			admin.setId(1);
@@ -97,7 +97,8 @@ public class FakeData {
 			profileA.setBirthday(calendar.getTime());
 			session.save(profileA);
 
-			map = upload(new File(System.getProperty("user.dir") + "/src/main/webapp/assets/images/user.png"));
+			map = upload(new File(
+			    System.getProperty("user.dir") + "/src/main/webapp/assets/images/user.png"));
 			avatar = (String) map.get("url");
 			User user = new User();
 			user.setId(2);
@@ -174,9 +175,12 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Category> categories = (List<
+			        Category>) session.createCriteria(Category.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 			Map<String, Object> map = null;
 			for (int i = 1; i < 10; i++) {
 				Product product = new Product();
@@ -188,8 +192,8 @@ public class FakeData {
 				product.setNumber(10);
 				product.setPrice(new Float(100.0));
 				product.setRating(new Float(4.0));
-				map = upload(new File(
-				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				map = upload(new File(System.getProperty("user.dir")
+				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
 				product.setAvatar((String) map.get("url"));
 				product.setCreatedAt(new Date());
 				session.save(product);
@@ -211,9 +215,12 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			        .list();
+			List<
+			    User> users = (List<
+			        User>) session.createCriteria(User.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+			            .list();
 			for (int i = 1; i < 10; i++) {
 				Order order = new Order();
 				order.setId(i);
@@ -241,12 +248,18 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			        .list();
-			List<Product> products = (List<Product>) session.createCriteria(Product.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    User> users = (List<
+			        User>) session.createCriteria(User.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+			            .list();
+			List<
+			    Product> products = (List<
+			        Product>) session.createCriteria(Product.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			for (int i = 1; i < 10; i++) {
 				Cart cart = new Cart();
@@ -274,12 +287,18 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			        .list();
-			List<Product> products = (List<Product>) session.createCriteria(Product.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    User> users = (List<
+			        User>) session.createCriteria(User.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+			            .list();
+			List<
+			    Product> products = (List<
+			        Product>) session.createCriteria(Product.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			for (int i = 1; i < 10; i++) {
 				Comment comment = new Comment();
@@ -307,13 +326,19 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<Order> orders = (List<Order>) session.createCriteria(Order.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Order> orders = (List<
+			        Order>) session.createCriteria(Order.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
-			List<Product> products = (List<Product>) session.createCriteria(Product.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Product> products = (List<
+			        Product>) session.createCriteria(Product.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			for (int i = 1; i < 10; i++) {
 				OrderProduct orderProduct = new OrderProduct();
@@ -342,17 +367,20 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<Product> products = (List<Product>) session.createCriteria(Product.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Product> products = (List<
+			        Product>) session.createCriteria(Product.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			Map<String, Object> map = null;
 			for (int i = 1; i < 10; i++) {
 				Image image = new Image();
 				image.setId(i);
 				image.setProduct(products.get(i - 1));
-				map = upload(new File(
-				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				map = upload(new File(System.getProperty("user.dir")
+				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
 				image.setImage((String) map.get("url"));
 
 				session.save(image);
@@ -374,21 +402,27 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<User> users = (List<User>) session.createCriteria(User.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			        .list();
+			List<
+			    User> users = (List<
+			        User>) session.createCriteria(User.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+			            .list();
 
-			List<Order> orders = (List<Order>) session.createCriteria(Order.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Order> orders = (List<
+			        Order>) session.createCriteria(Order.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			for (int i = 0; i < 9; i++) {
 				Notification notification = new Notification();
 				notification.setId(i + 1);
 				notification.setUser(users.get(i));
 				notification.setOrder(orders.get(i));
-				notification.setContent(
-				        "The Order (created at: " + orders.get(i).getCreatedAt() + ") was setted with accepted!");
+				notification.setContent("The Order (created at: " + orders.get(i).getCreatedAt()
+				    + ") was setted with accepted!");
 				notification.setWatched(false);
 				notification.setCreatedAt(new Date());
 
@@ -411,9 +445,12 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<Product> products = (List<Product>) session.createCriteria(Product.class)
-			        .add(Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			        .list();
+			List<
+			    Product> products = (List<
+			        Product>) session.createCriteria(Product.class)
+			            .add(Restrictions.in("id",
+			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
+			            .list();
 
 			for (int i = 1; i < 10; i++) {
 				Recent recent = new Recent();
@@ -472,8 +509,8 @@ public class FakeData {
 				suggest.setId(i);
 				suggest.setUser(new User(i + 1));
 				suggest.setPrice(100);
-				map = upload(new File(
-				        System.getProperty("user.dir") + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				map = upload(new File(System.getProperty("user.dir")
+				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
 				suggest.setAvatar((String) map.get("url"));
 				suggest.setCreatedAt(new Date());
 				suggest.setCategory("Category-" + i);
@@ -539,8 +576,8 @@ public class FakeData {
 		InputStream input = null;
 		try {
 
-			input = new FileInputStream(
-			        System.getProperty("user.dir") + "/src/main/resources/cloudinary-config.properties");
+			input = new FileInputStream(System.getProperty("user.dir")
+			    + "/src/main/resources/cloudinary-config.properties");
 			prop.load(input);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -548,7 +585,9 @@ public class FakeData {
 			e.printStackTrace();
 		}
 
-		return new Cloudinary(ObjectUtils.asMap("cloud_name", prop.getProperty("cloudinary.cloud_name"), "api_key",
-		        prop.getProperty("cloudinary.api_key"), "api_secret", prop.getProperty("cloudinary.api_secret")));
+		return new Cloudinary(
+		    ObjectUtils.asMap("cloud_name", prop.getProperty("cloudinary.cloud_name"), "api_key",
+		        prop.getProperty("cloudinary.api_key"), "api_secret",
+		        prop.getProperty("cloudinary.api_secret")));
 	}
 }
