@@ -63,8 +63,10 @@ $(document).ready(function() {
 	
 	function onRegisterReceived(data) {
 		var user = JSON.parse(data.body);
-		var subscribe = stompClient.subscribe('/topic/chats/' + user.token, onChatReceived);	
-		subscribers[user.token] = {subscribe: subscribe, token: user.token};
+		if(subscribers[user.token] == undefined) {
+		    var subscribe = stompClient.subscribe('/topic/chats/' + user.token, onChatReceived);	
+		    subscribers[user.token] = {subscribe: subscribe, token: user.token};
+		}
 	}
 	
 	function onUnRegisterReceived(data) {
@@ -85,6 +87,7 @@ $(document).ready(function() {
 	    chatPanel.attr('data-id', chat.id);
 	    var font = chatPanel.find('.primary-font');
 	    font.removeClass();
+	    
 	    var textMuted = chatPanel.find('.text-muted');
 	    textMuted.removeClass();
 	    
@@ -92,13 +95,15 @@ $(document).ready(function() {
 	        chatPanel.addClass('right');
 	        chatPanel.find('.chat-img').removeClass('pull-left');
 	        chatPanel.find('.chat-img').addClass('pull-right');
-	        font.addClass('.pull-right');
+	        font.addClass('pull-right');
 	    } else {
             chatPanel.addClass('left');
             chatPanel.find('.chat-img').addClass('pull-left');
             chatPanel.find('.chat-img').removeClass('pull-right');
             textMuted.addClass('.pull-right');
 	    }
+	    font.addClass('primary-font');
+	    chatPanel.find('.primary-font').text(chat.sender.name);
 	    chatPanel.find('.img-circle').attr('src', chat.sender.avatar);
 	    chatPanel.find('.chat-time').text(jQuery.timeago(chat.createdAt));
         chatPanel.find('.chat-content').text(chat.content);

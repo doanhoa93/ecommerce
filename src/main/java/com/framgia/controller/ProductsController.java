@@ -54,6 +54,7 @@ public class ProductsController extends BaseController {
 			model.addObject("product", productInfo);
 			model.addObject("slideSize", size);
 			model.setViewName("product");
+			model.addObject("categories", categoryService.getObjects());
 			productService.updateRecent(productInfo);
 		} else {
 			model.setViewName("404");

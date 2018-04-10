@@ -7,10 +7,10 @@ public class UserInfo {
 	private Integer id;
 	private String email;
 	private String password;
+	private String newPassword;
 	private String name;
 	private String avatar;
 	private String role;
-	private String gender;
 	private boolean remember;
 	private ProfileInfo profile;
 	private int unWatchedNotifications;
@@ -25,8 +25,8 @@ public class UserInfo {
 	public UserInfo() {
 	}
 
-	public UserInfo(Integer id, String email, String password, String name, String gender, String avatar, String role,
-	        ProfileInfo profile) {
+	public UserInfo(Integer id, String email, String password, String name, String avatar,
+	    String role, ProfileInfo profile) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -34,7 +34,6 @@ public class UserInfo {
 		this.avatar = avatar;
 		this.role = role;
 		this.profile = profile;
-		this.gender = gender;
 	}
 
 	public Integer getId() {
@@ -101,14 +100,6 @@ public class UserInfo {
 		this.remember = remember;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
 	public List<OrderInfo> getOrders() {
 		return orders;
 	}
@@ -171,5 +162,13 @@ public class UserInfo {
 
 	public void setAdminNewMessage(boolean adminNewMessage) {
 		this.adminNewMessage = adminNewMessage;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 }

@@ -21,7 +21,7 @@
             <a class="load-more" data-href="${request.getRequestURI()}?page=">Load more</a>
           </div>
         </div>
-        
+
         <div class="order-form-create">
           <c:import url="/views/orders/form.jsp" />
         </div>

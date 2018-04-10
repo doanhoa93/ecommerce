@@ -34,10 +34,12 @@ public interface UserService extends BaseService<Integer, UserInfo> {
 	List<UserInfo> getNewUsers(Date date, int limit);
 
 	List<UserInfo> getUsers(int off, int limit, Order order);
-	
+
 	List<String> getTokens();
 
 	UserInfo updateToken(UserInfo userInfo, String token);
+
+	boolean updateUser(UserInfo userInfo);
 
 	boolean createUser(UserInfo userInfo);
 

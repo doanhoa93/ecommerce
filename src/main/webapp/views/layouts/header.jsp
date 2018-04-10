@@ -122,7 +122,7 @@
                     </a>
                     <ul role="menu" class="sub-menu">
                       <li class="sub-menu-item">
-                        <a href="#">
+                        <a href="${contextPath}/users/${currentUser.getId()}">
                           <i class="fa fa-user"></i>
                           My profile
                         </a>
@@ -138,7 +138,7 @@
                       <li class="sub-menu-item">
                         <form:form action="${contextPath}/logout" method="POST">
                           <i class="fa fa-lock"></i>
-                          <input type="submit" class="logout" value="Logout" />
+                          <input type="submit" class="logout" value="Logout">
                         </form:form>
                       </li>
                     </ul>

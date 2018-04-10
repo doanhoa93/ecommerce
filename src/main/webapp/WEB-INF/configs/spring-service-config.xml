@@ -139,6 +139,7 @@
         <property name="userDAO" ref="UserDAO"></property>
         <property name="cartDAO" ref="CartDAO"></property>
         <property name="orderDAO" ref="OrderDAO"></property>
+        <property name="profileDAO" ref="ProfileDAO"></property>
       </bean>
     </property>
   </bean>

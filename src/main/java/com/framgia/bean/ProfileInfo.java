@@ -5,6 +5,7 @@ import java.util.Date;
 public class ProfileInfo {
 	private Integer id;
 	private Integer userId;
+	private String phoneNumber;
 	private String gender;
 	private Date birthday;
 	private String address;
@@ -67,5 +68,13 @@ public class ProfileInfo {
 
 	public void setUser(UserInfo user) {
 		this.user = user;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }

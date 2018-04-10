@@ -1,10 +1,13 @@
 package com.framgia.interceptor;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +30,9 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -52,6 +58,9 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 
+		HashMap<String, Object> hashMap = new HashMap<>();
+		hashMap.put("token", CustomSession.current());
+		simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
 		return true;
 	}
 

@@ -191,7 +191,7 @@
 	position: absolute;
 	top: 30px;
 	width: 320px;
-	z-index: 99999;
+	z-index: 99;
 }
 
 .notifications-body .notification {
@@ -295,3 +295,7 @@
 	margin-right: 15px;
 	width: 10px;
 }
+
+input[type="search"].input-sm {
+	width: auto !important;
+} 

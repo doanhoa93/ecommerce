@@ -5,7 +5,9 @@
   <div class="cart-product cart-product-${cart.getId()}" data-id="${cart.getId()}">
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 cart-left">
       <div class="cart-product-image-panel">
-        <img src="${product.getAvatar()}" class="img-responsive cart-product-image">
+        <a href="${contextPath}/products/${product.getId()}">
+          <img src="${product.getAvatar()}" class="img-responsive cart-product-image">
+        </a>
       </div>
       <div class="cart-product-info">
         <div class="cart-product-name">

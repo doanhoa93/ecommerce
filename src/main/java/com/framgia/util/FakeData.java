@@ -228,6 +228,10 @@ public class FakeData {
 				order.setStatus(Status.getIntStatus(Status.WAITING));
 				order.setTotalPrice(new Float(100));
 				order.setCreatedAt(new Date());
+				order.setPhoneNumber("+84123456789");
+				order.setEmail(users.get(i - 1).getEmail());
+				order.setName(users.get(i - 1).getName());
+				order.setAddress("Ha Noi");
 
 				session.save(order);
 			}
@@ -375,6 +379,28 @@ public class FakeData {
 			            .list();
 
 			Map<String, Object> map = null;
+			for (int i = 1; i < 10; i++) {
+				Image image = new Image();
+				image.setId(i);
+				image.setProduct(products.get(i - 1));
+				map = upload(new File(System.getProperty("user.dir")
+				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				image.setImage((String) map.get("url"));
+
+				session.save(image);
+			}
+
+			for (int i = 9; i >= 1; i--) {
+				Image image = new Image();
+				image.setId(i);
+				image.setProduct(products.get(9 - i));
+				map = upload(new File(System.getProperty("user.dir")
+				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				image.setImage((String) map.get("url"));
+
+				session.save(image);
+			}
+
 			for (int i = 1; i < 10; i++) {
 				Image image = new Image();
 				image.setId(i);
