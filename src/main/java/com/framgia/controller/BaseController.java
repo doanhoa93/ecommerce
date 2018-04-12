@@ -28,6 +28,7 @@ import com.framgia.service.ChatService;
 import com.framgia.service.OrderService;
 import com.framgia.service.ProductService;
 import com.framgia.service.PromotionService;
+import com.framgia.service.RateService;
 import com.framgia.service.SuggestService;
 import com.framgia.service.UserService;
 
@@ -53,6 +54,9 @@ public class BaseController {
 
 	@Autowired
 	public PromotionService promotionService;
+
+	@Autowired
+	public RateService rateService;
 
 	@Autowired
 	public SuggestService suggestService;

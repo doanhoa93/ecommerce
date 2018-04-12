@@ -113,6 +113,7 @@
     <property name="target">
       <bean class="com.framgia.service.impl.RateServiceImpl">
         <property name="rateDAO" ref="RateDAO"></property>
+        <property name="productDAO" ref="ProductDAO"></property>        
       </bean>
     </property>
   </bean>

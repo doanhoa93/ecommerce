@@ -36,7 +36,15 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	@Override
 	public RateInfo saveOrUpdate(RateInfo entity) {
 		try {
-			return ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(toRate(entity)));
+			Rate rate = toRate(entity);
+			ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(rate));
+			float rating = (float) getRateDAO().getRates(rate.getProduct().getId()).stream()
+			    .mapToDouble(Rate::getRating).average().orElse(Double.NaN);
+			Product product = getProductDAO().findById(rate.getProduct().getId(), true);
+			product.setRating(rating);
+			getProductDAO().saveOrUpdate(product);
+
+			return entity;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -82,6 +90,16 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 		try {
 			return getRateDAO().getRates(productId).stream().map(ModelToBean::toRateInfo)
 			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public RateInfo getRate(Integer userId, Integer productId) {
+		try {
+			return ModelToBean.toRateInfo(getRateDAO().getRate(userId, productId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

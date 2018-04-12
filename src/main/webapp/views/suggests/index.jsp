@@ -53,8 +53,10 @@
                 </td>
                 <td>
                   <c:set var="suggest" value="${suggest}" scope="session" />
+                  <c:set var="statuses" value="${statuses}" scope="session" />
                   <c:import url="/views/suggests/form.jsp" />
                   <c:remove var="suggest" scope="session" />
+                  <c:remove var="statuses" scope="session" />
                 </td>
               </tr>
             </c:forEach>

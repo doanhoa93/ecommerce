@@ -78,14 +78,14 @@
           <label>Gender</label>
           <select name="profile.gender" form="edit-user" class="gender">
             <c:choose>
-              <c:when test="${profile.getGender() == 'MALE'}">
-                <option value="MALE" selected>MALE</option>
-                <option value="FEMALE">FEMALE</option>
+              <c:when test="${profile.getGender() == genderes['male']}">
+                <option value="${genderes['male']}" selected>MALE</option>
+                <option value="${genderes['female']}">FEMALE</option>
               </c:when>
 
               <c:otherwise>
-                <option value="MALE">MALE</option>
-                <option value="FEMALE" selected>FEMALE</option>
+                <option value="${genderes['male']}">MALE</option>
+                <option value="${genderes['female']}" selected>FEMALE</option>
               </c:otherwise>
             </c:choose>
           </select>

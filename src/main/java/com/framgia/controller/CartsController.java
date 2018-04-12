@@ -26,12 +26,13 @@ import com.framgia.helper.CustomSession;
 import com.framgia.validator.CartValidator;
 
 @Controller
+@RequestMapping(value = "carts")
 public class CartsController extends BaseController {
 
 	@Autowired
 	private CartValidator cartValidator;
 
-	@RequestMapping(value = "/carts", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView("carts");
 		List<CartInfo> carts = null;
@@ -55,7 +56,7 @@ public class CartsController extends BaseController {
 	}
 
 	@SuppressWarnings("finally")
-	@RequestMapping(value = "/carts", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody String create(@ModelAttribute("cartInfo") CartInfo cartInfo,
 	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> flash = new HashMap<>();
@@ -77,7 +78,7 @@ public class CartsController extends BaseController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/carts/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "{id}", method = RequestMethod.PATCH)
 	public @ResponseBody String update(@RequestBody String data, @PathVariable("id") Integer id,
 	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
@@ -99,7 +100,7 @@ public class CartsController extends BaseController {
 		return toJson(hashMap);
 	}
 
-	@RequestMapping(value = "/carts/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable("id") Integer id)
 	    throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();

@@ -32,18 +32,40 @@
         <div class="product-name">${product.getName()}</div>
 
         <div class="product-rate">
-          <c:forEach begin="1" end="${product.getRating()}">
-            <span class="rate">
-              <i class="fa fa-star active"></i>
-            </span>
-          </c:forEach>
+          <div class="rate">
+            <c:set var="rate" value="${rating['min']}" />
+            <c:forEach begin="${rate}" end="${product.getRating()}">
+              <span class="rate">
+                <i class="fa fa-star active"></i>
+              </span>
+              <c:set var="rate" value="${rate + 1}" />
+            </c:forEach>
 
-          <c:forEach begin="${product.getRating() + 1}" end="5">
-            <span class="rate">
-              <i class="fa fa-star"></i>
-            </span>
-          </c:forEach>
-          <span>(${product.getRating()})</span>
+            <c:if test="${rate - product.getRating() > 0 && rate - product.getRating() < 1}">
+              <i class="fa fa-star-half-o active"></i>
+              <c:set var="rate" value="${rate + 1}" />
+            </c:if>
+
+            <c:forEach begin="${rate}" end="${rating['max']}">
+              <span class="rate">
+                <i class="fa fa-star-o active"></i>
+              </span>
+            </c:forEach>
+
+            <span>(${product.getRating()})</span>
+          </div>
+
+          <c:if test="${currentUser != null}">
+            <div>
+              <c:set var="product" value="${product}" scope="session" />
+              <c:set var="rate" value="${rate}" scope="session" />
+              <c:set var="rating" value="${rating}" scope="session" />
+              <c:import url="/views/rates/form.jsp" />
+              <c:remove var="product" scope="session" />
+              <c:remove var="rate" scope="session" />
+              <c:remove var="rating" scope="session" />
+            </div>
+          </c:if>
         </div>
       </div>
 

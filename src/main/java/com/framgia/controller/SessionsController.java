@@ -10,7 +10,7 @@ import com.framgia.bean.UserInfo;
 @Controller
 public class SessionsController extends BaseController {
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public ModelAndView getNew() {
 		ModelAndView model = new ModelAndView("login");
 		model.addObject("user", new UserInfo());

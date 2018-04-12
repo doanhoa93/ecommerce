@@ -44,8 +44,8 @@
         <span>Status: </span>
         <span class="order-status status-${order.getStatus()}"> ${order.getStatus()} </span>
       </div>
-
-      <c:if test="${order.getStatus() == 'WAITING' || order.getStatus() == 'REJECT'}">
+      <c:if
+        test="${order.getStatus() == statuses['waiting'] || order.getStatus() == statuses['reject']}">
         <div class="order-field">
           <a href="${contextPath}/orders/${order.getId()}/edit"
             class="btn btn-primary btn-order-edit"> Edit this order </a>

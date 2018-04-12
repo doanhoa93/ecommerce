@@ -3,15 +3,16 @@ package com.framgia.bean;
 public class RateInfo {
 	private Integer id;
 	private int rating;
-	private int userId;
-	private int productId;
+	private Integer userId;
+	private Integer productId;
 	private UserInfo user;
 	private ProductInfo product;
 
 	public RateInfo() {
 	}
 
-	public RateInfo(Integer id, int rating, int userId, int productId, UserInfo user, ProductInfo product) {
+	public RateInfo(Integer id, int rating, Integer userId, Integer productId, UserInfo user,
+	    ProductInfo product) {
 		this.id = id;
 		this.rating = rating;
 		this.userId = userId;
@@ -36,19 +37,19 @@ public class RateInfo {
 		this.rating = rating;
 	}
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public int getProductId() {
+	public Integer getProductId() {
 		return productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 

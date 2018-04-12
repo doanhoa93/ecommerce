@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<c:if test="${suggest.getStatus() == 'WAITING'}">
+<c:if test="${suggest.getStatus() == statuses['waiting']}">
   <a href="${contextPath}/suggests/${suggest.getId()}/edit" class="btn btn-primary btn-suggest">
     Edit suggest </a>
 

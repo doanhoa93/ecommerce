@@ -1,6 +1,7 @@
 package com.framgia.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
@@ -18,12 +19,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.framgia.bean.OrderInfo;
+import com.framgia.constant.Status;
 import com.framgia.helper.CustomSession;
 import com.framgia.helper.SendOrder;
 import com.framgia.validator.OrderValidator;
 
 @Controller
-@RequestMapping(value = "/orders")
+@RequestMapping(value = "orders")
 public class OrdersController extends BaseController {
 
 	@Autowired
@@ -79,6 +81,7 @@ public class OrdersController extends BaseController {
 		return model;
 	}
 
+	@SuppressWarnings("serial")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
 		OrderInfo orderInfo = orderService.findById(id, false);
@@ -86,6 +89,14 @@ public class OrdersController extends BaseController {
 		if (isOwner(orderInfo)) {
 			model.addObject("order", orderInfo);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
+			model.addObject("statuses", new HashMap<String, String>() {
+				{
+					put("waiting", Status.WAITING);
+					put("accept", Status.ACCEPT);
+					put("reject", Status.REJECT);
+					put("cancel", Status.CANCEL);
+				}
+			});			
 		} else
 			model.setViewName("404");
 
