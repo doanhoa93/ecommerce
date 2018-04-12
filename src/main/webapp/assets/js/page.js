@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	setTimeout(function(){
-	    $('.flash').slideUp(1000);
-	  }, 1500);
+	setTimeout(function() {
+        $('.flash').slideUp(1000);
+    }, 1500);
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -46,6 +46,39 @@ $(document).ready(function() {
 	        }
 	    }        
 	});
+	
+	$(document).on('submit', 'form#add-cart', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+                $('#add-cart-modal').modal('show');
+                if(data.result == 'success') {
+                    $('.add-cart-result-content.success').show();
+                    $('.add-cart-result-content.fail').hide();
+                    if(data.isNew)
+                        $('.item-cart .cart-size').text(Number($('.item-cart .cart-size').text()) + 1);
+                } else {
+                    $('.add-cart-result-content.success').hide();                    
+                    $('.add-cart-result-content.fail').show();
+                    $('.add-cart-result-content').css('color', 'red');
+                }                   
+                
+                $('.add-cart-result-content').css('text-align', 'center');
+                $('.add-cart-result-content').css('font-size', '25px');
+                setTimeout(function() {
+                    $('#add-cart-modal').modal('hide');
+                }, 4000);                
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });         
+    });	
 	
 	function hideShowChat() {
 		$('.chat-panel').toggle();

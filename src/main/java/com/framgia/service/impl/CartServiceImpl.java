@@ -172,6 +172,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			Cart cart = new Cart();
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
+
 			if (cartInfo.getUserId() != null)
 				cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
 			else
@@ -189,6 +190,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			}
 
 			cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
+			cartInfo.setQuantity(cart.getQuantity());
 			getCartDAO().saveOrUpdate(cart);
 			return true;
 		} catch (Exception e) {
