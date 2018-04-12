@@ -20,6 +20,8 @@ import com.framgia.bean.ProductInfo;
 import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.constant.Gender;
+import com.framgia.constant.Provider;
+import com.framgia.constant.Role;
 import com.framgia.helper.CustomSession;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
@@ -27,6 +29,7 @@ import com.framgia.model.Profile;
 import com.framgia.model.User;
 import com.framgia.security.CustomUserDetails;
 import com.framgia.service.UserService;
+import com.framgia.social.CustomUserSocial;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
@@ -275,11 +278,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 			User user = toUser(userInfo);
 			user.setPassword(bcrypt.encode(userInfo.getPassword()));
-			user.setAvatar(request.getContextPath() + "/assets/images/user.png");
+			if (StringUtils.isEmpty(userInfo.getAvatar()))
+				user.setAvatar(request.getContextPath() + "/assets/images/user.png");
+			else
+				user.setAvatar(userInfo.getAvatar());
 			getUserDAO().saveOrUpdate(user);
 
+			ProfileInfo profileInfo = userInfo.getProfile();
 			Profile profile = new Profile();
 			profile.setUser(user);
+			if (profileInfo != null)
+				profile.setGender(Gender.getInt(profileInfo.getGender()));
 			getProfileDAO().saveOrUpdate(profile);
 			return true;
 		} catch (Exception e) {
@@ -316,6 +325,43 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			getUserDAO().saveOrUpdate(user);
 			getProfileDAO().saveOrUpdate(profile);
 			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean createUser(CustomUserSocial userSocial) {
+		try {
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			User user = getUserDAO().findByEmail(userSocial.getEmail());
+			boolean result = false;
+			if (user != null) {
+				if (StringUtils.isNotEmpty(user.getProvider())
+				    && user.getProvider().equals(Provider.FACEBOOK)) {
+					user.setPassword(bcrypt.encode(userSocial.getPassword()));
+					getUserDAO().saveOrUpdate(user);
+					result = true;
+				}
+			} else {
+				user = new User();
+				user.setEmail(userSocial.getEmail());
+				user.setName(userSocial.getName());
+				user.setProvider(Provider.FACEBOOK);
+				user.setRole(Role.USER);
+				user.setCreatedAt(new Date());
+				user.setPassword(bcrypt.encode(userSocial.getPassword()));
+				user.setAvatar(userSocial.getPicture().getUrl());
+				getUserDAO().saveOrUpdate(user);
+
+				Profile profile = new Profile();
+				profile.setUser(user);
+				profile.setGender(Gender.getInt(userSocial.getGender().toUpperCase()));
+				getProfileDAO().saveOrUpdate(profile);
+				result = true;
+			}
+			return result;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

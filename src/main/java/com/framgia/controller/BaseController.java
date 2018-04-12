@@ -115,7 +115,7 @@ public class BaseController {
 	}
 
 	public boolean isAdmin(UserInfo userInfo) {
-		return userInfo.getRole().equals(Role.Admin);
+		return userInfo.getRole().equals(Role.ADMIN);
 	}
 
 	public HashMap<String, Object> convertErrorsToHashMap(List<FieldError> fieldErrors) {

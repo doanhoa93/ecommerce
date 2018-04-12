@@ -13,7 +13,7 @@ public class SessionsController extends BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getNew() {
 		ModelAndView model = new ModelAndView("login");
-		model.addObject("userInfo", new UserInfo());
+		model.addObject("user", new UserInfo());
 		return model;
 	}
 }

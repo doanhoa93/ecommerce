@@ -49,11 +49,11 @@ public class CustomUrlAuthenticationSuccessHandler
 	}
 
 	private boolean isAdmin(List<String> roles) {
-		return roles.contains(Role.Admin);
+		return roles.contains(Role.ADMIN);
 	}
 
 	private boolean isUser(List<String> roles) {
-		return roles.contains(Role.User);
+		return roles.contains(Role.USER);
 	}
 
 	public RedirectStrategy getRedirectStrategy() {

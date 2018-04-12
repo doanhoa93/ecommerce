@@ -39,7 +39,7 @@ public class ChatsController extends BaseController {
 		HashMap<String, String> hashMap = toHashMap(chat);
 		ChatInfo chatInfo = new ChatInfo();
 		chatInfo.setSender(userService.findByToken(token));
-		chatInfo.setReceiver(userService.getUsers(Role.Admin).get(0));
+		chatInfo.setReceiver(userService.getUsers(Role.ADMIN).get(0));
 		chatInfo.setContent(hashMap.get("content"));
 		chatInfo = chatService.createChat(chatInfo);
 		if (chatInfo != null)

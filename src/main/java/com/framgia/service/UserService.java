@@ -11,6 +11,7 @@ import com.framgia.bean.ProductInfo;
 import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.security.CustomUserDetails;
+import com.framgia.social.CustomUserSocial;
 
 public interface UserService extends BaseService<Integer, UserInfo> {
 	UserInfo findByEmail(String email);
@@ -42,6 +43,8 @@ public interface UserService extends BaseService<Integer, UserInfo> {
 	boolean updateUser(UserInfo userInfo);
 
 	boolean createUser(UserInfo userInfo);
+
+	boolean createUser(CustomUserSocial userSocial);
 
 	void logout(String email);
 }

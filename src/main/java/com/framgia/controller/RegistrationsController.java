@@ -17,16 +17,16 @@ public class RegistrationsController extends BaseController {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView getNew() {
-		return new ModelAndView("signup", "userInfo", new UserInfo());
+		return new ModelAndView("signup", "user", new UserInfo());
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("userInfo") UserInfo userInfo) {
+	public ModelAndView create(@ModelAttribute("user") UserInfo userInfo) {
 		try {
-			userInfo.setRole(Role.User);
-			ModelAndView model = new ModelAndView("redirect:/");
+			userInfo.setRole(Role.USER);
+			ModelAndView model = new ModelAndView("redirect:/login");
 			if (!userService.createUser(userInfo)) {
-				model.addObject("userInfo", userInfo);
+				model.addObject("user", userInfo);
 				model.setViewName("signup");
 			}
 
