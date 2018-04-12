@@ -10,7 +10,14 @@ $(document).ready(function() {
 	        xhr.setRequestHeader(header, token);
         }
     });	
-	
+
+    $('.zoom').zoom();
+
+    $('.product-image').on('click', function(e) {
+        $('.product-main-avatar').attr('src', $(this).attr('src'));
+        $('.zoom').zoom();
+    });
+
 	$(document).on('click', '.notification-dropdown', function() {
 		$('.notifications-body').toggle();
 	});

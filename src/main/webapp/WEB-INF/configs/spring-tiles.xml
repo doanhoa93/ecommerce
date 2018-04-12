@@ -36,6 +36,7 @@
       <add-attribute value="/assets/lib-js/sockjs.min.js" />
       <add-attribute value="/assets/lib-js/stomp.min.js" />
       <add-attribute value="/assets/lib-js/jquery.timeago.min.js" />
+      <add-attribute value="/assets/lib-js/jquery.zoom.min.js" />      
       <add-attribute value="/assets/js/page.js" />
       <add-attribute value="/assets/js/socket.js" />
     </put-list-attribute>
@@ -249,8 +250,8 @@
       <add-attribute value="/assets/admin/lib-js/jquery.timeago.min.js" />
       <add-attribute value="/assets/admin/lib-js/sockjs.min.js" />
       <add-attribute value="/assets/admin/lib-js/stomp.min.js" />
-      <add-attribute value="/assets/admin/js/datatable.js" />
       <add-attribute value="/assets/admin/js/page.js" />
+      <add-attribute value="/assets/admin/js/datatable.js" />
       <add-attribute value="/assets/admin/js/socket.js" />
     </put-list-attribute>
 
@@ -347,6 +348,11 @@
 
     <put-list-attribute name="css">
       <add-attribute value="/assets/admin/css/product.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/lib-js/jquery.zoom.min.js" />
+      <add-attribute value="/assets/admin/js/product.js" />
     </put-list-attribute>
   </definition>
 

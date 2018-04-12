@@ -62,14 +62,18 @@
   <div class="header-middle">
     <div class="container">
       <div class="row">
-        <div class="col-sm-4">
-          <div class="logo pull-left">
+        <div class="col-sm-6">
+          <div class="col-md-4 col-xs-12 col-sm-12 logo pull-left">
             <a href="${contextPath}">
               <img src="${contextPath}/assets/images/home/logo.jpg" alt="" class="header-logo" />
             </a>
           </div>
+          
+          <div class="col-md-8 col-xs-12 col-sm-12 search_box global-search pull-left">
+            <input type="text" placeholder="Search" class="global-search-input" />
+          </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-6">
           <div class="shop-menu pull-right">
             <ul class="nav navbar-nav">
               <c:choose>
@@ -175,6 +179,7 @@
               </c:choose>
             </ul>
           </div>
+          <div class="clearfix"></div>
         </div>
       </div>
     </div>
@@ -204,11 +209,6 @@
                   Products </a>
               </li>
             </ul>
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="search_box pull-right">
-            <input type="text" placeholder="Search" />
           </div>
         </div>
       </div>

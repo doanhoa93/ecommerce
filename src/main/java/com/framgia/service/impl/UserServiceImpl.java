@@ -277,6 +277,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			user.setPassword(bcrypt.encode(userInfo.getPassword()));
 			user.setAvatar(request.getContextPath() + "/assets/images/user.png");
 			getUserDAO().saveOrUpdate(user);
+
+			Profile profile = new Profile();
+			profile.setUser(user);
+			getProfileDAO().saveOrUpdate(profile);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

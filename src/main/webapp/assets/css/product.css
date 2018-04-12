@@ -95,3 +95,8 @@
 .categories .active {
 	background-color: #fdb45e !important;
 }
+
+.product-main-avatar {
+	height: 280px;
+	width: 250px;
+}

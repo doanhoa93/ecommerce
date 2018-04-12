@@ -37,11 +37,11 @@
   </div>
 
   <div class="product-body">
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-left">
-      <img src="${product.getAvatar()}" class="img-responsive" />
-    </div>
+    <span class="col-lg-5 col-md-5 col-sm-12 col-xs-12 product-body-left zoom">
+      <img src="${product.getAvatar()}" class="img-responsive product-main-avatar" />
+    </span>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-right">
+    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 product-body-right">
       <div class="product-price">
         <fmt:setLocale value="en_US" />
         <fmt:formatNumber value="${product.getPrice()}" type="currency" />
