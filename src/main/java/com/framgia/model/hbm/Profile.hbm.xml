@@ -6,7 +6,8 @@
     <id name="id" column="id">
       <generator class="increment" />
     </id>
-
+    
+    <property name="phoneNumber" column="phone_number" type="string" />
     <property name="gender" column="gender" type="integer" />
     <property name="birthday" column="birthday" type="date" />
     <property name="address" column="address" type="string" />

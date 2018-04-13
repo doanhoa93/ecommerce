@@ -341,6 +341,7 @@ public class ModelToBean {
 
 		ProfileInfo profileInfo = new ProfileInfo();
 		profileInfo.setId(profile.getId());
+		profileInfo.setPhoneNumber(profile.getPhoneNumber());
 		profileInfo.setAddress(profile.getAddress());
 		profileInfo.setBirthday(profile.getBirthday());
 		profileInfo.setGender(Gender.getStr(profile.getGender()));

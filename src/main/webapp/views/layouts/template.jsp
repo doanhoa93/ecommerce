@@ -54,13 +54,6 @@
   <div class="body">
     <div class="container container-body">
       <tiles:insertAttribute name="body" ignore="true" />
-
-      <c:if test="${currentUser != null}">
-        <div class="col-lg-4 chat-div">
-          <c:import url="/views/chats/index.jsp" />
-          <c:import url="/views/chats/chat_title.jsp" />
-        </div>
-      </c:if>
     </div>
   </div>
 

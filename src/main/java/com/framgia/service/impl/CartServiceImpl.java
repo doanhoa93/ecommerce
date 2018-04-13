@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 import com.framgia.bean.CartInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.helper.CustomSession;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Cart;
 import com.framgia.model.Product;
@@ -124,6 +125,16 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
+	public CartInfo getCart(String sessionId, Integer productId) {
+		try {
+			return ModelToBean.toCartInfo(getCartDAO().getCart(sessionId, productId));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public List<CartInfo> getCarts(Integer userId, String page, int limit, Order order) {
 		try {
 			int off;
@@ -161,21 +172,23 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 			Cart cart = new Cart();
 			if (cartInfo.getQuantity() == 0)
 				cartInfo.setQuantity(1);
-			if (cartInfo.getUserId() != null) {
+			if (cartInfo.getUserId() != null)
 				cart = getCartDAO().getCart(cartInfo.getUserId(), cartInfo.getProductId());
-				if (cart == null) {
-					cart = new Cart();
-					cart.setQuantity(0);
-					cart.setUser(new User(cartInfo.getUserId()));
-					cart.setProduct(new Product(cartInfo.getProductId()));
-				}
+			else
+				cart = getCartDAO().getCart(CustomSession.current(), cartInfo.getProductId());
 
-				cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
-			} else {
+			if (cart == null) {
+				cart = new Cart();
+				cart.setQuantity(0);
+
+				if (cartInfo.getUserId() == null)
+					cart.setSessionId(CustomSession.current());
+				else
+					cart.setUser(new User(cartInfo.getUserId()));
 				cart.setProduct(new Product(cartInfo.getProductId()));
-				cart.setQuantity(cartInfo.getQuantity());
-				cart.setSessionId(cartInfo.getSessionId());
 			}
+
+			cart.setQuantity(cart.getQuantity() + cartInfo.getQuantity());
 			getCartDAO().saveOrUpdate(cart);
 			return true;
 		} catch (Exception e) {

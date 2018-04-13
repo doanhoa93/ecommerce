@@ -7,6 +7,7 @@ import java.util.Date;
 public class Profile implements Serializable {
 	private Integer id;
 	private User user;
+	private String phoneNumber;	
 	private int gender;
 	private Date birthday;
 	private String address;
@@ -65,5 +66,13 @@ public class Profile implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }

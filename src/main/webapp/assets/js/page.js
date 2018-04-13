@@ -39,6 +39,14 @@ $(document).ready(function() {
 		hideShowChat();
 	});
 	
+	$(document).click(function(event) { 
+	    if(!$(event.target).closest('.item-notification').length) {
+	        if($('.notifications-body').is(":visible")) {
+	            $('.notifications-body').hide();
+	        }
+	    }        
+	});
+	
 	function hideShowChat() {
 		$('.chat-panel').toggle();
 		$('.chat-hidden').toggle();

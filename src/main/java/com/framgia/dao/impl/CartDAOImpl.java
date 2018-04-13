@@ -68,4 +68,12 @@ public class CartDAOImpl extends BaseDAOAbstract<Integer, Cart> implements CartD
 		criteria.add(Restrictions.eq("product.id", productId));
 		return (Cart) criteria.uniqueResult();
 	}
+
+	@Override
+	public Cart getCart(String sessionId, Integer productId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("sessionId", sessionId));
+		criteria.add(Restrictions.eq("product.id", productId));
+		return (Cart) criteria.uniqueResult();
+	}
 }

@@ -1,0 +1,25 @@
+.user {
+    border: 1px solid #F7F7F0;	
+	padding: 10px 40px;
+}
+
+.user .user-right {
+    border-left: 1px solid #F7F7F0;	
+}
+
+.user .user-avatar .avatar {
+	height: 150px;
+	width: 150px;
+}
+
+.user .field {
+	margin-bottom: 20px;
+}
+
+.field .user-save {
+	float: right;
+}
+
+.user .upload-avatar {
+	cursor: pointer;
+}

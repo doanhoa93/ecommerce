@@ -11,6 +11,10 @@
 	font-size: 30px;
 }
 
+.total-money-value {
+	font-size: 32px;
+}
+
 .carts-left .order-form-create {
 	display: none;
 }
@@ -67,7 +71,7 @@
 }
 
 .cart-right .cart-product-price {
-	font-size: 30px;
+	font-size: 22px;
 	line-height: 75px;
 	width: 150px;
 }

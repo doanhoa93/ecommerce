@@ -189,7 +189,7 @@ $(document).ready(function() {
 	}
 	
 	function displayCartLoadMore() {
-		if($('.cart-product').length <= Number($('.cart-size').text()))
+		if($('.cart-product').length >= Number($('.cart-size').text()))
 			$('.carts-load-more').remove();		
 	}
 	

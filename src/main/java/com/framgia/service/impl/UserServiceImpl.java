@@ -19,9 +19,11 @@ import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.ProfileInfo;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Gender;
 import com.framgia.helper.CustomSession;
 import com.framgia.helper.ModelToBean;
 import com.framgia.model.Order;
+import com.framgia.model.Profile;
 import com.framgia.model.User;
 import com.framgia.security.CustomUserDetails;
 import com.framgia.service.UserService;
@@ -289,6 +291,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
+		}
+	}
+
+	@Override
+	public boolean updateUser(UserInfo userInfo) {
+		try {
+			User user = getUserDAO().findById(userInfo.getId());
+			user.setName(userInfo.getName());
+			if (StringUtils.isNotEmpty(userInfo.getNewPassword())) {
+				BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+				user.setPassword(bcrypt.encode(userInfo.getNewPassword()));
+			}
+
+			Profile profile = user.getProfile();
+			profile.setPhoneNumber(userInfo.getProfile().getPhoneNumber());
+			profile.setGender(Gender.getInt(userInfo.getProfile().getGender()));
+			profile.setBirthday(userInfo.getProfile().getBirthday());
+			profile.setAddress(userInfo.getProfile().getAddress());
+			getUserDAO().saveOrUpdate(user);
+			getProfileDAO().saveOrUpdate(profile);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
 		}
 	}
 

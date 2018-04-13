@@ -115,8 +115,9 @@
 }
 
 .order-product .order-product-left .order-product-image {
-	height: auto !important;
 	display: inline-block;
+	height: auto !important;
+	max-height: 140px;
 }
 
 .order-product-product .order-product-left .order-product-product-image
