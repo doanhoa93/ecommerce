@@ -37,7 +37,7 @@
         <a href="${contextPath}/products/${product.getId()}" class="product-name">
           ${product.getName()} </a>
       </p>
-      <form:form action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
+      <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" name="productId" value="${product.getId()}" />
         <button class="btn btn-default add-to-cart" type="submit">

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.CartInfo;
@@ -57,29 +56,23 @@ public class CartsController extends BaseController {
 
 	@SuppressWarnings("finally")
 	@RequestMapping(value = "/carts", method = RequestMethod.POST)
-	public String create(RedirectAttributes redirect, @ModelAttribute("cartInfo") CartInfo cartInfo,
-	    BindingResult result) {
+	public @ResponseBody String create(@ModelAttribute("cartInfo") CartInfo cartInfo,
+	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> flash = new HashMap<>();
 		try {
 			cartInfo.setUser(currentUser());
 			cartValidator.validateCreate(cartInfo, result);
-			if (!result.hasErrors() && cartService.createCart(cartInfo))
-				flash.put("type", "success");
-			else
-				flash.put("type", "error");
+			if (!result.hasErrors() && cartService.createCart(cartInfo)) {
+				flash.put("result", "success");
+				flash.put("isNew", (cartInfo.getQuantity() == 1));
+			} else
+				flash.put("result", "fail");
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e);
-			flash.put("type", "error");
+			flash.put("result", "fail");
 		} finally {
-			if (flash.get("type").equals("success")) {
-				flash.put("content", messageSource.getMessage("cart.success", null, Locale.US));
-				redirect.addFlashAttribute("flash", flash);
-				return "redirect:/carts";
-			} else {
-				flash.put("content", messageSource.getMessage("cart.error", null, Locale.US));
-				redirect.addFlashAttribute("flash", flash);
-				return "redirect:/";
-			}
+			return toJson(flash);
 		}
 	}
 
