@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
 import com.framgia.bean.UserInfo;
@@ -35,6 +36,18 @@ public class UserValidator implements Validator {
 			errors.rejectValue("name", "user.name.empty");
 
 		if (StringUtils.isEmpty(userInfo.getProfile().getPhoneNumber()))
-			errors.rejectValue("phoneNumber", "user.phone_number.empty");
+			errors.rejectValue("profile.phoneNumber", "user.phone_number.empty");
+
+		removeErrorBirthDay(errors);
+	}
+
+	private void removeErrorBirthDay(Errors errors) {
+		for (FieldError fieldError : errors.getFieldErrors()) {
+			if (fieldError.getField().equals("profile.birthd ay")) {
+				errors.getFieldErrors().remove(fieldError);
+				break;
+			}
+		}
+
 	}
 }

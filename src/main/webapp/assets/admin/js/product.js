@@ -32,6 +32,13 @@ $(document).ready(function() {
 		$('.promotion-product').toggle();
 	});
 	
+    $('.zoom').zoom();	
+	
+    $('.product-image').on('click', function(e) {
+        $('.product-main-avatar').attr('src', $(this).attr('src'));
+        $('.zoom').zoom();
+    });    
+    
 	$(document).on('click', '.add-image', function() {
 	    var imageForm = $('.product-image-form').first().clone();
 	    imageForm.show();

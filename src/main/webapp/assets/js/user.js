@@ -23,10 +23,6 @@ $(document).ready(function() {
         e.preventDefault();    
         var formData = new FormData(this);
         formData.append('avatar', $('#upload').attr('src'));
-        formData.append('profile.phoneNumber', $('input[name="phoneNumber"]').val());
-        formData.append('profile.address', $('input[name="address"]').val());
-        formData.append('profile.birthday', $('input[name="birthday"]').val());
-        formData.append('profile.gender', $('.gender').val());
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
@@ -36,7 +32,7 @@ $(document).ready(function() {
                     $(data).filter('.error').each(function(index, error)  {
                         if($(error).filter('.gender').length)
                             $('.gender').after(error);
-                        $('input[name=' + $(error).attr('data-name') + ']').after(error);
+                        $('input[name="' + $(error).attr('data-name') + '"]').after(error);
                     });
                 } else {
                     var url = $(data).filter('.redirect').attr('href');

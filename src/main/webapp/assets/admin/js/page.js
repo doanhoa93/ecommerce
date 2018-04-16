@@ -5,7 +5,10 @@ $(document).ready(function() {
         beforeSend : function(xhr) {
 	        xhr.setRequestHeader(header, token);
         }
-    });	
+    });
+	
+	if($('#editor').length)
+	    CKEDITOR.replace('editor');
 	
 	$(document).on('shown.bs.modal', function() {
 		$('input[list]').on('input', function(e) {

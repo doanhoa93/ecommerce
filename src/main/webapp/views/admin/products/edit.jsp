@@ -70,8 +70,8 @@
 
         <div class="field">
           <label>Information of Product</label>
-          <form:textarea path="information" placeholder="Information of product"
-            class="form-control" />
+          <form:textarea path="information" id="editor" contenteditable="true"
+            placeholder="Information of product" class="form-control" />
         </div>
 
         <div class="field">
@@ -110,3 +110,5 @@
     </form:form>
   </div>
 </div>
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.2/ckeditor.js"></script>

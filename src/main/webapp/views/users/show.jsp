@@ -59,24 +59,24 @@
 
         <div class="field">
           <label>PhoneNumber</label>
-          <input name="phoneNumber" class="form-control" value="${profile.getPhoneNumber()}" />
+          <input name="profile.phoneNumber" class="form-control" value="${profile.getPhoneNumber()}" />
         </div>
 
         <div class="field">
           <label>Address</label>
-          <input name="address" class="form-control" value="${profile.getAddress()}" />
+          <input name="profile.address" class="form-control" value="${profile.getAddress()}" />
         </div>
 
         <div class="field">
           <label>Birthday</label>
           <fmt:formatDate value="${profile.getBirthday()}" pattern="MM/dd/yyyy" var="birthday" />
-          <input name="birthday" class="form-control datepicker" value="${birthday}"
+          <input name="profile.birthday" class="form-control datepicker" value="${birthday}"
             data-provide="datepicker" />
         </div>
 
         <div class="field">
           <label>Gender</label>
-          <select name="gender" form="edit-user" class="gender">
+          <select name="profile.gender" form="edit-user" class="gender">
             <c:choose>
               <c:when test="${profile.getGender() == 'MALE'}">
                 <option value="MALE" selected>MALE</option>

@@ -123,8 +123,9 @@ public class BaseController {
 		HashMap<String, Object> map = new HashMap<>();
 		while (iterator.hasNext()) {
 			FieldError fieldError = iterator.next();
-			map.put(fieldError.getField(), messageSource.getMessage(fieldError.getCode(),
-			    fieldError.getArguments(), Locale.US));
+			if (!fieldError.getCode().equals("typeMismatch"))
+				map.put(fieldError.getField(), messageSource.getMessage(fieldError.getCode(),
+				    fieldError.getArguments(), Locale.US));
 		}
 		return map;
 	}

@@ -304,3 +304,13 @@ input[type="search"].input-sm {
 	float: right;
 	margin-right: 10px;
 }
+
+.global-search {
+	margin-bottom: 15px;
+}
+
+.global-search-input {
+	background: url(../images/home/searchicon.png) 5px no-repeat #F0F0E9 !important;
+    padding-left: 30px !important;	
+	width: 100% !important;
+}

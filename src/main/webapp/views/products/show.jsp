@@ -56,8 +56,8 @@
     </div>
 
     <div class="product-body">
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-left">
-        <img src="${product.getAvatar()}" class="img-responsive" />
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-left zoom">
+        <img src="${product.getAvatar()}" class="img-responsive product-main-avatar" />
       </div>
 
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 product-body-right">

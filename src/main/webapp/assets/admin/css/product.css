@@ -108,3 +108,8 @@
 .add-image:before, .remove-image:before {
 	margin-right: 5px;
 }
+
+.product-main-avatar {
+	height: 280px;
+	width: 250px;
+}
