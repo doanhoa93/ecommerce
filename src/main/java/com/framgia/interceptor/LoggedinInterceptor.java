@@ -91,6 +91,6 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private boolean isAdmin(UserInfo userInfo) {
-		return userInfo != null && userInfo.getRole().equals(Role.Admin);
+		return userInfo != null && userInfo.getRole().equals(Role.ADMIN);
 	}
 }

@@ -51,7 +51,7 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 	@Override
 	public List<User> getUsers(int off, int limit, Order order) {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("role", Role.User));
+		criteria.add(Restrictions.eq("role", Role.USER));
 
 		if (limit != 0)
 			criteria.setMaxResults(limit);
@@ -66,7 +66,7 @@ public class UserDAOImpl extends BaseDAOAbstract<Integer, User> implements UserD
 	@Override
 	public List<String> getTokens() {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("role", Role.User));
+		criteria.add(Restrictions.eq("role", Role.USER));
 		criteria.add(Restrictions.neOrIsNotNull("token", ""));
 		criteria.setProjection(Projections.property("token"));
 		return criteria.list();

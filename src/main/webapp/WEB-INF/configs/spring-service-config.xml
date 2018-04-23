@@ -40,6 +40,8 @@
     </property>
   </bean>
 
+  <bean id="FacebookService" class="com.framgia.service.impl.FacebookServiceImpl" />
+
   <bean id="ImageService" parent="transactionProxyTemplate">
     <property name="target">
       <bean class="com.framgia.service.impl.ImageServiceImpl">

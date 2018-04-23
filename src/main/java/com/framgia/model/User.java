@@ -14,6 +14,7 @@ public class User implements Serializable {
 	private String role;
 	private Date createdAt;
 	private String token;
+	private String provider;
 	private Profile profile;
 	private List<Order> orders;
 	private List<Cart> carts;
@@ -28,7 +29,8 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public User(Integer id, String email, String password, String name, String avatar, String role) {
+	public User(Integer id, String email, String password, String name, String avatar,
+	    String role) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -147,5 +149,13 @@ public class User implements Serializable {
 
 	public void setSendedChats(List<Chat> sendedChats) {
 		this.sendedChats = sendedChats;
+	}
+
+	public String getProvider() {
+		return provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 }

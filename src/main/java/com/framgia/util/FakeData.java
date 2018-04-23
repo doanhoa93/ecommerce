@@ -82,7 +82,7 @@ public class FakeData {
 			admin.setId(1);
 			admin.setEmail("admin@gmail.com");
 			admin.setPassword(bcrypt.encode("123456"));
-			admin.setRole(Role.Admin);
+			admin.setRole(Role.ADMIN);
 			admin.setName("Admin");
 			admin.setCreatedAt(new Date());
 			admin.setAvatar(avatar);
@@ -104,7 +104,7 @@ public class FakeData {
 			user.setId(2);
 			user.setEmail("tiennh1995@gmail.com");
 			user.setPassword(bcrypt.encode("123456"));
-			user.setRole(Role.User);
+			user.setRole(Role.USER);
 			user.setName("Nguyen Huu Tien");
 			user.setCreatedAt(new Date());
 			user.setAvatar(avatar);
@@ -122,7 +122,7 @@ public class FakeData {
 				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");
 				user.setPassword(bcrypt.encode("123456"));
-				user.setRole(Role.User);
+				user.setRole(Role.USER);
 				user.setName("Example-" + i);
 				user.setCreatedAt(new Date());
 				user.setAvatar(avatar);

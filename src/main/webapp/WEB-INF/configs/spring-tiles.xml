@@ -36,7 +36,7 @@
       <add-attribute value="/assets/lib-js/sockjs.min.js" />
       <add-attribute value="/assets/lib-js/stomp.min.js" />
       <add-attribute value="/assets/lib-js/jquery.timeago.min.js" />
-      <add-attribute value="/assets/lib-js/jquery.zoom.min.js" />      
+      <add-attribute value="/assets/lib-js/jquery.zoom.min.js" />
       <add-attribute value="/assets/js/page.js" />
       <add-attribute value="/assets/js/socket.js" />
     </put-list-attribute>
@@ -62,14 +62,20 @@
   <definition name="login" extends="baselayout">
     <put-attribute name="title" value="Login | Ecommerce" />
     <put-attribute name="body" value="/views/sessions/new.jsp" />
+
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/login.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/js/fb.js" />
     </put-list-attribute>
   </definition>
 
   <definition name="signup" extends="baselayout">
     <put-attribute name="title" value="Signup | Ecommerce" />
     <put-attribute name="body" value="/views/registrations/new.jsp" />
+
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/signup.css" />
     </put-list-attribute>

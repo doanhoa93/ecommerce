@@ -30,15 +30,13 @@
   <beans:bean id="customizeRedirectSuccessHandler" class="com.framgia.security.CustomUrlAuthenticationSuccessHandler" />
   <beans:bean id="customizeRedirectFailedHandler" class="com.framgia.security.CustomUrlAuthenticationFailedHandler" />
   <beans:bean id="customLogoutSuccessHandler" class="com.framgia.security.CustomLogoutSuccessHandler" />
-  <beans:bean id="userLoginService" class="com.framgia.security.CustomUserDetailsService" />
+  <beans:bean id="userDetailsService" class="com.framgia.security.CustomUserDetailsService" />
+  <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
   <!-- Custom object user -->
   <authentication-manager>
-    <authentication-provider user-service-ref="userLoginService">
+    <authentication-provider user-service-ref="userDetailsService">
       <password-encoder ref="encoder"></password-encoder>
     </authentication-provider>
   </authentication-manager>
-
-  <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-  </beans:bean>
 </beans:beans>

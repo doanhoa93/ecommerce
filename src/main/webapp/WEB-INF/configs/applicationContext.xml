@@ -62,6 +62,12 @@
     <property name="fallbackToSystemLocale" value="false" />
   </bean>
 
+  <!-- Facebook -->
+  <bean id="faceBook" class="com.framgia.social.Facebook">
+    <property name="appId" value="${facebook.appId}" />
+    <property name="secretId" value="${facebook.secretId}" />  
+  </bean>  
+
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**" />

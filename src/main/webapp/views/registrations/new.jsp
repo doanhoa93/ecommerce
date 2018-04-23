@@ -13,22 +13,16 @@
             <div class="alert alert-warning">${message}</div>
           </c:if>
 
-          <form:form action="${contextPath}/registrations" method="POST" modelAttribute="userInfo"
-            class="form-signup">
+          <form:form id="new-user" action="${contextPath}/registrations" method="POST"
+            modelAttribute="user" class="form-signup">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <form:input path="name" placeholder="Name" />
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />
-
-            <label class="label-gender">
-              <form:radiobutton path="gender" value="FEMALE" cssClass="gender" checked="checked" />
-              <span class="gender-value">Female</span>
-            </label>
-            <label>
-              <form:radiobutton path="gender" value="MALE" cssClass="gender" />
-              <span class="gender-value">Male</span>
-            </label>
-
+            <select name="profile.gender" form="new-user" class="form-control">
+              <option value="MALE" selected>MALE</option>
+              <option value="FEMALE">FEMALE</option>
+            </select>
             <input type="submit" class="btn btn-primary" value="Sign up" />
           </form:form>
         </div>
