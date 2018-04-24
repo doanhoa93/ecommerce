@@ -57,7 +57,7 @@ public class CartsController extends BaseController {
 
 	@SuppressWarnings("finally")
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody String create(@ModelAttribute("cartInfo") CartInfo cartInfo,
+	public @ResponseBody String create(@ModelAttribute("cart") CartInfo cartInfo,
 	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> flash = new HashMap<>();
 		try {

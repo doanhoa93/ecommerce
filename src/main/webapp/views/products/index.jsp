@@ -25,7 +25,9 @@
 
     <div class="name-range">
       <h3>Name range</h3>
-      <input type="text" name="name" placeholder="Name of product" class="name-range-input">
+      <div class="ui-widget">
+        <input type="text" name="name" placeholder="Name of product" class="name-range-input">
+      </div>
     </div>
 
     <div class="price-range">
@@ -60,7 +62,7 @@
         <span>
           <select name="price"
             class="form-control product-order-field order-price product-order-active">
-            <option value="asc" >From Low to High</option>
+            <option value="asc">From Low to High</option>
             <option value="desc">From High to Low</option>
           </select>
         </span>
@@ -72,7 +74,7 @@
         </span>
         <span>
           <select name="name" class="form-control product-order-field order-name">
-            <option class="empty" selected></option>          
+            <option class="empty" selected></option>
             <option value="asc">A-Z</option>
             <option value="desc">Z-A</option>
           </select>

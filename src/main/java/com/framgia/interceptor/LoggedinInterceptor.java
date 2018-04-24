@@ -37,30 +37,33 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 	    Object handler) throws Exception {
-		UserInfo currentUser = currentUser();
-		if (currentUser != null) {
-			String token = CustomSession.current();
-			String currentToken = currentUser.getToken();
-			if (StringUtils.isEmpty(currentToken) || !currentToken.equals(token))
-				currentUser = userService.updateToken(currentUser, token);
-			request.setAttribute("currentUser", currentUser);
+		if (!request.getRequestURI().contains("assets")) {
+			UserInfo currentUser = currentUser();
+			if (isAdmin(currentUser) && !validAdminRequest(request)) {
+				response.sendRedirect(request.getContextPath() + "/admin");
+				return false;
+			}
+
+			if (currentUser != null) {
+				String token = CustomSession.current();
+				String currentToken = currentUser.getToken();
+				if (StringUtils.isEmpty(currentToken) || !currentToken.equals(token))
+					currentUser = userService.updateToken(currentUser, token);
+				request.setAttribute("currentUser", currentUser);
+			}
+
+			if (currentUser == null) {
+				request.setAttribute("cartSize",
+				    cartService.getCartsWithGuest(CustomSession.current(), null, 0, null).size());
+				request.setAttribute("orderSize",
+				    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
+			}
+
+			HashMap<String, Object> hashMap = new HashMap<>();
+			hashMap.put("token", CustomSession.current());
+			simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
 		}
 
-		if (currentUser == null) {
-			request.setAttribute("cartSize",
-			    cartService.getCartsWithGuest(CustomSession.current(), null, 0, null).size());
-			request.setAttribute("orderSize",
-			    orderService.getOrdersWithGuest(CustomSession.current(), 0, 0, null).size());
-		}
-
-		if (isAdmin(currentUser) && !validAdminRequest(request)) {
-			response.sendRedirect(request.getContextPath() + "/admin");
-			return false;
-		}
-
-		HashMap<String, Object> hashMap = new HashMap<>();
-		hashMap.put("token", CustomSession.current());
-		simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
 		return true;
 	}
 
@@ -86,8 +89,7 @@ public class LoggedinInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private boolean validAdminRequest(HttpServletRequest request) {
-		return request.getRequestURI().contains("admin")
-		    || request.getRequestURI().contains("assets");
+		return request.getRequestURI().contains("admin");
 	}
 
 	private boolean isAdmin(UserInfo userInfo) {

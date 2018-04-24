@@ -113,3 +113,9 @@
 .category a:hover {
 	background-color: #6967634a !important;
 }
+
+.ui-autocomplete {
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
