@@ -27,7 +27,7 @@ public class UserValidator implements Validator {
 	}
 
 	public void validateUpdate(UserInfo userInfo, Errors errors) {
-		UserInfo oldUser = userService.findById(userInfo.getId());
+		UserInfo oldUser = userService.findById(userInfo.getId(), false);
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		if (!bcrypt.matches(userInfo.getPassword(), oldUser.getPassword()))
 			errors.rejectValue("password", "user.password.invalid");
@@ -43,7 +43,7 @@ public class UserValidator implements Validator {
 
 	private void removeErrorBirthDay(Errors errors) {
 		for (FieldError fieldError : errors.getFieldErrors()) {
-			if (fieldError.getField().equals("profile.birthd ay")) {
+			if (fieldError.getField().equals("profile.birthday")) {
 				errors.getFieldErrors().remove(fieldError);
 				break;
 			}

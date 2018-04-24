@@ -45,7 +45,7 @@ public class ProductsController extends BaseController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		ProductInfo productInfo = productService.findById(id);
+		ProductInfo productInfo = productService.findById(id, false);
 		ModelAndView model = new ModelAndView();
 		if (productInfo != null) {
 			int size = productInfo.getImages().size() / 3;

@@ -34,9 +34,9 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	}
 
 	@Override
-	public SuggestInfo findById(Serializable key) {
+	public SuggestInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toSuggestInfo(getSuggestDAO().findById(key));
+			return ModelToBean.toSuggestInfo(getSuggestDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -67,7 +67,8 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	@Override
 	public boolean delete(SuggestInfo entity) {
 		try {
-			getSuggestDAO().delete(toSuggest(entity));
+			Suggest suggest = getSuggestDAO().findById(entity.getId(), true);
+			getSuggestDAO().delete(suggest);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -121,7 +122,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 
 		try {
 			Suggest suggest = new Suggest();
-			suggest.setUser(getUserDAO().findById(suggestInfo.getUserId()));
+			suggest.setUser(getUserDAO().findById(suggestInfo.getUserId(), false));
 			suggest.setStatus(Status.getIntStatus(Status.WAITING));
 			suggest.setAvatar(suggestInfo.getAvatar());
 			suggest.setCategory(suggestInfo.getCategory());
@@ -151,7 +152,7 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		}
 
 		try {
-			Suggest suggest = getSuggestDAO().findById(oldSuggest.getId());
+			Suggest suggest = getSuggestDAO().findById(oldSuggest.getId(), true);
 			suggest.setStatus(Status.getIntStatus(Status.WAITING));
 			if (StringUtils.isNotEmpty(newSuggest.getAvatar()))
 				suggest.setAvatar(newSuggest.getAvatar());

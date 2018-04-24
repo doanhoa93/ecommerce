@@ -47,7 +47,7 @@ public class OrdersController extends AdminController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		OrderInfo order = orderService.findById(id);
+		OrderInfo order = orderService.findById(id, false);
 		ModelAndView model = new ModelAndView("adminOrder");
 		if (order != null) {
 			model.addObject("order", order);
@@ -65,7 +65,7 @@ public class OrdersController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			OrderInfo orderInfo = orderService.findById(id);
+			OrderInfo orderInfo = orderService.findById(id, true);
 			orderValidator.validStatus((String) hashMap.get("status"), orderInfo, result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));

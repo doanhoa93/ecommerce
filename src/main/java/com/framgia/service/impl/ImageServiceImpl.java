@@ -24,9 +24,9 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public ImageInfo findById(Serializable key) {
+	public ImageInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toImageInfo(getImageDAO().findById(key));
+			return ModelToBean.toImageInfo(getImageDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -46,7 +46,8 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	@Override
 	public boolean delete(ImageInfo entity) {
 		try {
-			getImageDAO().delete(toImage(entity));
+			Image image = getImageDAO().findById(entity.getId(), true);
+			getImageDAO().delete(image);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

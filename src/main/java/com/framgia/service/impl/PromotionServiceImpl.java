@@ -23,9 +23,9 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public PromotionInfo findById(Serializable key) {
+	public PromotionInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toPromotionInfo(getPromotionDAO().findById(key));
+			return ModelToBean.toPromotionInfo(getPromotionDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -45,7 +45,8 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	@Override
 	public boolean delete(PromotionInfo entity) {
 		try {
-			getPromotionDAO().delete(toPromotion(entity));
+			Promotion promotion = getPromotionDAO().findById(entity.getId(), true);
+			getPromotionDAO().delete(promotion);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

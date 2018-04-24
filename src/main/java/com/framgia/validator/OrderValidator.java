@@ -97,7 +97,8 @@ public class OrderValidator implements Validator {
 		}
 
 		for (OrderProductInfo orderProductInfo : orderProductInfos) {
-			ProductInfo productInfo = productService.findById(orderProductInfo.getProductId());
+			ProductInfo productInfo = productService.findById(orderProductInfo.getProductId(),
+			    false);
 			if (productInfo != null && orderProductInfo.getQuantity() > productInfo.getNumber()) {
 				errors.rejectValue("orderProducts", "order.order_product.quantity.invalid");
 				return;

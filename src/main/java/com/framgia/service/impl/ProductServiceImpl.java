@@ -43,7 +43,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			ProductInfo productInfo = ModelToBean
 			    .toProductInfo(getProductDAO().findBy(attribute, key, lock));
-			Promotion promotion = getPromotionDAO().findById(productInfo.getPromotionId());
+			Promotion promotion = getPromotionDAO().findById(productInfo.getPromotionId(), false);
 			if (promotion != null)
 				productInfo.setPromotion(ModelToBean.toPromotionInfo(promotion));
 			return productInfo;
@@ -54,9 +54,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public ProductInfo findById(Serializable key) {
+	public ProductInfo findById(Serializable key, boolean lock) {
 		try {
-			return findBy("id", key, true);
+			return findBy("id", key, lock);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -82,7 +82,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			for (OrderProduct orderProduct : orderProducts)
 				getOrderProductDAO().delete(orderProduct);
 
-			getProductDAO().delete(toProduct(entity));
+			Product product = getProductDAO().findById(entity.getId(), true);
+			getProductDAO().delete(product);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -316,7 +317,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		try {
 			Product product = new Product();
 			product.setName(productInfo.getName());
-			product.setCategory(getCategoryDAO().findById(productInfo.getCategoryId()));
+			product.setCategory(getCategoryDAO().findById(productInfo.getCategoryId(), false));
 			product.setInformation(productInfo.getInformation());
 			product.setNumber(productInfo.getNumber());
 			product.setPrice(productInfo.getPrice());
@@ -372,10 +373,10 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 		}
 
 		try {
-			Product product = getProductDAO().findById(oldProduct.getId());
+			Product product = getProductDAO().findById(oldProduct.getId(), true);
 			product.setName(newProduct.getName());
 			product.setPrice(newProduct.getPrice());
-			product.setCategory(getCategoryDAO().findById(newProduct.getCategoryId()));
+			product.setCategory(getCategoryDAO().findById(newProduct.getCategoryId(), false));
 			product.setInformation(newProduct.getInformation());
 			product.setNumber(newProduct.getNumber());
 			if (!newProduct.getAvatarFile().isEmpty())
@@ -392,7 +393,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			int indexURL = 0;
 			for (int i = 0; i < statuses.size(); i++) {
 				if (statuses.get(i) == -1) {
-					Image image = getImageDAO().findById(ids.get(i));
+					Image image = getImageDAO().findById(ids.get(i), true);
 					if (image != null)
 						getImageDAO().delete(image);
 				} else if (statuses.get(i) == 0) {
@@ -414,7 +415,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public boolean updateRecent(ProductInfo productInfo) {
 		try {
-			Product product = getProductDAO().findById(productInfo.getId());
+			Product product = getProductDAO().findById(productInfo.getId(), false);
 			Recent recent = new Recent();
 			recent.setCreatedAt(new Date());
 			recent.setProduct(product);

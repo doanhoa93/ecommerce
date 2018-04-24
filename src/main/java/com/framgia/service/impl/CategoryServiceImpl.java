@@ -20,7 +20,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		try {
 			CategoryInfo categoryInfo = ModelToBean
 			    .toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
-			Category parent = getCategoryDAO().findById(categoryInfo.getParentId());
+			Category parent = getCategoryDAO().findById(categoryInfo.getParentId(), lock);
 			if (parent != null)
 				categoryInfo.setParentName(parent.getName());
 			return categoryInfo;
@@ -31,9 +31,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public CategoryInfo findById(Serializable key) {
+	public CategoryInfo findById(Serializable key, boolean lock) {
 		try {
-			return findBy("id", key, true);
+			return findBy("id", key, lock);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -54,7 +54,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public boolean delete(CategoryInfo entity) {
 		try {
-			getCategoryDAO().delete(toCategory(entity));
+			Category category = getCategoryDAO().findById(entity.getId(), true);
+			getCategoryDAO().delete(category);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -185,7 +186,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	@Override
 	public boolean updateCategory(CategoryInfo oldCategoryInfo, CategoryInfo newCategoryInfo) {
 		try {
-			Category category = getCategoryDAO().findById(oldCategoryInfo.getId());
+			Category category = getCategoryDAO().findById(oldCategoryInfo.getId(), true);
 			category.setName(newCategoryInfo.getName());
 			if (isNewParentId(newCategoryInfo.getParentId())) {
 				Category parent = new Category();

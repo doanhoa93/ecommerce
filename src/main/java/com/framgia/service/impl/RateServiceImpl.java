@@ -24,9 +24,9 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	}
 
 	@Override
-	public RateInfo findById(Serializable key) {
+	public RateInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toRateInfo(getRateDAO().findById(key));
+			return ModelToBean.toRateInfo(getRateDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -46,7 +46,8 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	@Override
 	public boolean delete(RateInfo entity) {
 		try {
-			getRateDAO().delete(toRate(entity));
+			Rate rate = getRateDAO().findById(entity.getId(), true);
+			getRateDAO().delete(rate);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

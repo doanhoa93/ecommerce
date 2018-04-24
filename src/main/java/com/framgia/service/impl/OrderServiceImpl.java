@@ -49,9 +49,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderInfo findById(Serializable key) {
+	public OrderInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toOrderInfo(getOrderDAO().findById(key));
+			return ModelToBean.toOrderInfo(getOrderDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -72,7 +72,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public boolean delete(OrderInfo entity) {
 		try {
-			getOrderDAO().delete(toOrder(entity));
+			Order order = getOrderDAO().findById(entity.getId(), true);
+			getOrderDAO().delete(order);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -227,7 +228,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			Order order = new Order();
 			order.setStatus(Status.getIntStatus(Status.WAITING));
 			if (userInfo != null)
-				order.setUser(getUserDAO().findById(userInfo.getId()));
+				order.setUser(getUserDAO().findById(userInfo.getId(), false));
 			else
 				order.setSessionId(CustomSession.current());
 
@@ -279,7 +280,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	public boolean acceptOrder(OrderInfo orderInfo) {
 		try {
 			boolean valid = true;
-			Order order = getOrderDAO().findById(orderInfo.getId());
+			Order order = getOrderDAO().findById(orderInfo.getId(), true);
 			List<OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
 			for (OrderProduct orderProduct : orderProducts) {
 				if (orderProduct.getProduct().getNumber() < orderProduct.getQuantity()) {
@@ -334,7 +335,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Override
 	public boolean updateStatusOrder(OrderInfo orderInfo) {
 		try {
-			Order order = getOrderDAO().findById(orderInfo.getId());
+			Order order = getOrderDAO().findById(orderInfo.getId(), true);
 			if (!orderInfo.getStatus().equals(Status.ACCEPT)) {
 				List<
 				    OrderProduct> orderProducts = getOrderDAO().getOrderProducts(orderInfo.getId());
@@ -384,7 +385,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				List<OrderProductInfo> orderProductInfos = orderInfo.getOrderProducts();
 				for (OrderProductInfo orderProductInfo : orderProductInfos) {
 					OrderProduct orderProduct = getOrderProductDAO()
-					    .findById(orderProductInfo.getId());
+					    .findById(orderProductInfo.getId(), true);
 					orderProduct.setQuantity(orderProductInfo.getQuantity());
 					getOrderProductDAO().saveOrUpdate(orderProduct);
 					orderProducts.remove(findOrderProduct(orderProductInfo.getId(), orderProducts));
@@ -399,7 +400,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				for (OrderProduct orderProduct : orderProducts) {
 					totalPrice += orderProduct.getQuantity() * orderProduct.getProduct().getPrice();
 				}
-				Order order = getOrderDAO().findById(orderInfo.getId());
+				Order order = getOrderDAO().findById(orderInfo.getId(), true);
 				order.setTotalPrice(totalPrice);
 				getOrderDAO().saveOrUpdate(order);
 				return true;

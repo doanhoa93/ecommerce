@@ -69,7 +69,7 @@ public class SuggestsController extends BaseController {
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView("editSuggest");
-		SuggestInfo suggestInfo = suggestService.findById(id);
+		SuggestInfo suggestInfo = suggestService.findById(id, true);
 		if (suggestInfo != null && suggestInfo.getStatus().equals(Status.WAITING))
 			model.addObject("suggest", suggestInfo);
 		else
@@ -82,7 +82,7 @@ public class SuggestsController extends BaseController {
 	    @ModelAttribute("suggest") SuggestInfo suggestInfo, BindingResult result)
 	    throws JsonProcessingException {
 		ModelAndView model = new ModelAndView();
-		SuggestInfo oldSuggest = suggestService.findById(id);
+		SuggestInfo oldSuggest = suggestService.findById(id, true);
 		if (oldSuggest != null && oldSuggest.getStatus().equals(Status.WAITING)) {
 			suggestInfo.setUserId(currentUser().getId());
 			suggestValidator.validUpdate(oldSuggest, suggestInfo, result);
@@ -101,7 +101,7 @@ public class SuggestsController extends BaseController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ModelAndView delete(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView("redirect:/suggests");
-		SuggestInfo suggestInfo = suggestService.findById(id);
+		SuggestInfo suggestInfo = suggestService.findById(id, true);
 		if (suggestInfo != null)
 			suggestService.delete(suggestInfo);
 		else

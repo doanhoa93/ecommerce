@@ -27,9 +27,9 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	}
 
 	@Override
-	public NotificationInfo findById(Serializable key) {
+	public NotificationInfo findById(Serializable key, boolean lock) {
 		try {
-			return findBy("id", key, true);
+			return findBy("id", key, lock);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -50,7 +50,8 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	@Override
 	public boolean delete(NotificationInfo entity) {
 		try {
-			getNotificationDAO().delete(toNotification(entity));
+			Notification notification = getNotificationDAO().findById(entity.getId(), true);
+			getNotificationDAO().delete(notification);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

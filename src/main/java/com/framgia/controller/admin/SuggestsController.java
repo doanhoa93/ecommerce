@@ -40,12 +40,13 @@ public class SuggestsController extends AdminController {
 		} else
 			model.addObject("suggests",
 			    suggestService.getSuggests(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("id")));
+		
 		return model;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		SuggestInfo suggest = suggestService.findById(id);
+		SuggestInfo suggest = suggestService.findById(id, false);
 		ModelAndView model = new ModelAndView("adminSuggest");
 		if (suggest != null)
 			model.addObject("suggest", suggest);
@@ -61,7 +62,7 @@ public class SuggestsController extends AdminController {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
 			hashMap = toHashMap(data);
-			SuggestInfo suggest = suggestService.findById(id);
+			SuggestInfo suggest = suggestService.findById(id, true);
 			suggestValidator.validStatus((String) hashMap.get("status"), result);
 			if (result.hasErrors()) {
 				hashMap.put("msg", messageSource.getMessage("error", null, Locale.US));

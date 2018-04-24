@@ -72,7 +72,7 @@ public class CategoriesController extends AdminController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id,
 	    @RequestParam(value = "entries", required = false) String entries) {
-		CategoryInfo category = categoryService.findById(id);
+		CategoryInfo category = categoryService.findById(id, false);
 		ModelAndView model = new ModelAndView("adminCategory");
 		if (category != null) {
 			List<ProductInfo> products = null;
@@ -97,7 +97,7 @@ public class CategoriesController extends AdminController {
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView("adminEditCategory");
-		CategoryInfo categoryInfo = categoryService.findById(id);
+		CategoryInfo categoryInfo = categoryService.findById(id, true);
 		if (categoryInfo != null) {
 			model.addObject("categories",
 			    categoryService.getCategoriesWithForNew(categoryInfo.getId()));
@@ -111,7 +111,7 @@ public class CategoriesController extends AdminController {
 	public ModelAndView update(@PathVariable("id") Integer id,
 	    @ModelAttribute("category") CategoryInfo categoryInfo, BindingResult result)
 	    throws JsonProcessingException {
-		CategoryInfo oldCategory = categoryService.findById(id);
+		CategoryInfo oldCategory = categoryService.findById(id, true);
 		ModelAndView model = new ModelAndView();
 		if (oldCategory != null) {
 			categoryValidator.validateUpdate(oldCategory, categoryInfo, result);
@@ -130,7 +130,7 @@ public class CategoriesController extends AdminController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ModelAndView delete(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView();
-		CategoryInfo categoryInfo = categoryService.findById(id);
+		CategoryInfo categoryInfo = categoryService.findById(id, true);
 		if (categoryInfo != null) {
 			categoryService.delete(categoryInfo);
 			model.setViewName("redirect:/admin/categories");

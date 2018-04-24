@@ -75,9 +75,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserInfo findById(Serializable key) {
+	public UserInfo findById(Serializable key, boolean lock) {
 		try {
-			return findBy("id", key, true);
+			return findBy("id", key, lock);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -97,7 +97,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public boolean delete(UserInfo entity) {
 		try {
-			getUserDAO().delete(toUser(entity));
+			User user = getUserDAO().findById(entity.getId(), true);
+			getUserDAO().delete(user);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -318,7 +319,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public boolean updateUser(UserInfo userInfo) {
 		try {
-			User user = getUserDAO().findById(userInfo.getId());
+			User user = getUserDAO().findById(userInfo.getId(), true);
 			user.setName(userInfo.getName());
 			if (StringUtils.isNotEmpty(userInfo.getNewPassword())) {
 				BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
@@ -342,7 +343,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public UserInfo updateToken(UserInfo userInfo, String token) {
 		try {
-			User user = getUserDAO().findById(userInfo.getId());
+			User user = getUserDAO().findById(userInfo.getId(), true);
 			user.setToken(token);
 			getUserDAO().saveOrUpdate(user);
 			userInfo.setToken(token);

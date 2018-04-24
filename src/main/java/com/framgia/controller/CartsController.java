@@ -82,7 +82,7 @@ public class CartsController extends BaseController {
 	    BindingResult result) throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
 		try {
-			CartInfo cartInfo = cartService.findById(id);
+			CartInfo cartInfo = cartService.findById(id, true);
 			hashMap = toHashMap(data);
 			cartInfo.setQuantity((Integer) hashMap.get("quantity"));
 			cartValidator.validateUpdate(cartInfo, currentUser(), result);
@@ -103,7 +103,7 @@ public class CartsController extends BaseController {
 	public @ResponseBody String delete(@PathVariable("id") Integer id)
 	    throws JsonProcessingException {
 		HashMap<String, Object> hashMap = new HashMap<>();
-		CartInfo cartInfo = cartService.findById(id);
+		CartInfo cartInfo = cartService.findById(id, true);
 		if (cartValidator.validateDelete(cartInfo, currentUser()) && cartService.delete(cartInfo))
 			hashMap.put("msg", messageSource.getMessage("success", null, Locale.US));
 		else

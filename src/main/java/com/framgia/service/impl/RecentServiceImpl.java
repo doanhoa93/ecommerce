@@ -24,9 +24,9 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public RecentInfo findById(Serializable key) {
+	public RecentInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toRecentInfo(getRecentDAO().findById(key));
+			return ModelToBean.toRecentInfo(getRecentDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -46,7 +46,8 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	@Override
 	public boolean delete(RecentInfo entity) {
 		try {
-			getRecentDAO().delete(toRecent(entity));
+			Recent recent = getRecentDAO().findById(entity.getId(), true);
+			getRecentDAO().delete(recent);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
