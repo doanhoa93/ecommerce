@@ -17,10 +17,10 @@
     <ul class="chat">
       <li class="right clearfix chat-item">
         <span class="chat-img pull-right">
-          <img src="${contextPath}/assets/images/supervisor.png" alt="User Avatar"
+          <img src="${contextPath}/assets/images/default/supervisor.png" alt="User Avatar"
             class="img-responsive img-circle" />
         </span>
-        
+
         <div class="chat-body clearfix">
           <div class="header">
             <strong class="pull-right primary-font">Admin</strong>

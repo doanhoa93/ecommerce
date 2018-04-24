@@ -54,6 +54,14 @@ $(document).ready(
 
         $('.datepicker').datepicker({});
 
+        $(document).on('mouseover', '.upload-avatar', function() {
+            $('.edit-avatar').toggle();
+        });
+
+        $(document).on('mouseout', '.upload-avatar', function() {
+            $('.edit-avatar').toggle();
+        });
+
         function isError(data) {
             $('.error').remove();
             return $(data).filter('.error').length;
