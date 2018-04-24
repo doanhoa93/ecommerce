@@ -171,6 +171,9 @@ public class ModelToBean {
 			    product.getOrderProducts().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
 
+		if (product.getPromotion() != null)
+			productInfo.setPromotion(toPromotionInfo(product.getPromotion()));
+
 		return productInfo;
 	}
 
@@ -362,13 +365,10 @@ public class ModelToBean {
 		productInfo.setId(product.getId());
 		productInfo.setAvatar(product.getAvatar());
 		productInfo.setInformation(product.getInformation());
-		productInfo.setIsPromotion(product.getIsPromotion());
 		productInfo.setName(product.getName());
 		productInfo.setNumber(product.getNumber());
 		productInfo.setPrice(product.getPrice());
-		productInfo.setPromotionId(product.getPromotionId());
 		productInfo.setRating(product.getRating());
-		productInfo.setSaleOff(product.getSaleOff());
 		productInfo.setCreatedAt(product.getCreatedAt());
 
 		return productInfo;
@@ -382,6 +382,7 @@ public class ModelToBean {
 		promotionInfo.setId(promotion.getId());
 		promotionInfo.setEndDate(promotion.getEndDate());
 		promotionInfo.setStartDate(promotion.getStartDate());
+		promotionInfo.setSaleOf(promotion.getSaleOf());
 
 		return promotionInfo;
 	}

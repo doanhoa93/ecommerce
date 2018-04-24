@@ -109,6 +109,13 @@ public class ProductDAOImpl extends BaseDAOAbstract<Integer, Product> implements
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByPromotion(Integer promotionId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("promotion.id", promotionId));
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> hotProducts(int limit) {
 		Criteria criteria = getSession().createCriteria(OrderProduct.class);

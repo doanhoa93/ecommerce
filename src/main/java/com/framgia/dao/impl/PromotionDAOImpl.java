@@ -1,10 +1,11 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
 
 import com.framgia.dao.PromotionDAO;
-import com.framgia.model.Product;
 import com.framgia.model.Promotion;
 
 public class PromotionDAOImpl extends BaseDAOAbstract<Integer, Promotion> implements PromotionDAO {
@@ -13,10 +14,19 @@ public class PromotionDAOImpl extends BaseDAOAbstract<Integer, Promotion> implem
 		super(Promotion.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Product getProduct(Integer promotionId) {
-		Criteria criteria = getSession().createCriteria(Product.class);
-		criteria.add(Restrictions.eq("promotion_id", promotionId));
-		return (Product) criteria.uniqueResult();
+	public List<Promotion> getPromotions(int off, int limit, Order order) {
+		Criteria criteria = createEntityCriteria();
+		if (off != 0)
+			criteria.setFirstResult(off);
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder(order);
+
+		return criteria.list();
 	}
 }

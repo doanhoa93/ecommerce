@@ -36,7 +36,9 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	List<ProductInfo> getProducts(Integer categoryId, String page, int limit, Order order);
 
 	List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter, String page,
-	    Integer limit, Order order);
+	    int limit, Order order);
+
+	List<ProductInfo> getProductsByPromotion(Integer promotionId);
 
 	List<ProductInfo> hotProducts(int limit);
 

@@ -8,9 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductInfo {
 	private Integer id;
 	private Integer categoryId;
-	private Boolean isPromotion;
 	private Integer promotionId;
-	private float saleOff;
 	private String name;
 	private float price;
 	private float rating;
@@ -30,13 +28,11 @@ public class ProductInfo {
 	public ProductInfo() {
 	}
 
-	public ProductInfo(Integer id, Integer categoryId, Boolean isPromotion, Integer promotionId, float saleOff,
-	        String name, float price, float rating, String avatar, String information, int number) {
+	public ProductInfo(Integer id, Integer categoryId, Integer promotionId, String name,
+	    float price, float rating, String avatar, String information, int number) {
 		this.id = id;
 		this.categoryId = categoryId;
-		this.isPromotion = isPromotion;
 		this.promotionId = promotionId;
-		this.saleOff = saleOff;
 		this.name = name;
 		this.price = price;
 		this.rating = rating;
@@ -61,28 +57,12 @@ public class ProductInfo {
 		this.categoryId = categoryId;
 	}
 
-	public Boolean getIsPromotion() {
-		return isPromotion;
-	}
-
-	public void setIsPromotion(Boolean isPromotion) {
-		this.isPromotion = isPromotion;
-	}
-
 	public Integer getPromotionId() {
 		return promotionId;
 	}
 
 	public void setPromotionId(Integer promotionId) {
 		this.promotionId = promotionId;
-	}
-
-	public float getSaleOff() {
-		return saleOff;
-	}
-
-	public void setSaleOff(float saleOff) {
-		this.saleOff = saleOff;
 	}
 
 	public String getName() {

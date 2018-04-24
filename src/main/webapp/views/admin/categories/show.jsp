@@ -16,7 +16,8 @@
     <form:form action="${contextPath}/admin/categories/${category.getId()}" method="DELETE"
       class="delete-category">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-      <input type="submit" class="btn btn-danger" value="Delete this category">
+      <input type="submit" data-confirm="Delete this category are you sure?" class="btn btn-danger"
+        value="Delete this category">
     </form:form>
   </div>
 </div>

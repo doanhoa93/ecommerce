@@ -8,8 +8,13 @@ public class Promotion implements Serializable {
 	private Integer id;
 	private Date startDate;
 	private Date endDate;
+	private float saleOf;
 
 	public Promotion() {
+	}
+
+	public Promotion(Integer id) {
+		this.id = id;
 	}
 
 	public Promotion(Integer id, Date startDate, Date endDate) {
@@ -40,5 +45,13 @@ public class Promotion implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public float getSaleOf() {
+		return saleOf;
+	}
+
+	public void setSaleOf(float saleOf) {
+		this.saleOf = saleOf;
 	}
 }

@@ -30,7 +30,8 @@
       <form:form action="${contextPath}/admin/products/${product.getId()}" method="DELETE"
         class="delete-product">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <input type="submit" class="btn btn-danger" value="Delete this product">
+        <input type="submit" data-confirm="Delete this product are you sure?" class="btn btn-danger"
+          value="Delete this product">
       </form:form>
     </div>
     <div class="clearfix"></div>
@@ -57,10 +58,10 @@
         <span class="number">${product.getNumber()}</span>
       </div>
 
-      <c:if test="${product.getIsPromotion()}">
+      <c:if test="${product.getPromotion() != null}">
         <div class="product-promotion">
-          <span class="promotion-title">Sale Off:</span>
-          <span class="promotion">${product.getSaleOff()}%</span>
+          <span class="promotion-title">Sale Of:</span>
+          <span class="promotion">${product.getPromotion().getSaleOf()}%</span>
         </div>
 
         <div>From ${product.getPromotion().getStartDate()} To

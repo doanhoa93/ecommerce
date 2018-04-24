@@ -49,10 +49,6 @@ public class ProductValidator implements Validator {
 		if (productInfo.getNumber() < 0)
 			errors.rejectValue("number", "product.number.invalid");
 
-		if (productInfo.getIsPromotion())
-			if (productInfo.getSaleOff() <= 0 || productInfo.getSaleOff() >= 100)
-				errors.rejectValue("saleOff", "product.sale_off.invalid");
-
 		if (productInfo.getImageFiles() != null)
 			for (MultipartFile image : productInfo.getImageFiles()) {
 				if (!image.isEmpty()) {
@@ -102,10 +98,6 @@ public class ProductValidator implements Validator {
 
 		if (newProductInfo.getNumber() < 0)
 			errors.rejectValue("number", "product.number.invalid");
-
-		if (newProductInfo.getIsPromotion())
-			if (newProductInfo.getSaleOff() <= 0 || newProductInfo.getSaleOff() >= 100)
-				errors.rejectValue("saleOff", "product.sale_off.invalid");
 
 		if (newProductInfo.getImageFiles() != null)
 			for (MultipartFile image : newProductInfo.getImageFiles()) {
