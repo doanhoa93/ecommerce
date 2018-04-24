@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,10 +35,11 @@ public class SuggestsController extends AdminController {
 			if (entries.equals("all"))
 				model.addObject("suggests", suggestService.getObjects());
 			else
-				model.addObject("suggests",
-				    suggestService.getObjects(0, Integer.parseInt(entries)));
+				model.addObject("suggests", suggestService.getSuggests(null, 0,
+				    Integer.parseInt(entries), Order.desc("id")));
 		} else
-			model.addObject("suggests", suggestService.getObjects(0, Paginate.ADMIN_OBJECT_LIMIT));
+			model.addObject("suggests",
+			    suggestService.getSuggests(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("id")));
 		return model;
 	}
 

@@ -39,6 +39,70 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	private ApplicationMailer mailer;
 
 	@Override
+	public OrderInfo findBy(String attribute, Serializable key, boolean lock) {
+		try {
+			return ModelToBean.toOrderInfo(getOrderDAO().findBy(attribute, key, lock));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public OrderInfo findById(Serializable key) {
+		try {
+			return ModelToBean.toOrderInfo(getOrderDAO().findById(key));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public OrderInfo saveOrUpdate(OrderInfo entity) {
+		try {
+			Order order = getOrderDAO().saveOrUpdate(toOrder(entity));
+			return ModelToBean.toOrderInfo(order);
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean delete(OrderInfo entity) {
+		try {
+			getOrderDAO().delete(toOrder(entity));
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getObjects() {
+		try {
+			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getObjectsByIds(List<Integer> keys) {
+		try {
+			return getOrderDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public UserInfo getUser(Integer orderId) {
 		try {
 			return ModelToBean.toUserInfo(getOrderDAO().getUser(orderId));
@@ -73,81 +137,6 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderInfo findBy(String attribute, Serializable key, boolean lock) {
-		try {
-			return ModelToBean.toOrderInfo(getOrderDAO().findBy(attribute, key, lock));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public OrderInfo findById(Serializable key) {
-		try {
-			return ModelToBean.toOrderInfo(getOrderDAO().findById(key));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public boolean delete(OrderInfo entity) {
-		try {
-			getOrderDAO().delete(toOrder(entity));
-			return true;
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public OrderInfo saveOrUpdate(OrderInfo entity) {
-		try {
-			Order order = getOrderDAO().saveOrUpdate(toOrder(entity));
-			return ModelToBean.toOrderInfo(order);
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public List<OrderInfo> getObjects() {
-		try {
-			return getOrderDAO().getObjects().stream().map(ModelToBean::toOrderInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<OrderInfo> getObjectsByIds(List<Integer> keys) {
-		try {
-			return getOrderDAO().getObjectsByIds(keys).stream().map(ModelToBean::toOrderInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<OrderInfo> getObjects(int off, int limit) {
-		try {
-			return getOrderDAO().getObjects(off, limit).stream().map(ModelToBean::toOrderInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public List<OrderInfo> getOrders(Integer userId, int off, int limit,
 	    org.hibernate.criterion.Order order) {
 		try {
@@ -156,6 +145,53 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				orderInfo.setProductQuantity(getProductQuantity(object.getId()));
 				return orderInfo;
 			}).collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getNewOrders(Date date, int limit) {
+		try {
+			return getOrderDAO().getNewObjects(date, limit).stream().map(ModelToBean::toOrderInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public int getOrdersSizeWithStatus(String status) {
+		try {
+			return getOrderDAO().getOrdersSizeWithStatus(Status.getIntStatus(status));
+		} catch (Exception e) {
+			logger.error(e);
+			return 0;
+		}
+	}
+
+	@Override
+	public double[] getSalesByDate(Date startDate, Date endDate) {
+		try {
+			return getOrderDAO().getSalesByDate(startDate, endDate);
+		} catch (Exception e) {
+			logger.error(e);
+			return new double[2];
+		}
+	}
+
+	@Override
+	public List<OrderInfo> getOrdersWithGuest(String sessionId, int off, int limit,
+	    org.hibernate.criterion.Order order) {
+		try {
+			return getOrderDAO().getOrdersWithGuest(sessionId, off, limit, order).stream()
+			    .map(object -> {
+				    OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
+				    orderInfo.setProductQuantity(getProductQuantity(object.getId()));
+				    return orderInfo;
+			    }).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -373,53 +409,6 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			e.printStackTrace();
 			logger.error(e);
 			throw e;
-		}
-	}
-
-	@Override
-	public List<OrderInfo> getNewOrders(Date date, int limit) {
-		try {
-			return getOrderDAO().getNewObjects(date, limit).stream().map(ModelToBean::toOrderInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public int getOrdersSizeWithStatus(String status) {
-		try {
-			return getOrderDAO().getOrdersSizeWithStatus(Status.getIntStatus(status));
-		} catch (Exception e) {
-			logger.error(e);
-			return 0;
-		}
-	}
-
-	@Override
-	public double[] getSalesByDate(Date startDate, Date endDate) {
-		try {
-			return getOrderDAO().getSalesByDate(startDate, endDate);
-		} catch (Exception e) {
-			logger.error(e);
-			return new double[2];
-		}
-	}
-
-	@Override
-	public List<OrderInfo> getOrdersWithGuest(String sessionId, int off, int limit,
-	    org.hibernate.criterion.Order order) {
-		try {
-			return getOrderDAO().getOrdersWithGuest(sessionId, off, limit, order).stream()
-			    .map(object -> {
-				    OrderInfo orderInfo = ModelToBean.toOrderInfo(object);
-				    orderInfo.setProductQuantity(getProductQuantity(object.getId()));
-				    return orderInfo;
-			    }).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
 		}
 	}
 

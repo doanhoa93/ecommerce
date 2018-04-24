@@ -16,26 +16,6 @@ import com.framgia.service.CommentService;
 public class CommentServiceImpl extends BaseServiceImpl implements CommentService {
 
 	@Override
-	public UserInfo getUser(Integer commentId) {
-		try {
-			return ModelToBean.toUserInfo(getCommentDAO().getUser(commentId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public ProductInfo getProduct(Integer commentId) {
-		try {
-			return ModelToBean.toProductInfo(getCommentDAO().getProduct(commentId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public CommentInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toCommentInfo(getCommentDAO().findBy(attribute, key, lock));
@@ -56,10 +36,9 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public boolean delete(CommentInfo entity) {
+	public CommentInfo saveOrUpdate(CommentInfo entity) {
 		try {
-			getCommentDAO().delete(toComment(entity));
-			return true;
+			return ModelToBean.toCommentInfo(getCommentDAO().saveOrUpdate(toComment(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -67,9 +46,10 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public CommentInfo saveOrUpdate(CommentInfo entity) {
+	public boolean delete(CommentInfo entity) {
 		try {
-			return ModelToBean.toCommentInfo(getCommentDAO().saveOrUpdate(toComment(entity)));
+			getCommentDAO().delete(toComment(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -99,10 +79,19 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public List<CommentInfo> getObjects(int off, int limit) {
+	public UserInfo getUser(Integer commentId) {
 		try {
-			return getCommentDAO().getObjects(off, limit).stream().map(ModelToBean::toCommentInfo)
-			    .collect(Collectors.toList());
+			return ModelToBean.toUserInfo(getCommentDAO().getUser(commentId));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public ProductInfo getProduct(Integer commentId) {
+		try {
+			return ModelToBean.toProductInfo(getCommentDAO().getProduct(commentId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

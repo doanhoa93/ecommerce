@@ -13,13 +13,11 @@ public interface BaseDAO<PK, T> {
 
 	public List<T> getObjectsByIds(List<Integer> keys);
 
-	public List<T> getObjects(int off, int limit);
-
 	List<T> getNewObjects(Date date, int limit);
 
-	public void delete(T entity);
+	public T getFromSession(Serializable key);
 
 	public T saveOrUpdate(T entity);
 
-	public T getFromSession(Serializable key);
+	public void delete(T entity);
 }

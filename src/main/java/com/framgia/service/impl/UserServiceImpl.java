@@ -37,6 +37,97 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@Override
+	public UserInfo findBy(String attribute, Serializable key, boolean lock) {
+		try {
+			return ModelToBean.toUserInfo(getUserDAO().findBy(attribute, key, lock));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public UserInfo findByEmail(String email) {
+		try {
+			return findBy("email", email, true);
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public CustomUserDetails findByEmailWithSecurity(String email) {
+		try {
+			User user = getUserDAO().findByEmail(email);
+			CustomUserDetails userDetail = new CustomUserDetails();
+			userDetail.setId(user.getId());
+			userDetail.setEmail(user.getEmail());
+			userDetail.setPassword(user.getPassword());
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority(user.getRole()));
+			userDetail.setAuthorities(authorities);
+			return userDetail;
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public UserInfo findById(Serializable key) {
+		try {
+			return findBy("id", key, true);
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public UserInfo saveOrUpdate(UserInfo entity) {
+		try {
+			return ModelToBean.toUserInfo(getUserDAO().saveOrUpdate(toUser(entity)));
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean delete(UserInfo entity) {
+		try {
+			getUserDAO().delete(toUser(entity));
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<UserInfo> getObjects() {
+		try {
+			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<UserInfo> getObjectsByIds(List<Integer> keys) {
+		try {
+			return getUserDAO().getObjectsByIds(keys).stream().map(ModelToBean::toUserInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public ProfileInfo getProfile(Integer userId) {
 		try {
 			return ModelToBean.toProfileInfo(getUserDAO().getProfile(userId));
@@ -95,108 +186,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserInfo findBy(String attribute, Serializable key, boolean lock) {
-		try {
-			return ModelToBean.toUserInfo(getUserDAO().findBy(attribute, key, lock));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public UserInfo findByEmail(String email) {
-		try {
-			return findBy("email", email, true);
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public CustomUserDetails findByEmailWithSecurity(String email) {
-		try {
-			User user = getUserDAO().findByEmail(email);
-			CustomUserDetails userDetail = new CustomUserDetails();
-			userDetail.setId(user.getId());
-			userDetail.setEmail(user.getEmail());
-			userDetail.setPassword(user.getPassword());
-			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority(user.getRole()));
-			userDetail.setAuthorities(authorities);
-			return userDetail;
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public UserInfo findById(Serializable key) {
-		try {
-			return findBy("id", key, true);
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public boolean delete(UserInfo entity) {
-		try {
-			getUserDAO().delete(toUser(entity));
-			return true;
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public UserInfo saveOrUpdate(UserInfo entity) {
-		try {
-			return ModelToBean.toUserInfo(getUserDAO().saveOrUpdate(toUser(entity)));
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public List<UserInfo> getObjects() {
-		try {
-			return getUserDAO().getObjects().stream().map(ModelToBean::toUserInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<UserInfo> getObjectsByIds(List<Integer> keys) {
-		try {
-			return getUserDAO().getObjectsByIds(keys).stream().map(ModelToBean::toUserInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<UserInfo> getObjects(int off, int limit) {
-		try {
-			return getUserDAO().getObjects(off, limit).stream().map(ModelToBean::toUserInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public void logout(String email) {
 		try {
 			HashMap<String, Object> hashMap = new HashMap<>();
@@ -245,9 +234,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserInfo findByToken(String token) {
+	public List<String> getTokens() {
 		try {
-			return findBy("token", token, true);
+			return getUserDAO().getTokens();
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -255,20 +244,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserInfo updateToken(UserInfo userInfo, String token) {
+	public UserInfo findByToken(String token) {
 		try {
-			User user = getUserDAO().findById(userInfo.getId());
-			user.setToken(token);
-			getUserDAO().saveOrUpdate(user);
-			userInfo.setToken(token);
-			HashMap<String, Object> hashMap = new HashMap<>();
-			hashMap.put("id", user.getId());
-			hashMap.put("token", user.getToken());
-			simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
-			return userInfo;
+			return findBy("token", token, true);
 		} catch (Exception e) {
 			logger.error(e);
-			throw e;
+			return null;
 		}
 	}
 
@@ -289,40 +270,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			profile.setUser(user);
 			if (profileInfo != null)
 				profile.setGender(Gender.getInt(profileInfo.getGender()));
-			getProfileDAO().saveOrUpdate(profile);
-			return true;
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public List<String> getTokens() {
-		try {
-			return getUserDAO().getTokens();
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public boolean updateUser(UserInfo userInfo) {
-		try {
-			User user = getUserDAO().findById(userInfo.getId());
-			user.setName(userInfo.getName());
-			if (StringUtils.isNotEmpty(userInfo.getNewPassword())) {
-				BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-				user.setPassword(bcrypt.encode(userInfo.getNewPassword()));
-			}
-
-			Profile profile = user.getProfile();
-			profile.setPhoneNumber(userInfo.getProfile().getPhoneNumber());
-			profile.setGender(Gender.getInt(userInfo.getProfile().getGender()));
-			profile.setBirthday(userInfo.getProfile().getBirthday());
-			profile.setAddress(userInfo.getProfile().getAddress());
-			getUserDAO().saveOrUpdate(user);
 			getProfileDAO().saveOrUpdate(profile);
 			return true;
 		} catch (Exception e) {
@@ -362,6 +309,48 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				result = true;
 			}
 			return result;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean updateUser(UserInfo userInfo) {
+		try {
+			User user = getUserDAO().findById(userInfo.getId());
+			user.setName(userInfo.getName());
+			if (StringUtils.isNotEmpty(userInfo.getNewPassword())) {
+				BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+				user.setPassword(bcrypt.encode(userInfo.getNewPassword()));
+			}
+
+			Profile profile = user.getProfile();
+			profile.setPhoneNumber(userInfo.getProfile().getPhoneNumber());
+			profile.setGender(Gender.getInt(userInfo.getProfile().getGender()));
+			profile.setBirthday(userInfo.getProfile().getBirthday());
+			profile.setAddress(userInfo.getProfile().getAddress());
+			getUserDAO().saveOrUpdate(user);
+			getProfileDAO().saveOrUpdate(profile);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public UserInfo updateToken(UserInfo userInfo, String token) {
+		try {
+			User user = getUserDAO().findById(userInfo.getId());
+			user.setToken(token);
+			getUserDAO().saveOrUpdate(user);
+			userInfo.setToken(token);
+			HashMap<String, Object> hashMap = new HashMap<>();
+			hashMap.put("id", user.getId());
+			hashMap.put("token", user.getToken());
+			simpMessagingTemplate.convertAndSend("/topic/registers", hashMap);
+			return userInfo;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

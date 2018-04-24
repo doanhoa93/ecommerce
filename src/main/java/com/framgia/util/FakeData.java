@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -151,7 +152,7 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-			for (int i = 1; i < 10; i++) {
+			for (int i = 1; i <= 7; i++) {
 				Category category = new Category();
 				category.setId(i);
 				category.setName("Category-" + i);
@@ -175,22 +176,20 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<
-			    Category> categories = (List<
-			        Category>) session.createCriteria(Category.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
+			List<Category> categories = (List<Category>) session.createCriteria(Category.class).add(
+			    Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7))))
+			    .list();
 			Map<String, Object> map = null;
-			for (int i = 1; i < 10; i++) {
+			Random random = new Random();
+			for (int i = 1; i < 19; i++) {
 				Product product = new Product();
 				product.setId(i);
-				product.setCategory(categories.get(i - 1));
+				product.setCategory(categories.get(i % 7));
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
 				product.setIsPromotion(false);
 				product.setNumber(10);
-				product.setPrice(new Float(100.0));
+				product.setPrice(new Float(random.nextInt(600)));
 				product.setRating(new Float(4.0));
 				map = upload(new File(System.getProperty("user.dir")
 				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));

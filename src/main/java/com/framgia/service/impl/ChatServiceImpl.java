@@ -79,41 +79,10 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<ChatInfo> getObjects(int off, int limit) {
-		try {
-			return getChatDAO().getObjects(off, limit).stream().map(ModelToBean::toChatInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public List<ChatInfo> getChats(Integer userId, int off, int limit, Order order) {
 		try {
 			return getChatDAO().getChats(userId, off, limit, order).stream()
 			    .map(ModelToBean::toChatInfo).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public void updateReadAll(Integer receiverId) {
-		try {
-			getChatDAO().updateReadAll(receiverId);
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public void updateReadAll(Integer senderId, Integer receiverId) {
-		try {
-			getChatDAO().updateReadAll(senderId, receiverId);
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -141,6 +110,26 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 			chat.setCreatedAt(new Date());
 			chat.setWatched(false);
 			return ModelToBean.toChatInfo(getChatDAO().saveOrUpdate(chat));
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateReadAll(Integer receiverId) {
+		try {
+			getChatDAO().updateReadAll(receiverId);
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateReadAll(Integer senderId, Integer receiverId) {
+		try {
+			getChatDAO().updateReadAll(senderId, receiverId);
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

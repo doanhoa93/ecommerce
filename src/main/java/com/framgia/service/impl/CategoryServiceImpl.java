@@ -16,6 +16,75 @@ import com.framgia.service.CategoryService;
 public class CategoryServiceImpl extends BaseServiceImpl implements CategoryService {
 
 	@Override
+	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
+		try {
+			CategoryInfo categoryInfo = ModelToBean
+			    .toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
+			Category parent = getCategoryDAO().findById(categoryInfo.getParentId());
+			if (parent != null)
+				categoryInfo.setParentName(parent.getName());
+			return categoryInfo;
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public CategoryInfo findById(Serializable key) {
+		try {
+			return findBy("id", key, true);
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public CategoryInfo saveOrUpdate(CategoryInfo entity) {
+		try {
+			Category category = getCategoryDAO().saveOrUpdate(toCategory(entity));
+			return ModelToBean.toCategoryInfo(category);
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean delete(CategoryInfo entity) {
+		try {
+			getCategoryDAO().delete(toCategory(entity));
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<CategoryInfo> getObjects() {
+		try {
+			return getCategoryDAO().getObjects().stream().map(ModelToBean::toCategoryInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<CategoryInfo> getObjectsByIds(List<Integer> keys) {
+		try {
+			return getCategoryDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCategoryInfo)
+			    .collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
 	public CategoryInfo getParentCategory(Integer categoryId) {
 		try {
 			return ModelToBean.toCategoryInfo(getCategoryDAO().getParentCategory(categoryId));
@@ -45,14 +114,12 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
+	public List<CategoryInfo> getCategoriesWithForNew(Integer categoryId) {
 		try {
-			CategoryInfo categoryInfo = ModelToBean
-			    .toCategoryInfo(getCategoryDAO().findBy(attribute, key, lock));
-			Category parent = getCategoryDAO().findById(categoryInfo.getParentId());
-			if (parent != null)
-				categoryInfo.setParentName(parent.getName());
-			return categoryInfo;
+			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId)
+			    .collect(Collectors.toList());
+			categoryIds.remove(categoryId);
+			return getObjectsByIds(categoryIds);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -60,41 +127,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public CategoryInfo findById(Serializable key) {
+	public List<CategoryInfo> hotCategories(int limit) {
 		try {
-			return findBy("id", key, true);
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public boolean delete(CategoryInfo entity) {
-		try {
-			getCategoryDAO().delete(toCategory(entity));
-			return true;
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public CategoryInfo saveOrUpdate(CategoryInfo entity) {
-		try {
-			Category category = getCategoryDAO().saveOrUpdate(toCategory(entity));
-			return ModelToBean.toCategoryInfo(category);
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public List<CategoryInfo> getObjects() {
-		try {
-			return getCategoryDAO().getObjects().stream().map(ModelToBean::toCategoryInfo)
+			return getCategoryDAO().hotCategories(limit).stream().map(ModelToBean::toCategoryInfo)
 			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
@@ -103,10 +138,10 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public List<CategoryInfo> getObjects(int off, int limit) {
+	public List<CategoryInfo> getNewCategories(Date date, int limit) {
 		try {
-			return getCategoryDAO().getObjects(off, limit).stream().map(ModelToBean::toCategoryInfo)
-			    .collect(Collectors.toList());
+			return getCategoryDAO().getNewObjects(date, limit).stream()
+			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -114,10 +149,10 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	}
 
 	@Override
-	public List<CategoryInfo> getObjectsByIds(List<Integer> keys) {
+	public List<CategoryInfo> getCategories(int off, int limit, Order order) {
 		try {
-			return getCategoryDAO().getObjectsByIds(keys).stream().map(ModelToBean::toCategoryInfo)
-			    .collect(Collectors.toList());
+			return getCategoryDAO().getCategories(off, limit, order).stream()
+			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -167,52 +202,6 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
-		}
-	}
-
-	@Override
-	public List<CategoryInfo> getCategoriesWithForNew(Integer categoryId) {
-		try {
-			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId)
-			    .collect(Collectors.toList());
-			categoryIds.remove(categoryId);
-			return getObjectsByIds(categoryIds);
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<CategoryInfo> hotCategories(int limit) {
-		try {
-			return getCategoryDAO().hotCategories(limit).stream().map(ModelToBean::toCategoryInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<CategoryInfo> getNewCategories(Date date, int limit) {
-		try {
-			return getCategoryDAO().getNewObjects(date, limit).stream()
-			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<CategoryInfo> getCategories(int off, int limit, Order order) {
-		try {
-			return getCategoryDAO().getCategories(off, limit, order).stream()
-			    .map(ModelToBean::toCategoryInfo).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
 		}
 	}
 

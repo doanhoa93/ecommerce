@@ -31,7 +31,6 @@
     <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />
     </many-to-one>
-    <one-to-one name="recent" class="Recent" cascade="delete" />
 
     <list name="images" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
