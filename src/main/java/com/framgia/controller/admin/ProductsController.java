@@ -30,12 +30,12 @@ public class ProductsController extends AdminController {
 		if (StringUtils.isNotEmpty(entries)) {
 			if (entries.equals("all"))
 				model.addObject("products",
-				    productService.getProducts(null, 0, 0, Order.desc("createdAt")));
+				    productService.getProducts(null, null, 0, Order.desc("createdAt")));
 			else
-				model.addObject("products", productService.getProducts(null, 0,
+				model.addObject("products", productService.getProducts(null, null,
 				    Integer.parseInt(entries), Order.desc("createdAt")));
 		} else
-			model.addObject("products", productService.getProducts(null, 0,
+			model.addObject("products", productService.getProducts(null, null,
 			    Paginate.ADMIN_OBJECT_LIMIT, Order.desc("createdAt")));
 
 		return model;

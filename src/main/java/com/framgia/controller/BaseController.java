@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Paginate;
 import com.framgia.constant.Role;
 import com.framgia.service.CartService;
 import com.framgia.service.CategoryService;
@@ -91,30 +92,34 @@ public class BaseController {
 		return new ObjectMapper().readValue(data, HashMap.class);
 	}
 
-	public HashMap<String, Object> setPaginate(int length, String page, int limit) {
-		int start, end;
-		boolean more;
-		if (StringUtils.isEmpty(page))
-			start = 1;
-		else
-			start = Integer.parseInt(page);
+	public HashMap<String, Object> setPaginate(String page, int length, int maxLength, int limit) {
+		int start = 0, end = 0, currentPage = 0;
+		boolean next, prev;
 
-		if (start == 1 && length < limit)
-			end = 1;
-		else if (length == limit)
-			end = start + 1;
-		else
-			end = 2;
+		currentPage = StringUtils.isEmpty(page) ? 1 : Integer.parseInt(page);
 
-		if (length == limit)
-			more = true;
+		if (currentPage % Paginate.MAX_SIZE_PAGE == 0)
+			start = currentPage - Paginate.MAX_SIZE_PAGE + 1;
 		else
-			more = false;
+			start = currentPage / Paginate.MAX_SIZE_PAGE * Paginate.MAX_SIZE_PAGE + 1;
+
+		prev = start > 1;
+		next = (start + Paginate.MAX_SIZE_PAGE - 1) * limit < maxLength;
+
+		if (next)
+			end = start + Paginate.MAX_SIZE_PAGE - 1;
+		else {
+			int add = maxLength - start * limit;
+			end = start + add / limit;
+			if (add > 0 && add % limit != 0)
+				end++;
+		}
 
 		HashMap<String, Object> paginate = new HashMap<>();
 		paginate.put("start", start);
 		paginate.put("end", end);
-		paginate.put("more", more);
+		paginate.put("prev", prev);
+		paginate.put("next", next);
 		return paginate;
 	}
 

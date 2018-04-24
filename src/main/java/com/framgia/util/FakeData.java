@@ -181,7 +181,7 @@ public class FakeData {
 			    .list();
 			Map<String, Object> map = null;
 			Random random = new Random();
-			for (int i = 1; i < 19; i++) {
+			for (int i = 1; i < 67; i++) {
 				Product product = new Product();
 				product.setId(i);
 				product.setCategory(categories.get(i % 7));
@@ -192,7 +192,7 @@ public class FakeData {
 				product.setPrice(new Float(random.nextInt(600)));
 				product.setRating(new Float(4.0));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				    + "/src/main/webapp/assets/images/home/product" + (i % 18 + 1) + ".jpg"));
 				product.setAvatar((String) map.get("url"));
 				product.setCreatedAt(new Date());
 				session.save(product);

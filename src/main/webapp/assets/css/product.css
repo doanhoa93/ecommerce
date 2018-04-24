@@ -100,3 +100,12 @@
 	height: 280px;
 	width: 250px;
 }
+
+.product-order-price {
+	display: inline-block;
+	width: auto;
+}
+
+.category a:hover {
+	background-color: #6967634a !important;
+}

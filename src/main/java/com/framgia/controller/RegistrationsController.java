@@ -28,7 +28,7 @@ public class RegistrationsController extends BaseController {
 			}
 		});
 		model.addObject("user", new UserInfo());
-
+		
 		return model;
 	}
 
