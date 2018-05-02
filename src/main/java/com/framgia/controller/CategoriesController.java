@@ -26,7 +26,7 @@ public class CategoriesController extends BaseController {
 	    @RequestParam(value = "name", required = false) String name,
 	    @RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		CategoryInfo categoryInfo = categoryService.findById(categoryId);
+		CategoryInfo categoryInfo = categoryService.findById(categoryId, false);
 		if (categoryInfo != null) {
 			List<ProductInfo> products = null;
 			ProductFilter productFilter = new ProductFilter(name, priceLow, priceHigh);

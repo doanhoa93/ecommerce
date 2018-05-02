@@ -52,7 +52,7 @@ public interface BaseService<PK, T> {
 
 	public T findBy(String attribute, Serializable key, boolean lock);
 
-	public T findById(Serializable key);
+	public T findById(Serializable key, boolean lock);
 
 	public List<T> getObjects();
 

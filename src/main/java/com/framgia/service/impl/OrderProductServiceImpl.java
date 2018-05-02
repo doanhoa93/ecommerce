@@ -29,9 +29,9 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	}
 
 	@Override
-	public OrderProductInfo findById(Serializable key) {
+	public OrderProductInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findById(key));
+			return ModelToBean.toOrderProductInfo(getOrderProductDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -52,7 +52,8 @@ public class OrderProductServiceImpl extends BaseServiceImpl implements OrderPro
 	@Override
 	public boolean delete(OrderProductInfo entity) {
 		try {
-			getOrderProductDAO().delete(toOrderProduct(entity));
+			OrderProduct orderProduct = getOrderProductDAO().findById(entity.getId(), true);
+			getOrderProductDAO().delete(orderProduct);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

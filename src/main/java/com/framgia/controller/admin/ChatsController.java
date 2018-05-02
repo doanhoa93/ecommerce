@@ -38,7 +38,7 @@ public class ChatsController extends AdminController {
 	    throws JsonParseException, JsonMappingException, IOException {
 		HashMap<String, String> hashMap = toHashMap(chat);
 		ChatInfo chatInfo = new ChatInfo();
-		UserInfo userInfo = userService.findById(userId);
+		UserInfo userInfo = userService.findById(userId, false);
 		chatInfo.setSender(userService.findByToken(hashMap.get("token")));
 		chatInfo.setReceiver(userInfo);
 		chatInfo.setContent(hashMap.get("content"));
@@ -66,7 +66,7 @@ public class ChatsController extends AdminController {
 
 	@RequestMapping(value = "admin/chats/{userId}", method = RequestMethod.PATCH)
 	public @ResponseBody void update(@PathVariable("userId") Integer userId) throws IOException {
-		UserInfo userInfo = userService.findById(userId);
+		UserInfo userInfo = userService.findById(userId, false);
 		if (userInfo != null)
 			chatService.updateReadAll(userId, currentUser().getId());
 	}

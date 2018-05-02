@@ -25,9 +25,9 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public ProfileInfo findById(Serializable key) {
+	public ProfileInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toProfileInfo(getProfileDAO().findById(key));
+			return ModelToBean.toProfileInfo(getProfileDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -47,7 +47,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	@Override
 	public boolean delete(ProfileInfo entity) {
 		try {
-			getProfileDAO().delete(toProfile(entity));
+			Profile profile = getProfileDAO().findById(entity.getId(), true);
+			getProfileDAO().delete(profile);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

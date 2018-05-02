@@ -33,7 +33,7 @@ public class CartValidator implements Validator {
 	public void validateCreate(Object target, Errors errors) {
 		CartInfo cartInfo = (CartInfo) target;
 		Integer productId = cartInfo.getProductId();
-		ProductInfo productInfo = productService.findById(productId);
+		ProductInfo productInfo = productService.findById(productId, false);
 		UserInfo userInfo = cartInfo.getUser();
 		if (productInfo == null) {
 			errors.rejectValue("product", "cart.product.invalid");

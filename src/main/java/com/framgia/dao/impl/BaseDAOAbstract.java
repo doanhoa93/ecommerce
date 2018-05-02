@@ -45,14 +45,20 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public T findBy(String attribute, Serializable key, boolean lock) {
+		if (attribute.equals("id")) {
+			T entity = getFromSession(key);
+			if (entity != null)
+				return entity;
+		}
+
 		Criteria criteria = createEntityCriteria();
 		if (lock)
 			criteria.setLockMode(LockMode.UPGRADE);
 		return (T) criteria.add(Restrictions.eq(attribute, key)).uniqueResult();
 	}
 
-	public T findById(Serializable key) {
-		return findBy("id", key, true);
+	public T findById(Serializable key, boolean lock) {
+		return findBy("id", key, lock);
 	}
 
 	public void delete(T entity) {

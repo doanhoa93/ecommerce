@@ -26,9 +26,9 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ChatInfo findById(Serializable key) {
+	public ChatInfo findById(Serializable key, boolean lock) {
 		try {
-			return findBy("id", key, true);
+			return findBy("id", key, lock);
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -48,7 +48,8 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	@Override
 	public boolean delete(ChatInfo entity) {
 		try {
-			getChatDAO().delete(toChat(entity));
+			Chat chat = getChatDAO().findById(entity.getId(), true);
+			getChatDAO().delete(chat);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -104,8 +105,8 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 	public ChatInfo createChat(ChatInfo chatInfo) {
 		try {
 			Chat chat = new Chat();
-			chat.setSender(getUserDAO().findById(chatInfo.getSender().getId()));
-			chat.setReceiver(getUserDAO().findById(chatInfo.getReceiver().getId()));
+			chat.setSender(getUserDAO().findById(chatInfo.getSender().getId(), false));
+			chat.setReceiver(getUserDAO().findById(chatInfo.getReceiver().getId(), false));
 			chat.setContent(chatInfo.getContent());
 			chat.setCreatedAt(new Date());
 			chat.setWatched(false);
@@ -142,8 +143,8 @@ public class ChatServiceImpl extends BaseServiceImpl implements ChatService {
 		if (chat == null) {
 			chat = new Chat();
 			chat.setId(chatInfo.getId());
-			chat.setSender(getUserDAO().findById(chatInfo.getSenderId()));
-			chat.setReceiver(getUserDAO().findById(chatInfo.getReceiverId()));
+			chat.setSender(getUserDAO().findById(chatInfo.getSenderId(), false));
+			chat.setReceiver(getUserDAO().findById(chatInfo.getReceiverId(), false));
 		}
 
 		chat.setContent(chatInfo.getContent());

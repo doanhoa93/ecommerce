@@ -41,9 +41,9 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public CartInfo findById(Serializable key) {
+	public CartInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toCartInfo(getCartDAO().findById(key));
+			return ModelToBean.toCartInfo(getCartDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -53,7 +53,8 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	@Override
 	public boolean delete(CartInfo entity) {
 		try {
-			getCartDAO().delete(toCart(entity));
+			Cart cart = getCartDAO().findById(entity.getId(), true);
+			getCartDAO().delete(cart);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

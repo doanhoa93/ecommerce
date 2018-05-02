@@ -26,9 +26,9 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	}
 
 	@Override
-	public CommentInfo findById(Serializable key) {
+	public CommentInfo findById(Serializable key, boolean lock) {
 		try {
-			return ModelToBean.toCommentInfo(getCommentDAO().findById(key));
+			return ModelToBean.toCommentInfo(getCommentDAO().findById(key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -48,7 +48,8 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 	@Override
 	public boolean delete(CommentInfo entity) {
 		try {
-			getCommentDAO().delete(toComment(entity));
+			Comment comment = getCommentDAO().findById(entity.getId(), true);
+			getCommentDAO().delete(comment);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

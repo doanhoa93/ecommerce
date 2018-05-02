@@ -69,7 +69,7 @@ public class ProductsController extends AdminController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable("id") Integer id) {
-		ProductInfo product = productService.findById(id);
+		ProductInfo product = productService.findById(id, false);
 		ModelAndView model = new ModelAndView("adminProduct");
 		if (product != null) {
 			int size = product.getImages().size() / 3;
@@ -85,7 +85,7 @@ public class ProductsController extends AdminController {
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView("adminEditProduct");
-		ProductInfo productInfo = productService.findById(id);
+		ProductInfo productInfo = productService.findById(id, true);
 		if (productInfo != null) {
 			model.addObject("promotions", promotionService.getObjects());
 			model.addObject("categories", categoryService.getObjects());
@@ -100,7 +100,7 @@ public class ProductsController extends AdminController {
 	    @ModelAttribute("product") ProductInfo productInfo, BindingResult result)
 	    throws JsonProcessingException {
 		ModelAndView model = new ModelAndView();
-		ProductInfo oldProduct = productService.findById(id);
+		ProductInfo oldProduct = productService.findById(id, true);
 		productValidator.validateUpdate(oldProduct, productInfo, result);
 		if (!result.hasErrors() && productService.updateProduct(oldProduct, productInfo)) {
 			model.setViewName("redirect");
@@ -117,7 +117,7 @@ public class ProductsController extends AdminController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ModelAndView delete(@PathVariable("id") Integer id) {
 		ModelAndView model = new ModelAndView();
-		ProductInfo productInfo = productService.findById(id);
+		ProductInfo productInfo = productService.findById(id, true);
 		if (productInfo != null) {
 			productService.delete(productInfo);
 			model.setViewName("redirect:/admin/products");

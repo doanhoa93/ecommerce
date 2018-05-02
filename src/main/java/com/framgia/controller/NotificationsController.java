@@ -16,7 +16,7 @@ public class NotificationsController {
 
 	@MessageMapping("update/{id}")
 	public void update(@DestinationVariable("id") Integer id) {
-		NotificationInfo notificationInfo = notificationService.findById(id);
+		NotificationInfo notificationInfo = notificationService.findById(id, true);
 		notificationInfo.setWatched(true);
 		notificationService.saveOrUpdate(notificationInfo);
 	}

@@ -22,7 +22,7 @@ public class UsersController extends BaseController {
 	@RequestMapping(value = "{id}")
 	public ModelAndView show(@PathVariable Integer id) {
 		ModelAndView model = new ModelAndView("user");
-		model.addObject("user", userService.findById(id));
+		model.addObject("user", userService.findById(id, false));
 		return model;
 	}
 

@@ -69,7 +69,7 @@ public class OrdersController extends BaseController {
 		if (!result.hasErrors() && orderService.createOrder(orderInfo, result)) {
 			model.setViewName("redirect");
 			model.addObject("url", request.getContextPath() + "/orders/" + orderInfo.getId());
-			orderInfo = orderService.findById(orderInfo.getId());
+			orderInfo = orderService.findById(orderInfo.getId(), false);
 			sendOrder.send("/topic/orders", orderInfo);
 		} else {
 			model.setViewName("inputError");
@@ -81,7 +81,7 @@ public class OrdersController extends BaseController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
-		OrderInfo orderInfo = orderService.findById(id);
+		OrderInfo orderInfo = orderService.findById(id, false);
 		ModelAndView model = new ModelAndView("order");
 		if (isOwner(orderInfo)) {
 			model.addObject("order", orderInfo);
@@ -95,7 +95,7 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable Integer id) {
 		ModelAndView model = new ModelAndView("editOrder");
-		OrderInfo orderInfo = orderService.findById(id);
+		OrderInfo orderInfo = orderService.findById(id, true);
 		if (orderValidator.validateEdit(orderInfo, currentUser())) {
 			model.addObject("orderInfo", orderInfo);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
@@ -112,7 +112,7 @@ public class OrdersController extends BaseController {
 	    throws JsonProcessingException {
 		ModelAndView model = new ModelAndView();
 		try {
-			OrderInfo oldOrder = orderService.findById(id);
+			OrderInfo oldOrder = orderService.findById(id, true);
 			orderValidator.validateUpdate(oldOrder, orderInfo, currentUser(), result);
 			if (!result.hasErrors() && orderService.updateOrderProduct(orderInfo)) {
 				model.setViewName("redirect");
@@ -133,7 +133,7 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable("id") Integer id) {
 		try {
-			OrderInfo orderInfo = orderService.findById(id);
+			OrderInfo orderInfo = orderService.findById(id, true);
 			if (orderValidator.validateDelete(orderInfo, currentUser())
 			    && orderService.delete(orderInfo))
 				return "redirect:/orders";
