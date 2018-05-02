@@ -1,5 +1,7 @@
 package com.framgia.controller;
 
+import java.util.HashMap;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class SuggestsController extends BaseController {
 	@Autowired
 	private SuggestValidator suggestValidator;
 
+	@SuppressWarnings("serial")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
 		ModelAndView model = new ModelAndView("suggests");
@@ -40,6 +43,15 @@ public class SuggestsController extends BaseController {
 			    suggestService.getSuggests(currentUser().getId(), 0, 0, Order.desc("id")));
 		model.addObject("suggestsSize",
 		    suggestService.getSuggests(currentUser().getId(), 0, 0, null).size());
+		model.addObject("statuses", new HashMap<String, String>() {
+			{
+				put("waiting", Status.WAITING);
+				put("accept", Status.ACCEPT);
+				put("reject", Status.REJECT);
+				put("cancel", Status.CANCEL);
+			}
+		});
+
 		return model;
 	}
 

@@ -4,12 +4,16 @@
 <div class="item ${index == 1 ? 'active' : ''}">
   <div class="col-sm-6">
     <h1>
-      <span>ECOMMERCE</span>
-    </h1>
-    <h2>
       <a href="${contextPath}/products/${product.getId()}" class="product-name">
-        ${product.getName()} </a>
+        <span>${product.getName()}</span>
+      </a>
+    </h1>
+
+    <h2>
+      <a href="${contextPath}/categories/${product.getCategory().getId()}">
+        ${product.getCategory().getName()} </a>
     </h2>
+    
     <p>${product.getInformation()}</p>
     <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -17,7 +21,10 @@
       <button type="submit" class="btn btn-default get">Get it now</button>
     </form:form>
   </div>
+
   <div class="col-sm-6">
-    <img src="${product.getAvatar()}" class="girl img-responsive" alt="" />
+    <a href="${contextPath}/products/${product.getId()}">
+      <img src="${product.getAvatar()}" class="girl img-responsive" alt="" />
+    </a>
   </div>
 </div>

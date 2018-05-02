@@ -27,6 +27,8 @@
           <div class="fb-login-button" data-max-rows="1" data-size="large"
             data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false"
             data-use-continue-as="true"></div>
+          <a href="${contextPath}/registrations/new" class="btn btn-primary">Have not account?
+            Sign up</a>
         </div>
       </div>
       <div class="col-sm-4"></div>

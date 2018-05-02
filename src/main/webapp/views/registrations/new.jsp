@@ -20,10 +20,11 @@
             <form:input path="email" placeholder="Email" />
             <form:password path="password" placeholder="Password" />
             <select name="profile.gender" form="new-user" class="form-control">
-              <option value="MALE" selected>MALE</option>
-              <option value="FEMALE">FEMALE</option>
+              <option value="${genderes['male']}" selected>MALE</option>
+              <option value="${genderes['female']}">FEMALE</option>
             </select>
             <input type="submit" class="btn btn-primary" value="Sign up" />
+            <a href="${contextPath}/login" class="btn btn-primary">Have account? Login</a>
           </form:form>
         </div>
       </div>

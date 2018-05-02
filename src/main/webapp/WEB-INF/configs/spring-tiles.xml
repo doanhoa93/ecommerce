@@ -160,11 +160,13 @@
     <put-attribute name="body" value="/views/products/show.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/product.css" />
+      <add-attribute value="/assets/css/rate.css" />
     </put-list-attribute>
 
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/fb.js" />
       <add-attribute value="/assets/js/product.js" />
+      <add-attribute value="/assets/js/rate.js" />
     </put-list-attribute>
   </definition>
 

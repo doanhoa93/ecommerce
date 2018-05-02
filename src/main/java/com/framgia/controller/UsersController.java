@@ -1,5 +1,7 @@
 package com.framgia.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Gender;
 import com.framgia.validator.UserValidator;
 
 @Controller
@@ -19,10 +22,18 @@ public class UsersController extends BaseController {
 	@Autowired
 	private UserValidator userValidator;
 
+	@SuppressWarnings("serial")
 	@RequestMapping(value = "{id}")
 	public ModelAndView show(@PathVariable Integer id) {
 		ModelAndView model = new ModelAndView("user");
 		model.addObject("user", userService.findById(id, false));
+		model.addObject("genderes", new HashMap<String, String>() {
+			{
+				put("male", Gender.MALE);
+				put("female", Gender.FEMALE);
+			}
+		});
+
 		return model;
 	}
 

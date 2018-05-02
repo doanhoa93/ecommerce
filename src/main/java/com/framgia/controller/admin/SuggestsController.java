@@ -40,7 +40,7 @@ public class SuggestsController extends AdminController {
 		} else
 			model.addObject("suggests",
 			    suggestService.getSuggests(null, 0, Paginate.ADMIN_OBJECT_LIMIT, Order.desc("id")));
-		
+
 		return model;
 	}
 

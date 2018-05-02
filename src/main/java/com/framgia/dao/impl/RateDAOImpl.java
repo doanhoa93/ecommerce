@@ -17,4 +17,12 @@ public class RateDAOImpl extends BaseDAOAbstract<Integer, Rate> implements RateD
 		criteria.add(Restrictions.eq("product.id", productId));
 		return (List<Rate>) criteria.list();
 	}
+
+	@Override
+	public Rate getRate(Integer userId, Integer productId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("user.id", userId));
+		criteria.add(Restrictions.eq("product.id", productId));
+		return (Rate) criteria.uniqueResult();
+	}
 }

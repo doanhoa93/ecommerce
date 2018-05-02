@@ -6,4 +6,6 @@ import com.framgia.bean.RateInfo;
 
 public interface RateService extends BaseService<Integer, RateInfo> {
 	List<RateInfo> getRates(Integer productId);
+
+	RateInfo getRate(Integer userId, Integer productId);
 }

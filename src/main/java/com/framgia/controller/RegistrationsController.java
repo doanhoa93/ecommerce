@@ -1,5 +1,6 @@
 package com.framgia.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
@@ -9,15 +10,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.framgia.bean.UserInfo;
+import com.framgia.constant.Gender;
 import com.framgia.constant.Role;
 
 @Controller
-@RequestMapping(value = "/registrations")
+@RequestMapping(value = "registrations")
 public class RegistrationsController extends BaseController {
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	@SuppressWarnings("serial")
+	@RequestMapping(value = "new", method = RequestMethod.GET)
 	public ModelAndView getNew() {
-		return new ModelAndView("signup", "user", new UserInfo());
+		ModelAndView model = new ModelAndView("signup");
+		model.addObject("genderes", new HashMap<String, String>() {
+			{
+				put("male", Gender.MALE);
+				put("female", Gender.FEMALE);
+			}
+		});
+		model.addObject("user", new UserInfo());
+
+		return model;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

@@ -1,5 +1,6 @@
 package com.framgia.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.framgia.bean.ProductInfo;
+import com.framgia.bean.RateInfo;
 import com.framgia.constant.Paginate;
 import com.framgia.constant.Price;
+import com.framgia.constant.Rating;
 import com.framgia.helper.ProductFilter;
 
 @Controller
-@RequestMapping(value = "/products")
+@RequestMapping(value = "products")
 public class ProductsController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -43,6 +46,7 @@ public class ProductsController extends BaseController {
 		return model;
 	}
 
+	@SuppressWarnings("serial")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable Integer id) {
 		ProductInfo productInfo = productService.findById(id, false);
@@ -53,8 +57,20 @@ public class ProductsController extends BaseController {
 				size++;
 			model.addObject("product", productInfo);
 			model.addObject("slideSize", size);
+			if (currentUser() != null) {
+				RateInfo rateInfo = rateService.getRate(currentUser().getId(), id);
+				if (rateInfo == null)
+					rateInfo = new RateInfo();
+				model.addObject("rate", rateInfo);
+			}
 			model.setViewName("product");
 			model.addObject("categories", categoryService.getObjects());
+			model.addObject("rating", new HashMap<String, Integer>() {
+				{
+					put("min", Rating.MIN);
+					put("max", Rating.MAX);
+				}
+			});
 			productService.updateRecent(productInfo);
 		} else {
 			model.setViewName("404");
