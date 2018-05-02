@@ -18,7 +18,6 @@ public class Product implements Serializable {
 	private String information;
 	private int number;
 	private Date createdAt;
-	private Recent recent;
 
 	private List<Image> images;
 	private List<OrderProduct> orderProducts;
@@ -30,8 +29,9 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId, float saleOff, String name,
-	        float price, float rating, String avatar, String information, int number) {
+	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId,
+	    float saleOff, String name, float price, float rating, String avatar, String information,
+	    int number) {
 		this.id = id;
 		this.category = category;
 		this.isPromotion = isPromotion;
@@ -139,14 +139,6 @@ public class Product implements Serializable {
 
 	public void setImages(List<Image> images) {
 		this.images = images;
-	}
-
-	public Recent getRecent() {
-		return recent;
-	}
-
-	public void setRecent(Recent recent) {
-		this.recent = recent;
 	}
 
 	public List<OrderProduct> getOrderProducts() {

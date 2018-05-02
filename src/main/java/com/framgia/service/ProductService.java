@@ -13,22 +13,13 @@ import com.framgia.bean.OrderInfo;
 import com.framgia.bean.OrderProductInfo;
 import com.framgia.bean.ProductInfo;
 import com.framgia.bean.PromotionInfo;
-import com.framgia.bean.RecentInfo;
 import com.framgia.bean.UserInfo;
 import com.framgia.helper.ProductFilter;
 
 public interface ProductService extends BaseService<Integer, ProductInfo> {
-	RecentInfo getRecent(Integer productId);
-
 	PromotionInfo getPromotion(Integer productId);
 
 	CategoryInfo getCategory(Integer productId);
-
-	boolean createProduct(ProductInfo productInfo);
-
-	boolean updateProduct(ProductInfo oldProduct, ProductInfo newProduct);
-
-	boolean updateRecent(ProductInfo productInfo);
 
 	List<OrderProductInfo> getOrderProducts(Integer productId);
 
@@ -56,4 +47,10 @@ public interface ProductService extends BaseService<Integer, ProductInfo> {
 	List<ProductInfo> randomProducts(int limit);
 
 	List<ProductInfo> getNewProducts(Date date, int limit);
+
+	boolean createProduct(ProductInfo productInfo);
+
+	boolean updateProduct(ProductInfo oldProduct, ProductInfo newProduct);
+
+	boolean updateRecent(ProductInfo productInfo);
 }

@@ -15,16 +15,6 @@ import com.framgia.service.ProfileService;
 public class ProfileServiceImpl extends BaseServiceImpl implements ProfileService {
 
 	@Override
-	public UserInfo getUser(Integer profileId) {
-		try {
-			return ModelToBean.toUserInfo(getProfileDAO().getUser(profileId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public ProfileInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toProfileInfo(getProfileDAO().findBy(attribute, key, lock));
@@ -45,10 +35,9 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public boolean delete(ProfileInfo entity) {
+	public ProfileInfo saveOrUpdate(ProfileInfo entity) {
 		try {
-			getProfileDAO().delete(toProfile(entity));
-			return true;
+			return ModelToBean.toProfileInfo(getProfileDAO().saveOrUpdate(toProfile(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -56,9 +45,10 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public ProfileInfo saveOrUpdate(ProfileInfo entity) {
+	public boolean delete(ProfileInfo entity) {
 		try {
-			return ModelToBean.toProfileInfo(getProfileDAO().saveOrUpdate(toProfile(entity)));
+			getProfileDAO().delete(toProfile(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -88,10 +78,9 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 	}
 
 	@Override
-	public List<ProfileInfo> getObjects(int off, int limit) {
+	public UserInfo getUser(Integer profileId) {
 		try {
-			return getProfileDAO().getObjects(off, limit).stream().map(ModelToBean::toProfileInfo)
-			    .collect(Collectors.toList());
+			return ModelToBean.toUserInfo(getProfileDAO().getUser(profileId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

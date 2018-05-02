@@ -15,7 +15,6 @@
     <many-to-one name="user" class="User">
       <column name="user_id" />
     </many-to-one>
-
     <many-to-one name="product" class="Product">
       <column name="product_id" not-null="true" />
     </many-to-one>

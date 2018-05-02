@@ -13,16 +13,6 @@ import com.framgia.service.PromotionService;
 public class PromotionServiceImpl extends BaseServiceImpl implements PromotionService {
 
 	@Override
-	public ProductInfo getProduct(Integer promotionId) {
-		try {
-			return ModelToBean.toProductInfo(getPromotionDAO().getProduct(promotionId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public PromotionInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toPromotionInfo(getPromotionDAO().findBy(attribute, key, lock));
@@ -43,10 +33,9 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public boolean delete(PromotionInfo entity) {
+	public PromotionInfo saveOrUpdate(PromotionInfo entity) {
 		try {
-			getPromotionDAO().delete(toPromotion(entity));
-			return true;
+			return ModelToBean.toPromotionInfo(getPromotionDAO().saveOrUpdate(toPromotion(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -54,9 +43,10 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public PromotionInfo saveOrUpdate(PromotionInfo entity) {
+	public boolean delete(PromotionInfo entity) {
 		try {
-			return ModelToBean.toPromotionInfo(getPromotionDAO().saveOrUpdate(toPromotion(entity)));
+			getPromotionDAO().delete(toPromotion(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -86,10 +76,9 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public List<PromotionInfo> getObjects(int off, int limit) {
+	public ProductInfo getProduct(Integer promotionId) {
 		try {
-			return getPromotionDAO().getObjects(off, limit).stream()
-			    .map(ModelToBean::toPromotionInfo).collect(Collectors.toList());
+			return ModelToBean.toProductInfo(getPromotionDAO().getProduct(promotionId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

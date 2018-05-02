@@ -14,16 +14,6 @@ import com.framgia.service.RecentService;
 public class RecentServiceImpl extends BaseServiceImpl implements RecentService {
 
 	@Override
-	public ProductInfo getProduct(Integer recentId) {
-		try {
-			return ModelToBean.toProductInfo(getRecentDAO().getProduct(recentId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public RecentInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toRecentInfo(getRecentDAO().findBy(attribute, key, lock));
@@ -44,10 +34,9 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public boolean delete(RecentInfo entity) {
+	public RecentInfo saveOrUpdate(RecentInfo entity) {
 		try {
-			getRecentDAO().delete(toRecent(entity));
-			return true;
+			return ModelToBean.toRecentInfo(getRecentDAO().saveOrUpdate(toRecent(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -55,9 +44,10 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public RecentInfo saveOrUpdate(RecentInfo entity) {
+	public boolean delete(RecentInfo entity) {
 		try {
-			return ModelToBean.toRecentInfo(getRecentDAO().saveOrUpdate(toRecent(entity)));
+			getRecentDAO().delete(toRecent(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -87,10 +77,9 @@ public class RecentServiceImpl extends BaseServiceImpl implements RecentService 
 	}
 
 	@Override
-	public List<RecentInfo> getObjects(int off, int limit) {
+	public ProductInfo getProduct(Integer recentId) {
 		try {
-			return getRecentDAO().getObjects(off, limit).stream().map(ModelToBean::toRecentInfo)
-			    .collect(Collectors.toList());
+			return ModelToBean.toProductInfo(getRecentDAO().getProduct(recentId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

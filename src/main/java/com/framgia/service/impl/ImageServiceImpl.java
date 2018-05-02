@@ -14,16 +14,6 @@ import com.framgia.service.ImageService;
 public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
 	@Override
-	public ProductInfo getProduct(Integer imageId) {
-		try {
-			return ModelToBean.toProductInfo(getImageDAO().getProduct(imageId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public ImageInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toImageInfo(getImageDAO().findBy(attribute, key, lock));
@@ -44,10 +34,9 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public boolean delete(ImageInfo entity) {
+	public ImageInfo saveOrUpdate(ImageInfo entity) {
 		try {
-			getImageDAO().delete(toImage(entity));
-			return true;
+			return ModelToBean.toImageInfo(getImageDAO().saveOrUpdate(toImage(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -55,9 +44,10 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public ImageInfo saveOrUpdate(ImageInfo entity) {
+	public boolean delete(ImageInfo entity) {
 		try {
-			return ModelToBean.toImageInfo(getImageDAO().saveOrUpdate(toImage(entity)));
+			getImageDAO().delete(toImage(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -87,10 +77,9 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<ImageInfo> getObjects(int off, int limit) {
+	public ProductInfo getProduct(Integer imageId) {
 		try {
-			return getImageDAO().getObjects(off, limit).stream().map(ModelToBean::toImageInfo)
-			    .collect(Collectors.toList());
+			return ModelToBean.toProductInfo(getImageDAO().getProduct(imageId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

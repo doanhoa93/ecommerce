@@ -79,14 +79,6 @@ public abstract class BaseDAOAbstract<PK extends Serializable, T> extends Hibern
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getObjects(int off, int limit) {
-		Criteria criteria = createEntityCriteria();
-		criteria.setFirstResult(off);
-		criteria.setMaxResults(limit);
-		return (List<T>) criteria.list();
-	}
-
-	@SuppressWarnings("unchecked")
 	public List<T> getNewObjects(Date date, int limit) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.ge("createdAt", date));

@@ -39,7 +39,16 @@ import com.framgia.model.User;
 public class ModelToBean {
 	// Cart
 	public static CartInfo toCartInfo(Cart cart) {
-		return toCartInfoWithPro(cart);
+		CartInfo cartInfo = toCartInfoWithPro(cart);
+		if (cartInfo == null)
+			return null;
+
+		if (cart.getProduct() != null)
+			cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
+
+		if (cart.getUser() != null)
+			cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
+		return cartInfo;
 	}
 
 	// Category
@@ -58,22 +67,58 @@ public class ModelToBean {
 
 	// Chat
 	public static ChatInfo toChatInfo(Chat chat) {
-		return toChatInfoWithPro(chat);
+		ChatInfo chatInfo = toChatInfoWithPro(chat);
+		if (chatInfo == null)
+			return null;
+
+		if (chat.getReceiver() != null)
+			chatInfo.setReceiver(toUserInfoWithPro(chat.getReceiver()));
+
+		if (chat.getSender() != null)
+			chatInfo.setSender(toUserInfoWithPro(chat.getSender()));
+		return chatInfo;
 	}
 
 	// Comment
 	public static CommentInfo toCommentInfo(Comment comment) {
-		return toCommentInfoWithPro(comment);
+		CommentInfo commentInfo = toCommentInfoWithPro(comment);
+		if (commentInfo == null)
+			return null;
+
+		if (comment.getUser() != null)
+			commentInfo.setUser(toUserInfo(comment.getUser()));
+
+		if (comment.getProduct() != null)
+			commentInfo.setProduct(toProductInfoWithPro(comment.getProduct()));
+
+		return commentInfo;
 	}
 
 	// Image
 	public static ImageInfo toImageInfo(Image image) {
-		return toImageInfoWithPro(image);
+		ImageInfo imageInfo = toImageInfoWithPro(image);
+		if (imageInfo == null)
+			return null;
+
+		if (image.getProduct() != null)
+			imageInfo.setProduct(toProductInfoWithPro(image.getProduct()));
+
+		return imageInfo;
 	}
 
 	// Notification
 	public static NotificationInfo toNotificationInfo(Notification notification) {
-		return toNotificationInfoWithPro(notification);
+		NotificationInfo notificationInfo = toNotificationInfoWithPro(notification);
+		if (notificationInfo == null)
+			return null;
+
+		if (notification.getOrder() != null)
+			notificationInfo.setOrder(toOrderInfoWithPro(notification.getOrder()));
+
+		if (notification.getUser() != null)
+			notificationInfo.setUser(toUserInfoWithPro(notification.getUser()));
+
+		return notificationInfo;
 	}
 
 	// Order
@@ -82,16 +127,30 @@ public class ModelToBean {
 		if (orderInfo == null)
 			return null;
 
+		if (order.getUser() != null)
+			orderInfo.setUser(toUserInfoWithPro(order.getUser()));
+
 		if (order.getOrderProducts() != null)
 			orderInfo.setOrderProducts(
 			    order.getOrderProducts().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
+
 		return orderInfo;
 	}
 
 	// OrderProduct
 	public static OrderProductInfo toOrderProductInfo(OrderProduct orderProduct) {
-		return toOrderProductInfoWithPro(orderProduct);
+		OrderProductInfo orderProductInfo = toOrderProductInfoWithPro(orderProduct);
+		if (orderProductInfo == null)
+			return null;
+
+		if (orderProduct.getOrder() != null)
+			orderProductInfo.setOrder(toOrderInfoWithPro(orderProduct.getOrder()));
+
+		if (orderProduct.getProduct() != null)
+			orderProductInfo.setProduct(toProductInfoWithPro(orderProduct.getProduct()));
+
+		return orderProductInfo;
 	}
 
 	// Product
@@ -99,6 +158,9 @@ public class ModelToBean {
 		ProductInfo productInfo = toProductInfoWithPro(product);
 		if (productInfo == null)
 			return null;
+
+		if (product.getCategory() != null)
+			productInfo.setCategory(toCategoryInfoWithPro(product.getCategory()));
 
 		if (product.getImages() != null)
 			productInfo.setImages(product.getImages().stream().filter(object -> (object != null))
@@ -108,6 +170,7 @@ public class ModelToBean {
 			productInfo.setOrderProducts(
 			    product.getOrderProducts().stream().filter(object -> (object != null))
 			        .map(ModelToBean::toOrderProductInfoWithPro).collect(Collectors.toList()));
+
 		return productInfo;
 	}
 
@@ -129,17 +192,40 @@ public class ModelToBean {
 
 	// Rate
 	public static RateInfo toRateInfo(Rate rate) {
-		return toRateInfoWithPro(rate);
+		RateInfo rateInfo = toRateInfoWithPro(rate);
+		if (rateInfo == null)
+			return null;
+
+		if (rate.getUser() != null)
+			rateInfo.setUser(toUserInfoWithPro(rate.getUser()));
+
+		if (rate.getProduct() != null)
+			rateInfo.setProduct(toProductInfoWithPro(rate.getProduct()));
+
+		return rateInfo;
 	}
 
 	// Recent
 	public static RecentInfo toRecentInfo(Recent recent) {
-		return toRecentInfoWithPro(recent);
+		RecentInfo recentInfo = toRecentInfoWithPro(recent);
+		if (recentInfo == null)
+			return null;
+
+		if (recent.getProduct() != null)
+			recentInfo.setProduct(toProductInfoWithPro(recent.getProduct()));
+
+		return recentInfo;
 	}
 
 	// Suggest
 	public static SuggestInfo toSuggestInfo(Suggest suggest) {
-		return toSuggestInfoWithPro(suggest);
+		SuggestInfo suggestInfo = toSuggestInfoWithPro(suggest);
+		if (suggestInfo == null)
+			return null;
+
+		if (suggest.getUser() != null)
+			suggestInfo.setUser(toUserInfoWithPro(suggest.getUser()));
+		return suggestInfo;
 	}
 
 	// User
@@ -147,6 +233,26 @@ public class ModelToBean {
 		UserInfo userInfo = toUserInfoWithPro(user);
 		if (userInfo == null)
 			return null;
+
+		List<Chat> chats = user.getChats();
+		if (chats != null) {
+			for (Chat chat : chats.stream().filter(object -> (object != null))
+			    .collect(Collectors.toList()))
+				if (!chat.isWatched()) {
+					userInfo.setNewMessage(true);
+					break;
+				}
+		}
+
+		List<Chat> sendedChats = user.getSendedChats();
+		if (sendedChats != null) {
+			for (Chat chat : sendedChats.stream().filter(object -> (object != null))
+			    .collect(Collectors.toList()))
+				if (!chat.isWatched()) {
+					userInfo.setAdminNewMessage(true);
+					break;
+				}
+		}
 
 		if (user.getProfile() != null)
 			userInfo.setProfile(toProfileInfoWithPro(user.getProfile()));
@@ -170,6 +276,7 @@ public class ModelToBean {
 			}).filter(object -> (object != null)).collect(Collectors.toList()).size();
 			userInfo.setUnWatchedNotifications(unwatched);
 		}
+
 		return userInfo;
 	}
 
@@ -182,11 +289,7 @@ public class ModelToBean {
 		cartInfo.setId(cart.getId());
 		cartInfo.setSessionId(cart.getSessionId());
 		cartInfo.setQuantity(cart.getQuantity());
-		if (cart.getProduct() != null)
-			cartInfo.setProduct(toProductInfoWithPro(cart.getProduct()));
 
-		if (cart.getUser() != null)
-			cartInfo.setUser(toUserInfoWithPro(cart.getUser()));
 		return cartInfo;
 	}
 
@@ -199,6 +302,7 @@ public class ModelToBean {
 		categoryInfo.setName(category.getName());
 		categoryInfo.setParentId(category.getParentId());
 		categoryInfo.setCreatedAt(category.getCreatedAt());
+
 		return categoryInfo;
 	}
 
@@ -212,12 +316,6 @@ public class ModelToBean {
 		chatInfo.setContent(chat.getContent());
 		chatInfo.setWatched(chat.isWatched());
 
-		if (chat.getReceiver() != null)
-			chatInfo.setReceiver(toUserInfoWithPro(chat.getReceiver()));
-
-		if (chat.getSender() != null)
-			chatInfo.setSender(toUserInfoWithPro(chat.getSender()));
-
 		return chatInfo;
 	}
 
@@ -228,11 +326,7 @@ public class ModelToBean {
 		CommentInfo commentInfo = new CommentInfo();
 		commentInfo.setId(comment.getId());
 		commentInfo.setContent(comment.getContent());
-		if (comment.getUser() != null)
-			commentInfo.setUser(toUserInfo(comment.getUser()));
 
-		if (comment.getProduct() != null)
-			commentInfo.setProduct(toProductInfoWithPro(comment.getProduct()));
 		return commentInfo;
 	}
 
@@ -243,8 +337,7 @@ public class ModelToBean {
 		ImageInfo imageInfo = new ImageInfo();
 		imageInfo.setId(image.getId());
 		imageInfo.setImage(image.getImage());
-		if (image.getProduct() != null)
-			imageInfo.setProduct(toProductInfoWithPro(image.getProduct()));
+
 		return imageInfo;
 	}
 
@@ -257,12 +350,6 @@ public class ModelToBean {
 		notificationInfo.setContent(notification.getContent());
 		notificationInfo.setWatched(notification.isWatched());
 		notificationInfo.setCreatedAt(notification.getCreatedAt());
-
-		if (notification.getOrder() != null)
-			notificationInfo.setOrder(toOrderInfoWithPro(notification.getOrder()));
-
-		if (notification.getUser() != null)
-			notificationInfo.setUser(toUserInfoWithPro(notification.getUser()));
 
 		return notificationInfo;
 	}
@@ -283,8 +370,7 @@ public class ModelToBean {
 		productInfo.setRating(product.getRating());
 		productInfo.setSaleOff(product.getSaleOff());
 		productInfo.setCreatedAt(product.getCreatedAt());
-		if (product.getCategory() != null)
-			productInfo.setCategory(toCategoryInfoWithPro(product.getCategory()));
+
 		return productInfo;
 	}
 
@@ -296,6 +382,7 @@ public class ModelToBean {
 		promotionInfo.setId(promotion.getId());
 		promotionInfo.setEndDate(promotion.getEndDate());
 		promotionInfo.setStartDate(promotion.getStartDate());
+
 		return promotionInfo;
 	}
 
@@ -313,8 +400,7 @@ public class ModelToBean {
 		orderInfo.setName(order.getName());
 		orderInfo.setPhoneNumber(order.getPhoneNumber());
 		orderInfo.setSessionId(order.getSessionId());
-		if (order.getUser() != null)
-			orderInfo.setUser(toUserInfoWithPro(order.getUser()));
+
 		return orderInfo;
 	}
 
@@ -327,11 +413,7 @@ public class ModelToBean {
 		orderProductInfo.setPrice(orderProduct.getPrice());
 		orderProductInfo.setQuantity(orderProduct.getQuantity());
 		orderProductInfo.setStatus(Status.getStrStatus(orderProduct.getStatus()));
-		if (orderProduct.getOrder() != null)
-			orderProductInfo.setOrder(toOrderInfoWithPro(orderProduct.getOrder()));
 
-		if (orderProduct.getProduct() != null)
-			orderProductInfo.setProduct(toProductInfoWithPro(orderProduct.getProduct()));
 		return orderProductInfo;
 	}
 
@@ -345,6 +427,7 @@ public class ModelToBean {
 		profileInfo.setAddress(profile.getAddress());
 		profileInfo.setBirthday(profile.getBirthday());
 		profileInfo.setGender(Gender.getStr(profile.getGender()));
+
 		return profileInfo;
 	}
 
@@ -355,11 +438,7 @@ public class ModelToBean {
 		RateInfo rateInfo = new RateInfo();
 		rateInfo.setId(rate.getId());
 		rateInfo.setRating(rate.getRating());
-		if (rate.getUser() != null)
-			rateInfo.setUser(toUserInfoWithPro(rate.getUser()));
 
-		if (rate.getProduct() != null)
-			rateInfo.setProduct(toProductInfoWithPro(rate.getProduct()));
 		return rateInfo;
 	}
 
@@ -370,8 +449,7 @@ public class ModelToBean {
 		RecentInfo recentInfo = new RecentInfo();
 		recentInfo.setId(recent.getId());
 		recentInfo.setCreatedAt(recent.getCreatedAt());
-		if (recent.getProduct() != null)
-			recentInfo.setProduct(toProductInfoWithPro(recent.getProduct()));
+
 		return recentInfo;
 	}
 
@@ -388,8 +466,7 @@ public class ModelToBean {
 		suggestInfo.setPrice(suggest.getPrice());
 		suggestInfo.setInformation(suggest.getInformation());
 		suggestInfo.setStatus(Status.getStrStatus(suggest.getStatus()));
-		if (suggest.getUser() != null)
-			suggestInfo.setUser(toUserInfoWithPro(suggest.getUser()));
+
 		return suggestInfo;
 	}
 
@@ -406,26 +483,6 @@ public class ModelToBean {
 		userInfo.setToken(user.getToken());
 		userInfo.setAvatar(user.getAvatar());
 		userInfo.setCreatedAt(user.getCreatedAt());
-		List<Chat> chats = user.getChats();
-		if (chats != null) {
-			chats = chats.stream().filter(object -> (object != null)).collect(Collectors.toList());
-			for (Chat chat : chats)
-				if (!chat.isWatched()) {
-					userInfo.setNewMessage(true);
-					break;
-				}
-		}
-
-		List<Chat> sendedChats = user.getSendedChats();
-		if (sendedChats != null) {
-			sendedChats = sendedChats.stream().filter(object -> (object != null))
-			    .collect(Collectors.toList());
-			for (Chat chat : sendedChats)
-				if (!chat.isWatched()) {
-					userInfo.setAdminNewMessage(true);
-					break;
-				}
-		}
 		return userInfo;
 	}
 }

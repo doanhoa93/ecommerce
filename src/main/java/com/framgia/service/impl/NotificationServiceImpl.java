@@ -81,17 +81,6 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 	}
 
 	@Override
-	public List<NotificationInfo> getObjects(int off, int limit) {
-		try {
-			return getNotificationDAO().getObjects(off, limit).stream()
-			    .map(ModelToBean::toNotificationInfo).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public UserInfo getUser(Integer notificationId) {
 		try {
 			return ModelToBean.toUserInfo(getNotificationDAO().getUser(notificationId));

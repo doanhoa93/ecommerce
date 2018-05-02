@@ -20,32 +20,23 @@ import com.framgia.service.CartService;
 public class CartServiceImpl extends BaseServiceImpl implements CartService {
 
 	@Override
-	public UserInfo getUser(Integer cartId) {
-		try {
-			return ModelToBean.toUserInfo(getCartDAO().getUser(cartId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public ProductInfo getProduct(Integer cartId) {
-		try {
-			return ModelToBean.toProductInfo(getCartDAO().getProduct(cartId));
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public CartInfo findBy(String attribute, Serializable key, boolean lock) {
 		try {
 			return ModelToBean.toCartInfo(getCartDAO().findBy(attribute, key, lock));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
+		}
+	}
+
+	@Override
+	public CartInfo saveOrUpdate(CartInfo entity) {
+		try {
+			Cart cart = getCartDAO().saveOrUpdate(toCart(entity));
+			return ModelToBean.toCartInfo(cart);
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
 		}
 	}
 
@@ -64,17 +55,6 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 		try {
 			getCartDAO().delete(toCart(entity));
 			return true;
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
-		}
-	}
-
-	@Override
-	public CartInfo saveOrUpdate(CartInfo entity) {
-		try {
-			Cart cart = getCartDAO().saveOrUpdate(toCart(entity));
-			return ModelToBean.toCartInfo(cart);
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -104,10 +84,19 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartInfo> getObjects(int off, int limit) {
+	public UserInfo getUser(Integer cartId) {
 		try {
-			return getCartDAO().getObjects(off, limit).stream().map(ModelToBean::toCartInfo)
-			    .collect(Collectors.toList());
+			return ModelToBean.toUserInfo(getCartDAO().getUser(cartId));
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public ProductInfo getProduct(Integer cartId) {
+		try {
+			return ModelToBean.toProductInfo(getCartDAO().getProduct(cartId));
 		} catch (Exception e) {
 			logger.error(e);
 			return null;

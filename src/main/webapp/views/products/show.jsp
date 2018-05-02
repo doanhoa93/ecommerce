@@ -142,7 +142,8 @@
       <div class="product-comments">
         <h3>Comments</h3>
         <hr>
-        <div class="fb-comments" data-href="${url}" data-numposts="5" data-width="100%"></div>
+        <div class="fb-comments" data-href="${url}/products/${product.getId()}" data-numposts="5"
+          data-width="100%"></div>
       </div>
     </div>
   </div>

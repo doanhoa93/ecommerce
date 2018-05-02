@@ -43,6 +43,27 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public SuggestInfo saveOrUpdate(SuggestInfo entity) {
+		try {
+			if (entity.getAvatarFile() != null) {
+				Map<String, String> map = uploadFile.upload(entity.getAvatarFile());
+				entity.setAvatar(map.get("url"));
+			}
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+
+		try {
+			return ModelToBean.toSuggestInfo(getSuggestDAO().saveOrUpdate(toSuggest(entity)));
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
 	@Override
 	public boolean delete(SuggestInfo entity) {
 		try {
@@ -77,17 +98,6 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 	}
 
 	@Override
-	public List<SuggestInfo> getObjects(int off, int limit) {
-		try {
-			return getSuggestDAO().getObjects(off, limit).stream().map(ModelToBean::toSuggestInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
 	public List<SuggestInfo> getSuggests(Integer userId, int off, int limit, Order order) {
 		try {
 			return getSuggestDAO().getSuggests(userId, off, limit, order).stream()
@@ -95,27 +105,6 @@ public class SuggestServiceImpl extends BaseServiceImpl implements SuggestServic
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public SuggestInfo saveOrUpdate(SuggestInfo entity) {
-		try {
-			if (entity.getAvatarFile() != null) {
-				Map<String, String> map = uploadFile.upload(entity.getAvatarFile());
-				entity.setAvatar(map.get("url"));
-			}
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-
-		try {
-			return ModelToBean.toSuggestInfo(getSuggestDAO().saveOrUpdate(toSuggest(entity)));
-		} catch (Exception e) {
-			logger.error(e);
-			throw e;
 		}
 	}
 

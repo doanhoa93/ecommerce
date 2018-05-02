@@ -20,7 +20,6 @@
     <many-to-one name="order" class="Order">
       <column name="order_id" not-null="true" />
     </many-to-one>
-
     <many-to-one name="product" class="Product">
       <column name="product_id" not-null="true" />
     </many-to-one>

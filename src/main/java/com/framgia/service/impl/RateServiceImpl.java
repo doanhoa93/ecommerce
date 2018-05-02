@@ -34,10 +34,9 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	}
 
 	@Override
-	public boolean delete(RateInfo entity) {
+	public RateInfo saveOrUpdate(RateInfo entity) {
 		try {
-			getRateDAO().delete(toRate(entity));
-			return true;
+			return ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(toRate(entity)));
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -45,9 +44,10 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	}
 
 	@Override
-	public RateInfo saveOrUpdate(RateInfo entity) {
+	public boolean delete(RateInfo entity) {
 		try {
-			return ModelToBean.toRateInfo(getRateDAO().saveOrUpdate(toRate(entity)));
+			getRateDAO().delete(toRate(entity));
+			return true;
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -69,17 +69,6 @@ public class RateServiceImpl extends BaseServiceImpl implements RateService {
 	public List<RateInfo> getObjectsByIds(List<Integer> keys) {
 		try {
 			return getRateDAO().getObjectsByIds(keys).stream().map(ModelToBean::toRateInfo)
-			    .collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<RateInfo> getObjects(int off, int limit) {
-		try {
-			return getRateDAO().getObjects(off, limit).stream().map(ModelToBean::toRateInfo)
 			    .collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
