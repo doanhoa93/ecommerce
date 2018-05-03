@@ -58,8 +58,9 @@
           <b>Price:</b>
         </span>
         <span>
-          <select name="price" class="form-control product-order-field order-price">
-            <option value="asc" selected>From Low to High</option>
+          <select name="price"
+            class="form-control product-order-field order-price product-order-active">
+            <option value="asc" >From Low to High</option>
             <option value="desc">From High to Low</option>
           </select>
         </span>
@@ -71,7 +72,8 @@
         </span>
         <span>
           <select name="name" class="form-control product-order-field order-name">
-            <option value="asc" selected>A-Z</option>
+            <option class="empty" selected></option>          
+            <option value="asc">A-Z</option>
             <option value="desc">Z-A</option>
           </select>
         </span>

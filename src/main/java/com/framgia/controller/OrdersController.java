@@ -63,7 +63,7 @@ public class OrdersController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("orderInfo") OrderInfo orderInfo,
+	public ModelAndView create(@ModelAttribute("order") OrderInfo orderInfo,
 	    BindingResult result) throws JsonParseException, JsonMappingException, IOException {
 		ModelAndView model = new ModelAndView();
 		orderInfo.setUser(currentUser());
