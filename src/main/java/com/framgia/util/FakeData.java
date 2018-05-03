@@ -46,10 +46,10 @@ public class FakeData {
 			destroy();
 			addUsers(session);
 			addCategories(session);
+			addPromotions(session);
 			addProducts(session);
 			addRecents(session);
 			addImages(session);
-			addPromotions(session);
 			addComments(session);
 			addCarts(session);
 			addOrders(session);
@@ -166,6 +166,32 @@ public class FakeData {
 		}
 	}
 
+	public static void addPromotions(Session session) {
+		try {
+			Transaction t = null;
+			t = session.beginTransaction();
+			session.createQuery("delete from Promotion").executeUpdate();
+			t.commit();
+
+			t = session.beginTransaction();
+			for (int i = 1; i < 10; i++) {
+				Promotion promotion = new Promotion();
+				promotion.setId(i);
+				Calendar calendar = Calendar.getInstance();
+				promotion.setStartDate(calendar.getTime());
+				calendar.add(Calendar.MONTH, i);
+				promotion.setEndDate(calendar.getTime());
+				promotion.setSaleOf(i * 10);
+
+				session.save(promotion);
+			}
+			t.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public static void addProducts(Session session) {
 		try {
@@ -187,9 +213,11 @@ public class FakeData {
 				product.setCategory(categories.get(i % 7));
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
-				product.setIsPromotion(false);
 				product.setNumber(10);
 				product.setPrice(new Float(random.nextInt(600)));
+				if (random.nextInt(2) == 0)
+					product.setPromotion(new Promotion(random.nextInt(9) + 1));
+
 				product.setRating(new Float(4.0));
 				map = upload(new File(System.getProperty("user.dir")
 				    + "/src/main/webapp/assets/images/home/product" + (i % 18 + 1) + ".jpg"));
@@ -484,32 +512,6 @@ public class FakeData {
 				recent.setCreatedAt(new Date());
 
 				session.save(recent);
-			}
-			t.commit();
-		} catch (Exception e) {
-			System.out.println(e);
-			System.exit(0);
-		}
-	}
-
-	public static void addPromotions(Session session) {
-		try {
-			Transaction t = null;
-			t = session.beginTransaction();
-			session.createQuery("delete from Promotion").executeUpdate();
-			t.commit();
-
-			t = session.beginTransaction();
-			for (int i = 1; i < 10; i++) {
-				Promotion promotion = new Promotion();
-				promotion.setId(i);
-				Calendar calendar = Calendar.getInstance();
-				calendar.set(2018, 01, 01);
-				promotion.setStartDate(calendar.getTime());
-				calendar.set(Calendar.MONDAY, Calendar.FEBRUARY);
-				promotion.setEndDate(calendar.getTime());
-
-				session.save(promotion);
 			}
 			t.commit();
 		} catch (Exception e) {

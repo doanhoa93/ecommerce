@@ -108,10 +108,10 @@
           </button>
         </form:form>
 
-        <c:if test="${product.getIsPromotion()}">
+        <c:if test="${product.getPromotion() != null}">
           <div class="product-promotion">
-            <span class="promotion-title">Sale Off:</span>
-            <span class="promotion">${product.getSaleOff()}%</span>
+            <span class="promotion-title">Sale Of:</span>
+            <span class="promotion">${product.getPromotion().getSaleOf()}%</span>
           </div>
 
           <div>From ${product.getPromotion().getStartDate()} To

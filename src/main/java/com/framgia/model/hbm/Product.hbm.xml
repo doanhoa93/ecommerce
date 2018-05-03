@@ -7,13 +7,6 @@
       <generator class="increment" />
     </id>
 
-    <property name="isPromotion" type="boolean">
-      <column name="is_promotion" default="false" />
-    </property>
-    <property name="promotionId" column="promotion_id" type="integer" />
-    <property name="saleOff" type="float">
-      <column name="sale_off" default="0" />
-    </property>
     <property name="name" column="name" type="string" />
     <property name="avatar" column="avatar" type="string" />
     <property name="information" column="information" type="string" />
@@ -31,7 +24,10 @@
     <many-to-one name="category" class="Category">
       <column name="category_id" not-null="true" />
     </many-to-one>
-
+    <many-to-one name="promotion" class="Promotion">
+      <column name="promotion_id" />
+    </many-to-one>
+    
     <list name="images" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
       <index column="id" />

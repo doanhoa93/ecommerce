@@ -16,7 +16,7 @@
         <a href="${contextPath}/admin/orders">
           <i class="fa fa-shopping-cart fa-fw"></i>
           Orders
-          <span class="new-order-item-icon"></span>          
+          <span class="new-order-item-icon"></span>
         </a>
       </li>
 
@@ -52,6 +52,13 @@
             <a data-href="${contextPath}/admin/categories/new" class="new-category">New category</a>
           </li>
         </ul>
+      </li>
+
+      <li>
+        <a href="${contextPath}/admin/promotions">
+          <i class="fa fa-gift fa-fw"></i>
+          Promotions
+        </a>
       </li>
 
       <li>

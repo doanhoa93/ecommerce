@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.framgia.bean.ProductInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.Order;
+
 import com.framgia.bean.PromotionInfo;
 import com.framgia.helper.ModelToBean;
+import com.framgia.model.Product;
 import com.framgia.model.Promotion;
 import com.framgia.service.PromotionService;
 
@@ -46,6 +49,13 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	public boolean delete(PromotionInfo entity) {
 		try {
 			Promotion promotion = getPromotionDAO().findById(entity.getId(), true);
+			List<Product> products = getProductDAO().getProductsByPromotion(entity.getId()).stream()
+			    .filter(object -> (object != null)).collect(Collectors.toList());
+			for (Product product : products) {
+				product.setPromotion(null);
+				getProductDAO().saveOrUpdate(product);
+			}
+
 			getPromotionDAO().delete(promotion);
 			return true;
 		} catch (Exception e) {
@@ -77,9 +87,14 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 	}
 
 	@Override
-	public ProductInfo getProduct(Integer promotionId) {
+	public List<PromotionInfo> getPromotions(String page, int limit, Order order) {
 		try {
-			return ModelToBean.toProductInfo(getPromotionDAO().getProduct(promotionId));
+			int off = 0;
+			if (StringUtils.isNotEmpty(page))
+				off = (Integer.parseInt(page) - 1) * limit;
+
+			return getPromotionDAO().getPromotions(off, limit, order).stream()
+			    .map(ModelToBean::toPromotionInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -96,6 +111,7 @@ public class PromotionServiceImpl extends BaseServiceImpl implements PromotionSe
 
 		promotion.setEndDate(promotionInfo.getEndDate());
 		promotion.setStartDate(promotionInfo.getStartDate());
+		promotion.setSaleOf(promotionInfo.getSaleOf());
 		return promotion;
 	}
 }

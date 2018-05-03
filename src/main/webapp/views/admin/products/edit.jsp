@@ -77,21 +77,25 @@
         <div class="field">
           <div class="field">
             <label>
-              <form:checkbox path="isPromotion" value="true" class="has-sale-off" />
-              Has sale off?
+              <input type="checkbox" class="has-sale-of"
+                ${product.getPromotion() != null ? 'checked' : null} />
+              Has sale of?
             </label>
           </div>
 
           <div class="field promotion-product"
-            style="display: ${product.getIsPromotion() ? 'block' : 'none'};">
-            <label>Sale off (%)</label>
-            <form:input path="saleOff" type="number" min="1" max="99" step="any"
-              placeHolder="Sale Off of product" value="1" class="form-control" />
-
+            style="display: ${product.getPromotion() != null ? 'block' : 'none'};">
             <label>Promotion of Product</label>
-            <form:select path="promotionId" value="" class="form-control">
+            <div>
+              <label>
+                Sale Of:
+                <span class="promotion-sale-of">${promotions[0].getSaleOf()}</span>
+                %
+              </label>
+            </div>
+            <form:select path="promotionId" class="form-control promotion-select">
               <c:forEach var="promotion" items="${promotions}">
-                <form:option value="${promotion.getId()}"
+                <form:option value="${promotion.getId()}" data-value="${promotion.getSaleOf()}"
                   selected="${promotion.getId() == product.getPromotion().getId() ? 'selected' : ''}">
                   From ${promotion.getStartDate()} To ${promotion.getEndDate()}
                 </form:option>

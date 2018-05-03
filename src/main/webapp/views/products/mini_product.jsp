@@ -10,7 +10,7 @@
           <img class="product-image" src="${product.getAvatar()}" alt="" />
         </a>
 
-        <c:if test="${product.getIsPromotion()}">
+        <c:if test="${product.getPromotion() != null}">
           <div class="product-sale">
             <img alt="" src="${contextPath}/assets/images/home/sale.png" class="img-responsive">
           </div>

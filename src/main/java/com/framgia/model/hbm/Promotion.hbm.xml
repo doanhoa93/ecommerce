@@ -9,5 +9,6 @@
 
     <property name="startDate" column="start_date" type="date" />
     <property name="endDate" column="end_date" type="date" />
+    <property name="saleOf" column="sale_of" type="float" not-null="true" />
   </class>
 </hibernate-mapping>

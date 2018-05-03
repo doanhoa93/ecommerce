@@ -35,6 +35,8 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off,
 	    int limit, Order order);
 
+	List<Product> getProductsByPromotion(Integer promotionId);
+
 	List<Product> hotProducts(int limit);
 
 	List<Product> recentProducts(Date date, int limit);

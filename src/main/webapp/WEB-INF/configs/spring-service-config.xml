@@ -105,6 +105,7 @@
     <property name="target">
       <bean class="com.framgia.service.impl.PromotionServiceImpl">
         <property name="promotionDAO" ref="PromotionDAO"></property>
+        <property name="productDAO" ref="ProductDAO"></property>
       </bean>
     </property>
   </bean>
@@ -113,7 +114,7 @@
     <property name="target">
       <bean class="com.framgia.service.impl.RateServiceImpl">
         <property name="rateDAO" ref="RateDAO"></property>
-        <property name="productDAO" ref="ProductDAO"></property>        
+        <property name="productDAO" ref="ProductDAO"></property>
       </bean>
     </property>
   </bean>

@@ -8,9 +8,7 @@ import java.util.List;
 public class Product implements Serializable {
 	private Integer id;
 	private Category category;
-	private boolean isPromotion;
-	private Integer promotionId;
-	private float saleOff;
+	private Promotion promotion;
 	private String name;
 	private float price;
 	private float rating;
@@ -29,14 +27,10 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public Product(Integer id, Category category, Boolean isPromotion, Integer promotionId,
-	    float saleOff, String name, float price, float rating, String avatar, String information,
-	    int number) {
+	public Product(Integer id, Category category, String name, float price, float rating,
+	    String avatar, String information, int number) {
 		this.id = id;
 		this.category = category;
-		this.isPromotion = isPromotion;
-		this.promotionId = promotionId;
-		this.saleOff = saleOff;
 		this.name = name;
 		this.price = price;
 		this.rating = rating;
@@ -61,28 +55,12 @@ public class Product implements Serializable {
 		this.category = category;
 	}
 
-	public boolean getIsPromotion() {
-		return isPromotion;
+	public Promotion getPromotion() {
+		return promotion;
 	}
 
-	public void setIsPromotion(boolean isPromotion) {
-		this.isPromotion = isPromotion;
-	}
-
-	public Integer getPromotionId() {
-		return promotionId;
-	}
-
-	public void setPromotionId(Integer promotionId) {
-		this.promotionId = promotionId;
-	}
-
-	public float getSaleOff() {
-		return saleOff;
-	}
-
-	public void setSaleOff(float saleOff) {
-		this.saleOff = saleOff;
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 
 	public String getName() {

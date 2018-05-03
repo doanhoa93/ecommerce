@@ -394,4 +394,23 @@
       <add-attribute value="/assets/admin/css/chat.css" />
     </put-list-attribute>
   </definition>
+
+  <definition name="adminPromotions" extends="adminBaseLayout">
+    <put-attribute name="title" value="Admin | Ecommerce" />
+    <put-attribute name="body" value="/views/admin/promotions/index.jsp" />
+
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/admin/css/promotion.css" />
+      <add-attribute value="/assets/admin/lib-css/jquery-ui.min.css" />
+    </put-list-attribute>
+
+    <put-list-attribute name="js">
+      <add-attribute value="/assets/admin/js/promotion.js" />
+      <add-attribute value="/assets/admin/lib-js/jquery-ui.min.js" />
+    </put-list-attribute>
+  </definition>
+
+  <definition name="adminNewPromotion" template="/views/admin/promotions/new.jsp" />
+
+  <definition name="adminEditPromotion" template="/views/admin/promotions/edit.jsp" />
 </tiles-definitions>

@@ -204,10 +204,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	@Override
 	public List<ProductInfo> getProducts(Integer categoryId, String page, int limit, Order order) {
 		try {
-			int off;
-			if (StringUtils.isEmpty(page))
-				off = 0;
-			else
+			int off = 0;
+			if (StringUtils.isNotEmpty(page))
 				off = (Integer.parseInt(page) - 1) * limit;
 
 			return getProductDAO().filterProducts(categoryId,
@@ -221,7 +219,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 	@Override
 	public List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter,
-	    String page, Integer limit, Order order) {
+	    String page, int limit, Order order) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
@@ -231,6 +229,17 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 			return getProductDAO().filterProducts(categoryId, productFilter, off, limit, order)
 			    .stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	public List<ProductInfo> getProductsByPromotion(Integer promotionId) {
+		try {
+
+			return getProductDAO().getProductsByPromotion(promotionId).stream()
+			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
@@ -311,11 +320,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			product.setNumber(productInfo.getNumber());
 			product.setPrice(productInfo.getPrice());
 			product.setAvatar(productInfo.getAvatar());
-			if (productInfo.getIsPromotion()) {
-				product.setIsPromotion(true);
-				product.setPromotionId(productInfo.getPromotionId());
-				product.setSaleOff(productInfo.getSaleOff());
-			}
+			Promotion promotion = getPromotionDAO().findById(productInfo.getPromotionId(), false);
+			product.setPromotion(promotion);
 			product.setCreatedAt(new Date());
 			product = getProductDAO().saveOrUpdate(product);
 
@@ -370,11 +376,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			product.setNumber(newProduct.getNumber());
 			if (!newProduct.getAvatarFile().isEmpty())
 				product.setAvatar(newProduct.getAvatar());
-			if (newProduct.getIsPromotion()) {
-				product.setIsPromotion(true);
-				product.setPromotionId(newProduct.getPromotionId());
-				product.setSaleOff(newProduct.getSaleOff());
-			}
+
+			Promotion promotion = getPromotionDAO().findById(newProduct.getPromotionId(), false);
+			product.setPromotion(promotion);
 			getProductDAO().saveOrUpdate(product);
 
 			List<Integer> statuses = newProduct.getImagesStatus();
@@ -423,17 +427,15 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			product = new Product();
 			product.setId(productInfo.getId());
 			product.setCategory(new Category(productInfo.getCategoryId()));
+			product.setPromotion(new Promotion(productInfo.getPromotionId()));
 		}
 
 		product.setAvatar(productInfo.getAvatar());
 		product.setInformation(productInfo.getInformation());
-		product.setIsPromotion(productInfo.getIsPromotion());
 		product.setName(productInfo.getName());
 		product.setNumber(productInfo.getNumber());
 		product.setPrice(productInfo.getPrice());
-		product.setPromotionId(productInfo.getPromotionId());
 		product.setRating(productInfo.getRating());
-		product.setSaleOff(productInfo.getSaleOff());
 		return product;
 	}
 }
