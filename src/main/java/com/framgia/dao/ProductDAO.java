@@ -30,14 +30,14 @@ public interface ProductDAO extends BaseDAO<Integer, Product> {
 
 	List<Image> getImages(Integer productId);
 
+	List<Product> getProducts(Integer categoryId, int off, int limit, Order order);
+
 	List<Product> filterProducts(Integer categoryId, ProductFilter productFilter, int off,
-	    int limit);
+	    int limit, Order order);
 
 	List<Product> hotProducts(int limit);
 
 	List<Product> recentProducts(Date date, int limit);
 
 	List<Product> randomProducts(int limit);
-
-	List<Product> getProducts(Integer categoryId, int off, int limit, Order order);
 }

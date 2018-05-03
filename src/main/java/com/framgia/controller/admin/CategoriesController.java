@@ -78,13 +78,13 @@ public class CategoriesController extends AdminController {
 			List<ProductInfo> products = null;
 			if (StringUtils.isNotEmpty(entries)) {
 				if (entries.equals("all"))
-					products = productService.getProducts(category.getId(), null, 0);
+					products = productService.getProducts(category.getId(), null, 0, null);
 				else
 					products = productService.getProducts(category.getId(), null,
-					    Integer.parseInt(entries));
+					    Integer.parseInt(entries), null);
 			} else {
 				products = productService.getProducts(category.getId(), null,
-				    Paginate.ADMIN_OBJECT_LIMIT);
+				    Paginate.ADMIN_OBJECT_LIMIT, null);
 			}
 			model.addObject("category", category);
 			model.addObject("products", products);

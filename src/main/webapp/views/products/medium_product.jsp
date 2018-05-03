@@ -9,11 +9,11 @@
       </a>
     </h1>
 
-    <h2>
+    <h2 class="category-name">
       <a href="${contextPath}/categories/${product.getCategory().getId()}">
         ${product.getCategory().getName()} </a>
     </h2>
-    
+
     <p>${product.getInformation()}</p>
     <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

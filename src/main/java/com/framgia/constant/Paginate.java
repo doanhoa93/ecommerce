@@ -12,4 +12,5 @@ public interface Paginate {
 	final int HOT_CATEGORY_LIMIT = 7;
 	final int DATE_RECENT = 30;
 	final int CHAT_LIMIT = 10;
+	final int MAX_SIZE_PAGE = 6;
 }

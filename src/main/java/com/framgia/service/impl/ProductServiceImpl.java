@@ -202,7 +202,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	}
 
 	@Override
-	public List<ProductInfo> getProducts(Integer categoryId, String page, int limit) {
+	public List<ProductInfo> getProducts(Integer categoryId, String page, int limit, Order order) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page))
@@ -210,19 +210,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			else
 				off = (Integer.parseInt(page) - 1) * limit;
 
-			return getProductDAO()
-			    .filterProducts(categoryId, new ProductFilter(null, null, null), off, limit)
-			    .stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
-		} catch (Exception e) {
-			logger.error(e);
-			return null;
-		}
-	}
-
-	@Override
-	public List<ProductInfo> getProducts(Integer categoryId, int off, int limit, Order order) {
-		try {
-			return getProductDAO().getProducts(categoryId, off, limit, order).stream()
+			return getProductDAO().filterProducts(categoryId,
+			    new ProductFilter(null, null, null, null), off, limit, order).stream()
 			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
@@ -232,7 +221,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 	@Override
 	public List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter,
-	    String page, Integer limit) {
+	    String page, Integer limit, Order order) {
 		try {
 			int off;
 			if (StringUtils.isEmpty(page)) {
@@ -240,8 +229,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			} else
 				off = (Integer.parseInt(page) - 1) * limit;
 
-			return getProductDAO().filterProducts(categoryId, productFilter, off, limit).stream()
-			    .map(ModelToBean::toProductInfo).collect(Collectors.toList());
+			return getProductDAO().filterProducts(categoryId, productFilter, off, limit, order)
+			    .stream().map(ModelToBean::toProductInfo).collect(Collectors.toList());
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
