@@ -49,7 +49,7 @@ public class CartsController extends BaseController {
 		}
 
 		model.addObject("carts", carts);
-		model.addObject("orderInfo", new OrderInfo());
+		model.addObject("order", new OrderInfo());
 		if (StringUtils.isNotEmpty(page))
 			model.setViewName("cartsPartial");
 		return model;

@@ -6,6 +6,8 @@ $(document).ready(
             filter.name = $('.name-range-input').val();
             filter.priceHigh = $('.price-range-input').val();
             filter.priceLow = $('.price-range-input').attr('min');
+            filter.orderAttr = $('.product-order-active').attr('name');
+            filter.orderType = $('.product-order-active').val();
             $.ajax({
                 method : 'GET',
                 headers : {
@@ -24,7 +26,7 @@ $(document).ready(
             filter.name = $('.name-range-input').val();
             filter.priceHigh = $('.price-range-input').val();
             filter.priceLow = $('.price-range-input').attr('min');
-            
+
             $.ajax({
                 method : 'GET',
                 headers : {
@@ -38,25 +40,43 @@ $(document).ready(
             })
         });
 
-        $(document).on('change', '.product-order-field', function() {
-            var url = $(this).data('href');
-            filter.name = $('.name-range-input').val();
-            filter.priceHigh = $('.price-range-input').val();
-            filter.priceLow = $('.price-range-input').attr('min');
-            filter.orderAttr = this.name;
-            filter.orderType = this.value;
-            $.ajax({
-                method : 'GET',
-                headers : {
-                    'Accept' : 'text/html',
-                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-                url : url,
-                data : filter
-            }).done(function(data) {
-                $('.products-right').html(data);
-            })
-        });
+        $(document).on(
+            'change',
+            '.product-order-field',
+            function() {
+                var url = $(this).data('href');
+                filter.name = $('.name-range-input').val();
+                filter.priceHigh = $('.price-range-input').val();
+                filter.priceLow = $('.price-range-input').attr('min');
+                filter.orderAttr = this.name;
+                filter.orderType = this.value;
+                if (filter.orderAttr == 'name') {
+                    if (!$('.order-price .empty').length) {
+                        $('.order-price option').first().before(
+                            $('.order-name option').first().clone().prop('outerHTML'));
+                    }
+                    $('.order-name .empty').remove();
+                } else {
+                    if (!$('.order-name .empty').length) {
+                        $('.order-name option').first().before(
+                            $('.order-price option').first().clone().prop('outerHTML'));
+                    }
+                    $('.order-price .empty').remove();
+                }
+                $('.product-order-field').removeClass('product-order-active');
+                $(this).addClass('product-order-active');
+                $.ajax({
+                    method : 'GET',
+                    headers : {
+                        'Accept' : 'text/html',
+                        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+                    },
+                    url : url,
+                    data : filter
+                }).done(function(data) {
+                    $('.products-right').html(data);
+                })
+            });
 
         $(document).on('input', '.name-category', function() {
             var name = $(this).val().toUpperCase();

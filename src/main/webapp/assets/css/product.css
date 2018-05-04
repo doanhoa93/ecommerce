@@ -106,6 +106,10 @@
 	width: auto;
 }
 
+.product-order-active {
+	border-color: #FE980F;
+}
+
 .category a:hover {
 	background-color: #6967634a !important;
 }

@@ -43,7 +43,7 @@ public class UsersController extends BaseController {
 		ModelAndView model = new ModelAndView("redirect");
 		if (currentUser().getId() == userInfo.getId()) {
 			userValidator.validateUpdate(userInfo, result);
-			if (!result.getFieldErrors().isEmpty() && userService.updateUser(userInfo)) {
+			if (!result.hasErrors() && userService.updateUser(userInfo)) {
 				model.addObject("url", request.getContextPath() + "/users/" + id);
 			} else {
 				model.setViewName("inputError");
