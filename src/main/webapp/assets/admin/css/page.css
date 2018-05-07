@@ -94,7 +94,7 @@
 }
 
 .user-chat-new-message {
-	background: url(../images/red_circle.png) center right no-repeat;
+	background: url(../images/default/red_circle.png) center right no-repeat;
 	border-radius: 100%;
 	float: right;
 	height: 10px;
@@ -103,7 +103,7 @@
 }
 
 .new-order-item-icon {
-	background: url(../images/red_circle.png) center right no-repeat;
+	background: url(../images/default/red_circle.png) center right no-repeat;
 	border-radius: 100%;
 	display: none;
 	float: right;

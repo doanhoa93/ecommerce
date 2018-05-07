@@ -10,6 +10,9 @@
       <label for="upload" class="upload-avatar">
         <input type="file" name="avatar" id="upload" style="display: none">
         <img src="${user.getAvatar()}" class="img-responsive avatar">
+        <span class="edit-avatar center">
+          <span class="content">Edit your avatar</span>
+        </span>
       </label>
     </div>
 

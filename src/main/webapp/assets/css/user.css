@@ -1,10 +1,10 @@
 .user {
-    border: 1px solid #F7F7F0;	
+	border: 1px solid #F7F7F0;
 	padding: 10px 40px;
 }
 
 .user .user-right {
-    border-left: 1px solid #F7F7F0;	
+	border-left: 1px solid #F7F7F0;
 }
 
 .user .user-avatar .avatar {
@@ -22,4 +22,22 @@
 
 .user .upload-avatar {
 	cursor: pointer;
+	position: relative;
+}
+
+.user .edit-avatar {
+	background: linear-gradient(transparent, rgba(0, 0, 0, .6) 50%,
+		rgba(0, 0, 0, .6) 100%);
+	color: white;
+	display: none;
+	height: 100%;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 100%;
+}
+
+.edit-avatar .content {
+	line-height: 150px;
+	vertical-align: middle;
 }

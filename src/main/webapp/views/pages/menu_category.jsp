@@ -18,6 +18,6 @@
   </div>
 
   <div class="shipping text-center">
-    <img src="${contextPath}/assets/images/home/shipping.jpg" alt="" />
+    <img src="${contextPath}/assets/images/default/shipping.jpg" alt="" />
   </div>
 </div>

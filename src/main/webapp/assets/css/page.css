@@ -287,7 +287,7 @@
 }
 
 .user-chat-new-message {
-	background: url(../images/red_circle.png) center right no-repeat;
+	background: url(../images/default/red_circle.png) center right no-repeat;
 	border-radius: 100%;
 	float: right;
 	height: 10px;
@@ -310,7 +310,7 @@ input[type="search"].input-sm {
 }
 
 .global-search-input {
-	background: url(../images/home/searchicon.png) 5px no-repeat #F0F0E9
+	background: url(../images/default/searchicon.png) 5px no-repeat #F0F0E9
 		!important;
 	padding-left: 30px !important;
 	width: 100% !important;

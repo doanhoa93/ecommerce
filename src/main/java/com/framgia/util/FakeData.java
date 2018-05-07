@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,11 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.framgia.constant.Gender;
+import com.framgia.constant.Rating;
 import com.framgia.constant.Role;
 import com.framgia.constant.Status;
 import com.framgia.model.Cart;
 import com.framgia.model.Category;
-import com.framgia.model.Comment;
 import com.framgia.model.Image;
 import com.framgia.model.Notification;
 import com.framgia.model.Order;
@@ -48,12 +46,9 @@ public class FakeData {
 			addCategories(session);
 			addPromotions(session);
 			addProducts(session);
-			addRecents(session);
 			addImages(session);
-			addComments(session);
 			addCarts(session);
 			addOrders(session);
-			addOrderProducts(session);
 			addNotifications(session);
 			addSuggests(session);
 			addRates(session);
@@ -76,11 +71,10 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-			Map<String, Object> map = upload(new File(
-			    System.getProperty("user.dir") + "/src/main/webapp/assets/images/supervisor.png"));
+			Map<String, Object> map = upload(new File(System.getProperty("user.dir")
+			    + "/src/main/webapp/assets/images/default/supervisor.png"));
 			String avatar = (String) map.get("url");
 			User admin = new User();
-			admin.setId(1);
 			admin.setEmail("admin@gmail.com");
 			admin.setPassword(bcrypt.encode("123456"));
 			admin.setRole(Role.ADMIN);
@@ -89,7 +83,6 @@ public class FakeData {
 			admin.setAvatar(avatar);
 			session.save(admin);
 			Profile profileA = new Profile();
-			profileA.setId(2);
 			profileA.setUser(admin);
 			profileA.setAddress("Ha Noi");
 			profileA.setGender(Gender.getInt(Gender.MALE));
@@ -98,11 +91,10 @@ public class FakeData {
 			profileA.setBirthday(calendar.getTime());
 			session.save(profileA);
 
-			map = upload(new File(
-			    System.getProperty("user.dir") + "/src/main/webapp/assets/images/user.png"));
+			map = upload(new File(System.getProperty("user.dir")
+			    + "/src/main/webapp/assets/images/default/user.png"));
 			avatar = (String) map.get("url");
 			User user = new User();
-			user.setId(2);
 			user.setEmail("tiennh1995@gmail.com");
 			user.setPassword(bcrypt.encode("123456"));
 			user.setRole(Role.USER);
@@ -111,7 +103,6 @@ public class FakeData {
 			user.setAvatar(avatar);
 			session.save(user);
 			Profile profile = new Profile();
-			profile.setId(1);
 			profile.setUser(user);
 			profile.setAddress("Ha Noi");
 			profile.setGender(Gender.getInt(Gender.MALE));
@@ -120,7 +111,6 @@ public class FakeData {
 
 			for (int i = 3; i < 11; i++) {
 				user = new User();
-				user.setId(i);
 				user.setEmail("example-" + i + "@gmail.com");
 				user.setPassword(bcrypt.encode("123456"));
 				user.setRole(Role.USER);
@@ -129,7 +119,6 @@ public class FakeData {
 				user.setAvatar(avatar);
 				session.save(user);
 				profile = new Profile();
-				profile.setId(i);
 				profile.setUser(user);
 				profile.setAddress("Ha Noi");
 				profile.setGender(Gender.getInt(Gender.MALE));
@@ -197,70 +186,38 @@ public class FakeData {
 		try {
 			Transaction t = null;
 			t = session.beginTransaction();
+			session.createQuery("delete from Recent").executeUpdate();
 			session.createQuery("delete from Product").executeUpdate();
 			t.commit();
 
 			t = session.beginTransaction();
 			session.clear();
-			List<Category> categories = (List<Category>) session.createCriteria(Category.class).add(
-			    Restrictions.in("id", new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7))))
+			List<Category> categories = (List<Category>) session.createCriteria(Category.class)
 			    .list();
 			Map<String, Object> map = null;
 			Random random = new Random();
-			for (int i = 1; i < 67; i++) {
+			for (int i = 1; i < 52; i++) {
 				Product product = new Product();
 				product.setId(i);
-				product.setCategory(categories.get(i % 7));
+				product.setCategory(categories.get(i % categories.size()));
 				product.setName("Product-" + i);
 				product.setInformation("This is information");
-				product.setNumber(10);
+				product.setNumber(random.nextInt(10000) + 1);
 				product.setPrice(new Float(random.nextInt(600)));
 				if (random.nextInt(2) == 0)
 					product.setPromotion(new Promotion(random.nextInt(9) + 1));
 
-				product.setRating(new Float(4.0));
+				product.setRating(new Float(random.nextInt(5) + 1));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + (i % 18 + 1) + ".jpg"));
+				    + "/src/main/webapp/assets/images/sample/product" + ((i % 16) + 1) + ".jpg"));
 				product.setAvatar((String) map.get("url"));
 				product.setCreatedAt(new Date());
 				session.save(product);
-			}
-			t.commit();
-		} catch (Exception e) {
-			System.out.println(e);
-			System.exit(0);
-		}
-	}
 
-	@SuppressWarnings({ "unchecked" })
-	public static void addOrders(Session session) {
-		try {
-			Transaction t = null;
-			t = session.beginTransaction();
-			session.createQuery("delete from Order").executeUpdate();
-			t.commit();
-
-			t = session.beginTransaction();
-			session.clear();
-			List<
-			    User> users = (List<
-			        User>) session.createCriteria(User.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			            .list();
-			for (int i = 1; i < 10; i++) {
-				Order order = new Order();
-				order.setId(i);
-				order.setUser(users.get(i - 1));
-				order.setStatus(Status.getIntStatus(Status.WAITING));
-				order.setTotalPrice(new Float(100));
-				order.setCreatedAt(new Date());
-				order.setPhoneNumber("+84123456789");
-				order.setEmail(users.get(i - 1).getEmail());
-				order.setName(users.get(i - 1).getName());
-				order.setAddress("Ha Noi");
-
-				session.save(order);
+				Recent recent = new Recent();
+				recent.setProduct(product);
+				recent.setCreatedAt(new Date());
+				session.save(recent);
 			}
 			t.commit();
 		} catch (Exception e) {
@@ -279,24 +236,18 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<
-			    User> users = (List<
-			        User>) session.createCriteria(User.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			            .list();
-			List<
-			    Product> products = (List<
-			        Product>) session.createCriteria(Product.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
-
+			List<User> users = (List<User>) session.createCriteria(User.class)
+			    .add(Restrictions.not(Restrictions.in("id", 1))).list();
+			List<Product> products = (List<Product>) session.createCriteria(Product.class).list();
+			int userSize = users.size();
+			int productSize = products.size();
 			for (int i = 1; i < 10; i++) {
 				Cart cart = new Cart();
 				cart.setId(i);
-				cart.setUser(users.get(i - 1));
-				cart.setProduct(products.get(i - 1));
+				int indexUser = i % userSize;
+				int indexProduct = i % productSize;
+				cart.setUser(users.get(indexUser));
+				cart.setProduct(products.get(indexProduct));
 
 				session.save(cart);
 			}
@@ -309,77 +260,51 @@ public class FakeData {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	public static void addComments(Session session) {
-		try {
-			Transaction t = null;
-			t = session.beginTransaction();
-			session.createQuery("delete from Comment").executeUpdate();
-			t.commit();
-
-			t = session.beginTransaction();
-			session.clear();
-			List<
-			    User> users = (List<
-			        User>) session.createCriteria(User.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			            .list();
-			List<
-			    Product> products = (List<
-			        Product>) session.createCriteria(Product.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
-
-			for (int i = 1; i < 10; i++) {
-				Comment comment = new Comment();
-				comment.setId(i);
-				comment.setUser(users.get(i - 1));
-				comment.setProduct(products.get(i - 1));
-				comment.setContent("This is content");
-
-				session.save(comment);
-			}
-			t.commit();
-		} catch (Exception e) {
-			System.out.println(e);
-			System.exit(0);
-		}
-	}
-
-	@SuppressWarnings({ "unchecked" })
-	public static void addOrderProducts(Session session) {
+	public static void addOrders(Session session) {
 		try {
 			Transaction t = null;
 			t = session.beginTransaction();
 			session.createQuery("delete from OrderProduct").executeUpdate();
+			session.createQuery("delete from Order").executeUpdate();
 			t.commit();
 
 			t = session.beginTransaction();
 			session.clear();
-			List<
-			    Order> orders = (List<
-			        Order>) session.createCriteria(Order.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
+			List<User> users = (List<User>) session.createCriteria(User.class)
+			    .add(Restrictions.not(Restrictions.in("id", 1))).list();
+			Random random = new Random();
+			for (int i = 1; i < 10; i++) {
+				Order order = new Order();
+				order.setId(i);
+				int index = i % users.size();
+				order.setUser(users.get(index));
+				order.setStatus(Status.getIntStatus(Status.WAITING));
+				order.setCreatedAt(new Date());
+				order.setPhoneNumber("+84123456789");
+				order.setEmail(users.get(index).getEmail());
+				order.setName(users.get(index).getName());
+				order.setAddress("Ha Noi");
 
-			List<
-			    Product> products = (List<
-			        Product>) session.createCriteria(Product.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
+				session.save(order);
+			}
+			t.commit();
 
+			t = session.beginTransaction();
+			session.clear();
+			List<Order> orders = (List<Order>) session.createCriteria(Order.class).list();
+			List<Product> products = (List<Product>) session.createCriteria(Product.class).list();
 			for (int i = 1; i < 10; i++) {
 				OrderProduct orderProduct = new OrderProduct();
 				orderProduct.setId(i);
 				orderProduct.setProduct(products.get(i - 1));
-				orderProduct.setQuantity(1);
+				orderProduct.setQuantity(random.nextInt(10));
 				orderProduct.setPrice(products.get(i - 1).getPrice());
 				orderProduct.setOrder(orders.get(i - 1));
+				orders.get(i - 1)
+				    .setTotalPrice(orderProduct.getQuantity() * orderProduct.getPrice());
 
 				session.save(orderProduct);
+				session.save(orders.get(i - 1));
 			}
 			t.commit();
 		} catch (Exception e) {
@@ -398,20 +323,14 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<
-			    Product> products = (List<
-			        Product>) session.createCriteria(Product.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
-
+			List<Product> products = (List<Product>) session.createCriteria(Product.class).list();
 			Map<String, Object> map = null;
 			for (int i = 1; i < 10; i++) {
 				Image image = new Image();
 				image.setId(i);
 				image.setProduct(products.get(i - 1));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				    + "/src/main/webapp/assets/images/sample/product" + i + ".jpg"));
 				image.setImage((String) map.get("url"));
 
 				session.save(image);
@@ -422,7 +341,7 @@ public class FakeData {
 				image.setId(i);
 				image.setProduct(products.get(9 - i));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				    + "/src/main/webapp/assets/images/sample/product" + i + ".jpg"));
 				image.setImage((String) map.get("url"));
 
 				session.save(image);
@@ -433,7 +352,7 @@ public class FakeData {
 				image.setId(i);
 				image.setProduct(products.get(i - 1));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				    + "/src/main/webapp/assets/images/sample/product" + i + ".jpg"));
 				image.setImage((String) map.get("url"));
 
 				session.save(image);
@@ -455,63 +374,20 @@ public class FakeData {
 
 			t = session.beginTransaction();
 			session.clear();
-			List<
-			    User> users = (List<
-			        User>) session.createCriteria(User.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10))))
-			            .list();
-
-			List<
-			    Order> orders = (List<
-			        Order>) session.createCriteria(Order.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
-
-			for (int i = 0; i < 9; i++) {
+			List<User> users = (List<User>) session.createCriteria(User.class)
+			    .add(Restrictions.not(Restrictions.in("id", 1))).list();
+			List<Order> orders = (List<Order>) session.createCriteria(Order.class).list();
+			for (int i = 1; i < 10; i++) {
 				Notification notification = new Notification();
-				notification.setId(i + 1);
-				notification.setUser(users.get(i));
-				notification.setOrder(orders.get(i));
-				notification.setContent("The Order (created at: " + orders.get(i).getCreatedAt()
-				    + ") was setted with accepted!");
+				notification.setId(i);
+				notification.setUser(users.get(i - 1));
+				notification.setOrder(orders.get(i - 1));
+				notification.setContent("The Order (created at: " + orders.get(i - 1).getCreatedAt()
+				    + ") was setted with waiting!");
 				notification.setWatched(false);
 				notification.setCreatedAt(new Date());
 
 				session.save(notification);
-			}
-			t.commit();
-		} catch (Exception e) {
-			System.out.println(e);
-			System.exit(0);
-		}
-	}
-
-	@SuppressWarnings({ "unchecked" })
-	public static void addRecents(Session session) {
-		try {
-			Transaction t = null;
-			t = session.beginTransaction();
-			session.createQuery("delete from Recent").executeUpdate();
-			t.commit();
-
-			t = session.beginTransaction();
-			session.clear();
-			List<
-			    Product> products = (List<
-			        Product>) session.createCriteria(Product.class)
-			            .add(Restrictions.in("id",
-			                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))))
-			            .list();
-
-			for (int i = 1; i < 10; i++) {
-				Recent recent = new Recent();
-				recent.setId(i);
-				recent.setProduct(products.get(i - 1));
-				recent.setCreatedAt(new Date());
-
-				session.save(recent);
 			}
 			t.commit();
 		} catch (Exception e) {
@@ -529,15 +405,15 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-
+			session.clear();
 			Map<String, Object> map = null;
-			for (int i = 1; i < 10; i++) {
+			Random random = new Random();
+			for (int i = 2; i < 10; i++) {
 				Suggest suggest = new Suggest();
-				suggest.setId(i);
-				suggest.setUser(new User(i + 1));
-				suggest.setPrice(100);
+				suggest.setUser(new User(i));
+				suggest.setPrice(new Float(random.nextInt(600)));
 				map = upload(new File(System.getProperty("user.dir")
-				    + "/src/main/webapp/assets/images/home/product" + i + ".jpg"));
+				    + "/src/main/webapp/assets/images/sample/product" + i + ".jpg"));
 				suggest.setAvatar((String) map.get("url"));
 				suggest.setCreatedAt(new Date());
 				suggest.setCategory("Category-" + i);
@@ -552,6 +428,7 @@ public class FakeData {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void addRates(Session session) {
 		try {
 			Transaction t = null;
@@ -560,14 +437,19 @@ public class FakeData {
 			t.commit();
 
 			t = session.beginTransaction();
-
+			session.clear();
+			List<Product> products = (List<Product>) session.createCriteria(Product.class).list();
+			Random random = new Random();
 			for (int i = 1; i < 10; i++) {
 				Rate rate = new Rate();
 				rate.setId(i);
 				rate.setUser(new User(i + 1));
-				rate.setProduct(new Product(i));
-				rate.setRating(3);
+				rate.setProduct(products.get(i - 1));
+				rate.setRating(random.nextInt(Rating.MAX) + 1);
+
+				products.get(i - 1).setRating(rate.getRating());
 				session.save(rate);
+				session.save(products.get(i - 1));
 			}
 			t.commit();
 		} catch (Exception e) {

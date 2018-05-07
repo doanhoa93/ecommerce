@@ -65,10 +65,10 @@
         <div class="col-sm-6">
           <div class="col-md-4 col-xs-12 col-sm-12 logo pull-left">
             <a href="${contextPath}">
-              <img src="${contextPath}/assets/images/home/logo.jpg" alt="" class="header-logo" />
+              <img src="${contextPath}/assets/images/default/logo.jpg" alt="" class="header-logo" />
             </a>
           </div>
-          
+
           <div class="col-md-8 col-xs-12 col-sm-12 search_box global-search pull-left">
             <input type="text" placeholder="Search" class="global-search-input" />
           </div>

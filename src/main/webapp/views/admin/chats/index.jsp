@@ -25,7 +25,7 @@
         <ul class="chat">
           <li class="right clearfix chat-item chat-item-0">
             <span class="chat-img pull-right">
-              <img src="${contextPath}/assets/images/supervisor.png" alt="User Avatar"
+              <img src="${contextPath}/assets/images/default/supervisor.png" alt="User Avatar"
                 class="img-responsive img-circle" />
             </span>
             

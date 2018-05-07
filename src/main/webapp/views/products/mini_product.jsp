@@ -12,7 +12,7 @@
 
         <c:if test="${product.getPromotion() != null}">
           <div class="product-sale">
-            <img alt="" src="${contextPath}/assets/images/home/sale.png" class="img-responsive">
+            <img alt="" src="${contextPath}/assets/images/sample/sale.png" class="img-responsive">
           </div>
         </c:if>
 
