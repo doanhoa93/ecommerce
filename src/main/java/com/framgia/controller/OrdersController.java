@@ -63,8 +63,8 @@ public class OrdersController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView create(@ModelAttribute("order") OrderInfo orderInfo,
-	    BindingResult result) throws JsonParseException, JsonMappingException, IOException {
+	public ModelAndView create(@ModelAttribute("order") OrderInfo orderInfo, BindingResult result)
+	    throws JsonParseException, JsonMappingException, IOException {
 		ModelAndView model = new ModelAndView();
 		orderInfo.setUser(currentUser());
 		orderValidator.validateCreate(orderInfo, result);
@@ -96,7 +96,7 @@ public class OrdersController extends BaseController {
 					put("reject", Status.REJECT);
 					put("cancel", Status.CANCEL);
 				}
-			});			
+			});
 		} else
 			model.setViewName("404");
 
@@ -108,7 +108,7 @@ public class OrdersController extends BaseController {
 		ModelAndView model = new ModelAndView("editOrder");
 		OrderInfo orderInfo = orderService.findById(id, true);
 		if (orderValidator.validateEdit(orderInfo, currentUser())) {
-			model.addObject("orderInfo", orderInfo);
+			model.addObject("order", orderInfo);
 			model.addObject("orderProducts", orderService.getOrderProducts(id));
 		} else {
 			model.setViewName("404");
@@ -119,7 +119,7 @@ public class OrdersController extends BaseController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.POST)
 	public ModelAndView update(@PathVariable("id") Integer id,
-	    @ModelAttribute("orderInfo") OrderInfo orderInfo, BindingResult result)
+	    @ModelAttribute("order") OrderInfo orderInfo, BindingResult result)
 	    throws JsonProcessingException {
 		ModelAndView model = new ModelAndView();
 		try {

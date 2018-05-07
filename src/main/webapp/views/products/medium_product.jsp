@@ -15,7 +15,7 @@
     </h2>
 
     <p>${product.getInformation()}</p>
-    <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cartInfo">
+    <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cart">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <input type="hidden" name="productId" value="${product.getId()}" />
       <button type="submit" class="btn btn-default get">Get it now</button>

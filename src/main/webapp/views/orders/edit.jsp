@@ -10,8 +10,8 @@
   </h3>
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 alert alert-warning"></div>
   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-    <form:form id="edit-order" action="${contextPath}/orders/${orderInfo.getId()}" method="PATCH"
-      enctype="multipart/form-data" modelAttribute="orderInfo" class="order-form">
+    <form:form id="edit-order" action="${contextPath}/orders/${order.getId()}" method="PATCH"
+      enctype="multipart/form-data" modelAttribute="order" class="order-form">
       <input type="hidden" name="sessionId" value="${token}" />
       <form:hidden path="status" />
       <div class="field">
@@ -100,8 +100,8 @@
     </div>
 
     <div class="order-form">
-      <button class="btn btn-primary btn-update-order" data-id="${orderInfo.getId()}">Save</button>
-      <a href="${contextPath}/orders/${orderInfo.getId()}" class="btn btn-default btn-cancel-order">Cancel
+      <button class="btn btn-primary btn-update-order" data-id="${order.getId()}">Save</button>
+      <a href="${contextPath}/orders/${order.getId()}" class="btn btn-default btn-cancel-order">Cancel
       </a>
     </div>
   </div>

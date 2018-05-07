@@ -1,6 +1,7 @@
 $(document).ready(
     function() {
         var filter = {};
+        var autoCompleteDatas = [];
 
         $(document).on('click', '.btn-filter', function() {
             filter.name = $('.name-range-input').val();
@@ -88,6 +89,11 @@ $(document).ready(
             });
         });
 
+        $(document).on('input', '.name-range-input', function() {
+            if (!autoCompleteDatas.length)
+                loadAutoCompleteData();
+        });
+
         scrollNameCategory();
 
         function scrollNameCategory() {
@@ -97,5 +103,24 @@ $(document).ready(
                         - $('.categories').position().top;
                 $('.categories').scrollTop(position);
             }
+        }
+
+        function loadAutoCompleteData() {
+            $.ajax({
+                url : getContextPath() + "/redises",
+                method : 'GET',
+                dataType : 'json',
+                success : function(data) {
+                    autoCompleteDatas = Object.values(data);
+
+                    $('.name-range-input').autocomplete({
+                        source : autoCompleteDatas
+                    });
+                }
+            });
+        }
+
+        function getContextPath() {
+            return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
         }
     });

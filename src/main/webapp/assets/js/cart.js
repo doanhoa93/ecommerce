@@ -97,6 +97,7 @@ $(document).ready(
                 data : formData,
                 success : function(data) {
                     if (isError(data)) {
+                        $('#preview-order').modal('hide');
                         $('.error').remove();
                         var errorMsgs = [];
                         $(data).filter('.error').each(function(index, error) {

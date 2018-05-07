@@ -15,6 +15,7 @@
 
     <!-- import css -->
     <put-list-attribute name="default-css">
+      <add-attribute value="/assets/lib-css/jquery-ui.min.css" />
       <add-attribute value="/assets/lib-css/animate.min.css" />
       <add-attribute value="/assets/lib-css/bootstrap.min.css" />
       <add-attribute value="/assets/lib-css/font-awesome.min.css" />
@@ -37,6 +38,7 @@
       <add-attribute value="/assets/lib-js/stomp.min.js" />
       <add-attribute value="/assets/lib-js/jquery.timeago.min.js" />
       <add-attribute value="/assets/lib-js/jquery.zoom.min.js" />
+      <add-attribute value="/assets/lib-js/jquery-ui.min.js" />
       <add-attribute value="/assets/js/page.js" />
       <add-attribute value="/assets/js/socket.js" />
     </put-list-attribute>
@@ -213,12 +215,10 @@
     <put-attribute name="body" value="/views/users/show.jsp" />
     <put-list-attribute name="css">
       <add-attribute value="/assets/css/user.css" />
-      <add-attribute value="/assets/lib-css/jquery-ui.min.css" />
     </put-list-attribute>
 
     <put-list-attribute name="js">
       <add-attribute value="/assets/js/user.js" />
-      <add-attribute value="/assets/lib-js/jquery-ui.min.js" />
     </put-list-attribute>
   </definition>
 
