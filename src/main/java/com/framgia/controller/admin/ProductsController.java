@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.framgia.bean.ProductInfo;
 import com.framgia.constant.Paginate;
-import com.framgia.helper.RedisUtil;
+import com.framgia.job.UpdateDataTask;
 import com.framgia.validator.ProductValidator;
 
 @Controller("admin/product")
@@ -26,7 +26,7 @@ public class ProductsController extends AdminController {
 	private ProductValidator productValidator;
 
 	@Autowired
-	private RedisUtil redisUtil;
+	private UpdateDataTask updateDataTask;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(@RequestParam(value = "entries", required = false) String entries) {
@@ -63,7 +63,7 @@ public class ProductsController extends AdminController {
 			model.setViewName("redirect");
 			model.addObject("url",
 			    request.getContextPath() + "/admin/products/" + productInfo.getId());
-			redisUtil.updateData();
+			updateDataTask.updateData();
 		} else {
 			model.setViewName("inputError");
 			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
@@ -111,7 +111,7 @@ public class ProductsController extends AdminController {
 			model.setViewName("redirect");
 			model.addObject("url",
 			    request.getContextPath() + "/admin/products/" + productInfo.getId());
-			redisUtil.updateData();
+			updateDataTask.updateData();
 		} else {
 			model.setViewName("inputError");
 			model.addObject("errors", convertErrorsToHashMap(result.getFieldErrors()));
@@ -127,7 +127,7 @@ public class ProductsController extends AdminController {
 		if (productInfo != null) {
 			productService.delete(productInfo);
 			model.setViewName("redirect:/admin/products");
-			redisUtil.updateData();
+			updateDataTask.updateData();
 		} else
 			model.setViewName("admin404");
 		return model;

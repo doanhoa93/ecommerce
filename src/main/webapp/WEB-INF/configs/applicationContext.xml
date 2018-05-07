@@ -1,7 +1,11 @@
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
   <mvc:resources mapping="/resources/**" location="/resources/" />
   <mvc:resources mapping="/assets/**" location="/assets/" />
@@ -48,15 +52,40 @@
     </property>
   </bean>
 
+  <!-- Task for send email -->
   <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
 
-  <bean id="redisUtil" class="com.framgia.helper.RedisUtil" />
+  <!-- Job for update data to redis -->
+  <bean id="updateDataTask" class="com.framgia.job.UpdateDataTask" />
 
-  <task:scheduled-tasks scheduler="updateDataToRedis">
-    <task:scheduled ref="redisUtil" method="updateData" cron="*/5 * * * * MON-FRI" />
-  </task:scheduled-tasks>
-  
-  <task:scheduler id="updateDataToRedis" />
+  <bean name="redisJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.framgia.job.RedisJob" />
+    <property name="jobDataMap">
+      <map>
+        <entry key="updateDataTask" value-ref="updateDataTask" />
+      </map>
+    </property>
+    <property name="durability" value="true" />
+  </bean>
+
+  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="redisJob" />
+    <property name="cronExpression" value="0 15 10 ? * MON-FRI" />
+  </bean>
+
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobDetails">
+      <list>
+        <ref bean="redisJob" />
+      </list>
+    </property>
+
+    <property name="triggers">
+      <list>
+        <ref bean="cronTrigger" />
+      </list>
+    </property>
+  </bean>
 
   <!-- Config upload with cloudinary -->
   <bean id="uploadFile" class="com.framgia.helper.UploadFile">

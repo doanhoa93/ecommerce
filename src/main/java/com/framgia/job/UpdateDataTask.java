@@ -1,15 +1,17 @@
-package com.framgia.helper;
+package com.framgia.job;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.framgia.bean.ProductInfo;
 import com.framgia.service.ProductService;
 
 import redis.clients.jedis.Jedis;
 
-public class RedisUtil {
+@Component
+public class UpdateDataTask {
 
 	@Autowired
 	private ProductService productService;
