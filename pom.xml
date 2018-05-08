@@ -40,6 +40,7 @@
     <poi.version>3.6</poi.version>
     <restfb.version>1.16.0</restfb.version>
     <redis.version>2.8.1</redis.version>
+    <quartz.version>2.3.0</quartz.version>
   </properties>
 
   <dependencies>
@@ -318,6 +319,13 @@
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
       <version>${redis.version}</version>
+    </dependency>
+
+    <!-- Quartz framework -->
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
     </dependency>
   </dependencies>
 
