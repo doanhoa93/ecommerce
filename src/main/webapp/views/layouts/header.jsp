@@ -70,7 +70,12 @@
           </div>
 
           <div class="col-md-8 col-xs-12 col-sm-12 search_box global-search pull-left">
-            <input type="text" placeholder="Search" class="global-search-input" />
+            <form:form action="${contextPath}/searches" method="GET">
+              <input type="text" placeholder="Search" name="search" class="global-search-input"
+                value="${param['search']}" />
+              <input type="hidden" name="objectType"
+                value="${param.objectType == null ? 'product' : param.objectType}">
+            </form:form>
           </div>
         </div>
         <div class="col-sm-6">

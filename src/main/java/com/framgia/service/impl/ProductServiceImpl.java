@@ -25,6 +25,7 @@ import com.framgia.bean.UserInfo;
 import com.framgia.helper.ModelToBean;
 import com.framgia.helper.ProductFilter;
 import com.framgia.helper.UploadFile;
+import com.framgia.job.UpdateDataElasticTask;
 import com.framgia.model.Category;
 import com.framgia.model.Image;
 import com.framgia.model.OrderProduct;
@@ -37,6 +38,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 
 	@Autowired
 	private UploadFile uploadFile;
+
+	@Autowired
+	private UpdateDataElasticTask updateDataElasticTask;
 
 	@Override
 	public ProductInfo findBy(String attribute, Serializable key, boolean lock) {
@@ -83,7 +87,9 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				getOrderProductDAO().delete(orderProduct);
 
 			Product product = getProductDAO().findById(entity.getId(), true);
+			updateDataElasticTask.deleteData(product);
 			getProductDAO().delete(product);
+			
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -338,6 +344,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			}
 
 			productInfo.setId(product.getId());
+
+			updateDataElasticTask.updateData(product);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -398,6 +406,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 				}
 			}
 
+			updateDataElasticTask.updateData(product);
 			return true;
 		} catch (Exception e) {
 			logger.error(e);

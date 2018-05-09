@@ -8,6 +8,6 @@ public class RedisJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-		new UpdateDataTask().updateData();
+		new UpdateDataRedisTask().reloadData();
 	}
 }

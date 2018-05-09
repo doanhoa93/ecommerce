@@ -2,9 +2,17 @@ package com.framgia.model;
 
 import java.io.Serializable;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 public class Image implements Serializable {
 	private Integer id;
+
+	@Field(type = FieldType.Object, ignoreFields = { "product" })
+	@JsonIgnore
 	private Product product;
 	private String image;
 

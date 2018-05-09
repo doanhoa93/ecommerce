@@ -4,12 +4,22 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
+@Document(indexName = "categories")
 public class Category implements Serializable {
 	private Integer id;
 	private Integer parentId;
 	private String name;
 	private Date createdAt;
+
+	@Field(type = FieldType.Nested, ignoreFields = { "products" })
+	@JsonIgnore
 	private List<Product> products;
 
 	public Category() {
@@ -63,5 +73,10 @@ public class Category implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	@Override
+	public String toString() {
+		return "{\"name\":\"" + name + "\"}";
 	}
 }

@@ -312,10 +312,19 @@ input[type="search"].input-sm {
 .global-search-input {
 	background: url(../images/default/searchicon.png) 5px no-repeat #F0F0E9
 		!important;
+	color: black !important;
 	padding-left: 30px !important;
 	width: 100% !important;
 }
 
 .item .category-name a {
 	color: #696763;
+}
+
+.category {
+	padding: 5px;
+}
+
+.tab-pane {
+	margin-top: 10px;
 }

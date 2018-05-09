@@ -222,6 +222,15 @@
     </put-list-attribute>
   </definition>
 
+  <definition name="searches" extends="baselayout">
+    <put-attribute name="title" value="Search | Ecommerce" />
+    <put-attribute name="body" value="/views/searches/index.jsp" />
+
+    <put-list-attribute name="css">
+      <add-attribute value="/assets/css/product.css" />
+    </put-list-attribute>
+  </definition>
+
   <!-- ADMIN -->
   <definition name="adminBaseLayout" template="/views/admin/layouts/template.jsp">
 
