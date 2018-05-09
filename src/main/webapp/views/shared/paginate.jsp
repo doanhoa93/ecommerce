@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="uri" value="${request.getRequestURI()}${param.size() == 0 ? '' : '?'}" />
+<c:set var="uri" value="${request.getRequestURI()}?" />
 <c:forEach var="pageParameter" items="${param}">
   <c:if test="${pageParameter.key != 'page'}">
     <c:set var="uri" value="${uri}&${pageParameter.key}=${pageParameter.value}" />

@@ -14,4 +14,5 @@ public interface Paginate {
 	final int DATE_RECENT = 30;
 	final int CHAT_LIMIT = 10;
 	final int MAX_SIZE_PAGE = 6;
+	final int NOTIFICATION_PAGE = 10;
 }

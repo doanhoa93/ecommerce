@@ -231,6 +231,11 @@
     </put-list-attribute>
   </definition>
 
+  <definition name="notifications" extends="baselayout">
+    <put-attribute name="title" value="Notifications | Ecommerce" />
+    <put-attribute name="body" value="/views/notifications/index.jsp" />
+  </definition>
+
   <!-- ADMIN -->
   <definition name="adminBaseLayout" template="/views/admin/layouts/template.jsp">
 
