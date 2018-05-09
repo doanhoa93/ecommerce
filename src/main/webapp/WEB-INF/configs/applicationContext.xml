@@ -16,6 +16,7 @@
   <!-- Load all annotation from java class -->
   <context:annotation-config />
 
+  <!-- Use for json response -->
   <mvc:annotation-driven>
     <mvc:message-converters>
       <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
@@ -23,87 +24,10 @@
     </mvc:message-converters>
   </mvc:annotation-driven>
 
-  <!-- Load variable from file.properties -->
-  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-    <property name="searchSystemEnvironment" value="true" />
-    <property name="ignoreUnresolvablePlaceholders" value="true" />
-    <property name="locations">
-      <list>
-        <value>classpath:spring-server-config.properties</value>
-        <value>classpath:email-config.properties</value>
-        <value>classpath:cloudinary-config.properties</value>
-      </list>
-    </property>
-  </bean>
-
-  <!-- Config mail -->
-  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    <property name="host" value="smtp.gmail.com" />
-    <property name="port" value="587" />
-    <property name="username" value="${email.username}" />
-    <property name="password" value="${email.password}" />
-    <property name="javaMailProperties">
-      <props>
-        <prop key="mail.transport.protocol">smtp</prop>
-        <prop key="mail.smtp.auth">true</prop>
-        <prop key="mail.smtp.starttls.enable">true</prop>
-      </props>
-    </property>
-  </bean>
-
-  <!-- Task for send email -->
-  <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
-
-  <!-- Job for update data to redis -->
-  <bean id="updateDataTask" class="com.framgia.job.UpdateDataTask" />
-
-  <bean name="redisJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-    <property name="jobClass" value="com.framgia.job.RedisJob" />
-    <property name="jobDataMap">
-      <map>
-        <entry key="updateDataTask" value-ref="updateDataTask" />
-      </map>
-    </property>
-    <property name="durability" value="true" />
-  </bean>
-
-  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-    <property name="jobDetail" ref="redisJob" />
-    <property name="cronExpression" value="0 15 10 ? * MON-FRI" />
-  </bean>
-
-  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    <property name="jobDetails">
-      <list>
-        <ref bean="redisJob" />
-      </list>
-    </property>
-
-    <property name="triggers">
-      <list>
-        <ref bean="cronTrigger" />
-      </list>
-    </property>
-  </bean>
-
-  <!-- Config upload with cloudinary -->
-  <bean id="uploadFile" class="com.framgia.helper.UploadFile">
-    <property name="cloudName" value="${cloudinary.cloud_name}" />
-    <property name="apiKey" value="${cloudinary.api_key}" />
-    <property name="apiSecret" value="${cloudinary.api_secret}" />
-  </bean>
-
-  <!-- Load message.properties. Nhu I18n -->
+  <!-- Load message.properties. As I18n -->
   <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     <property name="basename" value="classpath:messages" />
     <property name="fallbackToSystemLocale" value="false" />
-  </bean>
-
-  <!-- Facebook -->
-  <bean id="faceBook" class="com.framgia.social.Facebook">
-    <property name="appId" value="${facebook.appId}" />
-    <property name="secretId" value="${facebook.secretId}" />
   </bean>
 
   <mvc:interceptors>

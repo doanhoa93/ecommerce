@@ -297,7 +297,7 @@ public class FakeData {
 				OrderProduct orderProduct = new OrderProduct();
 				orderProduct.setId(i);
 				orderProduct.setProduct(products.get(i - 1));
-				orderProduct.setQuantity(random.nextInt(10));
+				orderProduct.setQuantity(random.nextInt(10) + 1);
 				orderProduct.setPrice(products.get(i - 1).getPrice());
 				orderProduct.setOrder(orders.get(i - 1));
 				orders.get(i - 1)

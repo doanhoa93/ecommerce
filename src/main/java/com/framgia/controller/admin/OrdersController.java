@@ -51,7 +51,7 @@ public class OrdersController extends AdminController {
 		ModelAndView model = new ModelAndView("adminOrder");
 		if (order != null) {
 			model.addObject("order", order);
-			model.addObject("orderProducts", order.getOrderProducts());
+			model.addObject("orderProducts", orderService.getOrderProducts(order.getId()));
 		} else {
 			model.setViewName("admin404");
 		}
