@@ -2,28 +2,25 @@ package com.framgia.job;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
-import com.framgia.bean.ProductInfo;
-import com.framgia.service.ProductService;
+import com.framgia.model.Product;
+import com.framgia.util.HibernateUtil;
 
 import redis.clients.jedis.Jedis;
 
-@Component
+@Service("updateDataTask")
 public class UpdateDataTask {
 
-	@Autowired
-	private ProductService productService;
-
-	private Jedis jedis;
-
+	@SuppressWarnings("unchecked")
 	public void updateData() {
-		jedis = new Jedis();
+		Jedis jedis = new Jedis();
 		jedis.flushAll();
-		List<ProductInfo> products = productService.getObjects();
-		for (ProductInfo productInfo : products)
-			jedis.sadd("products", productInfo.getName());
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Product> products = (List<Product>) session.createCriteria(Product.class).list();
+		for (Product product : products)
+			jedis.sadd("products", product.getName());
 		jedis.close();
 	}
 }

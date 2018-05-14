@@ -1,25 +1,35 @@
 package com.framgia.mailer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+
 import org.springframework.stereotype.Service;
+
+import redis.clients.jedis.Jedis;
 
 @Service("mailer")
 public class ApplicationMailer {
 
-	@Autowired
-	private MailSender mailSender;
-
-	@Autowired
-	private TaskExecutor taskExecutor;
-
+	@SuppressWarnings({ "resource" })
 	public void sendMail(String to, String subject, String body) {
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setTo(to);
-		simpleMailMessage.setSubject(subject);
-		simpleMailMessage.setText(body);
-		taskExecutor.execute(new MailerRunnable(mailSender, simpleMailMessage));
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutput out = null;
+			Jedis jedis = new Jedis();
+			HashMap<String, String> hashMap = new HashMap<>();
+			hashMap.put("to", to);
+			hashMap.put("subject", subject);
+			hashMap.put("body", body);
+			out = new ObjectOutputStream(bos);
+			out.writeObject(hashMap);
+			out.flush();
+			byte[] mailBytes = bos.toByteArray();
+			jedis.sadd("mails".getBytes(), mailBytes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
