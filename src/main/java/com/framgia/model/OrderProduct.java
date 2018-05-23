@@ -2,10 +2,21 @@ package com.framgia.model;
 
 import java.io.Serializable;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 public class OrderProduct implements Serializable {
 	private Integer id;
+
+	@Field(type = FieldType.Object, ignoreFields = { "order" })
+	@JsonIgnore
 	private Order order;
+
+	@Field(type = FieldType.Object, ignoreFields = { "product" })
+	@JsonIgnore
 	private Product product;
 	private float price;
 	private int quantity;
@@ -15,7 +26,8 @@ public class OrderProduct implements Serializable {
 		this.quantity = 1;
 	}
 
-	public OrderProduct(Integer id, Order order, Product product, float price, int quantity, int status) {
+	public OrderProduct(Integer id, Order order, Product product, float price, int quantity,
+	    int status) {
 		this.id = id;
 		this.order = order;
 		this.product = product;

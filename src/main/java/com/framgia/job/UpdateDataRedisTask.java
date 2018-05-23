@@ -10,11 +10,11 @@ import com.framgia.util.HibernateUtil;
 
 import redis.clients.jedis.Jedis;
 
-@Service("updateDataTask")
-public class UpdateDataTask {
+@Service("updateDataRedisTask")
+public class UpdateDataRedisTask {
 
 	@SuppressWarnings("unchecked")
-	public void updateData() {
+	public void reloadData() {
 		Jedis jedis = new Jedis();
 		jedis.flushAll();
 		Session session = HibernateUtil.getSessionFactory().openSession();

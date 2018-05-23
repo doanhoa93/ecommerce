@@ -7,13 +7,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framgia.bean.CategoryInfo;
 import com.framgia.helper.ModelToBean;
+import com.framgia.job.UpdateDataElasticTask;
 import com.framgia.model.Category;
 import com.framgia.service.CategoryService;
 
 public class CategoryServiceImpl extends BaseServiceImpl implements CategoryService {
+
+	@Autowired
+	private UpdateDataElasticTask updateDataElasticTask;
 
 	@Override
 	public CategoryInfo findBy(String attribute, Serializable key, boolean lock) {
@@ -55,7 +60,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public boolean delete(CategoryInfo entity) {
 		try {
 			Category category = getCategoryDAO().findById(entity.getId(), true);
+			updateDataElasticTask.deleteData(category);
 			getCategoryDAO().delete(category);
+
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -107,6 +114,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 					categoryId = category.getId();
 				}
 			} while (category != null);
+
 			return categories;
 		} catch (Exception e) {
 			logger.error(e);
@@ -120,6 +128,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			List<Integer> categoryIds = getObjects().stream().map(CategoryInfo::getId)
 			    .collect(Collectors.toList());
 			categoryIds.remove(categoryId);
+
 			return getObjectsByIds(categoryIds);
 		} catch (Exception e) {
 			logger.error(e);
@@ -176,6 +185,8 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			getCategoryDAO().saveOrUpdate(category);
 
 			categoryInfo.setId(category.getId());
+			updateDataElasticTask.insertData(category);
+
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -198,6 +209,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			} else
 				category.setParentId(newCategoryInfo.getParentId());
 			getCategoryDAO().saveOrUpdate(category);
+			updateDataElasticTask.updateData(category);
 
 			return true;
 		} catch (Exception e) {

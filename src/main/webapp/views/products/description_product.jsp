@@ -1,4 +1,3 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -16,17 +15,8 @@
           </div>
         </c:if>
 
-        <div class="product-stock">
-          <span>Status: </span>
-          <c:choose>
-            <c:when test="${product.getNumber() > 0}">
-              <span class="stock">Stock</span>
-            </c:when>
-
-            <c:otherwise>
-              <span class="out-stock">Out of stock</span>
-            </c:otherwise>
-          </c:choose>
+        <div class="product-info">
+          <p>${product.getInformation()}</p>
         </div>
       </div>
       <h2>
@@ -37,14 +27,6 @@
         <a href="${contextPath}/products/${product.getId()}" class="product-name">
           ${product.getName()} </a>
       </p>
-      <form:form id="add-cart" action="${contextPath}/carts" method="POST" modelAttribute="cart">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <input type="hidden" name="productId" value="${product.getId()}" />
-        <button class="btn btn-default add-to-cart" type="submit">
-          <i class="fa fa-shopping-cart"></i>
-          Add to cart
-        </button>
-      </form:form>
     </div>
   </div>
 </div>

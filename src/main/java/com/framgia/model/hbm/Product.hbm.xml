@@ -27,7 +27,7 @@
     <many-to-one name="promotion" class="Promotion">
       <column name="promotion_id" />
     </many-to-one>
-    
+
     <list name="images" fetch="select" cascade="delete" inverse="true">
       <key column="product_id" />
       <index column="id" />

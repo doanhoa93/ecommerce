@@ -1,9 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="uri" value="${request.getRequestURI()}?page=" />
+<c:set var="uri" value="${request.getRequestURI()}${param.size() == 0 ? '' : '?'}" />
+<c:forEach var="pageParameter" items="${param}">
+  <c:if test="${pageParameter.key != 'page'}">
+    <c:set var="uri" value="${uri}&${pageParameter.key}=${pageParameter.value}" />
+  </c:if>
+</c:forEach>
+<c:set var="uri" value="${uri}&page=" />
 <c:set var="page" value="${param.page}" />
 
-<c:if test="${paginate.start != paginate.end}">
+<c:if test="${paginate.start != paginate.end || (paginate.next == true || paginate.prev == true)}">
   <c:choose>
     <c:when test="${paginateJS}">
       <ul class="pagination pagination-sm">
@@ -26,6 +32,7 @@
         </c:if>
       </ul>
     </c:when>
+
     <c:otherwise>
       <ul class="pagination pagination-sm">
         <c:if test="${paginate.prev}">
