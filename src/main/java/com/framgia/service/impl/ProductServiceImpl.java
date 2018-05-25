@@ -89,7 +89,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 			Product product = getProductDAO().findById(entity.getId(), true);
 			updateDataElasticTask.deleteData(product);
 			getProductDAO().delete(product);
-			
+
 			return true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -227,10 +227,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
 	public List<ProductInfo> filterProducts(Integer categoryId, ProductFilter productFilter,
 	    String page, int limit, Order order) {
 		try {
-			int off;
-			if (StringUtils.isEmpty(page)) {
-				off = 0;
-			} else
+			int off = 0;
+			if (StringUtils.isNotEmpty(page))
 				off = (Integer.parseInt(page) - 1) * limit;
 
 			return getProductDAO().filterProducts(categoryId, productFilter, off, limit, order)

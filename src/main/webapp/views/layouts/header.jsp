@@ -89,7 +89,12 @@
                       Notifications
                       <i class="notification-size">${currentUser.getUnWatchedNotifications()}</i>
                     </a>
+
                     <ul role="menu" class="notifications-body">
+                      <li class="notification-title">
+                        <span class="title">Your notifications</span>
+                        <span class="mark">Mark all read</span>
+                      </li>
                       <c:if test="${currentUser.getNotifications().size() > 0}">
                         <c:forEach var="i" begin="0"
                           end="${currentUser.getNotifications().size() - 1}">
@@ -100,16 +105,28 @@
                           <li
                             class="sub-menu-item notification ${notification.isWatched() ? '' : 'unwatched'}"
                             data-id="${notification.getId()}">
-                            <a class="notification-href"
-                              href="${contextPath}/orders/${notification.getOrder().getId()}">
-                              <span class="notification-content">${notification.getContent()}</span>
-                            </a>
-                            <div class="small notification-time">${notification.getCreatedAt()}</div>
+                            <div class="sub-item-icon">
+                              <img src="${contextPath}/assets/images/default/order.png"
+                                class="img-resposive sub-item-order-icon" />
+                            </div>
+
+                            <div class="sub-item-content">
+                              <a class="notification-href"
+                                href="${contextPath}/orders/${notification.getOrder().getId()}">
+                                <span class="notification-content">${notification.getContent()}</span>
+                              </a>
+                              <div class="small notification-time">${notification.getCreatedAt()}</div>
+                            </div>
                           </li>
                         </c:forEach>
+                        
+                        <li class="see-all">
+                          <a href="${contextPath}/notifications">See all notifications</a>
+                        </li>
                       </c:if>
                     </ul>
                   </li>
+
                   <li>
                     <a href="${contextPath}/carts" class="item-cart">
                       <i class="fa fa-shopping-cart"></i>

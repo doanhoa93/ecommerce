@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.framgia.bean.NotificationInfo;
 import com.framgia.bean.OrderInfo;
 import com.framgia.bean.UserInfo;
@@ -98,6 +100,46 @@ public class NotificationServiceImpl extends BaseServiceImpl implements Notifica
 		} catch (Exception e) {
 			logger.error(e);
 			return null;
+		}
+	}
+
+	@Override
+	public List<NotificationInfo> getNotifications(Integer userId, String page, int limit,
+	    org.hibernate.criterion.Order order) {
+		try {
+			int off = 0;
+			if (StringUtils.isNotEmpty(page))
+				off = (Integer.parseInt(page) - 1) * limit;
+
+			return getNotificationDAO().getNotifications(userId, off, limit, order).stream()
+			    .map(ModelToBean::toNotificationInfo).collect(Collectors.toList());
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+	}
+
+	@Override
+	public boolean update(Integer id) {
+		try {
+			Notification notification = getNotificationDAO().findById(id, true);
+			notification.setWatched(true);
+			getNotificationDAO().saveOrUpdate(notification);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+		}
+	}
+
+	@Override
+	public boolean updateAll(Integer userId) {
+		try {
+			getNotificationDAO().updateAll(userId);
+			return true;
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
 		}
 	}
 

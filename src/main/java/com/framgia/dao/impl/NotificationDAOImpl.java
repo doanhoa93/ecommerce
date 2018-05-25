@@ -1,6 +1,9 @@
 package com.framgia.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 import com.framgia.dao.NotificationDAO;
@@ -31,5 +34,32 @@ public class NotificationDAOImpl extends BaseDAOAbstract<Integer, Notification>
 		criteria.createAlias("notifications", "notifications", Criteria.LEFT_JOIN,
 		    Restrictions.eq("notifications.id", notificationId));
 		return (Order) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Notification> getNotifications(Integer userId, int off, int limit,
+	    org.hibernate.criterion.Order order) {
+		Criteria criteria = getSession().createCriteria(Notification.class);
+		if (userId != null)
+			criteria.add(Restrictions.eq("user.id", userId));
+
+		criteria.setFirstResult(off);
+
+		if (limit != 0)
+			criteria.setMaxResults(limit);
+
+		if (order != null)
+			criteria.addOrder((org.hibernate.criterion.Order) order);
+
+		return (List<Notification>) criteria.list();
+	}
+
+	@Override
+	public void updateAll(Integer userId) {
+		Query query = getSession()
+		    .createQuery("update Notification n set n.watched = true where n.user.id = :userId");
+		query.setParameter("userId", userId);
+		query.executeUpdate();
 	}
 }

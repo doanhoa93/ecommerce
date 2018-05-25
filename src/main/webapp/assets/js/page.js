@@ -48,13 +48,15 @@ $(document).ready(
             hideShowChat();
         });
 
-        $(document).click(function(event) {
-            if (!$(event.target).closest('.item-notification').length) {
-                if ($('.notifications-body').is(":visible")) {
-                    $('.notifications-body').hide();
+        $(document).click(
+            function(event) {
+                if (!($(event.target).closest('.item-notification').length || $(event.target)
+                        .closest('.mark').length)) {
+                    if ($('.notifications-body').is(":visible")) {
+                        $('.notifications-body').hide();
+                    }
                 }
-            }
-        });
+            });
 
         $(document).on('submit', 'form#add-cart', addCart);
 
